@@ -1,7 +1,455 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="57e13379-18df-41e6-be42-2e7d8fc29a40" name="Default" comment="" />
+    <list default="true" id="57e13379-18df-41e6-be42-2e7d8fc29a40" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/core.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/dashboard.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/require.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/bootstrap.bundle.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/chart.bundle.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/circle-progress.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/jquery-3.2.1.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/jquery-3.2.1.slim.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/jquery-jvectormap-2.0.3.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/jquery-jvectormap-de-merc.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/jquery-jvectormap-world-mill.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/jquery.sparkline.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/jquery.tablesorter.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/select2.full.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/js/vendors/selectize.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.bootstrap.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.bootstrap.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.bootstrap4.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.bootstrap4.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.dataTables.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.dataTables.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.foundation.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.foundation.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.jqueryui.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.jqueryui.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.semanticui.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/buttons.semanticui.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/common.scss" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/css/mixins.scss" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.bootstrap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.bootstrap.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.bootstrap4.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.bootstrap4.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.colVis.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.colVis.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.flash.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.flash.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.foundation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.foundation.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.html5.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.html5.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.jqueryui.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.jqueryui.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.print.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.print.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.semanticui.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.semanticui.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/dataTables.buttons.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/dataTables.buttons.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/swf/flashExport.swf" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.bootstrap.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.bootstrap.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.bootstrap4.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.bootstrap4.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.dataTables.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.dataTables.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.foundation.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.foundation.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.jqueryui.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.jqueryui.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.semanticui.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/buttons.semanticui.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/common.scss" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/css/mixins.scss" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.bootstrap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.bootstrap.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.bootstrap4.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.bootstrap4.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.colVis.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.colVis.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.flash.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.flash.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.foundation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.foundation.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.html5.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.html5.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.jqueryui.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.jqueryui.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.print.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.print.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.semanticui.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/buttons.semanticui.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/dataTables.buttons.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/dataTables.buttons.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/js/jszip.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.2/swf/flashExport.swf" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/dataTables.bootstrap.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/dataTables.bootstrap.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/dataTables.foundation.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/dataTables.foundation.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/dataTables.jqueryui.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/dataTables.jqueryui.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/dataTables.semanticui.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/dataTables.semanticui.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/jquery.dataTables.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/css/jquery.dataTables.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/images/sort_asc.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/images/sort_asc_disabled.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/images/sort_both.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/images/sort_desc.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/images/sort_desc_disabled.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/dataTables.bootstrap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/dataTables.bootstrap.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/dataTables.foundation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/dataTables.foundation.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/dataTables.jqueryui.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/dataTables.jqueryui.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/dataTables.semanticui.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/dataTables.semanticui.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/jquery.dataTables.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.bootstrap.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.bootstrap.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.bootstrap4.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.bootstrap4.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.dataTables.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.dataTables.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.foundation.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.foundation.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.jqueryui.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.jqueryui.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.semanticui.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/css/responsive.semanticui.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/dataTables.responsive.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/dataTables.responsive.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/responsive.bootstrap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/responsive.bootstrap.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/responsive.bootstrap4.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/responsive.bootstrap4.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/responsive.foundation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/responsive.foundation.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/responsive.jqueryui.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/responsive.jqueryui.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/responsive.semanticui.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/Responsive-2.2.2/js/responsive.semanticui.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.bootstrap.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.bootstrap.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.bootstrap4.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.bootstrap4.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.foundation.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.foundation.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.jqueryui.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.jqueryui.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.material.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.material.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.semanticui.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.semanticui.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.uikit.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/datatables.uikit.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/jquery.datatables.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/jquery.datatables.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/css/jquery.datatables_themeroller.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/datatables.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/datatables.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/datatables.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/datatables.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/images/Sorting icons.psd" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/images/favicon.ico" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/images/sort_asc.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/images/sort_asc_disabled.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/images/sort_both.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/images/sort_desc.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/images/sort_desc_disabled.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.bootstrap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.bootstrap.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.bootstrap4.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.bootstrap4.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.foundation.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.foundation.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.jqueryui.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.jqueryui.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.material.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.material.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.semanticui.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.semanticui.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.uikit.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/datatables.uikit.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/jquery.datatables.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/jquery.datatables.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/js/jquery.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/pdfmake-0.1.36/pdfmake.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/pdfmake-0.1.36/pdfmake.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/DataTables/pdfmake-0.1.36/vfs_fonts.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/css/datepicker.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/css/datepicker3.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.ar.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.az.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.bg.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.bs.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.ca.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.cs.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.cy.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.da.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.de.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.el.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.en-GB.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.et.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.eu.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.fa.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.fi.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.fo.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr-CH.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.fr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.gl.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.he.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.hr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.hu.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.hy.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.id.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.is.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.it-CH.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.it.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.ja.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.ka.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.kh.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.kk.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.kr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.lt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.lv.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.mk.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.ms.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.nb.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.nl-BE.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.nl.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.no.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.pl.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.pt-BR.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.pt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.ro.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.rs-latin.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.rs.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.ru.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.sk.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.sl.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.sq.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.sr-latin.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.sr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.sv.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.sw.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.th.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.tr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.uk.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.vi.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-CN.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datepicker/js/locales/bootstrap-datepicker.zh-TW.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/LICENSE" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/README.md" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.bg.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ca.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.cs.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.da.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.de.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.el.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fi.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.fr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.he.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.hr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.hu.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.id.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.is.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.it.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ja.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.kr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.lt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.lv.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ms.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.nb.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.nl.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.pl.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.pt-BR.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.pt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ro.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.rs-latin.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.rs.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ru.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sk.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sl.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sv.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.sw.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.th.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.tr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.ua.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.uk.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-TW.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-material-design/bootstrap-md.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-material-design/bootstrap-md.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-material-design/bootstrap-md.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap-material-design/popper.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/css/bootstrap-theme.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/css/bootstrap-theme.css.map" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/css/bootstrap-theme.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/css/bootstrap-theme.min.css.map" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/css/bootstrap.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/css/bootstrap.css.map" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/css/bootstrap.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/css/bootstrap.min.css.map" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/fonts/glyphicons-halflings-regular.eot" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/fonts/glyphicons-halflings-regular.svg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/fonts/glyphicons-halflings-regular.ttf" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/fonts/glyphicons-halflings-regular.woff" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/fonts/glyphicons-halflings-regular.woff2" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/js/bootstrap.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/js/bootstrap.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/bootstrap/js/npm.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/font-awesome/css/font-awesome.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/font-awesome/css/font-awesome.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/font-awesome/fonts/FontAwesome.otf" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/font-awesome/fonts/fontawesome-webfont.eot" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/font-awesome/fonts/fontawesome-webfont.svg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/font-awesome/fonts/fontawesome-webfont.ttf" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/font-awesome/fonts/fontawesome-webfont.woff" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/font-awesome/fonts/fontawesome-webfont.woff2" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/fullpage.js/jquery.fullpage.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/fullpage.js/jquery.fullpage.extensions.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/fullpage.js/jquery.fullpage.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/fullpage.js/jquery.fullpage.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/fullpage.js/jquery.fullpage.min.css.map" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/fullpage.js/jquery.fullpage.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/fullpage.js/jquery.fullpage.min.js.map" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/icomoon/fonts/icomoon.eot" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/icomoon/fonts/icomoon.svg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/icomoon/fonts/icomoon.ttf" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/icomoon/fonts/icomoon.woff" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/icomoon/style.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/jquery-mask/jquery.mask.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/jquery-mask/jquery.mask.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/jquery-uploader/jquery-uploader.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/jquery-uploader/jquery-uploader.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/jquery-validation/jquery.validate.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/jquery-validation/jquery.validate.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/jquery/jquery-3.1.0.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/moment/moment.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/LICENSE.md" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/README.md" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/css/select2-bootstrap.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/css/select2.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/css/select2.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/az.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/bg.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/ca.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/cs.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/da.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/de.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/en.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/es.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/et.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/eu.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/fa.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/fi.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/fr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/gl.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/he.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/hi.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/hr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/hu.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/id.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/is.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/it.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/ko.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/lt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/lv.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/mk.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/nb.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/nl.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/pl.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/pt-BR.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/pt.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/ro.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/ru.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/sk.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/sr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/sv.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/th.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/tr.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/uk.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/vi.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/zh-CN.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/i18n/zh-TW.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/select2.full.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/select2.full.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/select2.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/js/select2.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/sass/select2-bootstrap.min.scss" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/select2-bootstrap.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/select2.full.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/select2/select2.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/License.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/Readme.txt" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/css/simple-line-icons.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/fonts/Simple-Line-Icons.dev.svg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/fonts/Simple-Line-Icons.eot" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/fonts/Simple-Line-Icons.svg" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/fonts/Simple-Line-Icons.ttf" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/fonts/Simple-Line-Icons.woff" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/fonts/Simple-Line-Icons.woff2" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/icons-lte-ie7.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/simple-line-icons.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/simple-line-icons/simple-line-icons.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/summernote-master/summernote-bs2.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/summernote-master/summernote-bs3.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/summernote-master/summernote.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/summernote-master/summernote.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/summernote-master/summernote.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/sweetalert/sweetalert.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/toastr/toastr.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/toastr/toastr.js.map" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/toastr/toastr.min.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/toastr/toastr.min.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/css/agent.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/css/aristo.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/css/default.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/css/jeans.css" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/agent/bg-input-agent.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/agent/bg-input-focus-agent.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/agent/sprite-agent.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/aristo/bg-input-aristo.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/aristo/bg-input-focus-aristo.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/aristo/sprite-aristo.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/default/bg-input-focus.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/default/bg-input.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/default/sprite.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/jeans/bg-input-focus-jeans.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/jeans/bg-input-focus-retina-jeans.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/jeans/bg-input-jeans.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/jeans/bg-input-retina-jeans.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/jeans/sprite-jeans.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/images/jeans/sprite-retina-jeans.png" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/js/jquery.uniform.bundled.js" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/public/assets/plugins/uniform/js/jquery.uniform.standalone.js" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DepositController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/DepositController.php" />
+      <change beforePath="$PROJECT_DIR$/public/assets/css/ipro.css" afterPath="$PROJECT_DIR$/public/assets/css/ipro.css" />
+      <change beforePath="$PROJECT_DIR$/resources/views/inventory/index.blade.php" afterPath="$PROJECT_DIR$/resources/views/inventory/index.blade.php" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" afterPath="$PROJECT_DIR$/resources/views/layouts/main.blade.php" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,36 +459,131 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/finance/index.blade.php">
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/inventory/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="2" column="27" lean-forward="false" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
-              <caret line="8" column="28" lean-forward="false" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+            <state relative-caret-position="-3302">
+              <caret line="75" column="22" lean-forward="true" selection-start-line="75" selection-start-column="22" selection-end-line="75" selection-end-column="22" />
               <folding>
-                <marker date="1544778295978" expanded="true" signature="9:23" ph="..." />
-                <marker date="1544778295978" expanded="true" signature="35:54" ph="..." />
-                <marker date="1544778295978" expanded="true" signature="66:75" ph="..." />
+                <marker date="1544792686836" expanded="true" signature="9:23" ph="..." />
+                <marker date="1544792686836" expanded="true" signature="35:55" ph="..." />
+                <marker date="1544792686836" expanded="true" signature="64:69" ph="..." />
+                <marker date="1544792686836" expanded="true" signature="89:144" ph="..." />
+                <marker date="1544792686836" expanded="true" signature="183:187" ph="..." />
+                <marker date="1544792686836" expanded="true" signature="208:216" ph="..." />
+                <marker date="1544792686836" expanded="true" signature="208:262" ph="..." />
+                <marker date="1544792686836" expanded="true" signature="391:398" ph="..." />
+                <marker date="1544792686836" expanded="true" signature="629:637" ph="..." />
+                <marker date="1544792686836" expanded="true" signature="1555:1564" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/inventory/index.blade.php">
+      <file leaf-file-name="main.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/layouts/main.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="8" column="29" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="12" selection-end-column="11" />
+            <state relative-caret-position="254">
+              <caret line="102" column="33" lean-forward="true" selection-start-line="102" selection-start-column="33" selection-end-line="102" selection-end-column="33" />
               <folding>
-                <marker date="1544778061351" expanded="true" signature="9:23" ph="..." />
-                <marker date="1544778061351" expanded="true" signature="35:55" ph="..." />
-                <marker date="1544778061351" expanded="true" signature="67:76" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="30:73" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="249:263" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="287:294" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="356:376" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="610:632" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="672:702" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="759:776" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="848:865" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="947:964" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="1027:1032" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="1045:1052" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="1214:1244" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="1939:1959" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="2366:2381" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="2467:2482" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="2532:2546" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="3239:3275" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="3328:3338" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="3411:3456" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="3509:3528" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="3606:3645" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="3698:3711" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="3794:3840" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="3893:3913" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="3991:4038" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="4091:4112" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="4190:4234" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="4287:4305" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="4381:4425" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="4478:4496" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="4577:4621" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="4674:4692" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="4820:4829" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="5110:5127" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="5379:5396" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="5460:5477" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="5517:5534" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="5599:5616" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="5674:5678" ph="..." />
+                <marker date="1544794452485" expanded="true" signature="5687:5695" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ipro.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/assets/css/ipro.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="92">
+              <caret line="4" column="6" lean-forward="true" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="app.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/layouts/app.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="47">
+              <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+              <folding>
+                <marker date="1544750727728" expanded="true" signature="30:73" ph="..." />
+                <marker date="1544750727728" expanded="true" signature="249:263" ph="..." />
+                <marker date="1544750727728" expanded="true" signature="282:313" ph="..." />
+                <marker date="1544750727728" expanded="true" signature="365:385" ph="..." />
+                <marker date="1544750727728" expanded="true" signature="619:641" ph="..." />
+                <marker date="1544750727728" expanded="true" signature="681:711" ph="..." />
+                <marker date="1544750727728" expanded="true" signature="791:822" ph="..." />
+                <marker date="1544750727728" expanded="true" signature="1236:1245" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="web.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/routes/web.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="26" column="43" lean-forward="true" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DepositController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DepositController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="15" column="28" lean-forward="false" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -54,13 +597,10 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" />
         <option value="$PROJECT_DIR$/resources/views/auth/login.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
-        <option value="$PROJECT_DIR$/public/assets/css/ipro.css" />
         <option value="$PROJECT_DIR$/routes/web.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" />
         <option value="$PROJECT_DIR$/resources/views/home.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/layouts/main.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/dashboard/index.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/inventory/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/pos/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/catalogue/index.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/account/index.blade.php" />
@@ -69,9 +609,12 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/InventoryController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CatalogueController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/FinanceController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/DepositController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AccountController.php" />
         <option value="$PROJECT_DIR$/resources/views/finance/index.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/inventory/index.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/layouts/main.blade.php" />
+        <option value="$PROJECT_DIR$/public/assets/css/ipro.css" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/DepositController.php" />
       </list>
     </option>
   </component>
@@ -89,6 +632,7 @@
     <option name="width" value="697" />
     <option name="height" value="735" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -115,24 +659,6 @@
             <path>
               <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
               <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Http" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Http" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="Controllers" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -140,48 +666,6 @@
               <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="account" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="catalogue" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="dashboard" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="deposit" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="finance" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="inventory" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
@@ -189,13 +673,6 @@
               <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="layouts" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="ipro" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ipro" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="resources" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="pos" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -211,6 +688,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\ipro\public\assets" />
+      <recent name="C:\xampp\htdocs\ipro\public\assets\plugins" />
       <recent name="C:\xampp\htdocs\ipro" />
     </key>
   </component>
@@ -239,12 +718,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544713535581</updated>
-      <workItem from="1544713567819" duration="11373000" />
+      <workItem from="1544713567819" duration="24277000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11373000" />
+    <option name="totallyTimeSpent" value="24277000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -255,7 +734,7 @@
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -321,7 +800,7 @@
         <state relative-caret-position="208">
           <caret line="16" column="32" lean-forward="false" selection-start-line="16" selection-start-column="32" selection-end-line="16" selection-end-column="32" />
           <folding>
-            <element signature="e#45#81#0#PHP" expanded="true" />
+            <element signature="e#45#81#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -368,14 +847,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/assets/css/ipro.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="1" lean-forward="true" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/auth/login.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
@@ -402,31 +873,6 @@
             <marker date="1544750648389" expanded="true" signature="3193:3220" ph="..." />
             <marker date="1544750648389" expanded="true" signature="3275:3304" ph="..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/app.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding>
-            <marker date="1544750727728" expanded="true" signature="30:73" ph="..." />
-            <marker date="1544750727728" expanded="true" signature="249:263" ph="..." />
-            <marker date="1544750727728" expanded="true" signature="282:313" ph="..." />
-            <marker date="1544750727728" expanded="true" signature="365:385" ph="..." />
-            <marker date="1544750727728" expanded="true" signature="619:641" ph="..." />
-            <marker date="1544750727728" expanded="true" signature="681:711" ph="..." />
-            <marker date="1544750727728" expanded="true" signature="791:822" ph="..." />
-            <marker date="1544750727728" expanded="true" signature="1236:1245" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-160">
-          <caret line="0" column="5" lean-forward="true" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -493,49 +939,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/main.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="93">
-          <caret line="33" column="34" lean-forward="false" selection-start-line="33" selection-start-column="34" selection-end-line="33" selection-end-column="34" />
-          <folding>
-            <marker date="1544777694196" expanded="true" signature="30:73" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="249:263" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="287:294" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="352:372" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="606:628" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="668:698" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="732:737" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="750:757" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="919:949" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="1644:1664" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="2061:2076" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="2732:2768" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="2821:2831" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="2904:2949" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="3002:3021" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="3099:3138" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="3191:3204" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="3287:3333" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="3386:3406" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="3484:3531" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="3584:3605" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="3683:3727" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="3780:3798" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="3874:3918" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="3971:3989" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="4070:4114" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="4167:4185" ph="..." />
-            <marker date="1544777694196" expanded="true" signature="4308:4317" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/home.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
           <caret line="1" column="0" lean-forward="true" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding>
-            <element signature="e#326#345#0#HTML" expanded="true" />
+            <element signature="e#326#345#0#HTML" expanded="false" />
             <marker date="1544777664143" expanded="true" signature="9:23" ph="..." />
             <marker date="1544777664143" expanded="true" signature="35:50" ph="..." />
             <marker date="1544777664143" expanded="true" signature="62:71" ph="..." />
@@ -575,14 +984,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DepositController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="15" column="39" lean-forward="false" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/FinanceController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -615,28 +1016,164 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/inventory/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="8" column="29" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="12" selection-end-column="11" />
-          <folding>
-            <marker date="1544778061351" expanded="true" signature="9:23" ph="..." />
-            <marker date="1544778061351" expanded="true" signature="35:55" ph="..." />
-            <marker date="1544778061351" expanded="true" signature="67:76" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/finance/index.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="2" column="27" lean-forward="false" selection-start-line="2" selection-start-column="27" selection-end-line="2" selection-end-column="27" />
-          <caret line="8" column="28" lean-forward="false" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+        <state relative-caret-position="161">
+          <caret line="7" column="22" lean-forward="true" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="22" />
           <folding>
             <marker date="1544778295978" expanded="true" signature="9:23" ph="..." />
             <marker date="1544778295978" expanded="true" signature="35:54" ph="..." />
             <marker date="1544778295978" expanded="true" signature="66:75" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/assets/plugins/DataTables/Buttons-1.5.1/js/buttons.flash.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="15" column="30" lean-forward="false" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/assets/plugins/jquery/jquery-3.1.0.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/assets/plugins/DataTables/datatables.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/assets/plugins/DataTables/datatables.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/assets/js/core.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/assets/css/ipro.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="92">
+          <caret line="4" column="6" lean-forward="true" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/inventory/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3302">
+          <caret line="75" column="22" lean-forward="true" selection-start-line="75" selection-start-column="22" selection-end-line="75" selection-end-column="22" />
+          <folding>
+            <marker date="1544792686836" expanded="true" signature="9:23" ph="..." />
+            <marker date="1544792686836" expanded="true" signature="35:55" ph="..." />
+            <marker date="1544792686836" expanded="true" signature="64:69" ph="..." />
+            <marker date="1544792686836" expanded="true" signature="89:144" ph="..." />
+            <marker date="1544792686836" expanded="true" signature="183:187" ph="..." />
+            <marker date="1544792686836" expanded="true" signature="208:216" ph="..." />
+            <marker date="1544792686836" expanded="true" signature="208:262" ph="..." />
+            <marker date="1544792686836" expanded="true" signature="391:398" ph="..." />
+            <marker date="1544792686836" expanded="true" signature="629:637" ph="..." />
+            <marker date="1544792686836" expanded="true" signature="1555:1564" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/layouts/main.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="102" column="33" lean-forward="true" selection-start-line="102" selection-start-column="33" selection-end-line="102" selection-end-column="33" />
+          <folding>
+            <marker date="1544794452485" expanded="true" signature="30:73" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="249:263" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="287:294" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="356:376" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="610:632" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="672:702" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="759:776" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="848:865" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="947:964" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="1027:1032" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="1045:1052" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="1214:1244" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="1939:1959" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="2366:2381" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="2467:2482" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="2532:2546" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="3239:3275" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="3328:3338" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="3411:3456" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="3509:3528" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="3606:3645" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="3698:3711" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="3794:3840" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="3893:3913" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="3991:4038" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="4091:4112" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="4190:4234" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="4287:4305" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="4381:4425" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="4478:4496" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="4577:4621" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="4674:4692" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="4820:4829" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="5110:5127" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="5379:5396" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="5460:5477" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="5517:5534" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="5599:5616" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="5674:5678" ph="..." />
+            <marker date="1544794452485" expanded="true" signature="5687:5695" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/layouts/app.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="47">
+          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding>
+            <marker date="1544750727728" expanded="true" signature="30:73" ph="..." />
+            <marker date="1544750727728" expanded="true" signature="249:263" ph="..." />
+            <marker date="1544750727728" expanded="true" signature="282:313" ph="..." />
+            <marker date="1544750727728" expanded="true" signature="365:385" ph="..." />
+            <marker date="1544750727728" expanded="true" signature="619:641" ph="..." />
+            <marker date="1544750727728" expanded="true" signature="681:711" ph="..." />
+            <marker date="1544750727728" expanded="true" signature="791:822" ph="..." />
+            <marker date="1544750727728" expanded="true" signature="1236:1245" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="26" column="43" lean-forward="true" selection-start-line="26" selection-start-column="43" selection-end-line="26" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DepositController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="15" column="28" lean-forward="false" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
