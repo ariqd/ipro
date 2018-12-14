@@ -1,0 +1,17 @@
+.btn.btn-ipro {
+    background-color: #136332;
+    color: #fff;
+    border-radius: 0;
+}
+
+.btn.btn-ipro:hover {
+    background-color: #0C4020;
+}
+
+/*.nav-item {*/
+    /*margin: 0 10px;*/
+/*}*/
+
+/*.nav-item.active {*/
+    /*border-bottom: 2px solid #212121;*/
+/*}*/
