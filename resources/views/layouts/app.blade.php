@@ -7,7 +7,9 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    {{--<title>{{ config('app.name', 'Ipro') }}</title>--}}
+    <title>Ipro</title>
+    <link rel="icon" href="{{ asset('assets/img/logo.png') }}">
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

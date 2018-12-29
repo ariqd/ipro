@@ -1,17 +1,3 @@
-html {
-    position: relative;
-    min-height: 100%;
-}
-body {
-    margin-bottom: 100px; /* Margin bottom by footer height */
-}
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 100px; /* Set the fixed height of the footer here */
-    background-color: #7B7B7B;
-}
 .btn.btn-ipro {
     background-color: #136332;
     color: #fff;
@@ -20,4 +6,8 @@ body {
 
 .btn.btn-ipro:hover {
     background-color: #0C4020;
+}
+
+.nav-link.active i {
+    color: #8BC34A!important;
 }

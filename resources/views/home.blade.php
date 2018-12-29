@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.carbon')
 
 @section('title', 'Home')
 
@@ -9,7 +9,7 @@
             <h1 class="text-center">
                 Today's News
             </h1>
-            <img src="https://via.placeholder.com/600x300" alt="alt" style="width: 100%">
+            <img src="https://via.placeholder.com/500x300" alt="alt" style="width: 100%">
             <h3 class="mt-3">
                 Conwood Membangun Pabrik Baru Seluas 8,2 Hektar di Indonesia
             </h3>
