@@ -13,10 +13,6 @@
 
 @push('style')
     <style>
-        /*#table {*/
-        /*height: 100%!important;*/
-        /*}*/
-
         .fill {
             min-height: 100%;
             height: 100%;
@@ -147,11 +143,11 @@
                                 <thead>
                                 <tr>
                                     <th>Brand</th>
-                                    <th>Kode Produk</th>
-                                    <th>Nama Produk</th>
-                                    <th>Stok (pcs / pack)</th>
+                                    <th>Kode</th>
+                                    <th>Nama</th>
+                                    <th>Stok (pcs/pack)</th>
                                     {{--<th>Berat / pcs</th>--}}
-                                    <th>Harga / unit</th>
+                                    <th>Harga/unit</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -181,115 +177,15 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                @foreach($inventories as $inventory)
-                                    <tr>
-                                        <td>{{ $inventory->brand }}</td>
-                                        <td>{{ $inventory->code }}</td>
-                                        <td>{{ $inventory->name }}</td>
-                                        <td>{{ $inventory->stock }}</td>
-                                        <td>Rp {{ number_format($inventory->price) }}</td>
-                                        <td>
-                                            <a href="#modalForm" data-toggle="modal"
-                                               data-href="{{ url('inventories/'.$inventory->id) }}"
-                                               class="btn btn-dark btn-sm">Detail</a>
-                                            <a class="btn btn-primary btn-sm" title="Edit" href="#modalForm"
-                                               data-toggle="modal"
-                                               data-href="{{ url('inventories/'.$inventory->id.'/edit') }}">
-                                                Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm btnDelete">Hapus</a>
-                                            <form action="{{ url('inventories/'.$inventory->id) }}"
-                                                  method="post" class="formDelete"
-                                                  style="display: none;">
-                                                {!! csrf_field() !!}
-                                                {!! method_field('delete') !!}
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                @foreach($inventories as $inventory)
-                                    <tr>
-                                        <td>{{ $inventory->brand }}</td>
-                                        <td>{{ $inventory->code }}</td>
-                                        <td>{{ $inventory->name }}</td>
-                                        <td>{{ $inventory->stock }}</td>
-                                        <td>Rp {{ number_format($inventory->price) }}</td>
-                                        <td>
-                                            <a href="#modalForm" data-toggle="modal"
-                                               data-href="{{ url('inventories/'.$inventory->id) }}"
-                                               class="btn btn-dark btn-sm">Detail</a>
-                                            <a class="btn btn-primary btn-sm" title="Edit" href="#modalForm"
-                                               data-toggle="modal"
-                                               data-href="{{ url('inventories/'.$inventory->id.'/edit') }}">
-                                                Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm btnDelete">Hapus</a>
-                                            <form action="{{ url('inventories/'.$inventory->id) }}"
-                                                  method="post" class="formDelete"
-                                                  style="display: none;">
-                                                {!! csrf_field() !!}
-                                                {!! method_field('delete') !!}
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                @foreach($inventories as $inventory)
-                                    <tr>
-                                        <td>{{ $inventory->brand }}</td>
-                                        <td>{{ $inventory->code }}</td>
-                                        <td>{{ $inventory->name }}</td>
-                                        <td>{{ $inventory->stock }}</td>
-                                        <td>Rp {{ number_format($inventory->price) }}</td>
-                                        <td>
-                                            <a href="#modalForm" data-toggle="modal"
-                                               data-href="{{ url('inventories/'.$inventory->id) }}"
-                                               class="btn btn-dark btn-sm">Detail</a>
-                                            <a class="btn btn-primary btn-sm" title="Edit" href="#modalForm"
-                                               data-toggle="modal"
-                                               data-href="{{ url('inventories/'.$inventory->id.'/edit') }}">
-                                                Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm btnDelete">Hapus</a>
-                                            <form action="{{ url('inventories/'.$inventory->id) }}"
-                                                  method="post" class="formDelete"
-                                                  style="display: none;">
-                                                {!! csrf_field() !!}
-                                                {!! method_field('delete') !!}
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                @foreach($inventories as $inventory)
-                                    <tr>
-                                        <td>{{ $inventory->brand }}</td>
-                                        <td>{{ $inventory->code }}</td>
-                                        <td>{{ $inventory->name }}</td>
-                                        <td>{{ $inventory->stock }}</td>
-                                        <td>Rp {{ number_format($inventory->price) }}</td>
-                                        <td>
-                                            <a href="#modalForm" data-toggle="modal"
-                                               data-href="{{ url('inventories/'.$inventory->id) }}"
-                                               class="btn btn-dark btn-sm">Detail</a>
-                                            <a class="btn btn-primary btn-sm" title="Edit" href="#modalForm"
-                                               data-toggle="modal"
-                                               data-href="{{ url('inventories/'.$inventory->id.'/edit') }}">
-                                                Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm btnDelete">Hapus</a>
-                                            <form action="{{ url('inventories/'.$inventory->id) }}"
-                                                  method="post" class="formDelete"
-                                                  style="display: none;">
-                                                {!! csrf_field() !!}
-                                                {!! method_field('delete') !!}
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td>Footer</td>
-                                    <td>Footer</td>
-                                    <td>Footer</td>
-                                    <td>Footer</td>
-                                    <td>Footer</td>
-                                    <td>Footer</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
                                 </tr>
                                 </tfoot>
                             </table>
@@ -298,20 +194,5 @@
                 </div>
             </div>
         </div>
-        {{--<div class="fixed-bottom pt-5" style="z-index: 1">--}}
-        {{--<div class="content pb-0">--}}
-        {{--<div class="container">--}}
-        {{--<div class="row">--}}
-        {{--<div class="col-lg-12">--}}
-        {{--<div class="card">--}}
-        {{--<div class="card-body pb-0">--}}
-        {{--<h1>Hello</h1>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
-        {{--</div>--}}
     </div>
 @endsection
