@@ -133,7 +133,7 @@ class InventoryController extends Controller
      */
     public function destroy($id)
     {
-        $inventory = Inventory::destroy($id);
-        return redirect('/inventories')->with('info', $inventory->name.' berhasil dihapus!');
+        Inventory::destroy($id);
+        return redirect('/inventories')->with('info', 'Produk berhasil dihapus!');
     }
 }

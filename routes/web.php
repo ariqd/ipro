@@ -20,7 +20,7 @@ Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index');
 
     Route::resource('dashboard', 'DashboardController');
@@ -30,4 +30,4 @@ Auth::routes();
     Route::resource('finances', 'FinanceController');
     Route::resource('accounts', 'AccountController');
     Route::resource('deposits', 'DepositController');
-//});
+});

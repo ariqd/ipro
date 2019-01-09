@@ -18,6 +18,8 @@
             height: 100%;
         }
 
+        .dataTables_filter { display: none; }
+
         .dataTables_wrapper .myfilter .dataTables_filter {
             float: left
         }
@@ -31,7 +33,20 @@
 @push('script')
     <script>
         $(document).ready(function () {
-            $('.data-table').DataTable({
+            function addCommas(nStr) {
+                nStr += '';
+                x = nStr.split('.');
+                x1 = x[0];
+                x2 = x.length > 1 ? '.' + x[1] : '';
+                var rgx = /(\d+)(\d{3})/;
+                while (rgx.test(x1)) {
+                    x1 = x1.replace(rgx, '$1' + ',' + '$2');
+                }
+                return x1 + x2;
+            }
+
+            var table = $('.data-table').DataTable({
+                // searching: false,
                 responsive: true,
                 paging: false,
                 dom: "<'myfilter'f><'mylength'l>t",
@@ -40,7 +55,33 @@
                 pageResize: true
             });
 
-            // $('.data-table').css('height', '100%');
+            countStock();
+            countPrice();
+
+            function countStock() {
+                var sum = 0;
+                $('.stock').each(function () {
+                    sum += parseInt($(this).text());
+                });
+                $('.total_stock').text(sum);
+                console.log("total stock = " + sum);
+            }
+
+            function countPrice() {
+                var sum = 0;
+                $('.price').each(function () {
+                    sum += parseFloat($(this).text());
+                });
+                $('.total_price').text(addCommas(sum));
+                console.log("total price = " + sum);
+            }
+
+            $('#myInput').on('keyup', function () {
+                table.search(this.value).draw();
+                // $('#filterInfo').html('Currently applied global search: ' + table.search());
+                countPrice();
+                countStock();
+            });
 
             $('.btnDelete').on('click', function (e) {
                 e.preventDefault();
@@ -69,6 +110,7 @@
         <div class="d-flex justify-content-between">
             <div>
                 <h1>Inventory</h1>
+                <p id="filterInfo"></p>
             </div>
             <div>
                 <a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button"
@@ -138,6 +180,13 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="add-on"><i class="fa fa-search"></i></span>
+                            </div>
+                            <input type="text" id="myInput" class="form-control" placeholder="Search inventory..." aria-label="Search" aria-describedby="add-on">
+                            {{--<input type="text" id="myInput" class="form-control" placeholder="Search...">--}}
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-bordered data-table display pageResize">
                                 <thead>
@@ -146,9 +195,9 @@
                                     <th>Kode</th>
                                     <th>Nama</th>
                                     <th>Stok (pcs/pack)</th>
-                                    {{--<th>Berat / pcs</th>--}}
                                     <th>Harga/unit</th>
                                     <th></th>
+                                    <th class="d-none"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -157,8 +206,12 @@
                                         <td>{{ $inventory->brand }}</td>
                                         <td>{{ $inventory->code }}</td>
                                         <td>{{ $inventory->name }}</td>
-                                        <td>{{ $inventory->stock }}</td>
-                                        <td>Rp {{ number_format($inventory->price) }}</td>
+                                        <td class="stock">
+                                            {{ $inventory->stock }}
+                                        </td>
+                                        <td>
+                                            Rp {{ number_format($inventory->price) }}
+                                        </td>
                                         <td>
                                             <a href="#modalForm" data-toggle="modal"
                                                data-href="{{ url('inventories/'.$inventory->id) }}"
@@ -175,17 +228,25 @@
                                                 {!! method_field('delete') !!}
                                             </form>
                                         </td>
+                                        <td class="price d-none">
+                                            {{ $inventory->price }}
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
-                                    <td>-</td>
+                                    <td colspan="3">
+                                        <div class="float-right">
+                                            <b>Total:</b>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="total_stock"></span>
+                                    </td>
+                                    <td colspan="3">
+                                        Rp <span class="total_price"></span>
+                                    </td>
                                 </tr>
                                 </tfoot>
                             </table>
