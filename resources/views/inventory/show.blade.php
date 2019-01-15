@@ -21,6 +21,10 @@
                 <td>{{ $inventory->name }}</td>
             </tr>
             <tr>
+                <td><b>Cabang</b></td>
+                <td>{{ $inventory->branch }}</td>
+            </tr>
+            <tr>
                 <td><b>Stok</b></td>
                 <td>{{ $inventory->stock }} pcs</td>
             </tr>

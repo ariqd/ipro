@@ -28,6 +28,13 @@
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
+                <label for="branch" class="form-control-label">Cabang</label>
+                <input id="branch" class="form-control" name="branch" value="{{ @$isEdit ? $inventory->branch : '' }}">
+                {{--<small class="text-secondary">e.g. BDG, JKT, JKT2</small>--}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
                 <label for="stock" class="form-control-label">Stok</label>
                 <input type="number" id="stock" class="form-control" name="stock"
                        value="{{ @$isEdit ? $inventory->stock : '' }}">

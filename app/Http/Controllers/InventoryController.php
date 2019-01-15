@@ -11,13 +11,16 @@ class InventoryController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $d['inventories'] = Inventory::all();
-        return view('inventory.index', $d);
+        $d['brands'] = Inventory::distinct('brand')->pluck('brand');
+//        $d['inventories'] = Inventory::all();
+        $d['inventories'] = $this->getTable($request);
 
+        return view('inventory.index', $d);
     }
 
     /**
@@ -33,7 +36,7 @@ class InventoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -58,14 +61,14 @@ class InventoryController extends Controller
             return redirect('inventories')->withErrors($validate)->withInput($input);
         } else {
             $inventory = Inventory::create($input);
-            return redirect('inventories')->with('info', $inventory->name. ' berhasil ditambahkan!');
+            return redirect('inventories')->with('info', $inventory->name . ' berhasil ditambahkan!');
         }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -77,7 +80,7 @@ class InventoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -90,8 +93,8 @@ class InventoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -118,9 +121,9 @@ class InventoryController extends Controller
             $inventory = Inventory::find($id);
 
             if ($inventory->update($input)) {
-                return redirect('inventories')->with('info', $inventory->name. ' berhasil diubah!');
+                return redirect('inventories')->with('info', $inventory->name . ' berhasil diubah!');
             } else {
-                return redirect('inventories')->with('error', $inventory->name. ' gagal diubah!');
+                return redirect('inventories')->with('error', $inventory->name . ' gagal diubah!');
             }
         }
     }
@@ -128,12 +131,23 @@ class InventoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         Inventory::destroy($id);
         return redirect('/inventories')->with('info', 'Produk berhasil dihapus!');
+    }
+
+    public function getTable(Request $request)
+    {
+        $inventory = (new Inventory())->newQuery();
+
+        if ($request->has('brands')) {
+            $inventory->brands($request->brands);
+        }
+
+        return $inventory->get();
     }
 }

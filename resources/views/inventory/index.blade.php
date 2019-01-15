@@ -4,6 +4,7 @@
 
 @push('css')
     <link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet"/>
 @endpush
 
 @push('js')
@@ -18,7 +19,9 @@
             height: 100%;
         }
 
-        .dataTables_filter { display: none; }
+        .dataTables_filter {
+            display: none;
+        }
 
         .dataTables_wrapper .myfilter .dataTables_filter {
             float: left
@@ -46,16 +49,16 @@
             }
 
             var table = $('.data-table').DataTable({
-                // searching: false,
                 responsive: true,
                 paging: false,
                 dom: "<'myfilter'f><'mylength'l>t",
-                scrollY: '41vh',
+                scrollY: '320px',
                 scrollCollapse: true,
                 pageResize: true
             });
 
             countStock();
+            countWeight();
             countPrice();
 
             function countStock() {
@@ -64,7 +67,20 @@
                     sum += parseInt($(this).text());
                 });
                 $('.total_stock').text(sum);
-                console.log("total stock = " + sum);
+            }
+
+            function countWeight() {
+                var sum = 0;
+                $('.weight').each(function () {
+                    sum += parseFloat($(this).text());
+                });
+                var text = sum + ' kg';
+                if (sum > 1000) {
+                    sum = sum / 1000;
+                    var weight = Number(sum).toFixed(2);
+                    text = weight + ' ton';
+                }
+                $('.total_weight').text(text);
             }
 
             function countPrice() {
@@ -73,13 +89,13 @@
                     sum += parseFloat($(this).text());
                 });
                 $('.total_price').text(addCommas(sum));
-                console.log("total price = " + sum);
             }
 
             $('#myInput').on('keyup', function () {
                 table.search(this.value).draw();
-                // $('#filterInfo').html('Currently applied global search: ' + table.search());
+
                 countPrice();
+                countWeight();
                 countStock();
             });
 
@@ -107,70 +123,60 @@
 @section('content')
     @include('layouts.ajax')
     <div class="container fill">
-        <div class="d-flex justify-content-between">
-            <div>
-                <h1>Inventory</h1>
-                <p id="filterInfo"></p>
+        <div class="row">
+            <div class="col-lg-3">
+                <h2><b>Inventory</b></h2>
             </div>
-            <div>
-                <a class="btn btn-secondary" data-toggle="collapse" href="#collapseExample" role="button"
-                   aria-expanded="false" aria-controls="collapseExample">
-                    Filter <i class="fa fa-chevron-down"></i>
-                </a>
-                <a href="#modalForm" data-toggle="modal" data-href="{{ url('inventories/create') }}"
-                   class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Produk</a>
-                {{--<a href="{{ url('inventories/create') }}" class="btn btn-dark"><i class="fa fa-plus"></i> Tambah Produk</a>--}}
+            <div class="col-lg-9">
+                <div class="d-flex">
+                    <div class="input-group mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="add-on"><i class="fa fa-search"></i></span>
+                        </div>
+                        <input type="text" id="myInput" class="form-control" placeholder="Search inventory..."
+                               aria-label="Search" aria-describedby="add-on">
+                    </div>
+                    <a href="{{ url('inventories') }}" class="btn btn-dark mr-2"><i class="fa fa-refresh"></i> Clear
+                        Filters</a>
+                    <a class="btn btn-secondary mr-2" data-toggle="collapse" href="#collapseExample" role="button"
+                       aria-expanded="false" aria-controls="collapseExample">
+                        Filter <i class="fa fa-chevron-down"></i>
+                    </a>
+                    <a href="#modalForm" data-toggle="modal" data-href="{{ url('inventories/create') }}"
+                       class="btn btn-primary"><i class="fa fa-plus"></i> Add Product</a>
+                </div>
+
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="collapse" id="collapseExample">
                     <div class="card card-body">
-                        <form action="" method="get">
+                        <form action="{{ url('inventories') }}" id="find-table" method="get">
                             <div class="row">
-                                <label for="brands" class="col-lg-3 col-form-label"><h4>Brands</h4></label>
-                                <div class="col-lg-9">
-                                    <div class="row">
-                                        <div class="col-lg-4 mb-2">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                <label class="custom-control-label" for="customCheck1">Brand
-                                                    Name</label>
+                                <label for="brands" class="col-lg-2 col-form-label text-right"><h4>Brands</h4></label>
+                                <div class="col-lg-10">
+                                    <div class="row p-2">
+                                        @foreach($brands as $brand)
+                                            <div class="col-lg-2 mb-2">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" name="brands[]"
+                                                           class="custom-control-input check" id="{{ $brand }}"
+                                                           value="{{ $brand }}"
+                                                    >
+                                                    <label class="custom-control-label"
+                                                           for="{{ $brand }}">{{ $brand }}</label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4 mb-2">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">Brand
-                                                    Name</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 mb-2">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck3">
-                                                <label class="custom-control-label" for="customCheck3">Brand
-                                                    Name</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 mb-2">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck4">
-                                                <label class="custom-control-label" for="customCheck4">Brand
-                                                    Name</label>
-                                            </div>
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group mb-0">
-                                <button type="submit" class="btn btn-dark float-right">Submit</button>
+                                <button type="submit" class="btn btn-dark float-right" id="btnFilter">Apply Filter
+                                </button>
                             </div>
                         </form>
-                        {{--<div class="row">--}}
-                        {{--<div class="col-lg-3 border-right">--}}
-                        {{--<h4>Brands</h4>--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
                     </div>
                 </div>
             </div>
@@ -178,24 +184,18 @@
         @include('layouts.feedback')
         <div class="row" id="table">
             <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="add-on"><i class="fa fa-search"></i></span>
-                            </div>
-                            <input type="text" id="myInput" class="form-control" placeholder="Search inventory..." aria-label="Search" aria-describedby="add-on">
-                            {{--<input type="text" id="myInput" class="form-control" placeholder="Search...">--}}
-                        </div>
+                {{--<div class="card">--}}
+                    {{--<div class="card-body">--}}
                         <div class="table-responsive">
-                            <table class="table table-bordered data-table display pageResize">
+                            <table class="table table-bordered data-table display pageResize bg-light">
                                 <thead>
                                 <tr>
-                                    <th>Brand</th>
-                                    <th>Kode</th>
-                                    <th>Nama</th>
-                                    <th>Stok (pcs/pack)</th>
-                                    <th>Harga/unit</th>
+                                    <th class="brand">Brand</th>
+                                    <th class="kode">Kode</th>
+                                    <th class="nama">Nama</th>
+                                    <th class="stok">Stok</th>
+                                    <th class="berat">Berat (kg)</th>
+                                    <th class="harga">Harga/unit</th>
                                     <th></th>
                                     <th class="d-none"></th>
                                 </tr>
@@ -203,24 +203,29 @@
                                 <tbody>
                                 @foreach($inventories as $inventory)
                                     <tr>
-                                        <td>{{ $inventory->brand }}</td>
-                                        <td>{{ $inventory->code }}</td>
-                                        <td>{{ $inventory->name }}</td>
-                                        <td class="stock">
+                                        <td class="brand">{{ $inventory->brand }}</td>
+                                        <td class="kode">{{ $inventory->code }}</td>
+                                        <td class="nama">{{ $inventory->name }}</td>
+                                        <td class="stock stok">
                                             {{ $inventory->stock }}
                                         </td>
-                                        <td>
+                                        <td class="berat weight">
+                                            {{ $inventory->weight }}
+                                        </td>
+                                        <td class="harga">
                                             Rp {{ number_format($inventory->price) }}
                                         </td>
                                         <td>
                                             <a href="#modalForm" data-toggle="modal"
                                                data-href="{{ url('inventories/'.$inventory->id) }}"
                                                class="btn btn-dark btn-sm">Detail</a>
-                                            <a class="btn btn-primary btn-sm" title="Edit" href="#modalForm"
+                                            <a title="Edit" class="btn btn-primary btn-icon btn-sm" title="Edit"
+                                               href="#modalForm"
                                                data-toggle="modal"
                                                data-href="{{ url('inventories/'.$inventory->id.'/edit') }}">
-                                                Edit</a>
-                                            <a href="#" class="btn btn-danger btn-sm btnDelete">Hapus</a>
+                                                <i class="fa fa-edit"></i></a>
+                                            <a href="#" class="btn btn-danger btn-sm btn-icon btnDelete"><i
+                                                        class="fa fa-trash"></i></a>
                                             <form action="{{ url('inventories/'.$inventory->id) }}"
                                                   method="post" class="formDelete"
                                                   style="display: none;">
@@ -236,23 +241,30 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <td colspan="3">
-                                        <div class="float-right">
+                                    <td class="brand"></td>
+                                    <td class="kode"></td>
+                                    <td class="nama">
+                                        <span class="float-right">
                                             <b>Total:</b>
-                                        </div>
+                                        </span>
+                                    </td>
+                                    <td class="stok">
+                                        <span class="total_stock"></span> pcs
                                     </td>
                                     <td>
-                                        <span class="total_stock"></span>
+                                        <span class="total_weight"></span>
                                     </td>
-                                    <td colspan="3">
+                                    <td class="border-right harga">
                                         Rp <span class="total_price"></span>
                                     </td>
+                                    <td></td>
+                                    <td class="d-none"></td>
                                 </tr>
                                 </tfoot>
                             </table>
                         </div>
-                    </div>
-                </div>
+                    {{--</div>--}}
+                {{--</div>--}}
             </div>
         </div>
     </div>

@@ -26,7 +26,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('dashboard', 'DashboardController');
     Route::resource('pos', 'PosController');
     Route::resource('catalogues', 'CatalogueController');
+
+    Route::get('inventories/get','InventoryController@getJsonTable');
     Route::resource('inventories', 'InventoryController');
+
     Route::resource('finances', 'FinanceController');
     Route::resource('accounts', 'AccountController');
     Route::resource('deposits', 'DepositController');
