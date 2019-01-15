@@ -14,7 +14,7 @@ class AlterInventoriesTableAddBranch extends Migration
     public function up()
     {
         Schema::table('inventories', function (Blueprint $table) {
-            $table->string('branch')->after('name');
+            $table->string('branch')->after('name')->nullable();
         });
     }
 

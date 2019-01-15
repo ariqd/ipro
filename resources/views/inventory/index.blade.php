@@ -145,7 +145,6 @@
                     <a href="#modalForm" data-toggle="modal" data-href="{{ url('inventories/create') }}"
                        class="btn btn-primary"><i class="fa fa-plus"></i> Add Product</a>
                 </div>
-
             </div>
         </div>
         <div class="row">
