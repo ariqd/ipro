@@ -10,6 +10,11 @@ class Inventory extends Model
 
     public function scopeBrands($query, Array $brands)
     {
-        return $query->whereIn('brand', $brands);
+        return $query->orWhereIn('brand', $brands);
+    }
+
+    public function scopeBranches($query, Array $branches)
+    {
+        return $query->orWhereIn('branch', $branches);
     }
 }

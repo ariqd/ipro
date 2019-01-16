@@ -83,6 +83,12 @@
                 <li class="nav-item {{ (Request::is('inventories*')) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('/inventories') }}">Inventory</a>
                 </li>
+                <li class="nav-item {{ (Request::is('purchase-order*')) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('/purchase-order') }}">Purchase Order</a>
+                </li>
+                <li class="nav-item {{ (Request::is('sales-order*')) ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ url('/sales-order') }}">Sales Order</a>
+                </li>
                 <li class="nav-item {{ (Request::is('finances*')) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('/finances') }}">Finance</a>
                 </li>

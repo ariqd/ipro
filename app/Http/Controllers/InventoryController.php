@@ -17,7 +17,8 @@ class InventoryController extends Controller
     public function index(Request $request)
     {
         $d['brands'] = Inventory::distinct('brand')->pluck('brand');
-//        $d['inventories'] = Inventory::all();
+        $d['branches'] = Inventory::distinct('branch')->pluck('branch');
+
         $d['inventories'] = $this->getTable($request);
 
         return view('inventory.index', $d);
@@ -146,6 +147,10 @@ class InventoryController extends Controller
 
         if ($request->has('brands')) {
             $inventory->brands($request->brands);
+        }
+
+        if ($request->has('branches')) {
+            $inventory->branches($request->branches);
         }
 
         return $inventory->get();

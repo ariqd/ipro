@@ -127,6 +127,20 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href="{{ url('purchase-orders') }}"
+                           class="nav-link {{ (Request::is('purchase-orders*')) ? 'active' : '' }}">
+                            <i class="fa fa-arrow-up"></i> Purchase Order
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ url('sales-orders') }}"
+                           class="nav-link {{ (Request::is('sales-orders*')) ? 'active' : '' }}">
+                            <i class="fa fa-arrow-down"></i> Sales Order
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{{ url('finances') }}"
                            class="nav-link {{ (Request::is('finances*')) ? 'active' : '' }}">
                             <i class="fa fa-line-chart"></i> Finance
