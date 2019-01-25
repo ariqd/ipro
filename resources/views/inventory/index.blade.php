@@ -242,22 +242,22 @@
                                 </td>
                                 <td>
                                     {{--<div class="d-flex">--}}
-                                        <a href="#modalForm" data-toggle="modal"
-                                           data-href="{{ url('inventories/'.$inventory->id) }}"
-                                           class="btn btn-dark btn-block">
-                                            <i class="fa fa-eye"></i> Detail</a>
-                                        <a title="Edit" class="btn btn-info btn-block" title="Edit"
-                                           href="#modalForm"
-                                           data-toggle="modal"
-                                           data-href="{{ url('inventories/'.$inventory->id.'/edit') }}">
-                                            <i class="fa fa-edit"></i> Edit</a>
-                                        <a href="#" class="btn btn-danger btnDelete btn-block"><i
-                                                    class="fa fa-trash"></i> Delete</a>
-                                        <form action="{{ url('inventories/'.$inventory->id) }}"
-                                              method="post" class="formDelete d-none">
-                                            {!! csrf_field() !!}
-                                            {!! method_field('delete') !!}
-                                        </form>
+                                    <a href="#modalForm" data-toggle="modal"
+                                       data-href="{{ url('inventories/'.$inventory->id) }}"
+                                       class="btn btn-dark btn-block btn-sm">
+                                        <i class="fa fa-eye"></i> Detail</a>
+                                    <a title="Edit" class="btn btn-info btn-block btn-sm" title="Edit"
+                                       href="#modalForm"
+                                       data-toggle="modal"
+                                       data-href="{{ url('inventories/'.$inventory->id.'/edit') }}">
+                                        <i class="fa fa-edit"></i> Edit</a>
+                                    <a href="#" class="btn btn-danger btnDelete btn-block btn-sm"><i
+                                                class="fa fa-trash"></i> Delete</a>
+                                    <form action="{{ url('inventories/'.$inventory->id) }}"
+                                          method="post" class="formDelete d-none">
+                                        {!! csrf_field() !!}
+                                        {!! method_field('delete') !!}
+                                    </form>
                                     {{--</div>--}}
                                 </td>
                                 <td class="price d-none">
