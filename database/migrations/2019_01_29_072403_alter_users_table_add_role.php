@@ -15,7 +15,7 @@ class AlterUsersTableAddRole extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('role')->after('email')->nullable();
-            $table->unsignedInteger('branch_id')->after('role');
+            $table->unsignedInteger('branch_id')->after('role')->nullable();
 
 //            $table->foreign('branch_id')
 //                ->references('id')->on('branches')
