@@ -124,11 +124,10 @@
     @include('layouts.ajax')
     <div class="container fill">
         <div class="row">
-            <div class="col-lg-3">
-                <h2><b>Inventory</b></h2>
-                {{--<p>Showing</p>--}}
+            <div class="col-lg-4">
+                <h2>Master Data Inventory</h2>
             </div>
-            <div class="col-lg-9">
+            <div class="col-lg-8">
                 <div class="d-flex">
                     <div class="input-group mr-2">
                         <div class="input-group-prepend">
@@ -137,17 +136,53 @@
                         <input type="text" id="myInput" class="form-control" placeholder="Search inventory..."
                                aria-label="Search" aria-describedby="add-on">
                     </div>
-                    <a href="{{ url('inventories') }}" class="btn btn-dark mr-2"><i class="fa fa-refresh"></i> Hapus
-                        Filter</a>
-                    <a class="btn btn-secondary mr-2" data-toggle="collapse" href="#collapseExample" role="button"
-                       aria-expanded="false" aria-controls="collapseExample">
-                        Filter <i class="fa fa-chevron-down"></i>
-                    </a>
-                    <a href="#modalForm" data-toggle="modal" data-href="{{ url('inventories/create') }}"
-                       class="btn btn-primary"><i class="fa fa-plus"></i> Tambah Produk</a>
+                    @if($filtered)
+                        <a href="{{ url('inventories') }}" class="btn btn-dark mr-2"><i class="fa fa-refresh"></i> Clear
+                            Filter</a>
+                    @else
+                        <a class="btn btn-secondary mr-2" data-toggle="collapse" href="#collapseExample" role="button"
+                           aria-expanded="false" aria-controls="collapseExample">
+                            Filter <i class="fa fa-chevron-down"></i>
+                        </a>
+                    @endif
+                    {{--<a href="{{ url('inventories/restock') }}"--}}
+                       {{--class="btn btn-success mr-2"><i class="fa fa-plus-circle"></i> Restock</a>--}}
+                    {{--<a href="#modalForm" data-toggle="modal" data-href="{{ url('inventories/restock') }}"--}}
+                       {{--class="btn btn-success mr-2"><i class="fa fa-plus-circle"></i> Restock</a>--}}
+                    @if(Gate::allows('isAdmin'))
+                        <a href="#modalForm" data-toggle="modal" data-href="{{ url('inventories/create') }}"
+                           class="btn btn-primary"><i class="fa fa-plus"></i> Add New</a>
+                    @endif
                 </div>
             </div>
         </div>
+        @if(!empty(Request::all()))
+            <div class="row">
+                <div class="col-lg-12">
+                    <b>Filters:</b> <br>
+                    @if(Request::has("brands"))
+                        Brands:
+                        @php
+                            $brands = Request::get("brands");
+                        @endphp
+                        @foreach($brands as $key => $brand)
+                            {{ $brand }}{{ $key == (count($brands) - 1) ? '' : ',' }}
+                        @endforeach
+                        <br>
+                    @endif
+
+                    @if(Request::has("branches"))
+                        Branches:
+                        @php
+                            $branches = Request::get("branches");
+                        @endphp
+                        @foreach($branches as $key => $branch)
+                            {{ $branch }}{{ $key == (count($branches) - 1) ? '' : ',' }}
+                        @endforeach
+                    @endif
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-lg-12">
                 <div class="collapse" id="collapseExample">
@@ -157,12 +192,13 @@
                                 <label for="brands" class="col-lg-2 col-form-label text-right"><h4>Brands :</h4></label>
                                 <div class="col-lg-10">
                                     <div class="row p-2">
-                                        @foreach($brands as $brand)
+                                        @foreach($brands as $key => $brand)
                                             <div class="col-lg-2 mb-2">
                                                 <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" name="brands[]"
                                                            class="custom-control-input check" id="{{ $brand }}"
                                                            value="{{ $brand }}"
+                                                            {{--                                                           {{ $brand == Request::get("brands")[$i] ? 'checked' : '' }}--}}
                                                     >
                                                     <label class="custom-control-label"
                                                            for="{{ $brand }}">{{ $brand }}</label>
@@ -213,7 +249,7 @@
                             <th class="brand">Brand</th>
                             <th class="kode">Kode</th>
                             <th>Cabang</th>
-                            <th class="stok">Stok</th>
+                            <th class="stok">Stok (per Batang)</th>
                             <th class="stok">Booking Stok</th>
                             <th class="berat">Berat (kg)</th>
                             <th class="harga">Harga/unit</th>
@@ -227,11 +263,12 @@
                                 <td class="nama">{{ $inventory->name }}</td>
                                 <td class="brand">{{ $inventory->brand }}</td>
                                 <td class="kode">{{ $inventory->code }}</td>
-                                <td class="cabang">{{ $inventory->branch }}</td>
+                                {{--<td class="cabang">{{ $inventory->branch }}</td>--}}
+                                <td class="cabang">Bandung</td>
                                 <td class="stock stok">
                                     {{ $inventory->stock }}
                                 </td>
-                                <td class="booking stock">
+                                <td class="booking">
                                     10
                                 </td>
                                 <td class="berat weight">
@@ -243,21 +280,27 @@
                                 <td>
                                     {{--<div class="d-flex">--}}
                                     <a href="#modalForm" data-toggle="modal"
-                                       data-href="{{ url('inventories/'.$inventory->id) }}"
-                                       class="btn btn-dark btn-block btn-sm">
-                                        <i class="fa fa-eye"></i> Detail</a>
-                                    <a title="Edit" class="btn btn-info btn-block btn-sm" title="Edit"
-                                       href="#modalForm"
-                                       data-toggle="modal"
-                                       data-href="{{ url('inventories/'.$inventory->id.'/edit') }}">
-                                        <i class="fa fa-edit"></i> Edit</a>
-                                    <a href="#" class="btn btn-danger btnDelete btn-block btn-sm"><i
-                                                class="fa fa-trash"></i> Delete</a>
-                                    <form action="{{ url('inventories/'.$inventory->id) }}"
-                                          method="post" class="formDelete d-none">
-                                        {!! csrf_field() !!}
-                                        {!! method_field('delete') !!}
-                                    </form>
+                                       data-href="{{ url('inventories/'.$inventory->id.'/restock') }}"
+                                       class="btn btn-success btn-block btn-sm">
+                                        <i class="fa fa-plus"></i> Restock</a>
+                                    @if(Gate::allows('isAdmin'))
+                                        <a href="#modalForm" data-toggle="modal"
+                                           data-href="{{ url('inventories/'.$inventory->id) }}"
+                                           class="btn btn-dark btn-block btn-sm">
+                                            <i class="fa fa-eye"></i> Detail</a>
+                                        <a title="Edit" class="btn btn-info btn-block btn-sm" title="Edit"
+                                           href="#modalForm"
+                                           data-toggle="modal"
+                                           data-href="{{ url('inventories/'.$inventory->id.'/edit') }}">
+                                            <i class="fa fa-edit"></i> Edit</a>
+                                        <a href="#" class="btn btn-danger btnDelete btn-block btn-sm"><i
+                                                    class="fa fa-trash"></i> Delete</a>
+                                        <form action="{{ url('inventories/'.$inventory->id) }}"
+                                              method="post" class="formDelete d-none">
+                                            {!! csrf_field() !!}
+                                            {!! method_field('delete') !!}
+                                        </form>
+                                    @endif
                                     {{--</div>--}}
                                 </td>
                                 <td class="price d-none">
@@ -279,7 +322,7 @@
                             <td class="stok">
                                 <span class="total_stock"></span> pcs
                             </td>
-                            <td>10</td>
+                            <td></td>
                             <td>
                                 <span class="total_weight"></span>
                             </td>

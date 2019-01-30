@@ -83,6 +83,35 @@
                 <li class="nav-item {{ (Request::is('inventories*')) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('/inventories') }}">Inventory</a>
                 </li>
+
+                <li class="nav-item nav-dropdown">
+                    <a href="#" class="nav-link nav-dropdown-toggle">
+                        <i class="fas fa-file-invoice-dollar"></i> Point of Sales <i class="fa fa-caret-left"></i>
+                    </a>
+
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a href="{{ url('pos/console') }}"
+                               class="nav-link {{ Request::is('pos/console*') ? 'active' : '' }}">
+                                <i class="fas fa-shopping-cart"></i> POS Console
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ url('pos/history') }}"
+                               class="nav-link {{ Request::is('pos/history*') ? 'active' : '' }}">
+                                <i class="fas fa-book"></i> History
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ url('pos/report') }}"
+                               class="nav-link {{ Request::is('pos/report*') ? 'active' : '' }}">
+                                <i class="fas fa-file"></i> Sales Report
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item {{ (Request::is('purchase-order*')) ? 'active' : '' }}">
                     <a class="nav-link" href="{{ url('/purchase-order') }}">Purchase Order</a>
                 </li>

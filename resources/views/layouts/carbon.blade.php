@@ -48,11 +48,13 @@
             {{--</li>--}}
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-toggle="dropdown"
+                   aria-haspopup="true"
                    aria-expanded="false">
                     {{--<img src="./imgs/avatar-1.png" class="avatar avatar-sm" alt="logo">--}}
                     <img src="{{ asset('carbon/imgs/avatar-1.png') }}" class="avatar avatar-sm" alt="logo">
-                    <span class="small ml-1 d-md-down-none">{{ Auth::user()->name }}</span>
+                    <span class="small ml-1 d-md-down-none"></span>
+                    {{ auth()->user()->name }}
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
@@ -119,11 +121,51 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{ url('inventories') }}"
-                           class="nav-link {{ (Request::is('inventories*')) ? 'active' : '' }}">
-                            <i class="fa fa-list"></i> Inventory
+                    {{--<li class="nav-item">--}}
+                    {{--<a href="{{ url('inventories') }}"--}}
+                    {{--class="nav-link {{ (Request::is('inventories*')) ? 'active' : '' }}">--}}
+                    {{--<i class="fa fa-list"></i> Inventory--}}
+                    {{--</a>--}}
+                    {{--</li>--}}
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="fa fa-asterisk"></i> Master Data <i class="fa fa-caret-left"></i>
                         </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="{{ url('inventories') }}"
+                                   class="nav-link {{ (Request::is('inventories*')) ? 'active' : '' }}">
+                                    <i class="fa fa-list"></i> Inventory
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                {{--<a href="{{ url('pos/history') }}"--}}
+                                <a href="#"
+                                   class="nav-link {{ Request::is('pos/history*') ? 'active' : '' }}">
+                                    <i class="fa fa-shopping-bag"></i> Customer
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                {{--<a href="{{ url('pos/report') }}"--}}
+                                <a href="#"
+                                   class="nav-link {{ Request::is('pos/report*') ? 'active' : '' }}">
+                                    <i class="fa fa-truck"></i> Vendor
+                                </a>
+                            </li>
+
+                            @if(Gate::allows('isAdmin'))
+                                <li class="nav-item">
+                                    <a href="{{ url('accounts') }}"
+                                       class="nav-link {{ Request::is('accounts*') ? 'active' : '' }}">
+                                        <i class="fa fa-users"></i> Users
+                                    </a>
+                                </li>
+                            @endif
+                        </ul>
                     </li>
 
                     <li class="nav-item">
@@ -147,12 +189,12 @@
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a href="{{ url('accounts') }}"
-                           class="nav-link {{ (Request::is('accounts*')) ? 'active' : '' }}">
-                            <i class="fa fa-users"></i> User Accounts
-                        </a>
-                    </li>
+                    {{--<li class="nav-item">--}}
+                    {{--<a href="{{ url('accounts') }}"--}}
+                    {{--class="nav-link {{ (Request::is('accounts*')) ? 'active' : '' }}">--}}
+                    {{--<i class="fa fa-users"></i> User Accounts--}}
+                    {{--</a>--}}
+                    {{--</li>--}}
 
                     <li class="nav-item">
                         <a href="{{ url('deposits') }}"

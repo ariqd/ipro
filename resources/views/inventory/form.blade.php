@@ -35,7 +35,7 @@
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="stock" class="form-control-label">Stok</label>
+                <label for="stock" class="form-control-label">Stok (per batang)</label>
                 <input type="number" id="stock" class="form-control" name="stock"
                        value="{{ @$isEdit ? $inventory->stock : '' }}">
             </div>

@@ -32,7 +32,9 @@
 </div>
 <div class="loading">
     <i class="fa fa-refresh fa-spin fa-2x fa-fw"></i><br/>
-    <span>Loading</span>
+    <span>Loading</span><br>
+    <span>Page not loaded?</span>
+    <a href="#" onClick="window.location.reload()">Refresh page</a>
 </div>
 
 @push('js')

@@ -25,7 +25,7 @@
                 <td>{{ $inventory->branch }}</td>
             </tr>
             <tr>
-                <td><b>Stok</b></td>
+                <td><b>Stok (per Batang)</b></td>
                 <td>{{ $inventory->stock }} pcs</td>
             </tr>
             <tr>

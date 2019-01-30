@@ -21,6 +21,11 @@ class InventoryController extends Controller
 
         $d['inventories'] = $this->getTable($request);
 
+        $d['filtered'] = FALSE;
+        if (!empty($request->all())) {
+            $d['filtered'] = TRUE;
+        }
+
         return view('inventory.index', $d);
     }
 
@@ -154,5 +159,27 @@ class InventoryController extends Controller
         }
 
         return $inventory->get();
+    }
+
+    public function restock($id)
+    {
+//        $d['brands'] = Inventory::distinct('brand')->pluck('brand');
+        $d['inventory'] = Inventory::find($id);
+        return view('inventory.restock', $d);
+    }
+
+    public function restockSingular(Request $request, $id)
+    {
+//        return view('inventory.restock', $d);
+//        dd($request->all());
+        $input = $request->all();
+        unset($input['_token']);
+
+        $inventory = Inventory::find($id);
+
+        $inventory->stock = $inventory->stock + $input['add'];
+
+        $inventory->save();
+        return redirect('/inventories')->with('info', 'Stok ' . $inventory->name . ' berhasil ditambahkan ' . $input['add'] . ' pcs menjadi ' . $inventory->stock .'pcs per batang');
     }
 }
