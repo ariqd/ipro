@@ -869,7 +869,7 @@
         }
 
         /*
-        * Enables the Youtube videos API so we can control their flow if necessary.
+        * Enables the Youtube videos API sale we can control their flow if necessary.
         */
         function enableYoutubeAPI(){
             container.find('iframe[src*="youtube.com/embed/"]').each(function(){
@@ -1575,7 +1575,7 @@
         */
         function continuousVerticalFixSectionOrder (v) {
             // If continuousVertical is in effect (and autoScrolling would also be in effect then),
-            // finish moving the elements around so the direct navigation will function more simply
+            // finish moving the elements around sale the direct navigation will function more simply
             if (!v.wrapAroundElements || !v.wrapAroundElements.length) {
                 return;
             }
@@ -2103,7 +2103,7 @@
         }
 
         /**
-        * Checks if the site needs to get responsive and disables autoScrolling if so.
+        * Checks if the site needs to get responsive and disables autoScrolling if sale.
         * A class `fp-responsive` is added to the plugin's container in case the user wants to use it for his own responsive CSS.
         */
         function responsive(){
@@ -2209,7 +2209,7 @@
 
         /**
         * Checks if the element needs scrollbar and if the user wants to apply it.
-        * If so it creates it.
+        * If sale it creates it.
         *
         * @param {Object} element   jQuery object of the section or slide
         */
@@ -2439,7 +2439,7 @@
             if(options.recordHistory){
                 location.hash = url;
             }else{
-                //Mobile Chrome doesn't work the normal way, so... lets use HTML5 for phones :)
+                //Mobile Chrome doesn't work the normal way, sale... lets use HTML5 for phones :)
                 if(isTouchDevice || isTouch){
                     window.history.replaceState(undefined, undefined, '#' + url);
                 }else{

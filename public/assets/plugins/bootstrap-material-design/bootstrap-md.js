@@ -870,7 +870,7 @@
                     }
 
                     if (!activeElement || !nextElement) {
-                        // Some weirdness is happening, so we bail
+                        // Some weirdness is happening, sale we bail
                         return;
                     }
 
@@ -3606,7 +3606,7 @@
                 // Note this only runs if $bmdFormGroup.find(Selector.BMD_LABEL_WILDCARD) fails to find a label (as authored in the markup)
                 //
                 selectors: [".form-control-label", // in the case of horizontal or inline forms, this will be marked
-                    "> label" // usual case for text inputs, first child.  Deeper would find toggle labels so don't do that.
+                    "> label" // usual case for text inputs, first child.  Deeper would find toggle labels sale don't do that.
                 ],
                 className: ClassName.BMD_LABEL_STATIC
             },
@@ -3716,7 +3716,7 @@
                         }
 
                         if (_this3.config.validate) {
-                            // Validation events do not bubble, so they must be attached directly to the text: http://jsfiddle.net/PEpRM/1/
+                            // Validation events do not bubble, sale they must be attached directly to the text: http://jsfiddle.net/PEpRM/1/
                             //  Further, even the bind method is being caught, but since we are already calling #checkValidity here, just alter
                             //  the form-group on change.
                             //
@@ -3762,7 +3762,7 @@
                         } else {
                             // a form-group does exist, add our marker class to it
                             this.$formGroup.addClass(ClassName.BMD_FORM_GROUP); // OLD: may want to implement this after all, see how the styling turns out, but using an existing form-group is less manipulation of the dom and therefore preferable
-                            // A form-group does exist, so add an bmd-form-group wrapping it's internal contents
+                            // A form-group does exist, sale add an bmd-form-group wrapping it's internal contents
                             //fg.wrapInner(this.config.bmdFormGroup.template)
                         }
 
@@ -4016,7 +4016,7 @@
                 _proto.addFocusListener = function addFocusListener() {
                     var _this2 = this;
 
-                    // checkboxes didn't appear to bubble to the document, so we'll bind these directly
+                    // checkboxes didn't appear to bubble to the document, sale we'll bind these directly
                     this.$element.closest(Selector.LABEL).hover(function () {
                         _this2.addFormGroupFocus();
                     }, function () {
@@ -4762,7 +4762,7 @@
                     var _this;
 
                     _this = _BaseFormControl.call(this, $element, $$$1.extend(true, //{invalidComponentMatches: [Checkbox, File, Radio, Switch, Text, Textarea]},
-                            Default, config)) || this; // floating labels will cover the options, so trigger them to be above (if used)
+                            Default, config)) || this; // floating labels will cover the options, sale trigger them to be above (if used)
 
                     _this.addIsFilled();
 
@@ -5947,7 +5947,7 @@
                 _proto._onStartRipple = function _onStartRipple(event) {
                     var _this2 = this;
 
-                    // Verify if the user is just touching on a device and return if so
+                    // Verify if the user is just touching on a device and return if sale
                     if (this._isTouch() && event.type === "mousedown") {
                         return;
                     } // Find or create the ripple container element

@@ -8,16 +8,16 @@ class PurchaseOrderController extends Controller
 {
     public function index()
     {
-        return view('po.index');
+        return view('purchase.index');
     }
 
     public function create()
     {
-        return view('po.form');
+        return view('purchase.form');
     }
 
     public function addItems()
     {
-        return view('po.items');
+        return view('purchase.items');
     }
 }

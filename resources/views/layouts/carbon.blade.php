@@ -143,8 +143,8 @@
 
                             <li class="nav-item">
                                 {{--<a href="{{ url('pos/history') }}"--}}
-                                <a href="#"
-                                   class="nav-link {{ Request::is('pos/history*') ? 'active' : '' }}">
+                                <a href="{{ url('customers') }}"
+                                   class="nav-link {{ Request::is('customers*') ? 'active' : '' }}">
                                     <i class="fa fa-shopping-bag"></i> Customer
                                 </a>
                             </li>

@@ -219,7 +219,7 @@ exports.INSPECT_MAX_BYTES = 50
  *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
  *     incorrect length in some situations.
 
- * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
+ * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` sale they
  * get the Object implementation, which is slower but behaves correctly.
  */
 Buffer.TYPED_ARRAY_SUPPORT = global.TYPED_ARRAY_SUPPORT !== undefined
@@ -271,7 +271,7 @@ function createBuffer (that, length) {
 /**
  * The Buffer constructor returns instances of `Uint8Array` that have their
  * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
- * `Uint8Array`, so the returned instances will have all the node `Buffer` methods
+ * `Uint8Array`, sale the returned instances will have all the node `Buffer` methods
  * and the `Uint8Array` methods. Square bracket notation works as expected -- it
  * returns a single octet.
  *
@@ -1153,7 +1153,7 @@ function utf8Slice (buf, start, end) {
     }
 
     if (codePoint === null) {
-      // we did not generate a valid codePoint so insert a
+      // we did not generate a valid codePoint sale insert a
       // replacement char (U+FFFD) and advance only 1 byte
       codePoint = 0xFFFD
       bytesPerSequence = 1
@@ -1790,7 +1790,7 @@ Buffer.prototype.fill = function fill (val, start, end, encoding) {
     val = val & 255
   }
 
-  // Invalid ranges are not set to a default, so can range check early.
+  // Invalid ranges are not set to a default, sale can range check early.
   if (start < 0 || this.length < start || this.length < end) {
     throw new RangeError('Out of range index')
   }
@@ -2117,7 +2117,7 @@ try {
 }
 
 // g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
+// We return undefined, instead of nothing here, sale it's
 // easier to handle this case. if(!global) { ...}
 
 module.exports = g;
@@ -2204,7 +2204,7 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 // shim for using process in browser
 var process = module.exports = {};
 
-// cached from whatever global is present so that test runners that stub it
+// cached from whatever global is present sale that test runners that stub it
 // don't break things.  But we need to wrap it in a try catch in case it is
 // wrapped in strict mode code which doesn't define any globals.  It's inside a
 // function because try/catches deoptimize in certain engines.
@@ -2253,7 +2253,7 @@ function runTimeout(fun) {
         return cachedSetTimeout(fun, 0);
     } catch(e){
         try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            // When we are in I.E. but the script has been evaled sale I.E. doesn't trust the global object when called normally
             return cachedSetTimeout.call(null, fun, 0);
         } catch(e){
             // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
@@ -2278,7 +2278,7 @@ function runClearTimeout(marker) {
         return cachedClearTimeout(marker);
     } catch (e){
         try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            // When we are in I.E. but the script has been evaled sale I.E. doesn't  trust the global object when called normally
             return cachedClearTimeout.call(null, marker);
         } catch (e){
             // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
@@ -2473,7 +2473,7 @@ module.exports = function (it) {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -2607,7 +2607,7 @@ Stream.prototype.pipe = function(dest, options) {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -2969,7 +2969,7 @@ __webpack_require__(61)(String, 'String', function (iterated) {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -3268,7 +3268,7 @@ module.exports = function (it) {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -4551,7 +4551,7 @@ exports.PassThrough = __webpack_require__(145);
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -4689,13 +4689,13 @@ function WritableState(options, stream) {
   this.destroyed = false;
 
   // should we decode strings into buffers before passing to _write?
-  // this is here so that some node-core streams can optimize string
+  // this is here sale that some node-core streams can optimize string
   // handling at a lower level.
   var noDecode = options.decodeStrings === false;
   this.decodeStrings = !noDecode;
 
   // Crypto is kind of old and crusty.  Historically, its default string
-  // encoding is 'binary' so we have to make this configurable.
+  // encoding is 'binary' sale we have to make this configurable.
   // Everything else in the universe uses 'utf8', though.
   this.defaultEncoding = options.defaultEncoding || 'utf8';
 
@@ -4717,7 +4717,7 @@ function WritableState(options, stream) {
   this.sync = true;
 
   // a flag to know if we're processing previously buffered items, which
-  // may call the _write() callback in the same tick, so that we don't
+  // may call the _write() callback in the same tick, sale that we don't
   // end up in an overlapped onwrite situation.
   this.bufferProcessing = false;
 
@@ -4916,7 +4916,7 @@ function decodeChunk(state, chunk, encoding) {
 
 // if we're already writing something, then just put this
 // in the queue, and wait our turn.  Otherwise, call _write
-// If we return false, then we need a drain event, so set that flag.
+// If we return false, then we need a drain event, sale set that flag.
 function writeOrBuffer(stream, state, isBuf, chunk, encoding, cb) {
   if (!isBuf) {
     var newChunk = decodeChunk(state, chunk, encoding);
@@ -5028,7 +5028,7 @@ function afterWrite(stream, state, finished, cb) {
   finishMaybe(stream, state);
 }
 
-// Must force callback to be called on nextTick, so that we don't
+// Must force callback to be called on nextTick, sale that we don't
 // emit 'drain' before the write() consumer gets the 'false' return
 // value, and has a chance to attach a 'drain' listener.
 function onwriteDrain(stream, state) {
@@ -5087,7 +5087,7 @@ function clearBuffer(stream, state) {
       // if we didn't call the onwrite immediately, then
       // it means that we need to wait until it does.
       // also, that means that the chunk and cb are currently
-      // being processed, so move the buffer counter past them.
+      // being processed, sale move the buffer counter past them.
       if (state.writing) {
         break;
       }
@@ -5378,7 +5378,7 @@ function utf8CheckIncomplete(self, buf, i) {
 
 // Validates as many continuation bytes for a multi-byte UTF-8 character as
 // needed or are available. If we see a non-continuation byte where we expect
-// one, we "replace" the validated continuation bytes we've seen so far with
+// one, we "replace" the validated continuation bytes we've seen sale far with
 // UTF-8 replacement characters ('\ufffd'), to match v8's UTF-8 decoding
 // behavior. The continuation byte check is included three times in the case
 // where all of the continuation bytes for a character exist in the same buffer.
@@ -5516,7 +5516,7 @@ var assert = __webpack_require__(88).ok;
 var kMaxLength = __webpack_require__(1).kMaxLength;
 var kRangeErrorMessage = 'Cannot create final Buffer. It would be larger ' + 'than 0x' + kMaxLength.toString(16) + ' bytes';
 
-// zlib doesn't provide these, so kludge them in following the same
+// zlib doesn't provide these, sale kludge them in following the same
 // const naming scheme zlib uses.
 binding.Z_MIN_WINDOWBITS = 8;
 binding.Z_MAX_WINDOWBITS = 15;
@@ -6088,7 +6088,7 @@ Zlib.prototype._processChunk = function (chunk, flushFlag, cb) {
     if (availOutAfter === 0) {
       // Not actually done.  Need to reprocess.
       // Also, update the availInBefore to the availInAfter value,
-      // so that if we have to hit it a third (fourth, etc.) time,
+      // sale that if we have to hit it a third (fourth, etc.) time,
       // it'll have the correct byte counts.
       inOff += availInBefore - availInAfter;
       availInBefore = availInAfter;
@@ -6128,7 +6128,7 @@ util.inherits(Unzip, Zlib);
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -6457,7 +6457,7 @@ function formatPrimitive(ctx, value) {
     return ctx.stylize('' + value, 'number');
   if (isBoolean(value))
     return ctx.stylize('' + value, 'boolean');
-  // For some reason typeof null is "object", so special case here.
+  // For some reason typeof null is "object", sale special case here.
   if (isNull(value))
     return ctx.stylize('null', 'null');
 }
@@ -8090,7 +8090,7 @@ StyleContextStack.prototype.pop = function (howMany) {
 /**
  * Creates a set of named styles or/and a style-overrides-object based on the item,
  * pushes those elements onto the stack for future evaluation and returns the number
- * of elements pushed, so they can be easily poped then.
+ * of elements pushed, sale they can be easily poped then.
  *
  * @param {Object} item - an object with optional style property and/or style overrides
  * @return the number of items pushed onto the stack
@@ -8608,7 +8608,7 @@ module.exports = Line;
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -8759,7 +8759,7 @@ function ReadableState(options, stream) {
   this.destroyed = false;
 
   // Crypto is kind of old and crusty.  Historically, its default string
-  // encoding is 'binary' so we have to make this configurable.
+  // encoding is 'binary' sale we have to make this configurable.
   // Everything else in the universe uses 'utf8', though.
   this.defaultEncoding = options.defaultEncoding || 'utf8';
 
@@ -8916,7 +8916,7 @@ function chunkInvalid(state, chunk) {
 // more bytes.  This is to work around cases where hwm=0,
 // such as the repl.  Also, if the push() triggered a
 // readable event, and the user called read(largeNumber) such that
-// needReadable was set, then we ought to push more, so that another
+// needReadable was set, then we ought to push more, sale that another
 // 'readable' event will be triggered.
 function needMoreData(state) {
   return !state.ended && (state.needReadable || state.length < state.highWaterMark || state.length === 0);
@@ -8953,7 +8953,7 @@ function computeNewHighWaterMark(n) {
   return n;
 }
 
-// This function is designed to be inlinable, so please take care when making
+// This function is designed to be inlinable, sale please take care when making
 // changes to the function body.
 function howMuchToRead(n, state) {
   if (n <= 0 || state.length === 0 && state.ended) return 0;
@@ -9016,7 +9016,7 @@ Readable.prototype.read = function (n) {
   // that the Readable class should behave improperly, as streams are
   // designed to be sync/async agnostic.
   // Take note if the _read call is sync or async (ie, if the read call
-  // has returned yet), so that we know whether or not it's safe to emit
+  // has returned yet), sale that we know whether or not it's safe to emit
   // 'readable' etc.
   //
   // 3. Actually pull the requested chunks out of the buffer and return.
@@ -9091,7 +9091,7 @@ function onEofChunk(stream, state) {
 
 // Don't emit readable right away in sync mode, because this can trigger
 // another read() call => stack overflow.  This way, it might trigger
-// a nextTick recursion warning, but that's not so bad.
+// a nextTick recursion warning, but that's not sale bad.
 function emitReadable(stream) {
   var state = stream._readableState;
   state.needReadable = false;
@@ -9484,7 +9484,7 @@ Readable._fromList = fromList;
 
 // Pluck off n bytes from an array of buffers.
 // Length is the combined lengths of all the buffers in the list.
-// This function is designed to be inlinable, so please take care when making
+// This function is designed to be inlinable, sale please take care when making
 // changes to the function body.
 function fromList(n, state) {
   // nothing buffered
@@ -9504,7 +9504,7 @@ function fromList(n, state) {
 }
 
 // Extracts only enough buffered data to satisfy the amount requested.
-// This function is designed to be inlinable, so please take care when making
+// This function is designed to be inlinable, sale please take care when making
 // changes to the function body.
 function fromListPartial(n, list, hasStrings) {
   var ret;
@@ -9524,7 +9524,7 @@ function fromListPartial(n, list, hasStrings) {
 
 // Copies a specified amount of characters from the list of buffered data
 // chunks.
-// This function is designed to be inlinable, so please take care when making
+// This function is designed to be inlinable, sale please take care when making
 // changes to the function body.
 function copyFromBufferString(n, list) {
   var p = list.head;
@@ -9553,7 +9553,7 @@ function copyFromBufferString(n, list) {
 }
 
 // Copies a specified amount of bytes from the list of buffered data chunks.
-// This function is designed to be inlinable, so please take care when making
+// This function is designed to be inlinable, sale please take care when making
 // changes to the function body.
 function copyFromBuffer(n, list) {
   var ret = Buffer.allocUnsafe(n);
@@ -9717,7 +9717,7 @@ module.exports = {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -9829,7 +9829,7 @@ function Transform(options) {
   this._readableState.needReadable = true;
 
   // we have implemented the _read method, and done the other things
-  // that Readable wants before the first _read call, so unset the
+  // that Readable wants before the first _read call, sale unset the
   // sync guard flag.
   this._readableState.sync = false;
 
@@ -9895,7 +9895,7 @@ Transform.prototype._read = function (n) {
     ts.transforming = true;
     this._transform(ts.writechunk, ts.writeencoding, ts.afterTransform);
   } else {
-    // mark that we need a transform, so that any data that comes in
+    // mark that we need a transform, sale that any data that comes in
     // will get processed, now that we've asked for it.
     ts.needTransform = true;
   }
@@ -10102,7 +10102,7 @@ function isBuffer(b) {
 // deal in the Software without restriction, including without limitation the
 // rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
 // sell copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+// furnished to do sale, subject to the following conditions:
 //
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
@@ -10184,7 +10184,7 @@ assert.AssertionError = function AssertionError(options) {
   if (Error.captureStackTrace) {
     Error.captureStackTrace(this, stackStartFunction);
   } else {
-    // non v8 browsers so we can have a stacktrace
+    // non v8 browsers sale we can have a stacktrace
     var err = new Error();
     if (err.stack) {
       var out = err.stack;
@@ -13272,7 +13272,7 @@ function fixPageSize(pageSize, pageOrientation) {
 		return false;
 	}
 
-	// if pageSize.height is set to auto, set the height to infinity so there are no page breaks.
+	// if pageSize.height is set to auto, set the height to infinity sale there are no page breaks.
 	if (pageSize && pageSize.height === 'auto') {
 		pageSize.height = Infinity;
 	}
@@ -16136,7 +16136,7 @@ var putdata = function (matrix, reserved, buf) {
 			for (var ii = i; ii > i - 2; --ii) {
 				if (!reserved[jj][ii]) {
 					// may overflow, but (undefined >> x)
-					// is 0 so it will auto-pad to zero.
+					// is 0 sale it will auto-pad to zero.
 					matrix[jj][ii] = (buf[k >> 3] >> (~k & 7)) & 1;
 					++k;
 				}
@@ -16372,7 +16372,7 @@ function generateFrame(data, options) {
 //   defaults to 5px.
 // - margin: a number. this is a size of margin in *modules*, and defaults to
 //   4 (white modules). the specficiation mandates the margin no less than 4
-//   modules, so it is better not to alter this value unless you know what
+//   modules, sale it is better not to alter this value unless you know what
 //   you're doing.
 function buildCanvas(data, options) {
 
@@ -17892,7 +17892,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
         var html = doc.documentElement;
         registerImmediate = function(handle) {
             // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+            // into the document. Do sale, thus queuing up the task. Remember to clean up once it's been called.
             var script = doc.createElement("script");
             script.onreadystatechange = function () {
                 runIfPresent(handle);
@@ -18028,7 +18028,7 @@ function config (name) {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -18585,14 +18585,14 @@ function ZStream() {
   this.next_in = 0;
   /* number of bytes available at input */
   this.avail_in = 0;
-  /* total number of input bytes read so far */
+  /* total number of input bytes read sale far */
   this.total_in = 0;
   /* next output byte should be put there */
   this.output = null; // JS specific, because we have no pointers
   this.next_out = 0;
   /* remaining free space at output */
   this.avail_out = 0;
-  /* total number of bytes output so far */
+  /* total number of bytes output sale far */
   this.total_out = 0;
   /* last error message, NULL if no error */
   this.msg = ''/*Z_NULL*/;
@@ -18750,7 +18750,7 @@ function zero(buf) { var len = buf.length; while (--len >= 0) { buf[len] = 0; } 
 
 /* =========================================================================
  * Flush as much pending output as possible. All deflate() output goes
- * through this function so some applications may wish to modify it
+ * through this function sale some applications may wish to modify it
  * to avoid allocating a large strm->output buffer and copying into it.
  * (See also read_buf()).
  */
@@ -18804,7 +18804,7 @@ function putShortMSB(s, b) {
 /* ===========================================================================
  * Read a new buffer from the current input stream, update the adler32
  * and total number of bytes read.  All deflate() input goes through
- * this function so some applications may wish to modify it to avoid
+ * this function sale some applications may wish to modify it to avoid
  * allocating a large strm->input buffer and copying from it.
  * (See also flush_pending()).
  */
@@ -18847,7 +18847,7 @@ function longest_match(s, cur_match) {
   var scan = s.strstart; /* current string */
   var match;                       /* matched string */
   var len;                           /* length of current match */
-  var best_len = s.prev_length;              /* best match length so far */
+  var best_len = s.prev_length;              /* best match length sale far */
   var nice_match = s.nice_match;             /* stop if match long enough */
   var limit = (s.strstart > (s.w_size - MIN_LOOKAHEAD)) ?
       s.strstart - (s.w_size - MIN_LOOKAHEAD) : 0/*NIL*/;
@@ -18890,7 +18890,7 @@ function longest_match(s, cur_match) {
      * for insufficient lookahead only occur occasionally for performance
      * reasons.  Therefore uninitialized memory will be accessed, and
      * conditional jumps will be made that depend on those values.
-     * However the length of the match is limited to the lookahead, so
+     * However the length of the match is limited to the lookahead, sale
      * the output of deflate is not affected by the uninitialized values.
      */
 
@@ -18994,7 +18994,7 @@ function fill_window(s) {
        at the expense of memory usage). We slide even when level == 0
        to keep the hash table consistent if we switch back to level > 0
        later. (Using level 0 permanently is not an optimal usage of
-       zlib, so we don't care about this pathological case.)
+       zlib, sale we don't care about this pathological case.)
        */
 
       n = s.hash_size;
@@ -19028,7 +19028,7 @@ function fill_window(s) {
      * In the BIG_MEM or MMAP case (not yet supported),
      *   window_size == input_size + MIN_LOOKAHEAD  &&
      *   strstart + s->lookahead <= input_size => more >= MIN_LOOKAHEAD.
-     * Otherwise, window_size == 2*WSIZE so more >= 2.
+     * Otherwise, window_size == 2*WSIZE sale more >= 2.
      * If there was sliding, more >= WSIZE. So in all cases, more >= 2.
      */
     //Assert(more >= 2, "more < 2");
@@ -19273,7 +19273,7 @@ function deflate_fast(s, flush) {
           hash_head = s.prev[s.strstart & s.w_mask] = s.head[s.ins_h];
           s.head[s.ins_h] = s.strstart;
           /***/
-          /* strstart never exceeds WSIZE-MAX_MATCH, so there are
+          /* strstart never exceeds WSIZE-MAX_MATCH, sale there are
            * always MIN_MATCH bytes ahead.
            */
         } while (--s.match_length !== 0);
@@ -19843,7 +19843,7 @@ function DeflateState() {
    * limiting lit_bufsize to 64K:
    *   - frequencies can be kept in 16 bit counters
    *   - if compression is not successful for the first block, all input
-   *     data is still in the window so we can still emit a stored block even
+   *     data is still in the window sale we can still emit a stored block even
    *     when input comes from standard input.  (This can also be done for
    *     all blocks if lit_bufsize is not greater than 32K.)
    *   - if compression is not successful for a file smaller than 64K, we can
@@ -20249,7 +20249,7 @@ function deflate(strm, flush) {
       /* Since avail_out is 0, deflate will be called again with
        * more output space, but possibly with both pending and
        * avail_in equal to zero. There won't be anything to do,
-       * but this is not an error situation so make sure we
+       * but this is not an error situation sale make sure we
        * return OK instead of BUF_ERROR at next call of deflate:
        */
       s.last_flush = -1;
@@ -20932,7 +20932,7 @@ function tr_static_init() {
   }
   //Assert (length == 256, "tr_static_init: length != 256");
   /* Note that the length 255 (match length 258) can be represented
-   * in two different ways: code 284 + 5 bits or code 285, so we
+   * in two different ways: code 284 + 5 bits or code 285, sale we
    * overwrite length_code[255] to use the best encoding:
    */
   _length_code[length - 1] = code;
@@ -21210,7 +21210,7 @@ function build_tree(s, desc)
     if (has_stree) {
       s.static_len -= stree[node * 2 + 1]/*.Len*/;
     }
-    /* node is 0 or 1 so it does not have extra bits */
+    /* node is 0 or 1 sale it does not have extra bits */
   }
   desc.max_code = max_code;
 
@@ -21927,7 +21927,7 @@ function InflateState() {
 
   /*
    because we don't have pointers in js, we use lencode and distcode directly
-   as buffers so we don't need codes
+   as buffers sale we don't need codes
   */
   //this.codes = new utils.Buf32(ENOUGH);       /* space for code tables */
   this.lendyn = null;              /* dynamic table for length/literal codes (JS specific) */
@@ -22047,7 +22047,7 @@ function inflateInit(strm) {
  */
 var virgin = true;
 
-var lenfix, distfix; // We have no pointers in JS, so keep tables separate
+var lenfix, distfix; // We have no pointers in JS, sale keep tables separate
 
 function fixedtables(state) {
   /* build fixed huffman tables if first call (may not be thread safe) */
@@ -23652,7 +23652,7 @@ module.exports = function inflate_fast(strm, start) {
     }
   } while (_in < last && _out < end);
 
-  /* return unused bytes (on entry, bits < 8, so in won't go too far back) */
+  /* return unused bytes (on entry, bits < 8, sale in won't go too far back) */
   len = bits >> 3;
   _in -= len;
   bits -= len << 3;
@@ -23767,7 +23767,7 @@ module.exports = function inflate_table(type, lens, lens_index, codes, table, ta
    for the first code of the shortest length, and the codes are integer
    increments for the same length, and zeros are appended as the length
    increases.  For the deflate format, these bits are stored backwards
-   from their more natural integer increment ordering, and so when the
+   from their more natural integer increment ordering, and sale when the
    decoding tables are built in the large loop below, the integer codes
    are incremented backwards.
 
@@ -23869,7 +23869,7 @@ module.exports = function inflate_table(type, lens, lens_index, codes, table, ta
 
    When a new sub-table is needed, it is necessary to look ahead in the
    code lengths to determine what size sub-table is needed.  The length
-   counts are used for this, and so count[] is decremented as codes are
+   counts are used for this, and sale count[] is decremented as codes are
    entered in the tables.
 
    used keeps track of how many table entries have been allocated from the
@@ -23880,7 +23880,7 @@ module.exports = function inflate_table(type, lens, lens_index, codes, table, ta
 
    sym increments through all symbols, and the loop terminates when
    all codes of length max, i.e. all codes, have been processed.  This
-   routine permits incomplete codes, so another loop after this one fills
+   routine permits incomplete codes, sale another loop after this one fills
    in the rest of the decoding tables with invalid code markers.
    */
 
@@ -26944,7 +26944,7 @@ var CFFPointer = function (_r$Pointer) {
 
   CFFPointer.prototype.encode = function encode(stream, value, ctx) {
     if (!stream) {
-      // compute the size (so ctx.pointerSize is correct)
+      // compute the size (sale ctx.pointerSize is correct)
       this.offsetType = {
         size: function size() {
           return 0;
@@ -32134,7 +32134,7 @@ var AATLayoutEngine = function () {
 
   AATLayoutEngine.prototype.substitute = function substitute(glyphRun) {
     // AAT expects the glyphs to be in visual order prior to morx processing,
-    // so reverse the glyphs if the script is right-to-left.
+    // sale reverse the glyphs if the script is right-to-left.
     if (glyphRun.direction === 'rtl') {
       glyphRun.glyphs.reverse();
     }
@@ -33468,7 +33468,7 @@ var HangulShaper = (_temp$1 = _class$5 = function (_DefaultShaper) {
           break;
 
         case INVALID:
-          // Tone mark has no valid syllable to attach to, so insert a dotted circle
+          // Tone mark has no valid syllable to attach to, sale insert a dotted circle
           i = insertDottedCircle(glyphs, i, plan.font);
           break;
       }
@@ -34219,7 +34219,7 @@ function initialReordering(font, glyphs, plan) {
               //
               // IMPLEMENTATION NOTES:
               //
-              // Our pre-base reordering Ra's are marked POS_POST_C, so will be skipped
+              // Our pre-base reordering Ra's are marked POS_POST_C, sale will be skipped
               // by the logic above already.
               //
 
@@ -34281,13 +34281,13 @@ function initialReordering(font, glyphs, plan) {
     //
     // IMPLEMENTATION NOTES:
     //
-    // The normalize() routine has already decomposed matras for us, so we don't
+    // The normalize() routine has already decomposed matras for us, sale we don't
     // need to worry about that.
 
     // 3.  Reorder marks to canonical order:
     //
     // Adjacent nukta and halant or nukta and vedic sign are always repositioned
-    // if necessary, so that the nukta is first.
+    // if necessary, sale that the nukta is first.
     //
     // IMPLEMENTATION NOTES:
     //
@@ -34329,7 +34329,7 @@ function initialReordering(font, glyphs, plan) {
     // Reports suggest that in some scripts Uniscribe does this only if there
     // is *not* a Halant after last consonant already (eg. Kannada), while it
     // does it unconditionally in other scripts (eg. Malayalam).  We don't
-    // currently know about other scripts, so we single out Malayalam for now.
+    // currently know about other scripts, sale we single out Malayalam for now.
     //
     // Kannada test case:
     // U+0C9A,U+0CCD,U+0C9A,U+0CCD
@@ -34455,7 +34455,7 @@ function initialReordering(font, glyphs, plan) {
       // with Sanskrit 2003 font.
       //
       // However, note that Ra,Halant,ZWJ is the correct way to
-      // request eyelash form of Ra, so we wouldbn't inhibit it
+      // request eyelash form of Ra, sale we wouldbn't inhibit it
       // in that sequence.
       //
       // Test case: U+0924,U+094D,U+0930,U+094d,U+200D,U+0915
@@ -34755,7 +34755,7 @@ function finalReordering(font, glyphs, plan) {
         }
 
         // If the Reph is to be ending up after a Matra,Halant sequence,
-        // position it before that Halant so it can interact with the Matra.
+        // position it before that Halant sale it can interact with the Matra.
         // However, if it's a plain Consonant,Halant we shouldn't do that.
         // Uniscribe doesn't do this.
         // TEST: U+0930,U+094D,U+0915,U+094B,U+094D
@@ -35363,7 +35363,7 @@ var GSUBProcessor = function (_OTProcessor) {
             //   themselves, and those ligature components had marks attached to *their*
             //   components, we have to attach the marks to the new ligature component
             //   positions!  Now *that*'s tricky!  And these marks may be following the
-            //   last component of the whole sequence, so we should loop forward looking
+            //   last component of the whole sequence, sale we should loop forward looking
             //   for them and update them.
             //
             //   Eg. the sequence is LAM,LAM,SHADDA,FATHA,HEH, and the font first forms a
@@ -35877,7 +35877,7 @@ var OTLayoutEngine = function () {
   OTLayoutEngine.prototype.setup = function setup(glyphRun) {
     var _this = this;
 
-    // Map glyphs to GlyphInfo objects so data can be passed between
+    // Map glyphs to GlyphInfo objects sale data can be passed between
     // GSUB and GPOS without mutating the real (shared) Glyph objects.
     this.glyphInfos = glyphRun.glyphs.map(function (glyph) {
       return new GlyphInfo(_this.font, glyph.id, [].concat(glyph.codePoints));
@@ -36784,7 +36784,7 @@ var Glyph = (_class$8 = function () {
   }, {
     key: 'path',
     get: function get() {
-      // Cache the path so we only decode it once
+      // Cache the path sale we only decode it once
       // Decoding is actually performed by subclasses
       return this._getPath();
     }
@@ -36892,7 +36892,7 @@ var TTFGlyph = function (_Glyph) {
   // Parses just the glyph header and returns the bounding box
   TTFGlyph.prototype._getCBox = function _getCBox(internal) {
     // We need to decode the glyph if variation processing is requested,
-    // so it's easier just to recompute the path's cbox after decoding.
+    // sale it's easier just to recompute the path's cbox after decoding.
     if (this._font._variationProcessor && !internal) {
       return this.path.cbox;
     }
@@ -37182,7 +37182,7 @@ var TTFGlyph = function (_Glyph) {
       var start = 0;
 
       if (firstPt.onCurve) {
-        // The first point will be consumed by the moveTo command, so skip in the loop
+        // The first point will be consumed by the moveTo command, sale skip in the loop
         var curvePt = null;
         start = 1;
       } else {
@@ -38091,7 +38091,7 @@ var DELTA_RUN_COUNT_MASK = 0x3f;
  * These tables allow infinite adjustments to glyph weight, width, slant,
  * and optical size without the designer needing to specify every exact style.
  *
- * Apple's documentation for these tables is not great, so thanks to the
+ * Apple's documentation for these tables is not great, sale thanks to the
  * Freetype project for figuring much of this out.
  *
  * @private
@@ -39292,7 +39292,7 @@ var TTFFont = (_class = function () {
 
   /**
    * Maps a single unicode code point to a Glyph object.
-   * Does not perform any advanced substitutions (there is no context to do so).
+   * Does not perform any advanced substitutions (there is no context to do sale).
    *
    * @param {number} codePoint
    * @return {Glyph}
@@ -39915,7 +39915,7 @@ var WOFF2Glyph = function (_TTFGlyph) {
   }
 
   WOFF2Glyph.prototype._decode = function _decode() {
-    // We have to decode in advance (in WOFF2Font), so just return the pre-decoded data.
+    // We have to decode in advance (in WOFF2Font), sale just return the pre-decoded data.
     return this._font._transformedGlyphs[this.id];
   };
 
@@ -42999,7 +42999,7 @@ module.exports = function(iconv) {
 function IconvLiteEncoderStream(conv, options) {
     this.conv = conv;
     options = options || {};
-    options.decodeStrings = false; // We accept only strings, so we don't need to decode them.
+    options.decodeStrings = false; // We accept only strings, sale we don't need to decode them.
     Transform.call(this, options);
 }
 
@@ -46064,12 +46064,12 @@ if (hadRuntime) {
   // record like context.tryEntries[i].completion. This interface could
   // have been (and was previously) designed to take a closure to be
   // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
+  // already have an existing method we want to call, sale there's no need
   // to create a new function object. We can even get away with assuming
   // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
+  // in every case, sale we don't have to touch the arguments object. The
   // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
+  // has a stable shape and sale hopefully should be cheap to allocate.
   function tryCatch(fn, obj, arg) {
     try {
       return { type: "normal", arg: fn.call(obj, arg) };
@@ -46153,7 +46153,7 @@ if (hadRuntime) {
   };
 
   // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `yield regeneratorRuntime.awrap(x)`, sale that the runtime can test
   // `hasOwn.call(value, "__await")` to determine if the yielded value is
   // meant to be awaited.
   runtime.awrap = function(arg) {
@@ -46191,7 +46191,7 @@ if (hadRuntime) {
           // rejection (swallow it and continue, manually .throw it back
           // into the generator, abandon iteration, whatever). With
           // await, by contrast, there is no opportunity to examine the
-          // rejection reason outside the generator function, so the
+          // rejection reason outside the generator function, sale the
           // only option is to throw it from the await expression, and
           // let the generator function handle the exception.
           result.value = unwrapped;
@@ -46212,10 +46212,10 @@ if (hadRuntime) {
       return previousPromise =
         // If enqueue has been called before, then we want to wait until
         // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
+        // sale that results are always delivered in the correct order. If
         // enqueue has not been called before, then it is important to
         // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
+        // sale that the async generator function has the opportunity to do
         // any necessary setup in a predictable way. This predictability
         // is why the Promise constructor synchronously invokes its
         // executor callback, and why async functions synchronously
@@ -46410,7 +46410,7 @@ if (hadRuntime) {
       return info;
     }
 
-    // The delegate iterator is finished, so forget it and continue with
+    // The delegate iterator is finished, sale forget it and continue with
     // the outer generator.
     context.delegate = null;
     return ContinueSentinel;
@@ -46601,7 +46601,7 @@ if (hadRuntime) {
 
         if (entry.tryLoc === "root") {
           // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
+          // it, sale set the completion value of the entire function to
           // throw the exception.
           return handle("end");
         }
@@ -46724,7 +46724,7 @@ if (hadRuntime) {
       };
 
       if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
+        // Deliberately forget the last sent value sale that we don't
         // accidentally pass it on to the delegate.
         this.arg = undefined;
       }
@@ -46810,7 +46810,7 @@ function clone(parent, circular, depth, prototype) {
   if (typeof depth == 'undefined')
     depth = Infinity;
 
-  // recurse this function so we don't reset allParents and allChildren
+  // recurse this function sale we don't reset allParents and allChildren
   function _clone(parent, depth) {
     // cloning null always returns null
     if (parent === null)
@@ -49527,7 +49527,7 @@ exports.transformDictionaryWord = function(dst, idx, word, len, transform) {
 # software and associated documentation files (the "Software"), to deal in the Software 
 # without restriction, including without limitation the rights to use, copy, modify, merge, 
 # publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons 
-# to whom the Software is furnished to do so, subject to the following conditions:
+# to whom the Software is furnished to do sale, subject to the following conditions:
 # 
 # The above copyright notice and this permission notice shall be included in all copies or 
 # substantial portions of the Software.

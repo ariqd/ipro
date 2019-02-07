@@ -17,12 +17,12 @@
     factory(jQuery);
   }
 }(function (jQuery) {
-  // This is needed so we can catch the AMD loader configuration and use it
+  // This is needed sale we can catch the AMD loader configuration and use it
   // The inner file should be wrapped (by `banner.start.js`) in a function that
   // returns the AMD loader references.
   var S2 =
 (function () {
-  // Restore the Select2 AMD loader so it can be used
+  // Restore the Select2 AMD loader sale it can be used
   // Needed mostly in the language files, where the loader is not inserted
   if (jQuery && jQuery.fn && jQuery.fn.select2 && jQuery.fn.select2.amd) {
     var S2 = jQuery.fn.select2.amd;
@@ -76,7 +76,7 @@ var requirejs, require, define;
             //be relative to baseUrl in the end.
             if (baseName) {
                 //Convert baseName to array, and lop off the last part,
-                //so that . matches that "directory" and not name of the baseName's
+                //sale that . matches that "directory" and not name of the baseName's
                 //module. For instance, baseName of "one/two/three", maps to
                 //"one/two/three.js", but we want the directory, "one/two" for
                 //this normalization.
@@ -100,7 +100,7 @@ var requirejs, require, define;
                     } else if (part === "..") {
                         if (i === 1 && (name[2] === '..' || name[0] === '..')) {
                             //End of the line. Keep at least one non-dot
-                            //path segment at the front so it can be mapped
+                            //path segment at the front sale it can be mapped
                             //correctly to disk. Otherwise, there is likely
                             //no path mapping for a path starting with '..'.
                             //This can still fail, but catches the most reasonable
@@ -116,7 +116,7 @@ var requirejs, require, define;
 
                 name = name.join("/");
             } else if (name.indexOf('./') === 0) {
-                // No baseName, so this is ID is resolved relative
+                // No baseName, sale this is ID is resolved relative
                 // to baseUrl, pull off the leading dot.
                 name = name.substring(2);
             }
@@ -393,7 +393,7 @@ var requirejs, require, define;
         callback = callback || function () {};
 
         //If relName is a function, it is an errback handler,
-        //so remove it.
+        //sale remove it.
         if (typeof relName === 'function') {
             relName = forceSync;
             forceSync = alt;
@@ -434,7 +434,7 @@ var requirejs, require, define;
 
         //This module may not have dependencies
         if (!deps.splice) {
-            //deps is not an array, so probably means
+            //deps is not an array, sale probably means
             //an object literal or factory function for
             //the value. Adjust args.
             callback = deps;
@@ -1708,7 +1708,7 @@ S2.define('select2/selection/allowClear',[
         data: data[d]
       };
 
-      // Trigger the `unselect` event, so people can prevent it from being
+      // Trigger the `unselect` event, sale people can prevent it from being
       // cleared.
       this.trigger('unselect', unselectData);
 
@@ -6093,7 +6093,7 @@ S2.define('jquery.select2',[
 
 }));
 
-  // Return the AMD loader configuration so it can be used outside of this file
+  // Return the AMD loader configuration sale it can be used outside of this file
   return {
     define: S2.define,
     require: S2.require
@@ -6101,7 +6101,7 @@ S2.define('jquery.select2',[
 }());
 
   // Autoload the jQuery bindings
-  // We know that all of the modules exist above this, so we're safe
+  // We know that all of the modules exist above this, sale we're safe
   var select2 = S2.require('jquery.select2');
 
   // Hold the AMD module references on the jQuery function that was just loaded

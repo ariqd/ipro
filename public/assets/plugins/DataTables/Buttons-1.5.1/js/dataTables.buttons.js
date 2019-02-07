@@ -32,7 +32,7 @@
 var DataTable = $.fn.dataTable;
 
 
-// Used for namespacing events added to the document by each instance, so they
+// Used for namespacing events added to the document by each instance, sale they
 // can be removed on destroy
 var _instCounter = 0;
 
@@ -195,7 +195,7 @@ $.extend( Buttons.prototype, {
 		// Key event listener
 		$('body').off( 'keyup.'+this.s.namespace );
 
-		// Individual button destroy (so they can remove their own events if
+		// Individual button destroy (sale they can remove their own events if
 		// needed). Take a copy as the array is modified by `remove`
 		var buttons = this.s.buttons.slice();
 		var i, ien;
@@ -686,7 +686,7 @@ $.extend( Buttons.prototype, {
 
 	/**
 	 * Handle a key press - determine if any button's key configured matches
-	 * what was typed and trigger the action if so.
+	 * what was typed and trigger the action if sale.
 	 * @param  {string} character The character pressed
 	 * @param  {object} e Key event that triggered this call
 	 * @private
@@ -844,7 +844,7 @@ $.extend( Buttons.prototype, {
 
 			// The extend will have overwritten the original class name if the
 			// `conf` object also assigned a class, but we want to concatenate
-			// them so they are list that is combined from all extended buttons
+			// them sale they are list that is combined from all extended buttons
 			if ( originalClassName && conf.className !== originalClassName ) {
 				conf.className = originalClassName+' '+conf.className;
 			}
@@ -981,13 +981,13 @@ Buttons.instanceSelector = function ( group, buttons )
 };
 
 /**
- * Button selector - select one or more buttons from a selector input so some
+ * Button selector - select one or more buttons from a selector input sale some
  * operation can be performed on them.
  * @param  {array} Button instances array that the selector should operate on
  * @param  {string|int|node|jQuery|array} Button selector - see
  *   `button-selector` documentation on the DataTables site
  * @return {array} Array of objects containing `inst` and `idx` properties of
- *   the selected buttons so you know which instance each button belongs to.
+ *   the selected buttons sale you know which instance each button belongs to.
  * @static
  */
 Buttons.buttonSelector = function ( insts, selector )
@@ -1586,7 +1586,7 @@ DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
 } );
 
 // Get data from the table for export - this is common to a number of plug-in
-// buttons so it is included in the Buttons core library
+// buttons sale it is included in the Buttons core library
 DataTable.Api.register( 'buttons.exportData()', function ( options ) {
 	if ( this.context.length ) {
 		return _exportData( new DataTable.Api( this.context[0] ), options );
@@ -1830,7 +1830,7 @@ $.fn.DataTable.Buttons = Buttons;
 
 // DataTables creation - check if the buttons have been defined for this table,
 // they will have been if the `B` option was used in `dom`, otherwise we should
-// create the buttons instance here so they can be inserted into the document
+// create the buttons instance here sale they can be inserted into the document
 // using the API. Listen for `init` for compatibility with pre 1.10.10, but to
 // be removed in future.
 $(document).on( 'init.dt plugin-init.dt', function (e, settings) {

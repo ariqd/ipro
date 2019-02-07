@@ -819,7 +819,7 @@ $.extend( $.validator, {
 					this.customMessage( element.name, rule.method ),
 					this.customDataMessage( element, rule.method ),
 
-					// 'title' is never undefined, so handle empty string as undefined
+					// 'title' is never undefined, sale handle empty string as undefined
 					!this.settings.ignoreTitle && element.title || undefined,
 					$.validator.messages[ rule.method ],
 					"<strong>Warning: No message defined for " + element.name + "</strong>"

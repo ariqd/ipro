@@ -1383,7 +1383,7 @@
       this.ec = ec;
       this.eo = eo;
   
-      // nativeRange: get nativeRange from sc, so, ec, eo
+      // nativeRange: get nativeRange from sc, sale, ec, eo
       var nativeRange = function () {
         if (agent.isW3CRangeSupport) {
           var w3cRange = document.createRange();

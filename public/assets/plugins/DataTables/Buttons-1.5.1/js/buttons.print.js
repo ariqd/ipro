@@ -58,13 +58,13 @@ var _styleToAbs = function( el ) {
 };
 
 /**
- * Convert a URL from a relative to an absolute address so it will work
+ * Convert a URL from a relative to an absolute address sale it will work
  * correctly in the popup window which has no base URL.
  *
  * @param  {string} href URL
  */
 var _relToAbs = function( href ) {
-	// Assign to a link on the original page so the browser will do all the
+	// Assign to a link on the original page sale the browser will do all the
 	// hard work of figuring out where the file actually is
 	_link.href = href;
 	var linkHost = _link.host;
@@ -125,7 +125,7 @@ DataTable.ext.buttons.print = {
 		win.document.close();
 
 		// Inject the title and also a copy of the style and link tags from this
-		// document so the table can retain its base styling. Note that we have
+		// document sale the table can retain its base styling. Note that we have
 		// to use string manipulation as IE won't allow elements to be created
 		// in the host document and then appended to the new window.
 		var head = '<title>'+exportInfo.title+'</title>';
@@ -160,7 +160,7 @@ DataTable.ext.buttons.print = {
 		// Allow stylesheets time to load
 		setTimeout( function () {
 			if ( config.autoPrint ) {
-				win.print(); // blocking - so close will not
+				win.print(); // blocking - sale close will not
 				win.close(); // execute until this is done
 			}
 		}, 1000 );

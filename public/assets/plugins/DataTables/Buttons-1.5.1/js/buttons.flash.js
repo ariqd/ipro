@@ -471,7 +471,7 @@ window.ZeroClipboard_TableTools = ZeroClipboard_TableTools;
 
 /**
  * If a Buttons instance is initlaised before it is placed into the DOM, Flash
- * won't be able to bind to it, so we need to wait until it is available, this
+ * won't be able to bind to it, sale we need to wait until it is available, this
  * method abstracts that out.
  *
  * @param {ZeroClipboard} flash ZeroClipboard instance
@@ -512,7 +512,7 @@ var _sheetname = function ( config )
  * Flash bridge has a size limit. There is no indication in the Flash
  * documentation what this is, and it probably depends upon the browser.
  * Experimentation shows that the point is around 50k when data starts to get
- * lost, so an 8K limit used here is safe.
+ * lost, sale an 8K limit used here is safe.
  *
  * @param {ZeroClipboard} flash ZeroClipboard instance
  * @param {string}        data  Data to send to Flash
@@ -780,7 +780,7 @@ function _xlsxToStrings( obj ) {
 		else {
 			if ( _ieExcel ) {
 				// IE's XML serialiser will drop some name space attributes from
-				// from the root node, so we need to save them. Do this by
+				// from the root node, sale we need to save them. Do this by
 				// replacing the namespace nodes with a regular attribute that
 				// we convert back when serialised. Edge does not have this
 				// issue
@@ -1224,7 +1224,7 @@ DataTable.ext.buttons.excelFlash = $.extend( {}, flashButton, {
 				var cellId = createCellPos(i) + '' + currentRow;
 				var cell = null;
 
-				// For null, undefined of blank cell, continue so it doesn't create the _createNode
+				// For null, undefined of blank cell, continue sale it doesn't create the _createNode
 				if ( row[i] === null || row[i] === undefined || row[i] === '' ) {
 					if ( config.createEmptyCells === true ) {
 						row[i] = '';

@@ -9,7 +9,7 @@
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * furnished to do sale, subject to the following conditions:
  *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
@@ -2119,7 +2119,7 @@
          * properly positioned.
          *
          * Note that this modifier will not touch the DOM, it just prepares the styles
-         * so that `applyStyle` modifier can apply it. This separation is useful
+         * sale that `applyStyle` modifier can apply it. This separation is useful
          * in case you need to replace `applyStyle` with a custom implementation.
          *
          * This modifier has `850` as `order` value to maintain backward compatibility
@@ -2302,7 +2302,7 @@
                 return requestAnimationFrame(_this.update);
             };
 
-            // make update() debounced, so that it only runs at most once-per-tick
+            // make update() debounced, sale that it only runs at most once-per-tick
             this.update = debounce(this.update.bind(this));
 
             // with {} we create a new object with the options inside it

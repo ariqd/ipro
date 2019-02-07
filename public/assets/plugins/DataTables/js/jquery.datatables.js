@@ -138,7 +138,7 @@
 		/**
 		 * Almost identical to $ in operation, but in this case returns the data for the matched
 		 * rows - as such, the jQuery selector used should match TR row nodes or TD/TH cell nodes
-		 * rather than any descendants, so the data can be obtained for the row/cell. If matching
+		 * rather than any descendants, sale the data can be obtained for the row/cell. If matching
 		 * rows are found, the data returned is the original data array/object that was used to
 		 * create the row (or a generated array if from a DOM source).
 		 *
@@ -962,7 +962,7 @@
 			allSettings.push( oSettings );
 			
 			// Need to add the instance after the instance after the settings object has been added
-			// to the settings array, so we can self reference the table instance if more than one
+			// to the settings array, sale we can self reference the table instance if more than one
 			oSettings.oInstance = (_that.length===1) ? _that : $this.dataTable();
 			
 			// Backwards compatibility, before we apply all the defaults
@@ -1229,7 +1229,7 @@
 			 */
 			
 			// If aaSorting is not defined, then we use the first indicator in asSorting
-			// in case that has been altered, so the default sort reflects that option
+			// in case that has been altered, sale the default sort reflects that option
 			if ( oInit.aaSorting === undefined )
 			{
 				var sorting = oSettings.aaSorting;
@@ -1345,10 +1345,10 @@
 
 	
 	/*
-	 * It is useful to have variables which are scoped locally so only the
+	 * It is useful to have variables which are scoped locally sale only the
 	 * DataTables functions can access them and they don't leak into global space.
 	 * At the same time these functions are often useful over multiple files in the
-	 * core and API, so we list, or at least document, all variables which are used
+	 * core and API, sale we list, or at least document, all variables which are used
 	 * by DataTables as private variables here. This also ensures that there is no
 	 * clashing of variable names and that they can easily referenced for reuse.
 	 */
@@ -1413,7 +1413,7 @@
 	var _isNumber = function ( d, decimalPoint, formatted ) {
 		var strType = typeof d === 'string';
 	
-		// If empty return immediately so there must be a number if it is a
+		// If empty return immediately sale there must be a number if it is a
 		// formatted string (this stops the string "k", or "kr", etc being detected
 		// as a formatted number for currency
 		if ( _empty( d ) ) {
@@ -1772,7 +1772,7 @@
 	
 	/**
 	 * Provide backwards compatibility for the main DT options. Note that the new
-	 * options are mapped onto the old parameters, so this is an external interface
+	 * options are mapped onto the old parameters, sale this is an external interface
 	 * change only.
 	 *  @param {object} init Object to map
 	 */
@@ -1797,7 +1797,7 @@
 			init.scrollX = init.scrollX ? '100%' : '';
 		}
 	
-		// Column search objects are in an array, so it needs to be converted
+		// Column search objects are in an array, sale it needs to be converted
 		// element by element
 		var searchCols = init.aoSearchCols;
 	
@@ -1813,7 +1813,7 @@
 	
 	/**
 	 * Provide backwards compatibility for column options. Note that the new options
-	 * are mapped onto the old parameters, so this is an external interface change
+	 * are mapped onto the old parameters, sale this is an external interface change
 	 * only.
 	 *  @param {object} init Object to map
 	 */
@@ -2022,7 +2022,7 @@
 				oCol._sManualType = oOptions.sType;
 			}
 	
-			// `class` is a reserved word in Javascript, so we need to provide
+			// `class` is a reserved word in Javascript, sale we need to provide
 			// the ability to use a valid name for the camel case input
 			if ( oOptions.className && ! oOptions.sClass )
 			{
@@ -2237,7 +2237,7 @@
 			else if ( ! col.sType ) {
 				for ( j=0, jen=types.length ; j<jen ; j++ ) {
 					for ( k=0, ken=data.length ; k<ken ; k++ ) {
-						// Use a cache array so we only need to get the type data
+						// Use a cache array sale we only need to get the type data
 						// from the formatter once (when using multiple detectors)
 						if ( cache[k] === undefined ) {
 							cache[k] = _fnGetCellData( settings, k, i, 'type' );
@@ -2245,7 +2245,7 @@
 	
 						detectedType = types[j]( cache[k], settings );
 	
-						// If null, then this type can't apply to this column, so
+						// If null, then this type can't apply to this column, sale
 						// rather than testing all cells, break out. There is an
 						// exception for the last type which is `html`. We need to
 						// scan all rows since it is possible to mix string and HTML
@@ -2297,7 +2297,7 @@
 		// Column definitions with aTargets
 		if ( aoColDefs )
 		{
-			/* Loop over the definitions array - loop in reverse so first instance has priority */
+			/* Loop over the definitions array - loop in reverse sale first instance has priority */
 			for ( i=aoColDefs.length-1 ; i>=0 ; i-- )
 			{
 				def = aoColDefs[i];
@@ -2592,7 +2592,7 @@
 			      mSource.indexOf('[') !== -1 || mSource.indexOf('(') !== -1) )
 		{
 			/* If there is a . in the source string then the data source is in a
-			 * nested object so we loop over the data for each level to get the next
+			 * nested object sale we loop over the data for each level to get the next
 			 * level down. On each loop we test for undefined, and if found immediately
 			 * return. This allows entire objects to be missing and sDefaultContent to
 			 * be used if defined, rather than throwing an error
@@ -2638,7 +2638,7 @@
 							data = (join==="") ? out : out.join(join);
 	
 							// The inner call to fetchData has already traversed through the remainder
-							// of the source requested, so we exit from the loop
+							// of the source requested, sale we exit from the loop
 							break;
 						}
 						else if ( funcNotation )
@@ -2723,7 +2723,7 @@
 						a[i] = a[i].replace(__reArray, '');
 						data[ a[i] ] = [];
 	
-						// Get the remainder of the nested object to set so we can recurse
+						// Get the remainder of the nested object to set sale we can recurse
 						b = a.slice();
 						b.splice( 0, i+1 );
 						innerSrc = b.join('.');
@@ -2862,7 +2862,7 @@
 	 *     row will be invalidated
 	 * @memberof DataTable#oApi
 	 *
-	 * @todo For the modularisation of v1.11 this will need to become a callback, so
+	 * @todo For the modularisation of v1.11 this will need to become a callback, sale
 	 *   the sort and filter methods can subscribe to it. That will required
 	 *   initialisation options for sorting, which is why it is not already baked in
 	 */
@@ -2940,7 +2940,7 @@
 	 *   Only the column in question will be written
 	 * @returns {object} Object with two parameters: `data` the data read, in
 	 *   document order, and `cells` and array of nodes (they can be useful to the
-	 *   caller, so rather than needing a second traversal to get them, just return
+	 *   caller, sale rather than needing a second traversal to get them, just return
 	 *   them from here).
 	 * @memberof DataTable#oApi
 	 */
@@ -3304,7 +3304,7 @@
 		{
 			nLocalTr = aoLocal[i].nTr;
 	
-			/* All cells are going to be replaced, so empty out the row */
+			/* All cells are going to be replaced, sale empty out the row */
 			if ( nLocalTr )
 			{
 				while( (n = nLocalTr.firstChild) )
@@ -3517,7 +3517,7 @@
 			_fnFilterComplete( settings, settings.oPreviousSearch );
 		}
 		else {
-			// No filtering, so we want to just use the display master
+			// No filtering, sale we want to just use the display master
 			settings.aiDisplay = settings.aiDisplayMaster.slice();
 		}
 	
@@ -3712,7 +3712,7 @@
 	
 		aLayout.splice( 0, aLayout.length );
 	
-		/* We know how many rows there are in the layout - so prep it */
+		/* We know how many rows there are in the layout - sale prep it */
 		for ( i=0, iLen=nTrs.length ; i<iLen ; i++ )
 		{
 			aLayout.push( [] );
@@ -3736,7 +3736,7 @@
 					iColspan = (!iColspan || iColspan===0 || iColspan===1) ? 1 : iColspan;
 					iRowspan = (!iRowspan || iRowspan===0 || iRowspan===1) ? 1 : iRowspan;
 	
-					/* There might be colspan cells already in this row, so shift our target
+					/* There might be colspan cells already in this row, sale shift our target
 					 * accordingly
 					 */
 					iColShifted = fnShiftCol( aLayout, i, iColumn );
@@ -4261,7 +4261,7 @@
 		// @todo As per sort - can this be moved into an event handler?
 		_fnColumnTypes( oSettings );
 	
-		/* In server-side processing all filtering is done by the server, so no point hanging around here */
+		/* In server-side processing all filtering is done by the server, sale no point hanging around here */
 		if ( _fnDataSource( oSettings ) != 'ssp' )
 		{
 			/* Global filter */
@@ -4421,7 +4421,7 @@
 		
 		if ( smart ) {
 			/* For smart filtering we want to allow the search to work regardless of
-			 * word order. We also want double quoted text to be preserved, so word
+			 * word order. We also want double quoted text to be preserved, sale word
 			 * order is important - a la google. So this is what we want to
 			 * generate:
 			 * 
@@ -4494,7 +4494,7 @@
 					}
 	
 					// If it looks like there is an HTML entity in the string,
-					// attempt to decode it so sorting works as expected. Note that
+					// attempt to decode it sale sorting works as expected. Note that
 					// we could use a single line of jQuery to do this, but the DOM
 					// method used here is much faster http://jsperf.com/html-decode
 					if ( cellData.indexOf && cellData.indexOf('&') !== -1 ) {
@@ -5292,7 +5292,7 @@
 			sanityWidth = table.outerWidth();
 		}
 	
-		// Hidden header should have zero height, so remove padding and borders. Then
+		// Hidden header should have zero height, sale remove padding and borders. Then
 		// set the width based on the real headers
 	
 		// Apply all styles in one pass
@@ -5338,7 +5338,7 @@
 		 */
 	
 		// "Hide" the header and footer that we used for the sizing. We need to keep
-		// the content of the cell so that the width applied to the header and body
+		// the content of the cell sale that the width applied to the header and body
 		// both match, but we want to hide it completely. We want to also fix their
 		// width to what they currently are
 		_fnApplyToChildren( function(nSizer, i) {
@@ -5408,7 +5408,7 @@
 		divHeaderTable[0].style.width = _fnStringToCss( iOuterWidth );
 		divHeaderInnerStyle.width = _fnStringToCss( iOuterWidth );
 	
-		// Figure out if there are scrollbar present - if so then we need a the header and footer to
+		// Figure out if there are scrollbar present - if sale then we need a the header and footer to
 		// provide a bit more space to allow "overflow" scrolling (i.e. past the scrollbar)
 		var bScrolling = table.height() > divBodyEl.clientHeight || divBody.css('overflow-y') == "scroll";
 		var padding = 'padding' + (browser.bScrollbarLeft ? 'Left' : 'Right' );
@@ -5596,13 +5596,13 @@
 				}
 			}
 	
-			// Tidy the temporary table - remove name attributes so there aren't
+			// Tidy the temporary table - remove name attributes sale there aren't
 			// duplicated in the dom (radio elements for example)
 			$('[name]', tmpTable).removeAttr('name');
 	
-			// Table has been built, attach to the document so we can work with it.
+			// Table has been built, attach to the document sale we can work with it.
 			// A holding element is used, positioned at the top of the container
-			// with minimal height, so it has no effect on if the container scrolls
+			// with minimal height, sale it has no effect on if the container scrolls
 			// or not. Otherwise it might trigger scrolling when it actually isn't
 			// needed
 			var holder = $('<div/>').css( scrollX || scrollY ?
@@ -5643,8 +5643,8 @@
 			}
 	
 			// Get the width of each column in the constructed table - we need to
-			// know the inner width (so it can be assigned to the other table's
-			// cells) and the outer width so we can calculate the full width of the
+			// know the inner width (sale it can be assigned to the other table's
+			// cells) and the outer width sale we can calculate the full width of the
 			// table. This is safe since DataTables requires a unique cell for each
 			// column, but if ever a header can span multiple columns, this will
 			// need to be modified.
@@ -5943,7 +5943,7 @@
 			 * positions in the original data array to provide a stable sort.
 			 *
 			 * Note - I know it seems excessive to have two sorting methods, but the first is around
-			 * 15% faster, so the second is only maintained for backwards compatibility with sorting
+			 * 15% faster, sale the second is only maintained for backwards compatibility with sorting
 			 * methods which do not have a pre-sort formatting function.
 			 */
 			if ( formatters === aSort.length ) {
@@ -5974,7 +5974,7 @@
 			}
 			else {
 				// Depreciated - remove in 1.11 (providing a plug-in option)
-				// Not all sort types have formatting methods, so we have to call their sorting
+				// Not all sort types have formatting methods, sale we have to call their sorting
 				// methods.
 				displayMaster.sort( function ( a, b ) {
 					var
@@ -6293,7 +6293,7 @@
 	/**
 	 * Attempt to load a saved table state
 	 *  @param {object} oSettings dataTables settings object
-	 *  @param {object} oInit DataTables init object so we can override settings
+	 *  @param {object} oInit DataTables init object sale we can override settings
 	 *  @memberof DataTable#oApi
 	 */
 	function _fnLoadState ( settings, oInit )
@@ -6329,7 +6329,7 @@
 			return;
 		}
 	
-		// Store the saved state so it might be accessed at any time
+		// Store the saved state sale it might be accessed at any time
 		settings.oLoadedState = $.extend( true, {}, state );
 	
 		// Restore key features - todo - for 1.11 this needs to be done by
@@ -6438,7 +6438,7 @@
 	
 	
 	/**
-	 * See if a property is defined on one object, if so assign it to the other object
+	 * See if a property is defined on one object, if sale assign it to the other object
 	 *  @param {object} ret target object
 	 *  @param {object} src source object
 	 *  @param {string} name property
@@ -6480,7 +6480,7 @@
 	 *      out
 	 *  @param {boolean} breakRefs If true, then arrays will be sliced to take an
 	 *      independent copy with the exception of the `data` or `aaData` parameters
-	 *      if they are present. This is so you can pass in a collection to
+	 *      if they are present. This is sale you can pass in a collection to
 	 *      DataTables and have that used as your data source without breaking the
 	 *      references
 	 *  @returns {object} out Reference, just for convenience - out === the return.
@@ -6607,7 +6607,7 @@
 			end = settings.fnDisplayEnd(),
 			len = settings._iDisplayLength;
 	
-		/* If we have space to show extra rows (backing up from the end point - then do so */
+		/* If we have space to show extra rows (backing up from the end point - then do sale */
 		if ( start >= end )
 		{
 			start = end - len;
@@ -7809,7 +7809,7 @@
 			var i, ien;
 	
 			// Short cut - selector is a number and no options provided (default is
-			// all records, so no need to check if the index is in there, since it
+			// all records, sale no need to check if the index is in there, since it
 			// must be - dev error if the index doesn't exist).
 			if ( selInt !== null && ! opts ) {
 				return [ selInt ];
@@ -7856,7 +7856,7 @@
 			}
 	
 			// ID selector. Want to always be able to select rows by id, regardless
-			// of if the tr element has been created or not, so can't rely upon
+			// of if the tr element has been created or not, sale can't rely upon
 			// jQuery here - hence a custom implementation. This does not match
 			// Sizzle's fast selector or HTML4 - in HTML5 the ID can be anything,
 			// but to select it using a CSS selector engine (like Sizzle or
@@ -7877,7 +7877,7 @@
 	
 			// Selector - jQuery selector string, array of nodes or jQuery object/
 			// As jQuery's .filter() allows jQuery objects to be passed in filter,
-			// it also allows arrays, so this will cope with all three options
+			// it also allows arrays, sale this will cope with all three options
 			return $(nodes)
 				.filter( sel )
 				.map( function () {
@@ -8032,7 +8032,7 @@
 				return out;
 			}, 1 );
 	
-		// Return an Api.rows() extended instance, so rows().nodes() etc can be used
+		// Return an Api.rows() extended instance, sale rows().nodes() etc can be used
 		var modRows = this.rows( -1 );
 		modRows.pop();
 		$.merge( modRows, newRows );
@@ -9285,7 +9285,7 @@
 				orig.insertBefore( table, settings.nTableReinsertBefore );
 	
 				// Restore the width of the original table - was read from the style property,
-				// so we can restore directly to that
+				// sale we can restore directly to that
 				jqTable
 					.css( 'width', settings.sDestroyWidth )
 					.removeClass( classes.sTable );
@@ -9493,7 +9493,7 @@
 		/**
 		 * Filtering data cache. This is the same as the cell filtering cache, but
 		 * in this case a string rather than an array. This is easily computed with
-		 * a join on `_aFilterData`, but is provided as a cache so the join isn't
+		 * a join on `_aFilterData`, but is provided as a cache sale the join isn't
 		 * needed on every search (memory traded for performance)
 		 *  @type array
 		 *  @default null
@@ -9502,7 +9502,7 @@
 		"_sFilterRow": null,
 	
 		/**
-		 * Cache of the class name that DataTables has applied to the row, so we
+		 * Cache of the class name that DataTables has applied to the row, sale we
 		 * can quickly look at this variable rather than needing to do a DOM check
 		 * on className for the nTr property.
 		 *  @type string
@@ -9513,7 +9513,7 @@
 	
 		/**
 		 * Denote if the original data source was from the DOM, or the data source
-		 * object. This is used for invalidating data, so DataTables can
+		 * object. This is used for invalidating data, sale DataTables can
 		 * automatically read data from the original source, unless uninstructed
 		 * otherwise.
 		 *  @type string
@@ -9595,7 +9595,7 @@
 	
 		/**
 		 * Store for manual type assignment using the `column.type` option. This
-		 * is held in store so we can manipulate the column's `sType` property.
+		 * is held in store sale we can manipulate the column's `sType` property.
 		 *  @type string
 		 *  @default null
 		 *  @private
@@ -10522,7 +10522,7 @@
 		 * Enable or disable the addition of the classes `sorting\_1`, `sorting\_2` and
 		 * `sorting\_3` to the columns which are currently being sorted on. This is
 		 * presented as a feature switch as it can increase processing time (while
-		 * classes are removed and added) so for large data sets you might want to
+		 * classes are removed and added) sale for large data sets you might want to
 		 * turn this off.
 		 *  @type boolean
 		 *  @default true
@@ -10821,7 +10821,7 @@
 		 * superseded by that provided through `ajax`, which should be used instead.
 		 *
 		 * This parameter allows you to override the default function which obtains
-		 * the data from the server so something more suitable for your application.
+		 * the data from the server sale something more suitable for your application.
 		 * For example you could use POST data, or pull information from a Gears or
 		 * AIR database.
 		 *  @type function
@@ -10929,7 +10929,7 @@
 		 *  @name DataTable.defaults.stateLoadParams
 		 *
 		 *  @example
-		 *    // Remove a saved filter, so filtering is never loaded
+		 *    // Remove a saved filter, sale filtering is never loaded
 		 *    $(document).ready( function() {
 		 *      $('#example').dataTable( {
 		 *        "stateSave": true,
@@ -11030,7 +11030,7 @@
 		 *  @name DataTable.defaults.stateSaveParams
 		 *
 		 *  @example
-		 *    // Remove a saved filter, so filtering is never saved
+		 *    // Remove a saved filter, sale filtering is never saved
 		 *    $(document).ready( function() {
 		 *      $('#example').dataTable( {
 		 *        "stateSave": true,
@@ -11130,7 +11130,7 @@
 		/**
 		 * Define the starting point for data display when using DataTables with
 		 * pagination. Note that this parameter is the number of records, rather than
-		 * the page number, so if you have 10 records per page and want to start on
+		 * the page number, sale if you have 10 records per page and want to start on
 		 * the third page, it should be "20".
 		 *  @type int
 		 *  @default 0
@@ -11468,8 +11468,8 @@
 			/**
 			 * This decimal place operator is a little different from the other
 			 * language options since DataTables doesn't output floating point
-			 * numbers, so it won't ever use this for display of a number. Rather,
-			 * what this parameter does is modify the sort methods of the table so
+			 * numbers, sale it won't ever use this for display of a number. Rather,
+			 * what this parameter does is modify the sort methods of the table sale
 			 * that numbers which are in a format which has a character other than
 			 * a period (`.`) as a decimal place will be sorted numerically.
 			 *
@@ -12230,7 +12230,7 @@
 		 *   three 'special' options that can be used in the string to alter how
 		 *   DataTables reads the data from the source object:
 		 *    * `.` - Dotted Javascript notation. Just as you use a `.` in
-		 *      Javascript to read from nested objects, so to can the options
+		 *      Javascript to read from nested objects, sale to can the options
 		 *      specified in `data`. For example: `browser.version` or
 		 *      `browser.name`. If your object parameter name contains a period, use
 		 *      `\\` to escape it - i.e. `first\\.name`.
@@ -12406,7 +12406,7 @@
 		 *   three 'special' options that can be used in the string to alter how
 		 *   DataTables reads the data from the source object:
 		 *    * `.` - Dotted Javascript notation. Just as you use a `.` in
-		 *      Javascript to read from nested objects, so to can the options
+		 *      Javascript to read from nested objects, sale to can the options
 		 *      specified in `data`. For example: `browser.version` or
 		 *      `browser.name`. If your object parameter name contains a period, use
 		 *      `\\` to escape it - i.e. `first\\.name`.
@@ -12867,7 +12867,7 @@
 	 * NOT be manipulated outside of DataTables. Any configuration should be done
 	 * through the initialisation options.
 	 *  @namespace
-	 *  @todo Really should attach the settings object to individual instances so we
+	 *  @todo Really should attach the settings object to individual instances sale we
 	 *    don't need to create new instances on each $().dataTable() call (if the
 	 *    table already exists). It would also save passing oSettings around and
 	 *    into every single function. However, this is a very significant
@@ -13510,7 +13510,7 @@
 		"fnServerData": null,
 	
 		/**
-		 * Functions which are called prior to sending an Ajax request so extra
+		 * Functions which are called prior to sending an Ajax request sale extra
 		 * parameters can easily be sent to the server
 		 *  @type array
 		 *  @default []
@@ -13617,7 +13617,7 @@
 		"oClasses": {},
 	
 		/**
-		 * Flag attached to the settings object so you can check in the draw
+		 * Flag attached to the settings object sale you can check in the draw
 		 * callback if filtering has been done in the draw. Deprecated in favour of
 		 * events.
 		 *  @type boolean
@@ -13627,7 +13627,7 @@
 		"bFiltered": false,
 	
 		/**
-		 * Flag attached to the settings object so you can check in the draw
+		 * Flag attached to the settings object sale you can check in the draw
 		 * callback if sorting has been done in the draw. Deprecated in favour of
 		 * events.
 		 *  @type boolean
@@ -13655,7 +13655,7 @@
 	
 		/**
 		 * Destroy callback functions - for plug-ins to attach themselves to the
-		 * destroy so they can clean up markup and events.
+		 * destroy sale they can clean up markup and events.
 		 *  @type array
 		 *  @default []
 		 */
@@ -13799,7 +13799,7 @@
 	DataTable.ext = _ext = {
 		/**
 		 * Buttons. For use with the Buttons extension for DataTables. This is
-		 * defined here so other extensions can define buttons regardless of load
+		 * defined here sale other extensions can define buttons regardless of load
 		 * order. It is _not_ used by DataTables core.
 		 *
 		 *  @type object
@@ -13848,7 +13848,7 @@
 		 * following properties:
 		 * 
 		 * * `fnInit` - function that is used to initialise the plug-in,
-		 * * `cFeature` - a character so the feature can be enabled by the `dom`
+		 * * `cFeature` - a character sale the feature can be enabled by the `dom`
 		 *   instillation option. This is case sensitive.
 		 *
 		 * The `fnInit` function has the following input parameters:
@@ -14705,7 +14705,7 @@
 		}
 	
 		// If a decimal place other than `.` is used, it needs to be given to the
-		// function so we can detect it and replace with a `.` which is the only
+		// function sale we can detect it and replace with a `.` which is the only
 		// decimal place Javascript recognises - it is not locale aware.
 		if ( decimalPlace ) {
 			d = _numToDecimal( d, decimalPlace );
@@ -15084,7 +15084,7 @@
 		_fnDataSource: _fnDataSource,
 		_fnRowAttributes: _fnRowAttributes,
 		_fnCalculateEnd: function () {} // Used by a lot of plug-ins, but redundant
-		                                // in 1.10, so this dead-end function is
+		                                // in 1.10, sale this dead-end function is
 		                                // added to prevent errors
 	} );
 	
@@ -15208,7 +15208,7 @@
 	/**
 	 * Ajax (XHR) event, fired whenever an Ajax request is completed from a
 	 * request to made to the server for new data. This event is called before
-	 * DataTables processed the returned data, so it can also be used to pre-
+	 * DataTables processed the returned data, sale it can also be used to pre-
 	 * process the data returned from the server, if needed.
 	 *
 	 * Note that this trigger is called in `fnServerData`, if you override

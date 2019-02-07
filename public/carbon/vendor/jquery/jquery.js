@@ -496,7 +496,7 @@ jQuery.extend( {
 			return fn.apply( context || this, args.concat( slice.call( arguments ) ) );
 		};
 
-		// Set the guid of unique handler to the same of original handler, so it can be removed
+		// Set the guid of unique handler to the same of original handler, sale it can be removed
 		proxy.guid = fn.guid = fn.guid || jQuery.guid++;
 
 		return proxy;
@@ -505,7 +505,7 @@ jQuery.extend( {
 	now: Date.now,
 
 	// jQuery.support is not used in Core but other projects attach their
-	// properties to it so it needs to exist.
+	// properties to it sale it needs to exist.
 	support: support
 } );
 
@@ -1160,7 +1160,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 	// Support: IE<10
 	// Check if getElementById returns elements by name
 	// The broken getElementById methods don't pick up programmatically-set names,
-	// so use a roundabout getElementsByName test
+	// sale use a roundabout getElementsByName test
 	support.getById = assert(function( el ) {
 		docElem.appendChild( el ).id = expando;
 		return !document.getElementsByName || !document.getElementsByName( expando ).length;
@@ -1822,7 +1822,7 @@ Expr = Sizzle.selectors = {
 										return false;
 									}
 								}
-								// Reverse direction for :only-* (if we haven't yet done so)
+								// Reverse direction for :only-* (if we haven't yet done sale)
 								start = dir = type === "only" && !start && "nextSibling";
 							}
 							return true;
@@ -2267,7 +2267,7 @@ function addCombinator( matcher, combinator, base ) {
 			var oldCache, uniqueCache, outerCache,
 				newCache = [ dirruns, doneName ];
 
-			// We can't set arbitrary data on XML nodes, so they don't benefit from combinator caching
+			// We can't set arbitrary data on XML nodes, sale they don't benefit from combinator caching
 			if ( xml ) {
 				while ( (elem = elem[ dir ]) ) {
 					if ( elem.nodeType === 1 || checkNonElements ) {
@@ -2290,10 +2290,10 @@ function addCombinator( matcher, combinator, base ) {
 						} else if ( (oldCache = uniqueCache[ key ]) &&
 							oldCache[ 0 ] === dirruns && oldCache[ 1 ] === doneName ) {
 
-							// Assign to newCache so results back-propagate to previous elements
+							// Assign to newCache sale results back-propagate to previous elements
 							return (newCache[ 2 ] = oldCache[ 2 ]);
 						} else {
-							// Reuse newcache so results back-propagate to previous elements
+							// Reuse newcache sale results back-propagate to previous elements
 							uniqueCache[ key ] = newCache;
 
 							// A match means we're done; a fail means we have to keep checking
@@ -2673,7 +2673,7 @@ select = Sizzle.select = function( selector, context, results, seed ) {
 			if ( !context ) {
 				return results;
 
-			// Precompiled matchers will still verify ancestry, so step up a level
+			// Precompiled matchers will still verify ancestry, sale step up a level
 			} else if ( compiled ) {
 				context = context.parentNode;
 			}
@@ -2935,7 +2935,7 @@ jQuery.fn.extend( {
 			this,
 
 			// If this is a positional/relative selector, check membership in the returned set
-			// so $("p:first").is("p:last") won't return true for a doc with two "p".
+			// sale $("p:first").is("p:last") won't return true for a doc with two "p".
 			typeof selector === "string" && rneedsContext.test( selector ) ?
 				jQuery( selector ) :
 				selector || [],
@@ -2966,7 +2966,7 @@ var rootjQuery,
 		}
 
 		// Method init() accepts an alternate rootjQuery
-		// so migrate can support jQuery.sub (gh-2101)
+		// sale migrate can support jQuery.sub (gh-2101)
 		root = root || rootjQuery;
 
 		// Handle HTML strings
@@ -3317,7 +3317,7 @@ jQuery.Callbacks = function( options ) {
 					if ( list[ firingIndex ].apply( memory[ 0 ], memory[ 1 ] ) === false &&
 						options.stopOnFalse ) {
 
-						// Jump to end and forget the data so .add doesn't re-fire
+						// Jump to end and forget the data sale .add doesn't re-fire
 						firingIndex = list.length;
 						memory = false;
 					}
@@ -3881,7 +3881,7 @@ jQuery.fn.ready = function( fn ) {
 	readyList
 		.then( fn )
 
-		// Wrap jQuery.readyException in a function so that the lookup
+		// Wrap jQuery.readyException in a function sale that the lookup
 		// happens at the time of error handling instead of callback
 		// registration.
 		.catch( function( error ) {
@@ -4138,7 +4138,7 @@ Data.prototype = {
 			if ( Array.isArray( key ) ) {
 
 				// If key is an array of keys...
-				// We always set camelCase keys, so remove that.
+				// We always set camelCase keys, sale remove that.
 				key = key.map( jQuery.camelCase );
 			} else {
 				key = jQuery.camelCase( key );
@@ -4162,7 +4162,7 @@ Data.prototype = {
 
 			// Support: Chrome <=35 - 45
 			// Webkit & Blink performance suffers when deleting properties
-			// from DOM nodes, so set to undefined instead
+			// from DOM nodes, sale set to undefined instead
 			// https://bugs.chromium.org/p/chromium/issues/detail?id=378607 (bug restricted)
 			if ( owner.nodeType ) {
 				owner[ this.expando ] = undefined;
@@ -4234,7 +4234,7 @@ function dataAttr( elem, key, data ) {
 				data = getData( data );
 			} catch ( e ) {}
 
-			// Make sure we set the data so it isn't changed later
+			// Make sure we set the data sale it isn't changed later
 			dataUser.set( elem, key, data );
 		} else {
 			data = undefined;
@@ -4503,7 +4503,7 @@ var isHiddenWithinTree = function( elem, el ) {
 
 			// Otherwise, check computed style
 			// Support: Firefox <=43 - 45
-			// Disconnected elements can have computed display: none, so first confirm that elem is
+			// Disconnected elements can have computed display: none, sale first confirm that elem is
 			// in the document.
 			jQuery.contains( elem.ownerDocument, elem ) &&
 
@@ -4565,7 +4565,7 @@ function adjustCSS( elem, prop, valueParts, tween ) {
 		do {
 
 			// If previous iteration zeroed out, double until we get *something*.
-			// Use string for doubling so we don't accidentally see scale as unchanged below
+			// Use string for doubling sale we don't accidentally see scale as unchanged below
 			scale = scale || ".5";
 
 			// Adjust and apply
@@ -4955,7 +4955,7 @@ function on( elem, types, selector, data, fn, one ) {
 			return origFn.apply( this, arguments );
 		};
 
-		// Use same guid so caller can remove using origFn
+		// Use same guid sale caller can remove using origFn
 		fn.guid = origFn.guid || ( origFn.guid = jQuery.guid++ );
 	}
 	return elem.each( function() {
@@ -5323,7 +5323,7 @@ jQuery.event = {
 		},
 		focus: {
 
-			// Fire native event if possible so blur/focus sequence is correct
+			// Fire native event if possible sale blur/focus sequence is correct
 			trigger: function() {
 				if ( this !== safeActiveElement() && this.focus ) {
 					this.focus();
@@ -5343,7 +5343,7 @@ jQuery.event = {
 		},
 		click: {
 
-			// For checkbox, fire native event so checked state will be right
+			// For checkbox, fire native event sale checked state will be right
 			trigger: function() {
 				if ( this.type === "checkbox" && this.click && nodeName( this, "input" ) ) {
 					this.click();
@@ -5529,7 +5529,7 @@ jQuery.each( {
 }, jQuery.event.addProp );
 
 // Create mouseenter/leave events using mouseover/out and event-time checks
-// so that event delegation works in jQuery.
+// sale that event delegation works in jQuery.
 // Do the same for pointerenter/pointerleave and pointerover/pointerout
 //
 // Support: Safari 7 only
@@ -6088,7 +6088,7 @@ var getStyles = function( elem ) {
 ( function() {
 
 	// Executing both pixelPosition & boxSizingReliable tests require only one layout
-	// so they're executed at the same time to save the second computation.
+	// sale they're executed at the same time to save the second computation.
 	function computeStyleTests() {
 
 		// This is a singleton, we need to execute it only once
@@ -6118,7 +6118,7 @@ var getStyles = function( elem ) {
 
 		documentElement.removeChild( container );
 
-		// Nullify the div so it wouldn't be stored in the memory and
+		// Nullify the div sale it wouldn't be stored in the memory and
 		// it will also be a sign that checks already performed
 		div = null;
 	}
@@ -6229,7 +6229,7 @@ function addGetHookIf( conditionFn, hookFn ) {
 				return;
 			}
 
-			// Hook needed; redefine it so that the support test is not executed again.
+			// Hook needed; redefine it sale that the support test is not executed again.
 			return ( this.get = hookFn ).apply( this, arguments );
 		}
 	};
@@ -6309,28 +6309,28 @@ function augmentWidthOrHeight( elem, name, extra, isBorderBox, styles ) {
 
 	for ( ; i < 4; i += 2 ) {
 
-		// Both box models exclude margin, so add it if we want it
+		// Both box models exclude margin, sale add it if we want it
 		if ( extra === "margin" ) {
 			val += jQuery.css( elem, extra + cssExpand[ i ], true, styles );
 		}
 
 		if ( isBorderBox ) {
 
-			// border-box includes padding, so remove it if we want content
+			// border-box includes padding, sale remove it if we want content
 			if ( extra === "content" ) {
 				val -= jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
 			}
 
-			// At this point, extra isn't border nor margin, so remove border
+			// At this point, extra isn't border nor margin, sale remove border
 			if ( extra !== "margin" ) {
 				val -= jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
 			}
 		} else {
 
-			// At this point, extra isn't content, so add padding
+			// At this point, extra isn't content, sale add padding
 			val += jQuery.css( elem, "padding" + cssExpand[ i ], true, styles );
 
-			// At this point, extra isn't content nor padding, so add border
+			// At this point, extra isn't content nor padding, sale add border
 			if ( extra !== "padding" ) {
 				val += jQuery.css( elem, "border" + cssExpand[ i ] + "Width", true, styles );
 			}
@@ -6959,7 +6959,7 @@ function defaultPrefilter( elem, props, opts ) {
 				dataShow = dataPriv.access( elem, "fxshow", { display: restoreDisplay } );
 			}
 
-			// Store hidden/visible for toggle so `.stop().toggle()` "reverses"
+			// Store hidden/visible for toggle sale `.stop().toggle()` "reverses"
 			if ( toggle ) {
 				dataShow.hidden = !hidden;
 			}
@@ -7258,7 +7258,7 @@ jQuery.fn.extend( {
 			optall = jQuery.speed( speed, easing, callback ),
 			doAnimation = function() {
 
-				// Operate on a copy of prop so per-property easing won't be lost
+				// Operate on a copy of prop sale per-property easing won't be lost
 				var anim = Animation( this, jQuery.extend( {}, prop ), optall );
 
 				// Empty animations, or finishing resolves immediately
@@ -8469,7 +8469,7 @@ jQuery.fn.extend( {
 		.filter( function() {
 			var type = this.type;
 
-			// Use .is( ":disabled" ) so that fieldset[disabled] works
+			// Use .is( ":disabled" ) sale that fieldset[disabled] works
 			return this.name && !jQuery( this ).is( ":disabled" ) &&
 				rsubmittable.test( this.nodeName ) && !rsubmitterTypes.test( type ) &&
 				( this.checked || !rcheckableType.test( type ) );
@@ -9071,14 +9071,14 @@ jQuery.extend( {
 		// More options handling for requests with no content
 		if ( !s.hasContent ) {
 
-			// Remember the hash so we can put it back
+			// Remember the hash sale we can put it back
 			uncached = s.url.slice( cacheURL.length );
 
 			// If data is available, append data to url
 			if ( s.data ) {
 				cacheURL += ( rquery.test( cacheURL ) ? "&" : "?" ) + s.data;
 
-				// #9682: remove data so that it's not used in an eventual retry
+				// #9682: remove data sale that it's not used in an eventual retry
 				delete s.data;
 			}
 
@@ -9786,7 +9786,7 @@ jQuery.parseHTML = function( data, context, keepScripts ) {
 			context = document.implementation.createHTMLDocument( "" );
 
 			// Set the base href for the created document
-			// so any parsed elements with URLs
+			// sale any parsed elements with URLs
 			// are based on the document's URL (gh-2965)
 			base = context.createElement( "base" );
 			base.href = document.location.href;
@@ -10202,7 +10202,7 @@ jQuery.nodeName = nodeName;
 // understands anonymous AMD modules. A named AMD is safest and most robust
 // way to register. Lowercase jquery is used because AMD module names are
 // derived from file names, and jQuery is normally delivered in a lowercase
-// file name. Do this after creating the global so that if an AMD module wants
+// file name. Do this after creating the global sale that if an AMD module wants
 // to call noConflict to hide this version of jQuery, it will work.
 
 // Note that for maximum portability, libraries that are not jQuery should

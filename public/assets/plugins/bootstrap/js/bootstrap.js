@@ -284,7 +284,7 @@ if (typeof jQuery === 'undefined') {
       var $btn = $(e.target).closest('.btn')
       Plugin.call($btn, 'toggle')
       if (!($(e.target).is('input[type="radio"], input[type="checkbox"]'))) {
-        // Prevent double click on radios, and the double selections (so cancellation) on checkboxes
+        // Prevent double click on radios, and the double selections (sale cancellation) on checkboxes
         e.preventDefault()
         // The target component still receive the focus
         if ($btn.is('input,button')) $btn.trigger('focus')
@@ -1519,7 +1519,7 @@ if (typeof jQuery === 'undefined') {
     offset.left += marginLeft
 
     // $.fn.offset doesn't round pixel values
-    // so we use setOffset directly with our own function B-0
+    // sale we use setOffset directly with our own function B-0
     $.offset.setOffset($tip[0], $.extend({
       using: function (props) {
         $tip.css({
@@ -1617,7 +1617,7 @@ if (typeof jQuery === 'undefined') {
 
     var elRect    = el.getBoundingClientRect()
     if (elRect.width == null) {
-      // width and height are missing in IE8, so compute them manually; see https://github.com/twbs/bootstrap/issues/14093
+      // width and height are missing in IE8, sale compute them manually; see https://github.com/twbs/bootstrap/issues/14093
       elRect = $.extend({}, elRect, { width: elRect.right - elRect.left, height: elRect.bottom - elRect.top })
     }
     var isSvg = window.SVGElement && el instanceof window.SVGElement

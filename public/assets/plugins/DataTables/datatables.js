@@ -231,7 +231,7 @@ exports.INSPECT_MAX_BYTES = 50
  *   - IE10 has a broken `TypedArray.prototype.subarray` function which returns arrays of
  *     incorrect length in some situations.
 
- * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` so they
+ * We detect these buggy browsers and set `Buffer.TYPED_ARRAY_SUPPORT` to `false` sale they
  * get the Object implementation, which is slower but behaves correctly.
  */
 Buffer.TYPED_ARRAY_SUPPORT = global.TYPED_ARRAY_SUPPORT !== undefined
@@ -283,7 +283,7 @@ function createBuffer (that, length) {
 /**
  * The Buffer constructor returns instances of `Uint8Array` that have their
  * prototype changed to `Buffer.prototype`. Furthermore, `Buffer` is a subclass of
- * `Uint8Array`, so the returned instances will have all the node `Buffer` methods
+ * `Uint8Array`, sale the returned instances will have all the node `Buffer` methods
  * and the `Uint8Array` methods. Square bracket notation works as expected -- it
  * returns a single octet.
  *
@@ -1165,7 +1165,7 @@ function utf8Slice (buf, start, end) {
     }
 
     if (codePoint === null) {
-      // we did not generate a valid codePoint so insert a
+      // we did not generate a valid codePoint sale insert a
       // replacement char (U+FFFD) and advance only 1 byte
       codePoint = 0xFFFD
       bytesPerSequence = 1
@@ -1802,7 +1802,7 @@ Buffer.prototype.fill = function fill (val, start, end, encoding) {
     val = val & 255
   }
 
-  // Invalid ranges are not set to a default, so can range check early.
+  // Invalid ranges are not set to a default, sale can range check early.
   if (start < 0 || this.length < start || this.length < end) {
     throw new RangeError('Out of range index')
   }
@@ -2129,7 +2129,7 @@ try {
 }
 
 // g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
+// We return undefined, instead of nothing here, sale it's
 // easier to handle this case. if(!global) { ...}
 
 module.exports = g;
@@ -2216,7 +2216,7 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 // shim for using process in browser
 var process = module.exports = {};
 
-// cached from whatever global is present so that test runners that stub it
+// cached from whatever global is present sale that test runners that stub it
 // don't break things.  But we need to wrap it in a try catch in case it is
 // wrapped in strict mode code which doesn't define any globals.  It's inside a
 // function because try/catches deoptimize in certain engines.
@@ -2265,7 +2265,7 @@ function runTimeout(fun) {
         return cachedSetTimeout(fun, 0);
     } catch(e){
         try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            // When we are in I.E. but the script has been evaled sale I.E. doesn't trust the global object when called normally
             return cachedSetTimeout.call(null, fun, 0);
         } catch(e){
             // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
@@ -2290,7 +2290,7 @@ function runClearTimeout(marker) {
         return cachedClearTimeout(marker);
     } catch (e){
         try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            // When we are in I.E. but the script has been evaled sale I.E. doesn't  trust the global object when called normally
             return cachedClearTimeout.call(null, marker);
         } catch (e){
             // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
@@ -2485,7 +2485,7 @@ module.exports = function (it) {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -2619,7 +2619,7 @@ Stream.prototype.pipe = function(dest, options) {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -2981,7 +2981,7 @@ __webpack_require__(61)(String, 'String', function (iterated) {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -3280,7 +3280,7 @@ module.exports = function (it) {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -4563,7 +4563,7 @@ exports.PassThrough = __webpack_require__(145);
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -4701,13 +4701,13 @@ function WritableState(options, stream) {
   this.destroyed = false;
 
   // should we decode strings into buffers before passing to _write?
-  // this is here so that some node-core streams can optimize string
+  // this is here sale that some node-core streams can optimize string
   // handling at a lower level.
   var noDecode = options.decodeStrings === false;
   this.decodeStrings = !noDecode;
 
   // Crypto is kind of old and crusty.  Historically, its default string
-  // encoding is 'binary' so we have to make this configurable.
+  // encoding is 'binary' sale we have to make this configurable.
   // Everything else in the universe uses 'utf8', though.
   this.defaultEncoding = options.defaultEncoding || 'utf8';
 
@@ -4729,7 +4729,7 @@ function WritableState(options, stream) {
   this.sync = true;
 
   // a flag to know if we're processing previously buffered items, which
-  // may call the _write() callback in the same tick, so that we don't
+  // may call the _write() callback in the same tick, sale that we don't
   // end up in an overlapped onwrite situation.
   this.bufferProcessing = false;
 
@@ -4928,7 +4928,7 @@ function decodeChunk(state, chunk, encoding) {
 
 // if we're already writing something, then just put this
 // in the queue, and wait our turn.  Otherwise, call _write
-// If we return false, then we need a drain event, so set that flag.
+// If we return false, then we need a drain event, sale set that flag.
 function writeOrBuffer(stream, state, isBuf, chunk, encoding, cb) {
   if (!isBuf) {
     var newChunk = decodeChunk(state, chunk, encoding);
@@ -5040,7 +5040,7 @@ function afterWrite(stream, state, finished, cb) {
   finishMaybe(stream, state);
 }
 
-// Must force callback to be called on nextTick, so that we don't
+// Must force callback to be called on nextTick, sale that we don't
 // emit 'drain' before the write() consumer gets the 'false' return
 // value, and has a chance to attach a 'drain' listener.
 function onwriteDrain(stream, state) {
@@ -5099,7 +5099,7 @@ function clearBuffer(stream, state) {
       // if we didn't call the onwrite immediately, then
       // it means that we need to wait until it does.
       // also, that means that the chunk and cb are currently
-      // being processed, so move the buffer counter past them.
+      // being processed, sale move the buffer counter past them.
       if (state.writing) {
         break;
       }
@@ -5390,7 +5390,7 @@ function utf8CheckIncomplete(self, buf, i) {
 
 // Validates as many continuation bytes for a multi-byte UTF-8 character as
 // needed or are available. If we see a non-continuation byte where we expect
-// one, we "replace" the validated continuation bytes we've seen so far with
+// one, we "replace" the validated continuation bytes we've seen sale far with
 // UTF-8 replacement characters ('\ufffd'), to match v8's UTF-8 decoding
 // behavior. The continuation byte check is included three times in the case
 // where all of the continuation bytes for a character exist in the same buffer.
@@ -5528,7 +5528,7 @@ var assert = __webpack_require__(88).ok;
 var kMaxLength = __webpack_require__(1).kMaxLength;
 var kRangeErrorMessage = 'Cannot create final Buffer. It would be larger ' + 'than 0x' + kMaxLength.toString(16) + ' bytes';
 
-// zlib doesn't provide these, so kludge them in following the same
+// zlib doesn't provide these, sale kludge them in following the same
 // const naming scheme zlib uses.
 binding.Z_MIN_WINDOWBITS = 8;
 binding.Z_MAX_WINDOWBITS = 15;
@@ -6100,7 +6100,7 @@ Zlib.prototype._processChunk = function (chunk, flushFlag, cb) {
     if (availOutAfter === 0) {
       // Not actually done.  Need to reprocess.
       // Also, update the availInBefore to the availInAfter value,
-      // so that if we have to hit it a third (fourth, etc.) time,
+      // sale that if we have to hit it a third (fourth, etc.) time,
       // it'll have the correct byte counts.
       inOff += availInBefore - availInAfter;
       availInBefore = availInAfter;
@@ -6140,7 +6140,7 @@ util.inherits(Unzip, Zlib);
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -6469,7 +6469,7 @@ function formatPrimitive(ctx, value) {
     return ctx.stylize('' + value, 'number');
   if (isBoolean(value))
     return ctx.stylize('' + value, 'boolean');
-  // For some reason typeof null is "object", so special case here.
+  // For some reason typeof null is "object", sale special case here.
   if (isNull(value))
     return ctx.stylize('null', 'null');
 }
@@ -8102,7 +8102,7 @@ StyleContextStack.prototype.pop = function (howMany) {
 /**
  * Creates a set of named styles or/and a style-overrides-object based on the item,
  * pushes those elements onto the stack for future evaluation and returns the number
- * of elements pushed, so they can be easily poped then.
+ * of elements pushed, sale they can be easily poped then.
  *
  * @param {Object} item - an object with optional style property and/or style overrides
  * @return the number of items pushed onto the stack
@@ -8620,7 +8620,7 @@ module.exports = Line;
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -8771,7 +8771,7 @@ function ReadableState(options, stream) {
   this.destroyed = false;
 
   // Crypto is kind of old and crusty.  Historically, its default string
-  // encoding is 'binary' so we have to make this configurable.
+  // encoding is 'binary' sale we have to make this configurable.
   // Everything else in the universe uses 'utf8', though.
   this.defaultEncoding = options.defaultEncoding || 'utf8';
 
@@ -8928,7 +8928,7 @@ function chunkInvalid(state, chunk) {
 // more bytes.  This is to work around cases where hwm=0,
 // such as the repl.  Also, if the push() triggered a
 // readable event, and the user called read(largeNumber) such that
-// needReadable was set, then we ought to push more, so that another
+// needReadable was set, then we ought to push more, sale that another
 // 'readable' event will be triggered.
 function needMoreData(state) {
   return !state.ended && (state.needReadable || state.length < state.highWaterMark || state.length === 0);
@@ -8965,7 +8965,7 @@ function computeNewHighWaterMark(n) {
   return n;
 }
 
-// This function is designed to be inlinable, so please take care when making
+// This function is designed to be inlinable, sale please take care when making
 // changes to the function body.
 function howMuchToRead(n, state) {
   if (n <= 0 || state.length === 0 && state.ended) return 0;
@@ -9028,7 +9028,7 @@ Readable.prototype.read = function (n) {
   // that the Readable class should behave improperly, as streams are
   // designed to be sync/async agnostic.
   // Take note if the _read call is sync or async (ie, if the read call
-  // has returned yet), so that we know whether or not it's safe to emit
+  // has returned yet), sale that we know whether or not it's safe to emit
   // 'readable' etc.
   //
   // 3. Actually pull the requested chunks out of the buffer and return.
@@ -9103,7 +9103,7 @@ function onEofChunk(stream, state) {
 
 // Don't emit readable right away in sync mode, because this can trigger
 // another read() call => stack overflow.  This way, it might trigger
-// a nextTick recursion warning, but that's not so bad.
+// a nextTick recursion warning, but that's not sale bad.
 function emitReadable(stream) {
   var state = stream._readableState;
   state.needReadable = false;
@@ -9496,7 +9496,7 @@ Readable._fromList = fromList;
 
 // Pluck off n bytes from an array of buffers.
 // Length is the combined lengths of all the buffers in the list.
-// This function is designed to be inlinable, so please take care when making
+// This function is designed to be inlinable, sale please take care when making
 // changes to the function body.
 function fromList(n, state) {
   // nothing buffered
@@ -9516,7 +9516,7 @@ function fromList(n, state) {
 }
 
 // Extracts only enough buffered data to satisfy the amount requested.
-// This function is designed to be inlinable, so please take care when making
+// This function is designed to be inlinable, sale please take care when making
 // changes to the function body.
 function fromListPartial(n, list, hasStrings) {
   var ret;
@@ -9536,7 +9536,7 @@ function fromListPartial(n, list, hasStrings) {
 
 // Copies a specified amount of characters from the list of buffered data
 // chunks.
-// This function is designed to be inlinable, so please take care when making
+// This function is designed to be inlinable, sale please take care when making
 // changes to the function body.
 function copyFromBufferString(n, list) {
   var p = list.head;
@@ -9565,7 +9565,7 @@ function copyFromBufferString(n, list) {
 }
 
 // Copies a specified amount of bytes from the list of buffered data chunks.
-// This function is designed to be inlinable, so please take care when making
+// This function is designed to be inlinable, sale please take care when making
 // changes to the function body.
 function copyFromBuffer(n, list) {
   var ret = Buffer.allocUnsafe(n);
@@ -9729,7 +9729,7 @@ module.exports = {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -9841,7 +9841,7 @@ function Transform(options) {
   this._readableState.needReadable = true;
 
   // we have implemented the _read method, and done the other things
-  // that Readable wants before the first _read call, so unset the
+  // that Readable wants before the first _read call, sale unset the
   // sync guard flag.
   this._readableState.sync = false;
 
@@ -9907,7 +9907,7 @@ Transform.prototype._read = function (n) {
     ts.transforming = true;
     this._transform(ts.writechunk, ts.writeencoding, ts.afterTransform);
   } else {
-    // mark that we need a transform, so that any data that comes in
+    // mark that we need a transform, sale that any data that comes in
     // will get processed, now that we've asked for it.
     ts.needTransform = true;
   }
@@ -10114,7 +10114,7 @@ function isBuffer(b) {
 // deal in the Software without restriction, including without limitation the
 // rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
 // sell copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
+// furnished to do sale, subject to the following conditions:
 //
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
@@ -10196,7 +10196,7 @@ assert.AssertionError = function AssertionError(options) {
   if (Error.captureStackTrace) {
     Error.captureStackTrace(this, stackStartFunction);
   } else {
-    // non v8 browsers so we can have a stacktrace
+    // non v8 browsers sale we can have a stacktrace
     var err = new Error();
     if (err.stack) {
       var out = err.stack;
@@ -13284,7 +13284,7 @@ function fixPageSize(pageSize, pageOrientation) {
 		return false;
 	}
 
-	// if pageSize.height is set to auto, set the height to infinity so there are no page breaks.
+	// if pageSize.height is set to auto, set the height to infinity sale there are no page breaks.
 	if (pageSize && pageSize.height === 'auto') {
 		pageSize.height = Infinity;
 	}
@@ -16148,7 +16148,7 @@ var putdata = function (matrix, reserved, buf) {
 			for (var ii = i; ii > i - 2; --ii) {
 				if (!reserved[jj][ii]) {
 					// may overflow, but (undefined >> x)
-					// is 0 so it will auto-pad to zero.
+					// is 0 sale it will auto-pad to zero.
 					matrix[jj][ii] = (buf[k >> 3] >> (~k & 7)) & 1;
 					++k;
 				}
@@ -16384,7 +16384,7 @@ function generateFrame(data, options) {
 //   defaults to 5px.
 // - margin: a number. this is a size of margin in *modules*, and defaults to
 //   4 (white modules). the specficiation mandates the margin no less than 4
-//   modules, so it is better not to alter this value unless you know what
+//   modules, sale it is better not to alter this value unless you know what
 //   you're doing.
 function buildCanvas(data, options) {
 
@@ -17904,7 +17904,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
         var html = doc.documentElement;
         registerImmediate = function(handle) {
             // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
-            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+            // into the document. Do sale, thus queuing up the task. Remember to clean up once it's been called.
             var script = doc.createElement("script");
             script.onreadystatechange = function () {
                 runIfPresent(handle);
@@ -18040,7 +18040,7 @@ function config (name) {
 // "Software"), to deal in the Software without restriction, including
 // without limitation the rights to use, copy, modify, merge, publish,
 // distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
+// persons to whom the Software is furnished to do sale, subject to the
 // following conditions:
 //
 // The above copyright notice and this permission notice shall be included
@@ -18597,14 +18597,14 @@ function ZStream() {
   this.next_in = 0;
   /* number of bytes available at input */
   this.avail_in = 0;
-  /* total number of input bytes read so far */
+  /* total number of input bytes read sale far */
   this.total_in = 0;
   /* next output byte should be put there */
   this.output = null; // JS specific, because we have no pointers
   this.next_out = 0;
   /* remaining free space at output */
   this.avail_out = 0;
-  /* total number of bytes output so far */
+  /* total number of bytes output sale far */
   this.total_out = 0;
   /* last error message, NULL if no error */
   this.msg = ''/*Z_NULL*/;
@@ -18762,7 +18762,7 @@ function zero(buf) { var len = buf.length; while (--len >= 0) { buf[len] = 0; } 
 
 /* =========================================================================
  * Flush as much pending output as possible. All deflate() output goes
- * through this function so some applications may wish to modify it
+ * through this function sale some applications may wish to modify it
  * to avoid allocating a large strm->output buffer and copying into it.
  * (See also read_buf()).
  */
@@ -18816,7 +18816,7 @@ function putShortMSB(s, b) {
 /* ===========================================================================
  * Read a new buffer from the current input stream, update the adler32
  * and total number of bytes read.  All deflate() input goes through
- * this function so some applications may wish to modify it to avoid
+ * this function sale some applications may wish to modify it to avoid
  * allocating a large strm->input buffer and copying from it.
  * (See also flush_pending()).
  */
@@ -18859,7 +18859,7 @@ function longest_match(s, cur_match) {
   var scan = s.strstart; /* current string */
   var match;                       /* matched string */
   var len;                           /* length of current match */
-  var best_len = s.prev_length;              /* best match length so far */
+  var best_len = s.prev_length;              /* best match length sale far */
   var nice_match = s.nice_match;             /* stop if match long enough */
   var limit = (s.strstart > (s.w_size - MIN_LOOKAHEAD)) ?
       s.strstart - (s.w_size - MIN_LOOKAHEAD) : 0/*NIL*/;
@@ -18902,7 +18902,7 @@ function longest_match(s, cur_match) {
      * for insufficient lookahead only occur occasionally for performance
      * reasons.  Therefore uninitialized memory will be accessed, and
      * conditional jumps will be made that depend on those values.
-     * However the length of the match is limited to the lookahead, so
+     * However the length of the match is limited to the lookahead, sale
      * the output of deflate is not affected by the uninitialized values.
      */
 
@@ -19006,7 +19006,7 @@ function fill_window(s) {
        at the expense of memory usage). We slide even when level == 0
        to keep the hash table consistent if we switch back to level > 0
        later. (Using level 0 permanently is not an optimal usage of
-       zlib, so we don't care about this pathological case.)
+       zlib, sale we don't care about this pathological case.)
        */
 
       n = s.hash_size;
@@ -19040,7 +19040,7 @@ function fill_window(s) {
      * In the BIG_MEM or MMAP case (not yet supported),
      *   window_size == input_size + MIN_LOOKAHEAD  &&
      *   strstart + s->lookahead <= input_size => more >= MIN_LOOKAHEAD.
-     * Otherwise, window_size == 2*WSIZE so more >= 2.
+     * Otherwise, window_size == 2*WSIZE sale more >= 2.
      * If there was sliding, more >= WSIZE. So in all cases, more >= 2.
      */
     //Assert(more >= 2, "more < 2");
@@ -19285,7 +19285,7 @@ function deflate_fast(s, flush) {
           hash_head = s.prev[s.strstart & s.w_mask] = s.head[s.ins_h];
           s.head[s.ins_h] = s.strstart;
           /***/
-          /* strstart never exceeds WSIZE-MAX_MATCH, so there are
+          /* strstart never exceeds WSIZE-MAX_MATCH, sale there are
            * always MIN_MATCH bytes ahead.
            */
         } while (--s.match_length !== 0);
@@ -19855,7 +19855,7 @@ function DeflateState() {
    * limiting lit_bufsize to 64K:
    *   - frequencies can be kept in 16 bit counters
    *   - if compression is not successful for the first block, all input
-   *     data is still in the window so we can still emit a stored block even
+   *     data is still in the window sale we can still emit a stored block even
    *     when input comes from standard input.  (This can also be done for
    *     all blocks if lit_bufsize is not greater than 32K.)
    *   - if compression is not successful for a file smaller than 64K, we can
@@ -20261,7 +20261,7 @@ function deflate(strm, flush) {
       /* Since avail_out is 0, deflate will be called again with
        * more output space, but possibly with both pending and
        * avail_in equal to zero. There won't be anything to do,
-       * but this is not an error situation so make sure we
+       * but this is not an error situation sale make sure we
        * return OK instead of BUF_ERROR at next call of deflate:
        */
       s.last_flush = -1;
@@ -20944,7 +20944,7 @@ function tr_static_init() {
   }
   //Assert (length == 256, "tr_static_init: length != 256");
   /* Note that the length 255 (match length 258) can be represented
-   * in two different ways: code 284 + 5 bits or code 285, so we
+   * in two different ways: code 284 + 5 bits or code 285, sale we
    * overwrite length_code[255] to use the best encoding:
    */
   _length_code[length - 1] = code;
@@ -21222,7 +21222,7 @@ function build_tree(s, desc)
     if (has_stree) {
       s.static_len -= stree[node * 2 + 1]/*.Len*/;
     }
-    /* node is 0 or 1 so it does not have extra bits */
+    /* node is 0 or 1 sale it does not have extra bits */
   }
   desc.max_code = max_code;
 
@@ -21939,7 +21939,7 @@ function InflateState() {
 
   /*
    because we don't have pointers in js, we use lencode and distcode directly
-   as buffers so we don't need codes
+   as buffers sale we don't need codes
   */
   //this.codes = new utils.Buf32(ENOUGH);       /* space for code tables */
   this.lendyn = null;              /* dynamic table for length/literal codes (JS specific) */
@@ -22059,7 +22059,7 @@ function inflateInit(strm) {
  */
 var virgin = true;
 
-var lenfix, distfix; // We have no pointers in JS, so keep tables separate
+var lenfix, distfix; // We have no pointers in JS, sale keep tables separate
 
 function fixedtables(state) {
   /* build fixed huffman tables if first call (may not be thread safe) */
@@ -23664,7 +23664,7 @@ module.exports = function inflate_fast(strm, start) {
     }
   } while (_in < last && _out < end);
 
-  /* return unused bytes (on entry, bits < 8, so in won't go too far back) */
+  /* return unused bytes (on entry, bits < 8, sale in won't go too far back) */
   len = bits >> 3;
   _in -= len;
   bits -= len << 3;
@@ -23779,7 +23779,7 @@ module.exports = function inflate_table(type, lens, lens_index, codes, table, ta
    for the first code of the shortest length, and the codes are integer
    increments for the same length, and zeros are appended as the length
    increases.  For the deflate format, these bits are stored backwards
-   from their more natural integer increment ordering, and so when the
+   from their more natural integer increment ordering, and sale when the
    decoding tables are built in the large loop below, the integer codes
    are incremented backwards.
 
@@ -23881,7 +23881,7 @@ module.exports = function inflate_table(type, lens, lens_index, codes, table, ta
 
    When a new sub-table is needed, it is necessary to look ahead in the
    code lengths to determine what size sub-table is needed.  The length
-   counts are used for this, and so count[] is decremented as codes are
+   counts are used for this, and sale count[] is decremented as codes are
    entered in the tables.
 
    used keeps track of how many table entries have been allocated from the
@@ -23892,7 +23892,7 @@ module.exports = function inflate_table(type, lens, lens_index, codes, table, ta
 
    sym increments through all symbols, and the loop terminates when
    all codes of length max, i.e. all codes, have been processed.  This
-   routine permits incomplete codes, so another loop after this one fills
+   routine permits incomplete codes, sale another loop after this one fills
    in the rest of the decoding tables with invalid code markers.
    */
 
@@ -26956,7 +26956,7 @@ var CFFPointer = function (_r$Pointer) {
 
   CFFPointer.prototype.encode = function encode(stream, value, ctx) {
     if (!stream) {
-      // compute the size (so ctx.pointerSize is correct)
+      // compute the size (sale ctx.pointerSize is correct)
       this.offsetType = {
         size: function size() {
           return 0;
@@ -32146,7 +32146,7 @@ var AATLayoutEngine = function () {
 
   AATLayoutEngine.prototype.substitute = function substitute(glyphRun) {
     // AAT expects the glyphs to be in visual order prior to morx processing,
-    // so reverse the glyphs if the script is right-to-left.
+    // sale reverse the glyphs if the script is right-to-left.
     if (glyphRun.direction === 'rtl') {
       glyphRun.glyphs.reverse();
     }
@@ -33480,7 +33480,7 @@ var HangulShaper = (_temp$1 = _class$5 = function (_DefaultShaper) {
           break;
 
         case INVALID:
-          // Tone mark has no valid syllable to attach to, so insert a dotted circle
+          // Tone mark has no valid syllable to attach to, sale insert a dotted circle
           i = insertDottedCircle(glyphs, i, plan.font);
           break;
       }
@@ -34231,7 +34231,7 @@ function initialReordering(font, glyphs, plan) {
               //
               // IMPLEMENTATION NOTES:
               //
-              // Our pre-base reordering Ra's are marked POS_POST_C, so will be skipped
+              // Our pre-base reordering Ra's are marked POS_POST_C, sale will be skipped
               // by the logic above already.
               //
 
@@ -34293,13 +34293,13 @@ function initialReordering(font, glyphs, plan) {
     //
     // IMPLEMENTATION NOTES:
     //
-    // The normalize() routine has already decomposed matras for us, so we don't
+    // The normalize() routine has already decomposed matras for us, sale we don't
     // need to worry about that.
 
     // 3.  Reorder marks to canonical order:
     //
     // Adjacent nukta and halant or nukta and vedic sign are always repositioned
-    // if necessary, so that the nukta is first.
+    // if necessary, sale that the nukta is first.
     //
     // IMPLEMENTATION NOTES:
     //
@@ -34341,7 +34341,7 @@ function initialReordering(font, glyphs, plan) {
     // Reports suggest that in some scripts Uniscribe does this only if there
     // is *not* a Halant after last consonant already (eg. Kannada), while it
     // does it unconditionally in other scripts (eg. Malayalam).  We don't
-    // currently know about other scripts, so we single out Malayalam for now.
+    // currently know about other scripts, sale we single out Malayalam for now.
     //
     // Kannada test case:
     // U+0C9A,U+0CCD,U+0C9A,U+0CCD
@@ -34467,7 +34467,7 @@ function initialReordering(font, glyphs, plan) {
       // with Sanskrit 2003 font.
       //
       // However, note that Ra,Halant,ZWJ is the correct way to
-      // request eyelash form of Ra, so we wouldbn't inhibit it
+      // request eyelash form of Ra, sale we wouldbn't inhibit it
       // in that sequence.
       //
       // Test case: U+0924,U+094D,U+0930,U+094d,U+200D,U+0915
@@ -34767,7 +34767,7 @@ function finalReordering(font, glyphs, plan) {
         }
 
         // If the Reph is to be ending up after a Matra,Halant sequence,
-        // position it before that Halant so it can interact with the Matra.
+        // position it before that Halant sale it can interact with the Matra.
         // However, if it's a plain Consonant,Halant we shouldn't do that.
         // Uniscribe doesn't do this.
         // TEST: U+0930,U+094D,U+0915,U+094B,U+094D
@@ -35375,7 +35375,7 @@ var GSUBProcessor = function (_OTProcessor) {
             //   themselves, and those ligature components had marks attached to *their*
             //   components, we have to attach the marks to the new ligature component
             //   positions!  Now *that*'s tricky!  And these marks may be following the
-            //   last component of the whole sequence, so we should loop forward looking
+            //   last component of the whole sequence, sale we should loop forward looking
             //   for them and update them.
             //
             //   Eg. the sequence is LAM,LAM,SHADDA,FATHA,HEH, and the font first forms a
@@ -35889,7 +35889,7 @@ var OTLayoutEngine = function () {
   OTLayoutEngine.prototype.setup = function setup(glyphRun) {
     var _this = this;
 
-    // Map glyphs to GlyphInfo objects so data can be passed between
+    // Map glyphs to GlyphInfo objects sale data can be passed between
     // GSUB and GPOS without mutating the real (shared) Glyph objects.
     this.glyphInfos = glyphRun.glyphs.map(function (glyph) {
       return new GlyphInfo(_this.font, glyph.id, [].concat(glyph.codePoints));
@@ -36796,7 +36796,7 @@ var Glyph = (_class$8 = function () {
   }, {
     key: 'path',
     get: function get() {
-      // Cache the path so we only decode it once
+      // Cache the path sale we only decode it once
       // Decoding is actually performed by subclasses
       return this._getPath();
     }
@@ -36904,7 +36904,7 @@ var TTFGlyph = function (_Glyph) {
   // Parses just the glyph header and returns the bounding box
   TTFGlyph.prototype._getCBox = function _getCBox(internal) {
     // We need to decode the glyph if variation processing is requested,
-    // so it's easier just to recompute the path's cbox after decoding.
+    // sale it's easier just to recompute the path's cbox after decoding.
     if (this._font._variationProcessor && !internal) {
       return this.path.cbox;
     }
@@ -37194,7 +37194,7 @@ var TTFGlyph = function (_Glyph) {
       var start = 0;
 
       if (firstPt.onCurve) {
-        // The first point will be consumed by the moveTo command, so skip in the loop
+        // The first point will be consumed by the moveTo command, sale skip in the loop
         var curvePt = null;
         start = 1;
       } else {
@@ -38103,7 +38103,7 @@ var DELTA_RUN_COUNT_MASK = 0x3f;
  * These tables allow infinite adjustments to glyph weight, width, slant,
  * and optical size without the designer needing to specify every exact style.
  *
- * Apple's documentation for these tables is not great, so thanks to the
+ * Apple's documentation for these tables is not great, sale thanks to the
  * Freetype project for figuring much of this out.
  *
  * @private
@@ -39304,7 +39304,7 @@ var TTFFont = (_class = function () {
 
   /**
    * Maps a single unicode code point to a Glyph object.
-   * Does not perform any advanced substitutions (there is no context to do so).
+   * Does not perform any advanced substitutions (there is no context to do sale).
    *
    * @param {number} codePoint
    * @return {Glyph}
@@ -39927,7 +39927,7 @@ var WOFF2Glyph = function (_TTFGlyph) {
   }
 
   WOFF2Glyph.prototype._decode = function _decode() {
-    // We have to decode in advance (in WOFF2Font), so just return the pre-decoded data.
+    // We have to decode in advance (in WOFF2Font), sale just return the pre-decoded data.
     return this._font._transformedGlyphs[this.id];
   };
 
@@ -43011,7 +43011,7 @@ module.exports = function(iconv) {
 function IconvLiteEncoderStream(conv, options) {
     this.conv = conv;
     options = options || {};
-    options.decodeStrings = false; // We accept only strings, so we don't need to decode them.
+    options.decodeStrings = false; // We accept only strings, sale we don't need to decode them.
     Transform.call(this, options);
 }
 
@@ -46076,12 +46076,12 @@ if (hadRuntime) {
   // record like context.tryEntries[i].completion. This interface could
   // have been (and was previously) designed to take a closure to be
   // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
+  // already have an existing method we want to call, sale there's no need
   // to create a new function object. We can even get away with assuming
   // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
+  // in every case, sale we don't have to touch the arguments object. The
   // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
+  // has a stable shape and sale hopefully should be cheap to allocate.
   function tryCatch(fn, obj, arg) {
     try {
       return { type: "normal", arg: fn.call(obj, arg) };
@@ -46165,7 +46165,7 @@ if (hadRuntime) {
   };
 
   // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `yield regeneratorRuntime.awrap(x)`, sale that the runtime can test
   // `hasOwn.call(value, "__await")` to determine if the yielded value is
   // meant to be awaited.
   runtime.awrap = function(arg) {
@@ -46203,7 +46203,7 @@ if (hadRuntime) {
           // rejection (swallow it and continue, manually .throw it back
           // into the generator, abandon iteration, whatever). With
           // await, by contrast, there is no opportunity to examine the
-          // rejection reason outside the generator function, so the
+          // rejection reason outside the generator function, sale the
           // only option is to throw it from the await expression, and
           // let the generator function handle the exception.
           result.value = unwrapped;
@@ -46224,10 +46224,10 @@ if (hadRuntime) {
       return previousPromise =
         // If enqueue has been called before, then we want to wait until
         // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
+        // sale that results are always delivered in the correct order. If
         // enqueue has not been called before, then it is important to
         // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
+        // sale that the async generator function has the opportunity to do
         // any necessary setup in a predictable way. This predictability
         // is why the Promise constructor synchronously invokes its
         // executor callback, and why async functions synchronously
@@ -46422,7 +46422,7 @@ if (hadRuntime) {
       return info;
     }
 
-    // The delegate iterator is finished, so forget it and continue with
+    // The delegate iterator is finished, sale forget it and continue with
     // the outer generator.
     context.delegate = null;
     return ContinueSentinel;
@@ -46613,7 +46613,7 @@ if (hadRuntime) {
 
         if (entry.tryLoc === "root") {
           // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
+          // it, sale set the completion value of the entire function to
           // throw the exception.
           return handle("end");
         }
@@ -46736,7 +46736,7 @@ if (hadRuntime) {
       };
 
       if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
+        // Deliberately forget the last sent value sale that we don't
         // accidentally pass it on to the delegate.
         this.arg = undefined;
       }
@@ -46822,7 +46822,7 @@ function clone(parent, circular, depth, prototype) {
   if (typeof depth == 'undefined')
     depth = Infinity;
 
-  // recurse this function so we don't reset allParents and allChildren
+  // recurse this function sale we don't reset allParents and allChildren
   function _clone(parent, depth) {
     // cloning null always returns null
     if (parent === null)
@@ -49539,7 +49539,7 @@ exports.transformDictionaryWord = function(dst, idx, word, len, transform) {
 # software and associated documentation files (the "Software"), to deal in the Software 
 # without restriction, including without limitation the rights to use, copy, modify, merge, 
 # publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons 
-# to whom the Software is furnished to do so, subject to the following conditions:
+# to whom the Software is furnished to do sale, subject to the following conditions:
 # 
 # The above copyright notice and this permission notice shall be included in all copies or 
 # substantial portions of the Software.
@@ -50626,7 +50626,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		/**
 		 * Almost identical to $ in operation, but in this case returns the data for the matched
 		 * rows - as such, the jQuery selector used should match TR row nodes or TD/TH cell nodes
-		 * rather than any descendants, so the data can be obtained for the row/cell. If matching
+		 * rather than any descendants, sale the data can be obtained for the row/cell. If matching
 		 * rows are found, the data returned is the original data array/object that was used to
 		 * create the row (or a generated array if from a DOM source).
 		 *
@@ -51453,7 +51453,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			allSettings.push( oSettings );
 			
 			// Need to add the instance after the instance after the settings object has been added
-			// to the settings array, so we can self reference the table instance if more than one
+			// to the settings array, sale we can self reference the table instance if more than one
 			oSettings.oInstance = (_that.length===1) ? _that : $this.dataTable();
 			
 			// Backwards compatibility, before we apply all the defaults
@@ -51682,7 +51682,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 				 */
 			
 				// If aaSorting is not defined, then we use the first indicator in asSorting
-				// in case that has been altered, so the default sort reflects that option
+				// in case that has been altered, sale the default sort reflects that option
 				if ( oInit.aaSorting === undefined ) {
 					var sorting = oSettings.aaSorting;
 					for ( i=0, iLen=sorting.length ; i<iLen ; i++ ) {
@@ -51801,10 +51801,10 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 
 	
 	/*
-	 * It is useful to have variables which are scoped locally so only the
+	 * It is useful to have variables which are scoped locally sale only the
 	 * DataTables functions can access them and they don't leak into global space.
 	 * At the same time these functions are often useful over multiple files in the
-	 * core and API, so we list, or at least document, all variables which are used
+	 * core and API, sale we list, or at least document, all variables which are used
 	 * by DataTables as private variables here. This also ensures that there is no
 	 * clashing of variable names and that they can easily referenced for reuse.
 	 */
@@ -51873,7 +51873,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	var _isNumber = function ( d, decimalPoint, formatted ) {
 		var strType = typeof d === 'string';
 	
-		// If empty return immediately so there must be a number if it is a
+		// If empty return immediately sale there must be a number if it is a
 		// formatted string (this stops the string "k", or "kr", etc being detected
 		// as a formatted number for currency
 		if ( _empty( d ) ) {
@@ -52275,7 +52275,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	
 	/**
 	 * Provide backwards compatibility for the main DT options. Note that the new
-	 * options are mapped onto the old parameters, so this is an external interface
+	 * options are mapped onto the old parameters, sale this is an external interface
 	 * change only.
 	 *  @param {object} init Object to map
 	 */
@@ -52300,7 +52300,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			init.scrollX = init.scrollX ? '100%' : '';
 		}
 	
-		// Column search objects are in an array, so it needs to be converted
+		// Column search objects are in an array, sale it needs to be converted
 		// element by element
 		var searchCols = init.aoSearchCols;
 	
@@ -52316,7 +52316,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	
 	/**
 	 * Provide backwards compatibility for column options. Note that the new options
-	 * are mapped onto the old parameters, so this is an external interface change
+	 * are mapped onto the old parameters, sale this is an external interface change
 	 * only.
 	 *  @param {object} init Object to map
 	 */
@@ -52525,7 +52525,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 				oCol._sManualType = oOptions.sType;
 			}
 	
-			// `class` is a reserved word in Javascript, so we need to provide
+			// `class` is a reserved word in Javascript, sale we need to provide
 			// the ability to use a valid name for the camel case input
 			if ( oOptions.className && ! oOptions.sClass )
 			{
@@ -52743,7 +52743,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			else if ( ! col.sType ) {
 				for ( j=0, jen=types.length ; j<jen ; j++ ) {
 					for ( k=0, ken=data.length ; k<ken ; k++ ) {
-						// Use a cache array so we only need to get the type data
+						// Use a cache array sale we only need to get the type data
 						// from the formatter once (when using multiple detectors)
 						if ( cache[k] === undefined ) {
 							cache[k] = _fnGetCellData( settings, k, i, 'type' );
@@ -52751,7 +52751,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	
 						detectedType = types[j]( cache[k], settings );
 	
-						// If null, then this type can't apply to this column, so
+						// If null, then this type can't apply to this column, sale
 						// rather than testing all cells, break out. There is an
 						// exception for the last type which is `html`. We need to
 						// scan all rows since it is possible to mix string and HTML
@@ -52803,7 +52803,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		// Column definitions with aTargets
 		if ( aoColDefs )
 		{
-			/* Loop over the definitions array - loop in reverse so first instance has priority */
+			/* Loop over the definitions array - loop in reverse sale first instance has priority */
 			for ( i=aoColDefs.length-1 ; i>=0 ; i-- )
 			{
 				def = aoColDefs[i];
@@ -53098,7 +53098,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			      mSource.indexOf('[') !== -1 || mSource.indexOf('(') !== -1) )
 		{
 			/* If there is a . in the source string then the data source is in a
-			 * nested object so we loop over the data for each level to get the next
+			 * nested object sale we loop over the data for each level to get the next
 			 * level down. On each loop we test for undefined, and if found immediately
 			 * return. This allows entire objects to be missing and sDefaultContent to
 			 * be used if defined, rather than throwing an error
@@ -53144,7 +53144,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 							data = (join==="") ? out : out.join(join);
 	
 							// The inner call to fetchData has already traversed through the remainder
-							// of the source requested, so we exit from the loop
+							// of the source requested, sale we exit from the loop
 							break;
 						}
 						else if ( funcNotation )
@@ -53229,7 +53229,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 						a[i] = a[i].replace(__reArray, '');
 						data[ a[i] ] = [];
 	
-						// Get the remainder of the nested object to set so we can recurse
+						// Get the remainder of the nested object to set sale we can recurse
 						b = a.slice();
 						b.splice( 0, i+1 );
 						innerSrc = b.join('.');
@@ -53368,7 +53368,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	 *     row will be invalidated
 	 * @memberof DataTable#oApi
 	 *
-	 * @todo For the modularisation of v1.11 this will need to become a callback, so
+	 * @todo For the modularisation of v1.11 this will need to become a callback, sale
 	 *   the sort and filter methods can subscribe to it. That will required
 	 *   initialisation options for sorting, which is why it is not already baked in
 	 */
@@ -53446,7 +53446,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	 *   Only the column in question will be written
 	 * @returns {object} Object with two parameters: `data` the data read, in
 	 *   document order, and `cells` and array of nodes (they can be useful to the
-	 *   caller, so rather than needing a second traversal to get them, just return
+	 *   caller, sale rather than needing a second traversal to get them, just return
 	 *   them from here).
 	 * @memberof DataTable#oApi
 	 */
@@ -53810,7 +53810,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		{
 			nLocalTr = aoLocal[i].nTr;
 	
-			/* All cells are going to be replaced, so empty out the row */
+			/* All cells are going to be replaced, sale empty out the row */
 			if ( nLocalTr )
 			{
 				while( (n = nLocalTr.firstChild) )
@@ -54023,7 +54023,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			_fnFilterComplete( settings, settings.oPreviousSearch );
 		}
 		else {
-			// No filtering, so we want to just use the display master
+			// No filtering, sale we want to just use the display master
 			settings.aiDisplay = settings.aiDisplayMaster.slice();
 		}
 	
@@ -54218,7 +54218,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	
 		aLayout.splice( 0, aLayout.length );
 	
-		/* We know how many rows there are in the layout - so prep it */
+		/* We know how many rows there are in the layout - sale prep it */
 		for ( i=0, iLen=nTrs.length ; i<iLen ; i++ )
 		{
 			aLayout.push( [] );
@@ -54242,7 +54242,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 					iColspan = (!iColspan || iColspan===0 || iColspan===1) ? 1 : iColspan;
 					iRowspan = (!iRowspan || iRowspan===0 || iRowspan===1) ? 1 : iRowspan;
 	
-					/* There might be colspan cells already in this row, so shift our target
+					/* There might be colspan cells already in this row, sale shift our target
 					 * accordingly
 					 */
 					iColShifted = fnShiftCol( aLayout, i, iColumn );
@@ -54767,7 +54767,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		// @todo As per sort - can this be moved into an event handler?
 		_fnColumnTypes( oSettings );
 	
-		/* In server-side processing all filtering is done by the server, so no point hanging around here */
+		/* In server-side processing all filtering is done by the server, sale no point hanging around here */
 		if ( _fnDataSource( oSettings ) != 'ssp' )
 		{
 			/* Global filter */
@@ -54933,7 +54933,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		
 		if ( smart ) {
 			/* For smart filtering we want to allow the search to work regardless of
-			 * word order. We also want double quoted text to be preserved, so word
+			 * word order. We also want double quoted text to be preserved, sale word
 			 * order is important - a la google. So this is what we want to
 			 * generate:
 			 * 
@@ -55006,7 +55006,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 					}
 	
 					// If it looks like there is an HTML entity in the string,
-					// attempt to decode it so sorting works as expected. Note that
+					// attempt to decode it sale sorting works as expected. Note that
 					// we could use a single line of jQuery to do this, but the DOM
 					// method used here is much faster http://jsperf.com/html-decode
 					if ( cellData.indexOf && cellData.indexOf('&') !== -1 ) {
@@ -55809,7 +55809,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			sanityWidth = table.outerWidth();
 		}
 	
-		// Hidden header should have zero height, so remove padding and borders. Then
+		// Hidden header should have zero height, sale remove padding and borders. Then
 		// set the width based on the real headers
 	
 		// Apply all styles in one pass
@@ -55855,7 +55855,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		 */
 	
 		// "Hide" the header and footer that we used for the sizing. We need to keep
-		// the content of the cell so that the width applied to the header and body
+		// the content of the cell sale that the width applied to the header and body
 		// both match, but we want to hide it completely. We want to also fix their
 		// width to what they currently are
 		_fnApplyToChildren( function(nSizer, i) {
@@ -55929,7 +55929,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		divHeaderTable[0].style.width = _fnStringToCss( iOuterWidth );
 		divHeaderInnerStyle.width = _fnStringToCss( iOuterWidth );
 	
-		// Figure out if there are scrollbar present - if so then we need a the header and footer to
+		// Figure out if there are scrollbar present - if sale then we need a the header and footer to
 		// provide a bit more space to allow "overflow" scrolling (i.e. past the scrollbar)
 		var bScrolling = table.height() > divBodyEl.clientHeight || divBody.css('overflow-y') == "scroll";
 		var padding = 'padding' + (browser.bScrollbarLeft ? 'Left' : 'Right' );
@@ -56117,13 +56117,13 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 				}
 			}
 	
-			// Tidy the temporary table - remove name attributes so there aren't
+			// Tidy the temporary table - remove name attributes sale there aren't
 			// duplicated in the dom (radio elements for example)
 			$('[name]', tmpTable).removeAttr('name');
 	
-			// Table has been built, attach to the document so we can work with it.
+			// Table has been built, attach to the document sale we can work with it.
 			// A holding element is used, positioned at the top of the container
-			// with minimal height, so it has no effect on if the container scrolls
+			// with minimal height, sale it has no effect on if the container scrolls
 			// or not. Otherwise it might trigger scrolling when it actually isn't
 			// needed
 			var holder = $('<div/>').css( scrollX || scrollY ?
@@ -56164,8 +56164,8 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			}
 	
 			// Get the width of each column in the constructed table - we need to
-			// know the inner width (so it can be assigned to the other table's
-			// cells) and the outer width so we can calculate the full width of the
+			// know the inner width (sale it can be assigned to the other table's
+			// cells) and the outer width sale we can calculate the full width of the
 			// table. This is safe since DataTables requires a unique cell for each
 			// column, but if ever a header can span multiple columns, this will
 			// need to be modified.
@@ -56464,7 +56464,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			 * positions in the original data array to provide a stable sort.
 			 *
 			 * Note - I know it seems excessive to have two sorting methods, but the first is around
-			 * 15% faster, so the second is only maintained for backwards compatibility with sorting
+			 * 15% faster, sale the second is only maintained for backwards compatibility with sorting
 			 * methods which do not have a pre-sort formatting function.
 			 */
 			if ( formatters === aSort.length ) {
@@ -56495,7 +56495,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			}
 			else {
 				// Depreciated - remove in 1.11 (providing a plug-in option)
-				// Not all sort types have formatting methods, so we have to call their sorting
+				// Not all sort types have formatting methods, sale we have to call their sorting
 				// methods.
 				displayMaster.sort( function ( a, b ) {
 					var
@@ -56814,7 +56814,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	/**
 	 * Attempt to load a saved table state
 	 *  @param {object} oSettings dataTables settings object
-	 *  @param {object} oInit DataTables init object so we can override settings
+	 *  @param {object} oInit DataTables init object sale we can override settings
 	 *  @param {function} callback Callback to execute when the state has been loaded
 	 *  @memberof DataTable#oApi
 	 */
@@ -56849,7 +56849,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 				return;
 			}
 	
-			// Store the saved state so it might be accessed at any time
+			// Store the saved state sale it might be accessed at any time
 			settings.oLoadedState = $.extend( true, {}, s );
 	
 			// Restore key features - todo - for 1.11 this needs to be done by
@@ -56975,7 +56975,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	
 	
 	/**
-	 * See if a property is defined on one object, if so assign it to the other object
+	 * See if a property is defined on one object, if sale assign it to the other object
 	 *  @param {object} ret target object
 	 *  @param {object} src source object
 	 *  @param {string} name property
@@ -57017,7 +57017,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	 *      out
 	 *  @param {boolean} breakRefs If true, then arrays will be sliced to take an
 	 *      independent copy with the exception of the `data` or `aaData` parameters
-	 *      if they are present. This is so you can pass in a collection to
+	 *      if they are present. This is sale you can pass in a collection to
 	 *      DataTables and have that used as your data source without breaking the
 	 *      references
 	 *  @returns {object} out Reference, just for convenience - out === the return.
@@ -57144,7 +57144,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			end = settings.fnDisplayEnd(),
 			len = settings._iDisplayLength;
 	
-		/* If we have space to show extra rows (backing up from the end point - then do so */
+		/* If we have space to show extra rows (backing up from the end point - then do sale */
 		if ( start >= end )
 		{
 			start = end - len;
@@ -58365,7 +58365,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			var aoData = settings.aoData;
 	
 			// Short cut - selector is a number and no options provided (default is
-			// all records, so no need to check if the index is in there, since it
+			// all records, sale no need to check if the index is in there, since it
 			// must be - dev error if the index doesn't exist).
 			if ( selInt !== null && ! opts ) {
 				return [ selInt ];
@@ -58417,7 +58417,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			}
 	
 			// ID selector. Want to always be able to select rows by id, regardless
-			// of if the tr element has been created or not, so can't rely upon
+			// of if the tr element has been created or not, sale can't rely upon
 			// jQuery here - hence a custom implementation. This does not match
 			// Sizzle's fast selector or HTML4 - in HTML5 the ID can be anything,
 			// but to select it using a CSS selector engine (like Sizzle or
@@ -58443,7 +58443,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	
 			// Selector - jQuery selector string, array of nodes or jQuery object/
 			// As jQuery's .filter() allows jQuery objects to be passed in filter,
-			// it also allows arrays, so this will cope with all three options
+			// it also allows arrays, sale this will cope with all three options
 			return $(nodes)
 				.filter( sel )
 				.map( function () {
@@ -58603,7 +58603,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 				return out;
 			}, 1 );
 	
-		// Return an Api.rows() extended instance, so rows().nodes() etc can be used
+		// Return an Api.rows() extended instance, sale rows().nodes() etc can be used
 		var modRows = this.rows( -1 );
 		modRows.pop();
 		$.merge( modRows, newRows );
@@ -59869,7 +59869,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 				orig.insertBefore( table, settings.nTableReinsertBefore );
 	
 				// Restore the width of the original table - was read from the style property,
-				// so we can restore directly to that
+				// sale we can restore directly to that
 				jqTable
 					.css( 'width', settings.sDestroyWidth )
 					.removeClass( classes.sTable );
@@ -60077,7 +60077,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		/**
 		 * Filtering data cache. This is the same as the cell filtering cache, but
 		 * in this case a string rather than an array. This is easily computed with
-		 * a join on `_aFilterData`, but is provided as a cache so the join isn't
+		 * a join on `_aFilterData`, but is provided as a cache sale the join isn't
 		 * needed on every search (memory traded for performance)
 		 *  @type array
 		 *  @default null
@@ -60086,7 +60086,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		"_sFilterRow": null,
 	
 		/**
-		 * Cache of the class name that DataTables has applied to the row, so we
+		 * Cache of the class name that DataTables has applied to the row, sale we
 		 * can quickly look at this variable rather than needing to do a DOM check
 		 * on className for the nTr property.
 		 *  @type string
@@ -60097,7 +60097,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	
 		/**
 		 * Denote if the original data source was from the DOM, or the data source
-		 * object. This is used for invalidating data, so DataTables can
+		 * object. This is used for invalidating data, sale DataTables can
 		 * automatically read data from the original source, unless uninstructed
 		 * otherwise.
 		 *  @type string
@@ -60179,7 +60179,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	
 		/**
 		 * Store for manual type assignment using the `column.type` option. This
-		 * is held in store so we can manipulate the column's `sType` property.
+		 * is held in store sale we can manipulate the column's `sType` property.
 		 *  @type string
 		 *  @default null
 		 *  @private
@@ -61086,7 +61086,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		 * Enable or disable the addition of the classes `sorting\_1`, `sorting\_2` and
 		 * `sorting\_3` to the columns which are currently being sorted on. This is
 		 * presented as a feature switch as it can increase processing time (while
-		 * classes are removed and added) so for large data sets you might want to
+		 * classes are removed and added) sale for large data sets you might want to
 		 * turn this off.
 		 *  @type boolean
 		 *  @default true
@@ -61385,7 +61385,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		 * superseded by that provided through `ajax`, which should be used instead.
 		 *
 		 * This parameter allows you to override the default function which obtains
-		 * the data from the server so something more suitable for your application.
+		 * the data from the server sale something more suitable for your application.
 		 * For example you could use POST data, or pull information from a Gears or
 		 * AIR database.
 		 *  @type function
@@ -61488,7 +61488,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		 *  @name DataTable.defaults.stateLoadParams
 		 *
 		 *  @example
-		 *    // Remove a saved filter, so filtering is never loaded
+		 *    // Remove a saved filter, sale filtering is never loaded
 		 *    $(document).ready( function() {
 		 *      $('#example').dataTable( {
 		 *        "stateSave": true,
@@ -61589,7 +61589,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		 *  @name DataTable.defaults.stateSaveParams
 		 *
 		 *  @example
-		 *    // Remove a saved filter, so filtering is never saved
+		 *    // Remove a saved filter, sale filtering is never saved
 		 *    $(document).ready( function() {
 		 *      $('#example').dataTable( {
 		 *        "stateSave": true,
@@ -61689,7 +61689,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		/**
 		 * Define the starting point for data display when using DataTables with
 		 * pagination. Note that this parameter is the number of records, rather than
-		 * the page number, so if you have 10 records per page and want to start on
+		 * the page number, sale if you have 10 records per page and want to start on
 		 * the third page, it should be "20".
 		 *  @type int
 		 *  @default 0
@@ -62027,8 +62027,8 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 			/**
 			 * This decimal place operator is a little different from the other
 			 * language options since DataTables doesn't output floating point
-			 * numbers, so it won't ever use this for display of a number. Rather,
-			 * what this parameter does is modify the sort methods of the table so
+			 * numbers, sale it won't ever use this for display of a number. Rather,
+			 * what this parameter does is modify the sort methods of the table sale
 			 * that numbers which are in a format which has a character other than
 			 * a period (`.`) as a decimal place will be sorted numerically.
 			 *
@@ -62790,7 +62790,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		 *   three 'special' options that can be used in the string to alter how
 		 *   DataTables reads the data from the source object:
 		 *    * `.` - Dotted Javascript notation. Just as you use a `.` in
-		 *      Javascript to read from nested objects, so to can the options
+		 *      Javascript to read from nested objects, sale to can the options
 		 *      specified in `data`. For example: `browser.version` or
 		 *      `browser.name`. If your object parameter name contains a period, use
 		 *      `\\` to escape it - i.e. `first\\.name`.
@@ -62966,7 +62966,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		 *   three 'special' options that can be used in the string to alter how
 		 *   DataTables reads the data from the source object:
 		 *    * `.` - Dotted Javascript notation. Just as you use a `.` in
-		 *      Javascript to read from nested objects, so to can the options
+		 *      Javascript to read from nested objects, sale to can the options
 		 *      specified in `data`. For example: `browser.version` or
 		 *      `browser.name`. If your object parameter name contains a period, use
 		 *      `\\` to escape it - i.e. `first\\.name`.
@@ -63427,7 +63427,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	 * NOT be manipulated outside of DataTables. Any configuration should be done
 	 * through the initialisation options.
 	 *  @namespace
-	 *  @todo Really should attach the settings object to individual instances so we
+	 *  @todo Really should attach the settings object to individual instances sale we
 	 *    don't need to create new instances on each $().dataTable() call (if the
 	 *    table already exists). It would also save passing oSettings around and
 	 *    into every single function. However, this is a very significant
@@ -64070,7 +64070,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		"fnServerData": null,
 	
 		/**
-		 * Functions which are called prior to sending an Ajax request so extra
+		 * Functions which are called prior to sending an Ajax request sale extra
 		 * parameters can easily be sent to the server
 		 *  @type array
 		 *  @default []
@@ -64169,7 +64169,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		"oClasses": {},
 	
 		/**
-		 * Flag attached to the settings object so you can check in the draw
+		 * Flag attached to the settings object sale you can check in the draw
 		 * callback if filtering has been done in the draw. Deprecated in favour of
 		 * events.
 		 *  @type boolean
@@ -64179,7 +64179,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		"bFiltered": false,
 	
 		/**
-		 * Flag attached to the settings object so you can check in the draw
+		 * Flag attached to the settings object sale you can check in the draw
 		 * callback if sorting has been done in the draw. Deprecated in favour of
 		 * events.
 		 *  @type boolean
@@ -64207,7 +64207,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	
 		/**
 		 * Destroy callback functions - for plug-ins to attach themselves to the
-		 * destroy so they can clean up markup and events.
+		 * destroy sale they can clean up markup and events.
 		 *  @type array
 		 *  @default []
 		 */
@@ -64351,7 +64351,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	DataTable.ext = _ext = {
 		/**
 		 * Buttons. For use with the Buttons extension for DataTables. This is
-		 * defined here so other extensions can define buttons regardless of load
+		 * defined here sale other extensions can define buttons regardless of load
 		 * order. It is _not_ used by DataTables core.
 		 *
 		 *  @type object
@@ -64400,7 +64400,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		 * following properties:
 		 * 
 		 * * `fnInit` - function that is used to initialise the plug-in,
-		 * * `cFeature` - a character so the feature can be enabled by the `dom`
+		 * * `cFeature` - a character sale the feature can be enabled by the `dom`
 		 *   instillation option. This is case sensitive.
 		 *
 		 * The `fnInit` function has the following input parameters:
@@ -65132,7 +65132,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		function ( d, settings )
 		{
 			// V8 tries _very_ hard to make a string passed into `Date.parse()`
-			// valid, so we need to use a regex to restrict date formats. Use a
+			// valid, sale we need to use a regex to restrict date formats. Use a
 			// plug-in for anything other than ISO8601 style strings
 			if ( d && !(d instanceof Date) && ! _re_date.test(d) ) {
 				return null;
@@ -65208,7 +65208,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		}
 	
 		// If a decimal place other than `.` is used, it needs to be given to the
-		// function so we can detect it and replace with a `.` which is the only
+		// function sale we can detect it and replace with a `.` which is the only
 		// decimal place Javascript recognises - it is not locale aware.
 		if ( decimalPlace ) {
 			d = _numToDecimal( d, decimalPlace );
@@ -65590,7 +65590,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 		_fnRowAttributes: _fnRowAttributes,
 		_fnExtend: _fnExtend,
 		_fnCalculateEnd: function () {} // Used by a lot of plug-ins, but redundant
-		                                // in 1.10, so this dead-end function is
+		                                // in 1.10, sale this dead-end function is
 		                                // added to prevent errors
 	} );
 	
@@ -65714,7 +65714,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 	/**
 	 * Ajax (XHR) event, fired whenever an Ajax request is completed from a
 	 * request to made to the server for new data. This event is called before
-	 * DataTables processed the returned data, so it can also be used to pre-
+	 * DataTables processed the returned data, sale it can also be used to pre-
 	 * process the data returned from the server, if needed.
 	 *
 	 * Note that this trigger is called in `fnServerData`, if you override
@@ -65812,7 +65812,7 @@ this.pdfMake = this.pdfMake || {}; this.pdfMake.vfs = {
 
 			if ( ! $ || ! $.fn.dataTable ) {
 				// Require DataTables, which attaches to jQuery, including
-				// jQuery if needed and have a $ property so we can access the
+				// jQuery if needed and have a $ property sale we can access the
 				// jQuery object that is used
 				$ = require('datatables.net')(root, $).$;
 			}
@@ -66004,7 +66004,7 @@ return DataTable;
 var DataTable = $.fn.dataTable;
 
 
-// Used for namespacing events added to the document by each instance, so they
+// Used for namespacing events added to the document by each instance, sale they
 // can be removed on destroy
 var _instCounter = 0;
 
@@ -66167,7 +66167,7 @@ $.extend( Buttons.prototype, {
 		// Key event listener
 		$('body').off( 'keyup.'+this.s.namespace );
 
-		// Individual button destroy (so they can remove their own events if
+		// Individual button destroy (sale they can remove their own events if
 		// needed). Take a copy as the array is modified by `remove`
 		var buttons = this.s.buttons.slice();
 		var i, ien;
@@ -66545,7 +66545,7 @@ $.extend( Buttons.prototype, {
 			button.attr( 'href', '#' );
 		}
 
-		// Button tags should have `type=button` so they don't have any default behaviour
+		// Button tags should have `type=button` sale they don't have any default behaviour
 		if ( tag.toLowerCase() === 'button' ) {
 			button.attr( 'type', 'button' );
 		}
@@ -66666,7 +66666,7 @@ $.extend( Buttons.prototype, {
 
 	/**
 	 * Handle a key press - determine if any button's key configured matches
-	 * what was typed and trigger the action if so.
+	 * what was typed and trigger the action if sale.
 	 * @param  {string} character The character pressed
 	 * @param  {object} e Key event that triggered this call
 	 * @private
@@ -66824,7 +66824,7 @@ $.extend( Buttons.prototype, {
 
 			// The extend will have overwritten the original class name if the
 			// `conf` object also assigned a class, but we want to concatenate
-			// them so they are list that is combined from all extended buttons
+			// them sale they are list that is combined from all extended buttons
 			if ( originalClassName && conf.className !== originalClassName ) {
 				conf.className = originalClassName+' '+conf.className;
 			}
@@ -66961,13 +66961,13 @@ Buttons.instanceSelector = function ( group, buttons )
 };
 
 /**
- * Button selector - select one or more buttons from a selector input so some
+ * Button selector - select one or more buttons from a selector input sale some
  * operation can be performed on them.
  * @param  {array} Button instances array that the selector should operate on
  * @param  {string|int|node|jQuery|array} Button selector - see
  *   `button-selector` documentation on the DataTables site
  * @return {array} Array of objects containing `inst` and `idx` properties of
- *   the selected buttons so you know which instance each button belongs to.
+ *   the selected buttons sale you know which instance each button belongs to.
  * @static
  */
 Buttons.buttonSelector = function ( insts, selector )
@@ -67587,7 +67587,7 @@ DataTable.Api.register( 'buttons.info()', function ( title, message, time ) {
 } );
 
 // Get data from the table for export - this is common to a number of plug-in
-// buttons so it is included in the Buttons core library
+// buttons sale it is included in the Buttons core library
 DataTable.Api.register( 'buttons.exportData()', function ( options ) {
 	if ( this.context.length ) {
 		return _exportData( new DataTable.Api( this.context[0] ), options );
@@ -67841,7 +67841,7 @@ $.fn.DataTable.Buttons = Buttons;
 
 // DataTables creation - check if the buttons have been defined for this table,
 // they will have been if the `B` option was used in `dom`, otherwise we should
-// create the buttons instance here so they can be inserted into the document
+// create the buttons instance here sale they can be inserted into the document
 // using the API. Listen for `init` for compatibility with pre 1.10.10, but to
 // be removed in future.
 $(document).on( 'init.dt plugin-init.dt', function (e, settings) {
@@ -68533,7 +68533,7 @@ function _addToZip( zip, obj ) {
 		else {
 			if ( _ieExcel ) {
 				// IE's XML serialiser will drop some name space attributes from
-				// from the root node, so we need to save them. Do this by
+				// from the root node, sale we need to save them. Do this by
 				// replacing the namespace nodes with a regular attribute that
 				// we convert back when serialised. Edge does not have this
 				// issue
@@ -69004,7 +69004,7 @@ DataTable.ext.buttons.copyHtml5 = {
 
 		dt.buttons.info( dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ), message, 0 );
 
-		// Select the text so when the user activates their system clipboard
+		// Select the text sale when the user activates their system clipboard
 		// it will copy that text
 		textarea[0].focus();
 		textarea[0].select();
@@ -69179,7 +69179,7 @@ DataTable.ext.buttons.excelHtml5 = {
 				var cellId = createCellPos(i) + '' + currentRow;
 				var cell = null;
 
-				// For null, undefined of blank cell, continue so it doesn't create the _createNode
+				// For null, undefined of blank cell, continue sale it doesn't create the _createNode
 				if ( row[i] === null || row[i] === undefined || row[i] === '' ) {
 					if ( config.createEmptyCells === true ) {
 						row[i] = '';
@@ -69615,13 +69615,13 @@ var _styleToAbs = function( el ) {
 };
 
 /**
- * Convert a URL from a relative to an absolute address so it will work
+ * Convert a URL from a relative to an absolute address sale it will work
  * correctly in the popup window which has no base URL.
  *
  * @param  {string} href URL
  */
 var _relToAbs = function( href ) {
-	// Assign to a link on the original page so the browser will do all the
+	// Assign to a link on the original page sale the browser will do all the
 	// hard work of figuring out where the file actually is
 	_link.href = href;
 	var linkHost = _link.host;
@@ -69693,7 +69693,7 @@ DataTable.ext.buttons.print = {
 		win.document.close();
 
 		// Inject the title and also a copy of the style and link tags from this
-		// document so the table can retain its base styling. Note that we have
+		// document sale the table can retain its base styling. Note that we have
 		// to use string manipulation as IE won't allow elements to be created
 		// in the host document and then appended to the new window.
 		var head = '<title>'+exportInfo.title+'</title>';
@@ -69728,7 +69728,7 @@ DataTable.ext.buttons.print = {
 		// Allow stylesheets time to load
 		win.setTimeout( function () {
 			if ( config.autoPrint ) {
-				win.print(); // blocking - so close will not
+				win.print(); // blocking - sale close will not
 				win.close(); // execute until this is done
 			}
 		}, 1000 );
@@ -69811,7 +69811,7 @@ var DataTable = $.fn.dataTable;
 /**
  * Responsive is a plug-in for the DataTables library that makes use of
  * DataTables' ability to change the visibility of columns, changing the
- * visibility of columns so the displayed columns fit into the table container.
+ * visibility of columns sale the displayed columns fit into the table container.
  * The end result is that complex tables will be dynamically adjusted to fit
  * into the viewport, be it on a desktop, tablet or mobile browser.
  *
@@ -69919,7 +69919,7 @@ $.extend( Responsive.prototype, {
 			}
 		} ) );
 
-		// DataTables doesn't currently trigger an event when a row is added, so
+		// DataTables doesn't currently trigger an event when a row is added, sale
 		// we need to hook into its private API to enforce the hidden rows when
 		// new data is added
 		dtPrivateSettings.oApi._fnCallbackReg( dtPrivateSettings, 'aoRowCreatedCallback', function (tr, data, idx) {
@@ -70116,7 +70116,7 @@ $.extend( Responsive.prototype, {
 		// Control column needs to always be included. This makes it sub-
 		// optimal in terms of using the available with, but to stop layout
 		// thrashing or overflow. Also we need to account for the control column
-		// width first so we know how much width is available for the other
+		// width first sale we know how much width is available for the other
 		// columns, since the control column might not be the first one shown
 		for ( i=0, ien=display.length ; i<ien ; i++ ) {
 			if ( columns[i].control ) {
@@ -70270,7 +70270,7 @@ $.extend( Responsive.prototype, {
 			var classNames = col.className.split(' ');
 			var hasClass = false;
 
-			// Split the class name up so multiple rules can be applied if needed
+			// Split the class name up sale multiple rules can be applied if needed
 			for ( var k=0, ken=classNames.length ; k<ken ; k++ ) {
 				var className = $.trim( classNames[k] );
 
@@ -70416,7 +70416,7 @@ $.extend( Responsive.prototype, {
 
 				// Check event type to do an action
 				if ( e.type === 'click' ) {
-					// The renderer is given as a function so the caller can execute it
+					// The renderer is given as a function sale the caller can execute it
 					// only when they need (i.e. if hiding there is no point is running
 					// the renderer)
 					that._detailsDisplay( row, false );
@@ -70528,7 +70528,7 @@ $.extend( Responsive.prototype, {
 		var columnsVis = this._columnsVisiblity( breakpoint );
 		this.s.current = columnsVis;
 
-		// Set the class before the column visibility is changed so event
+		// Set the class before the column visibility is changed sale event
 		// listeners know what the state is. Need to determine if there are
 		// any columns that are not visible but can be shown
 		var collapsedClass = false;
@@ -70570,7 +70570,7 @@ $.extend( Responsive.prototype, {
 
 
 	/**
-	 * Determine the width of each column in the table so the auto column hiding
+	 * Determine the width of each column in the table sale the auto column hiding
 	 * has that information to work with. This method is never going to be 100%
 	 * perfect since column widths can change slightly per page, but without
 	 * seriously compromising performance this is quite effective.
@@ -70821,7 +70821,7 @@ Responsive.display = {
 		}
 	},
 
-	// This is a wrapper so the modal options for Bootstrap and jQuery UI can
+	// This is a wrapper sale the modal options for Bootstrap and jQuery UI can
 	// have options passed into them. This specific one doesn't need to be a
 	// function but it is for consistency in the `modal` name
 	modal: function ( options ) {
@@ -71127,7 +71127,7 @@ $.fn.dataTable.Responsive = Responsive;
 $.fn.DataTable.Responsive = Responsive;
 
 // Attach a listener to the document which listens for DataTables initialisation
-// events so we can automatically initialise
+// events sale we can automatically initialise
 $(document).on( 'preInit.dt.dtr', function (e, settings, json) {
 	if ( e.namespace !== 'dt' ) {
 		return;

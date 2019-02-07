@@ -2,7 +2,45 @@
 
 @section('title', 'Sales Order')
 
+@push("css")
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+@endpush
+
+@push("js")
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.select2').select2();
+            $("#customer_select").change(function () {
+                var id = $(this).val();
+                $.ajax({
+                    // url: '/info/' + $(this).val(),
+                    url: "{{ url('sales-orders/create/customer/') }}/" + id,
+                    type: 'get',
+                    data: {},
+                    success: function (data) {
+                        if (data.success === true) {
+                            $("#register_id").val(data.fill.id);
+                            $("#project_owner").val(data.fill.project_owner);
+                            $("#address").val(data.fill.address);
+                            $("#phone").val(data.fill.phone);
+                            $("#fax").val(data.fill.fax);
+                            $("#email").val(data.fill.email);
+                        } else {
+                            alert('Cannot find info');
+                        }
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                    }
+                });
+            });
+        });
+    </script>
+@endpush
+
 @section('content')
+    @include("layouts.ajax")
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -10,7 +48,7 @@
                     <div>
                         <h2>
                             <small>
-                                <a href="{{ url('sales-orders') }}">Sales Orders</a> /
+                                <a href="{{ url('sales-orders') }}" class="text-dark">Sales Orders</a> /
                             </small>
                             <b>Create</b>
                         </h2>
@@ -36,37 +74,40 @@
                             <div class="form-group">
                                 <label for="customer">Customer</label>
                                 {{--<input type="text" class="form-control" id="customer" name="customer">--}}
-                                <select class="form-control" id="customer" name="customer">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
+                                <select class="form-control select2" id="customer_select" name="customer">
+                                    <option selected disabled>Choose Customer</option>
+                                    @foreach($customers as $customer)
+                                        <option value="{{ $customer->id }}">{{ $customer->project_owner }}</option>
+                                    @endforeach
                                 </select>
+                                <a href="#modalForm" data-toggle="modal"
+                                   data-href="{{ url('sales-orders/create/customer') }}"
+                                   class="btn btn-outline-dark mt-3 btn-block">
+                                    <i class="fa fa-plus"></i> New Customer</a>
                             </div>
                             <div class="form-group">
                                 <label for="register_id">Register ID</label>
-                                <input type="text" class="form-control" id="register_id" name="register_id">
+                                <input type="text" class="form-control" id="register_id" readonly name="register_id">
                             </div>
                             <div class="form-group">
-                                <label for="owner">Pemilik Project</label>
-                                <input type="text" class="form-control" id="owner" name="owner">
+                                <label for="project_owner">Pemilik Project</label>
+                                <input type="text" class="form-control" id="project_owner" readonly name="project_owner">
                             </div>
                             <div class="form-group">
                                 <label for="address">Alamat</label>
-                                <input type="text" class="form-control" id="address" name="address">
+                                <input type="text" class="form-control" id="address" readonly name="address">
                             </div>
                             <div class="form-group">
-                                <label for="telp">Telp</label>
-                                <input type="text" class="form-control" id="telp" name="telp">
+                                <label for="phone">Telp</label>
+                                <input type="text" class="form-control" id="phone" readonly name="phone">
                             </div>
                             <div class="form-group">
                                 <label for="fax">Fax</label>
-                                <input type="text" class="form-control" id="fax" name="fax">
+                                <input type="text" class="form-control" id="fax" readonly name="fax">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" name="email">
+                                <input type="email" class="form-control" id="email" readonly name="email">
                             </div>
                             <div class="form-group">
                                 <label for="project">Project</label>

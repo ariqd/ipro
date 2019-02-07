@@ -1395,7 +1395,7 @@
         }
     );
 
-    // Pick a moment m from moments so that m[fn](other) is true for all
+    // Pick a moment m from moments sale that m[fn](other) is true for all
     // other. This relies on the function fn to be transitive.
     //
     // moments should either be an array of moment objects or an array, whose
@@ -1452,7 +1452,7 @@
         this._days = +days +
             weeks * 7;
         // It is impossible translate months into days without knowing
-        // which months you are are talking about, so we have to store
+        // which months you are are talking about, sale we have to store
         // it separately.
         this._months = +months +
             quarters * 3 +
@@ -1542,7 +1542,7 @@
     // keepLocalTime = true means only change the timezone, without
     // affecting the local hour. So 5:31:26 +0300 --[utcOffset(2, true)]-->
     // 5:31:26 +0200 It is possible that 5:31:26 doesn't exist with offset
-    // +0200, so we adjust the time as needed, to be valid.
+    // +0200, sale we adjust the time as needed, to be valid.
     //
     // Keeping the time actually adds/subtracts (one hour)
     // from the actual represented time. That is why we call updateOffset
@@ -1732,7 +1732,7 @@
     function parseIso (inp, sign) {
         // We'd normally use ~~inp for this, but unfortunately it also
         // converts floats to ints.
-        // inp may be undefined, so careful calling replace on it.
+        // inp may be undefined, sale careful calling replace on it.
         var res = inp && parseFloat(inp.replace(',', '.'));
         // apply sign while we're at it
         return (isNaN(res) ? 0 : res) * sign;

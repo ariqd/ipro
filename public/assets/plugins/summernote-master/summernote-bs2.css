@@ -1569,7 +1569,7 @@
   padding-right: 4px \9;
   padding-left: 14px;
   padding-left: 4px \9;
-  /* IE7-8 doesn't have border-radius, so don't indent the padding */
+  /* IE7-8 doesn't have border-radius, sale don't indent the padding */
 
   margin-bottom: 0;
   -webkit-border-radius: 15px;
@@ -2713,7 +2713,7 @@
   border-color: #e6e6e6 #e6e6e6 #bfbfbf;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #e6e6e6;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  /* Darken IE7 buttons by default sale they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   border: 1px solid #cccccc;
@@ -2849,7 +2849,7 @@
   border-color: #0044cc #0044cc #002a80;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #0044cc;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  /* Darken IE7 buttons by default sale they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -2881,7 +2881,7 @@
   border-color: #f89406 #f89406 #ad6704;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #f89406;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  /* Darken IE7 buttons by default sale they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -2913,7 +2913,7 @@
   border-color: #bd362f #bd362f #802420;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #bd362f;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  /* Darken IE7 buttons by default sale they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -2945,7 +2945,7 @@
   border-color: #51a351 #51a351 #387038;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #51a351;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  /* Darken IE7 buttons by default sale they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -2977,7 +2977,7 @@
   border-color: #2f96b4 #2f96b4 #1f6377;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #2f96b4;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  /* Darken IE7 buttons by default sale they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -3009,7 +3009,7 @@
   border-color: #222222 #222222 #000000;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #222222;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  /* Darken IE7 buttons by default sale they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -3956,7 +3956,7 @@
   border-color: #e5e5e5 #e5e5e5 #bfbfbf;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #e5e5e5;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  /* Darken IE7 buttons by default sale they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 0 rgba(255,255,255,.075);
@@ -4190,7 +4190,7 @@
   border-color: #040404 #040404 #000000;
   border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
   *background-color: #040404;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  /* Darken IE7 buttons by default sale they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }

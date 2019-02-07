@@ -7,13 +7,16 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="d-flex justify-content-between">
-                    <h2>Master Data Users</h2>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0">Master Data</h5>
+                        <h2>User</h2>
+                    </div>
                     <div>
                         {{--<a href="#modalForm" data-toggle="modal" data-href="{{ url('branches') }}"--}}
                            {{--class="btn btn-success"><i class="fa fa-tree"></i> Atur Cabang</a>--}}
                         <a href="{{ url('branches') }}"
-                           class="btn btn-success"><i class="fa fa-tree"></i> Atur Cabang</a>
+                           class="btn btn-secondary"><i class="fa fa-tree"></i> Atur Cabang</a>
                         <a href="#modalForm" data-toggle="modal" data-href="{{ url('accounts/create') }}"
                            class="btn btn-dark"><i class="fa fa-plus"></i> Tambah User</a>
                     </div>
@@ -32,7 +35,7 @@
                             <th>Username</th>
                             <th>Email</th>
                             <th>Role</th>
-                            <th>Branch</th>
+                            {{--<th>Branch</th>--}}
                             <th></th>
                         </tr>
                         </thead>
@@ -45,11 +48,12 @@
                                 <td>{{ $user->username }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->role }}</td>
-                                <td>{{ $user->branch }}</td>
+                                {{--<td>{{ $user->branch }}</td>--}}
+                                {{--<td>Bandung</td>--}}
                                 <td>
                                     <a href="#modalForm" data-toggle="modal"
                                        data-href="{{ url('accounts/'.$user->id.'/edit') }}"
-                                       class="btn btn-outline-dark btn-sm">Edit</a>
+                                       class="btn btn-secondary btn-sm">Edit</a>
                                     <a href="#modalForm" data-toggle="modal"
                                        data-href="#"
                                        class="btn btn-outline-dark btn-sm">Change Password</a>

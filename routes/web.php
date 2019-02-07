@@ -36,10 +36,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('purchase-orders', 'PurchaseOrderController');
     Route::get('purchase-orders/create/add-items', 'PurchaseOrderController@addItems');
     Route::resource('sales-orders', 'SalesOrderController');
-//    Route::get('sales-orders/create', 'SalesOrderController@create');
+    Route::get('sales-orders/create/customer', 'SalesOrderController@createCustomer');
+    Route::post('sales-orders/create/customer', 'SalesOrderController@insertCustomer');
+    Route::get('sales-orders/create/customer/{id}', 'SalesOrderController@getCustomer');
 
     Route::resource('finances', 'FinanceController');
     Route::resource('accounts', 'AccountController');
     Route::resource('branches', 'BranchController');
     Route::resource('deposits', 'DepositController');
+
+    Route::resource('customers', 'CustomerController');
 });

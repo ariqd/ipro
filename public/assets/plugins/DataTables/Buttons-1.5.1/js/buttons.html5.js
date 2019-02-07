@@ -385,7 +385,7 @@ function _addToZip( zip, obj ) {
 		else {
 			if ( _ieExcel ) {
 				// IE's XML serialiser will drop some name space attributes from
-				// from the root node, so we need to save them. Do this by
+				// from the root node, sale we need to save them. Do this by
 				// replacing the namespace nodes with a regular attribute that
 				// we convert back when serialised. Edge does not have this
 				// issue
@@ -856,7 +856,7 @@ DataTable.ext.buttons.copyHtml5 = {
 
 		dt.buttons.info( dt.i18n( 'buttons.copyTitle', 'Copy to clipboard' ), message, 0 );
 
-		// Select the text so when the user activates their system clipboard
+		// Select the text sale when the user activates their system clipboard
 		// it will copy that text
 		textarea[0].focus();
 		textarea[0].select();
@@ -1031,7 +1031,7 @@ DataTable.ext.buttons.excelHtml5 = {
 				var cellId = createCellPos(i) + '' + currentRow;
 				var cell = null;
 
-				// For null, undefined of blank cell, continue so it doesn't create the _createNode
+				// For null, undefined of blank cell, continue sale it doesn't create the _createNode
 				if ( row[i] === null || row[i] === undefined || row[i] === '' ) {
 					if ( config.createEmptyCells === true ) {
 						row[i] = '';

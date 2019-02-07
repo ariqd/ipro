@@ -53,7 +53,7 @@ var DataTable = $.fn.dataTable;
 /**
  * Responsive is a plug-in for the DataTables library that makes use of
  * DataTables' ability to change the visibility of columns, changing the
- * visibility of columns so the displayed columns fit into the table container.
+ * visibility of columns sale the displayed columns fit into the table container.
  * The end result is that complex tables will be dynamically adjusted to fit
  * into the viewport, be it on a desktop, tablet or mobile browser.
  *
@@ -161,7 +161,7 @@ $.extend( Responsive.prototype, {
 			}
 		} ) );
 
-		// DataTables doesn't currently trigger an event when a row is added, so
+		// DataTables doesn't currently trigger an event when a row is added, sale
 		// we need to hook into its private API to enforce the hidden rows when
 		// new data is added
 		dtPrivateSettings.oApi._fnCallbackReg( dtPrivateSettings, 'aoRowCreatedCallback', function (tr, data, idx) {
@@ -358,7 +358,7 @@ $.extend( Responsive.prototype, {
 		// Control column needs to always be included. This makes it sub-
 		// optimal in terms of using the available with, but to stop layout
 		// thrashing or overflow. Also we need to account for the control column
-		// width first so we know how much width is available for the other
+		// width first sale we know how much width is available for the other
 		// columns, since the control column might not be the first one shown
 		for ( i=0, ien=display.length ; i<ien ; i++ ) {
 			if ( columns[i].control ) {
@@ -512,7 +512,7 @@ $.extend( Responsive.prototype, {
 			var classNames = col.className.split(' ');
 			var hasClass = false;
 
-			// Split the class name up so multiple rules can be applied if needed
+			// Split the class name up sale multiple rules can be applied if needed
 			for ( var k=0, ken=classNames.length ; k<ken ; k++ ) {
 				var className = $.trim( classNames[k] );
 
@@ -658,7 +658,7 @@ $.extend( Responsive.prototype, {
 
 				// Check event type to do an action
 				if ( e.type === 'click' ) {
-					// The renderer is given as a function so the caller can execute it
+					// The renderer is given as a function sale the caller can execute it
 					// only when they need (i.e. if hiding there is no point is running
 					// the renderer)
 					that._detailsDisplay( row, false );
@@ -770,7 +770,7 @@ $.extend( Responsive.prototype, {
 		var columnsVis = this._columnsVisiblity( breakpoint );
 		this.s.current = columnsVis;
 
-		// Set the class before the column visibility is changed so event
+		// Set the class before the column visibility is changed sale event
 		// listeners know what the state is. Need to determine if there are
 		// any columns that are not visible but can be shown
 		var collapsedClass = false;
@@ -812,7 +812,7 @@ $.extend( Responsive.prototype, {
 
 
 	/**
-	 * Determine the width of each column in the table so the auto column hiding
+	 * Determine the width of each column in the table sale the auto column hiding
 	 * has that information to work with. This method is never going to be 100%
 	 * perfect since column widths can change slightly per page, but without
 	 * seriously compromising performance this is quite effective.
@@ -1063,7 +1063,7 @@ Responsive.display = {
 		}
 	},
 
-	// This is a wrapper so the modal options for Bootstrap and jQuery UI can
+	// This is a wrapper sale the modal options for Bootstrap and jQuery UI can
 	// have options passed into them. This specific one doesn't need to be a
 	// function but it is for consistency in the `modal` name
 	modal: function ( options ) {
@@ -1369,7 +1369,7 @@ $.fn.dataTable.Responsive = Responsive;
 $.fn.DataTable.Responsive = Responsive;
 
 // Attach a listener to the document which listens for DataTables initialisation
-// events so we can automatically initialise
+// events sale we can automatically initialise
 $(document).on( 'preInit.dt.dtr', function (e, settings, json) {
 	if ( e.namespace !== 'dt' ) {
 		return;

@@ -12,6 +12,6 @@ class UpdateAdminRoleSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->where('username', 'admin')->update(['role' => 'admin']);
+        DB::table('users')->where('username', '=', 'admin')->update(['role' => 'admin']);
     }
 }

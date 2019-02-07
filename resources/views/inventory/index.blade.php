@@ -151,7 +151,7 @@
                        {{--class="btn btn-success mr-2"><i class="fa fa-plus-circle"></i> Restock</a>--}}
                     @if(Gate::allows('isAdmin'))
                         <a href="#modalForm" data-toggle="modal" data-href="{{ url('inventories/create') }}"
-                           class="btn btn-primary"><i class="fa fa-plus"></i> Add New</a>
+                           class="btn btn-dark"><i class="fa fa-plus"></i> Add New</a>
                     @endif
                 </div>
             </div>
@@ -281,19 +281,19 @@
                                     {{--<div class="d-flex">--}}
                                     <a href="#modalForm" data-toggle="modal"
                                        data-href="{{ url('inventories/'.$inventory->id.'/restock') }}"
-                                       class="btn btn-success btn-block btn-sm">
+                                       class="btn btn-ipro btn-block btn-sm">
                                         <i class="fa fa-plus"></i> Restock</a>
                                     @if(Gate::allows('isAdmin'))
                                         <a href="#modalForm" data-toggle="modal"
                                            data-href="{{ url('inventories/'.$inventory->id) }}"
                                            class="btn btn-dark btn-block btn-sm">
                                             <i class="fa fa-eye"></i> Detail</a>
-                                        <a title="Edit" class="btn btn-info btn-block btn-sm" title="Edit"
+                                        <a title="Edit" class="btn btn-secondary btn-block btn-sm" title="Edit"
                                            href="#modalForm"
                                            data-toggle="modal"
                                            data-href="{{ url('inventories/'.$inventory->id.'/edit') }}">
                                             <i class="fa fa-edit"></i> Edit</a>
-                                        <a href="#" class="btn btn-danger btnDelete btn-block btn-sm"><i
+                                        <a href="#" class="btn btn-link btnDelete btn-block btn-sm"><i
                                                     class="fa fa-trash"></i> Delete</a>
                                         <form action="{{ url('inventories/'.$inventory->id) }}"
                                               method="post" class="formDelete d-none">

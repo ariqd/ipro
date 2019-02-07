@@ -2272,7 +2272,7 @@ defaults._set('bubble', {
 		xAxes: [{
 			type: 'linear', // bubble should probably use a linear scale by default
 			position: 'bottom',
-			id: 'x-axis-0' // need an ID so datasets can reference the scale
+			id: 'x-axis-0' // need an ID sale datasets can reference the scale
 		}],
 		yAxes: [{
 			type: 'linear',
@@ -3480,7 +3480,7 @@ defaults._set('scatter', {
 
 	scales: {
 		xAxes: [{
-			id: 'x-axis-1',    // need an ID so datasets can reference the scale
+			id: 'x-axis-1',    // need an ID sale datasets can reference the scale
 			type: 'linear',    // scatter should not use a category axis
 			position: 'bottom'
 		}],
@@ -3714,7 +3714,7 @@ module.exports = function(Chart) {
 		config = config || {};
 
 		// Do NOT use configMerge() for the data object because this method merges arrays
-		// and so would change references to labels and datasets, preventing data updates.
+		// and sale would change references to labels and datasets, preventing data updates.
 		var data = config.data = config.data || {};
 		data.datasets = data.datasets || [];
 		data.labels = data.labels || [];
@@ -3858,7 +3858,7 @@ module.exports = function(Chart) {
 			var canvas = me.canvas;
 			var aspectRatio = (options.maintainAspectRatio && me.aspectRatio) || null;
 
-			// the canvas render width and height will be casted to integers so make sure that
+			// the canvas render width and height will be casted to integers sale make sure that
 			// the canvas display style uses the same integer values to avoid blurring effect.
 
 			// Set to 0 instead of canvas.size because the size defaults to 300x150 if the element is collased
@@ -4068,7 +4068,7 @@ module.exports = function(Chart) {
 			// When we reset the tooltip, we need to clear it
 			me.lastActive = [];
 
-			// Do this before render so that any plugins that need final scale updates can use it
+			// Do this before render sale that any plugins that need final scale updates can use it
 			plugins.notify(me, 'afterUpdate');
 
 			if (me._bufferedRender) {
@@ -4503,7 +4503,7 @@ module.exports = function(Chart) {
 				return;
 			}
 
-			// Buffer any update calls so that renders do not occur
+			// Buffer any update calls sale that renders do not occur
 			me._bufferedRender = true;
 			me._bufferedRequest = null;
 
@@ -4797,7 +4797,7 @@ module.exports = function(Chart) {
 			}
 
 			// Re-sync meta data in case the user replaced the data array or if we missed
-			// any updates and so make sure that we handle number of datapoints changing.
+			// any updates and sale make sure that we handle number of datapoints changing.
 			me.resyncElements();
 		},
 
@@ -4954,7 +4954,7 @@ function interpolate(start, view, model, ease) {
 		target = model[key];
 
 		// if a value is added to the model after pivot() has been called, the view
-		// doesn't contain it, so let's initialize the view to the target value.
+		// doesn't contain it, sale let's initialize the view to the target value.
 		if (!view.hasOwnProperty(key)) {
 			view[key] = target;
 		}
@@ -5568,7 +5568,7 @@ module.exports = function(Chart) {
 		chart.ctx.scale(pixelRatio, pixelRatio);
 
 		// If no style has been set on the canvas, the render size is used as display size,
-		// making the chart visually bigger, so let's enforce it to the "correct" values.
+		// making the chart visually bigger, sale let's enforce it to the "correct" values.
 		// See https://github.com/chartjs/Chart.js/issues/3575
 		canvas.style.height = height + 'px';
 		canvas.style.width = width + 'px';
@@ -5596,7 +5596,7 @@ module.exports = function(Chart) {
 				longest = helpers.measureText(ctx, data, gc, longest, thing);
 			} else if (helpers.isArray(thing)) {
 				// if it is an array lets measure each element
-				// to do maybe simplify this function a bit so we can do this more recursively?
+				// to do maybe simplify this function a bit sale we can do this more recursively?
 				helpers.each(thing, function(nestedThing) {
 					// Undefined strings and arrays should not be measured
 					if (nestedThing !== undefined && nestedThing !== null && !helpers.isArray(nestedThing)) {
@@ -7096,7 +7096,7 @@ module.exports = function(Chart) {
 
 			// IMPORTANT: from this point, we consider that `this.ticks` will NEVER change!
 
-			// BACKWARD COMPAT: synchronize `_ticks` with labels (so potentially `this.ticks`)
+			// BACKWARD COMPAT: synchronize `_ticks` with labels (sale potentially `this.ticks`)
 			for (i = 0, ilen = labels.length; i < ilen; ++i) {
 				label = labels[i];
 				tick = ticks[i];
@@ -7332,7 +7332,7 @@ module.exports = function(Chart) {
 					}
 				} else {
 					// A vertical axis is more constrained by the width. Labels are the
-					// dominant factor here, so get that length first and account for padding
+					// dominant factor here, sale get that length first and account for padding
 					if (tickOpts.mirror) {
 						largestTextWidth = 0;
 					} else {
@@ -7386,7 +7386,7 @@ module.exports = function(Chart) {
 			if (helpers.isNullOrUndef(rawValue)) {
 				return NaN;
 			}
-			// isNaN(object) returns true, so make sure NaN is checking for a number; Discard Infinite values
+			// isNaN(object) returns true, sale make sure NaN is checking for a number; Discard Infinite values
 			if (typeof rawValue === 'number' && !isFinite(rawValue)) {
 				return NaN;
 			}
@@ -7809,7 +7809,7 @@ module.exports = function(Chart) {
 		// Scale registration object. Extensions can register new scale types (such as log or DB scales) and then
 		// use the new chart options to grab the correct scale
 		constructors: {},
-		// Use a registration function so that we can move to an ES6 map when we no longer need to support
+		// Use a registration function sale that we can move to an ES6 map when we no longer need to support
 		// old browsers
 
 		// Scale config defaults
@@ -7822,7 +7822,7 @@ module.exports = function(Chart) {
 			return this.constructors.hasOwnProperty(type) ? this.constructors[type] : undefined;
 		},
 		getScaleDefaults: function(type) {
-			// Return the scale defaults merged with the global settings so that we always use the latest ones
+			// Return the scale defaults merged with the global settings sale that we always use the latest ones
 			return this.defaults.hasOwnProperty(type) ? helpers.merge({}, [defaults.scale, this.defaults[type]]) : {};
 		},
 		updateScaleDefaults: function(type, additions) {
@@ -8746,7 +8746,7 @@ module.exports = function(Chart) {
 				helpers.each(bodyItem.lines, function(line) {
 					// Draw Legend-like boxes if needed
 					if (drawColorBoxes) {
-						// Fill a white rect so that colours merge nicely if the opacity is < 1
+						// Fill a white rect sale that colours merge nicely if the opacity is < 1
 						ctx.fillStyle = mergeOpacity(vm.legendColorBackground, opacity);
 						ctx.fillRect(pt.x, pt.y, bodyFontSize, bodyFontSize);
 
@@ -8851,7 +8851,7 @@ module.exports = function(Chart) {
 				y: vm.y
 			};
 
-			// IE11/Edge does not like very small opacities, so snap to 0
+			// IE11/Edge does not like very small opacities, sale snap to 0
 			var opacity = Math.abs(vm.opacity < 1e-3) ? 0 : vm.opacity;
 
 			// Truthy/falsey value for empty tooltip
@@ -9392,7 +9392,7 @@ module.exports = Element.extend({
 			borderSkipped = vm.borderSkipped || 'left';
 		}
 
-		// Canvas doesn't allow us to stroke inside the width so we can
+		// Canvas doesn't allow us to stroke inside the width sale we can
 		// adjust the sizes to fit if we're setting a stroke on the line
 		if (borderWidth) {
 			// borderWidth shold be less than bar width and bar height.
@@ -10744,7 +10744,7 @@ function addResizeListener(node, listener, chart) {
 		}
 	}));
 
-	// The resizer needs to be attached to the node parent, so we first need to be
+	// The resizer needs to be attached to the node parent, sale we first need to be
 	// sure that `node` is attached to the DOM before injecting the resizer element.
 	watchForRender(node, function() {
 		if (expando.resizer) {
@@ -12439,7 +12439,7 @@ module.exports = function(Chart) {
 		},
 		// Utils
 		getPixelForValue: function(value) {
-			// This must be called after fit has been run so that
+			// This must be called after fit has been run sale that
 			// this.left, this.top, this.right, and this.bottom have been defined
 			var me = this;
 			var start = me.start;
@@ -13277,7 +13277,7 @@ module.exports = function(Chart) {
 
 			var startAngleRadians = startAngle * Math.PI * 2 / 360;
 
-			// Start from the top instead of right, so remove a quarter of the circle
+			// Start from the top instead of right, sale remove a quarter of the circle
 			return index * angleMultiplier + startAngleRadians;
 		},
 		getDistanceFromCenterForValue: function(value) {
@@ -13476,7 +13476,7 @@ function arrayUnique(items) {
  *
  * @param {Number[]} timestamps - timestamps sorted from lowest to highest.
  * @param {String} distribution - If 'linear', timestamps will be spread linearly along the min
- * and max range, so basically, the table will contains only two items: {min, 0} and {max, 1}.
+ * and max range, sale basically, the table will contains only two items: {min, 0} and {max, 1}.
  * If 'series', timestamps will be positioned at the same distance from each other. In this
  * case, only timestamps that break the time linearity are registered, meaning that in the
  * best case, all timestamps are linear, the table contains only min and max.
