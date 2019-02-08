@@ -15,13 +15,13 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-    	$d['items'] = Item::all()
+    	$d['items'] = Item::all();
 
     	if (!empty($request->all())) {
     		$d['filtered'] = TRUE;
     	}
 
-    	return view('inventory.index', $d);
+    	return view('item.index', $d);
     }
 
     /**
@@ -54,7 +54,7 @@ class ItemController extends Controller
     	if ($validate->fails()) {
     		return redirect('item')->withErrors($validate)->withInput($input);
     	} else {
-    		$inventory = Item::create($input);
+    		$item = Item::create($input);
     		return redirect('item')->with('info', $item->name . ' berhasil ditambahkan!');
     	}
     }
@@ -79,7 +79,7 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-    	$d['item'] = Inventory::find($id);
+    	$d['item'] = Item::find($id);
     	$d['isEdit'] = TRUE;
     	return view('item.form', $d);
     }
@@ -123,7 +123,7 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-    	Inventory::destroy($id);
+    	Item::destroy($id);
     	return redirect('/item')->with('info', 'Item berhasil dihapus!');
     }
 }
