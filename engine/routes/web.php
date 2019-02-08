@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('pos', 'PosController');
     Route::resource('catalogues', 'CatalogueController');
 
+    Route::resource('items', 'ItemController');
     Route::get('stocks/get', 'StockController@getJsonTable');
 //    Route::get('stocks/restock', 'StockController@restock');
     Route::get('stocks/{id}/restock', 'StockController@restock');
