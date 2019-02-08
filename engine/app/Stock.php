@@ -10,7 +10,7 @@ class Stock extends Model
 
     public function scopeBrands($query, Array $brands)
     {
-        return $query->orWhereIn('brand', $brands);
+        return $query->leftjoin("items","items.id","stocks.item_id")->leftjoin("brands","brands.id","item.brand_id")->orWhereIn('brands', $brands);
     }
 
     public function scopeBranches($query, Array $branches)

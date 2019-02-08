@@ -1,6 +1,6 @@
 @extends('layouts.carbon')
 
-@section('title', 'Inventory')
+@section('title', 'Stock')
 
 @push('css')
     <link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet"/>
@@ -125,7 +125,7 @@
     <div class="container fill">
         <div class="row">
             <div class="col-lg-4">
-                <h2>Master Data Inventory</h2>
+                <h2>Master Data Stock</h2>
             </div>
             <div class="col-lg-8">
                 <div class="d-flex">
@@ -133,11 +133,11 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="add-on"><i class="fa fa-search"></i></span>
                         </div>
-                        <input type="text" id="myInput" class="form-control" placeholder="Search inventory..."
+                        <input type="text" id="myInput" class="form-control" placeholder="Search stock..."
                                aria-label="Search" aria-describedby="add-on">
                     </div>
                     @if($filtered)
-                        <a href="{{ url('inventories') }}" class="btn btn-dark mr-2"><i class="fa fa-refresh"></i> Clear
+                        <a href="{{ url('stocks') }}" class="btn btn-dark mr-2"><i class="fa fa-refresh"></i> Clear
                             Filter</a>
                     @else
                         <a class="btn btn-secondary mr-2" data-toggle="collapse" href="#collapseExample" role="button"
@@ -145,12 +145,12 @@
                             Filter <i class="fa fa-chevron-down"></i>
                         </a>
                     @endif
-                    {{--<a href="{{ url('inventories/restock') }}"--}}
+                    {{--<a href="{{ url('stocks/restock') }}"--}}
                        {{--class="btn btn-success mr-2"><i class="fa fa-plus-circle"></i> Restock</a>--}}
-                    {{--<a href="#modalForm" data-toggle="modal" data-href="{{ url('inventories/restock') }}"--}}
+                    {{--<a href="#modalForm" data-toggle="modal" data-href="{{ url('stocks/restock') }}"--}}
                        {{--class="btn btn-success mr-2"><i class="fa fa-plus-circle"></i> Restock</a>--}}
                     @if(Gate::allows('isAdmin'))
-                        <a href="#modalForm" data-toggle="modal" data-href="{{ url('inventories/create') }}"
+                        <a href="#modalForm" data-toggle="modal" data-href="{{ url('stocks/create') }}"
                            class="btn btn-dark"><i class="fa fa-plus"></i> Add New</a>
                     @endif
                 </div>
@@ -187,7 +187,7 @@
             <div class="col-lg-12">
                 <div class="collapse" id="collapseExample">
                     <div class="card card-body">
-                        <form action="{{ url('inventories') }}" id="find-table" method="get">
+                        <form action="{{ url('stocks') }}" id="find-table" method="get">
                             <div class="row">
                                 <label for="brands" class="col-lg-2 col-form-label text-right"><h4>Brands :</h4></label>
                                 <div class="col-lg-10">
@@ -258,44 +258,44 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($inventories as $inventory)
+                        @foreach($stocks as $stock)
                             <tr>
-                                <td class="nama">{{ $inventory->name }}</td>
-                                <td class="brand">{{ $inventory->brand }}</td>
-                                <td class="kode">{{ $inventory->code }}</td>
-                                {{--<td class="cabang">{{ $inventory->branch }}</td>--}}
+                                <td class="nama">{{ $stock->name }}</td>
+                                <td class="brand">{{ $stock->brand }}</td>
+                                <td class="kode">{{ $stock->code }}</td>
+                                {{--<td class="cabang">{{ $stock->branch }}</td>--}}
                                 <td class="cabang">Bandung</td>
                                 <td class="stock stok">
-                                    {{ $inventory->stock }}
+                                    {{ $stock->stock }}
                                 </td>
                                 <td class="booking">
                                     10
                                 </td>
                                 <td class="berat weight">
-                                    {{ $inventory->weight }}
+                                    {{ $stock->weight }}
                                 </td>
                                 <td class="harga">
-                                    Rp {{ number_format($inventory->price) }}
+                                    Rp {{ number_format($stock->price) }}
                                 </td>
                                 <td>
                                     {{--<div class="d-flex">--}}
                                     <a href="#modalForm" data-toggle="modal"
-                                       data-href="{{ url('inventories/'.$inventory->id.'/restock') }}"
+                                       data-href="{{ url('stocks/'.$stock->id.'/restock') }}"
                                        class="btn btn-ipro btn-block btn-sm">
                                         <i class="fa fa-plus"></i> Restock</a>
                                     @if(Gate::allows('isAdmin'))
                                         <a href="#modalForm" data-toggle="modal"
-                                           data-href="{{ url('inventories/'.$inventory->id) }}"
+                                           data-href="{{ url('stocks/'.$stock->id) }}"
                                            class="btn btn-dark btn-block btn-sm">
                                             <i class="fa fa-eye"></i> Detail</a>
                                         <a title="Edit" class="btn btn-secondary btn-block btn-sm" title="Edit"
                                            href="#modalForm"
                                            data-toggle="modal"
-                                           data-href="{{ url('inventories/'.$inventory->id.'/edit') }}">
+                                           data-href="{{ url('stocks/'.$stock->id.'/edit') }}">
                                             <i class="fa fa-edit"></i> Edit</a>
                                         <a href="#" class="btn btn-link btnDelete btn-block btn-sm"><i
                                                     class="fa fa-trash"></i> Delete</a>
-                                        <form action="{{ url('inventories/'.$inventory->id) }}"
+                                        <form action="{{ url('stocks/'.$stock->id) }}"
                                               method="post" class="formDelete d-none">
                                             {!! csrf_field() !!}
                                             {!! method_field('delete') !!}
@@ -304,7 +304,7 @@
                                     {{--</div>--}}
                                 </td>
                                 <td class="price d-none">
-                                    {{ $inventory->price }}
+                                    {{ $stock->price }}
                                 </td>
                             </tr>
                         @endforeach

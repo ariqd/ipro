@@ -135,9 +135,9 @@
 
                         <ul class="nav-dropdown-items">
                             <li class="nav-item">
-                                <a href="{{ url('inventories') }}"
-                                   class="nav-link {{ (Request::is('inventories*')) ? 'active' : '' }}">
-                                    <i class="fa fa-list"></i> Inventory
+                                <a href="{{ url('stocks') }}"
+                                   class="nav-link {{ (Request::is('stocks*')) ? 'active' : '' }}">
+                                    <i class="fa fa-list"></i> Stock
                                 </a>
                             </li>
 

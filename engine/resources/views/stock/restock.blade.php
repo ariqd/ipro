@@ -1,7 +1,7 @@
-<form action="{{ url('inventories/'.$inventory->id.'/restock')  }}" method="post">
+<form action="{{ url('inventories/'.$stock->id.'/restock')  }}" method="post">
     @csrf
     <div class="modal-header">
-        <h5 class="modal-title">Restock {{ $inventory->branch .' | '. $inventory->name }}</h5>
+        <h5 class="modal-title">Restock {{ $stock->branch .' | '. $stock->name }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

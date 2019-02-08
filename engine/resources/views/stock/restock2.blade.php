@@ -1,6 +1,6 @@
 @extends('layouts.carbon')
 
-@section('title', 'Inventory')
+@section('title', 'Stock')
 
 @push('css')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
@@ -156,8 +156,8 @@
                                             <select class="select2 form-control" name="brand"
                                                     id="brand">
                                                 <option value="0" disabled selected>- Pilih Produk -</option>
-                                                @foreach($inventories as $inventory)
-                                                    <option value="{{ $inventory->id }}">{{ $inventory->name }}</option>
+                                                @foreach($stocks as $stock)
+                                                    <option value="{{ $stock->id }}">{{ $stock->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

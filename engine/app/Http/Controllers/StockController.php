@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Inventory;
+use App\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class InventoryController extends Controller
+class StockController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,17 +16,17 @@ class InventoryController extends Controller
      */
     public function index(Request $request)
     {
-        $d['brands'] = Inventory::distinct('brand')->pluck('brand');
-        $d['branches'] = Inventory::distinct('branch')->pluck('branch');
+        $d['brands'] = Stock::leftjoin("items","items.id","stocks.item_id")->leftjoin("brands","brands.id","items.brand_id")->distinct('brands.name')->pluck('brands.name');
+        $d['branches'] = Stock::distinct('branch')->pluck('branch');
 
-        $d['inventories'] = $this->getTable($request);
+        $d['stocks'] = $this->getTable($request);
 
         $d['filtered'] = FALSE;
         if (!empty($request->all())) {
             $d['filtered'] = TRUE;
         }
 
-        return view('inventory.index', $d);
+        return view('stock.index', $d);
     }
 
     /**
@@ -36,7 +36,7 @@ class InventoryController extends Controller
      */
     public function create()
     {
-        return view('inventory.form');
+        return view('stock.form');
     }
 
     /**
@@ -51,7 +51,7 @@ class InventoryController extends Controller
         unset($input['_token']);
 
         $validate = Validator::make($input, [
-            'brand' => 'required',
+            'brand_id' => 'required',
             'code' => 'required',
             'name' => 'required',
             'stock' => 'required|numeric',
@@ -64,10 +64,10 @@ class InventoryController extends Controller
         ]);
 
         if ($validate->fails()) {
-            return redirect('inventories')->withErrors($validate)->withInput($input);
+            return redirect('stocks')->withErrors($validate)->withInput($input);
         } else {
-            $inventory = Inventory::create($input);
-            return redirect('inventories')->with('info', $inventory->name . ' berhasil ditambahkan!');
+            $stock = Stock::create($input);
+            return redirect('stocks')->with('info', $stock->name . ' berhasil ditambahkan!');
         }
     }
 
@@ -79,8 +79,8 @@ class InventoryController extends Controller
      */
     public function show($id)
     {
-        $d['inventory'] = Inventory::find($id);
-        return view('inventory.show', $d);
+        $d['stock'] = Stock::find($id);
+        return view('stock.show', $d);
     }
 
     /**
@@ -91,9 +91,9 @@ class InventoryController extends Controller
      */
     public function edit($id)
     {
-        $d['inventory'] = Inventory::find($id);
+        $d['stock'] = Stock::find($id);
         $d['isEdit'] = TRUE;
-        return view('inventory.form', $d);
+        return view('stock.form', $d);
     }
 
     /**
@@ -109,9 +109,9 @@ class InventoryController extends Controller
         unset($input['_token']);
 
         $validate = Validator::make($input, [
-            'brand' => 'required',
+            'brand_id' => 'required',
             'code' => 'required',
-            'name' => 'required',
+            'item_id' => 'required',
             'stock' => 'required|numeric',
             'weight' => 'required|numeric',
             'area' => 'required|numeric',
@@ -122,14 +122,14 @@ class InventoryController extends Controller
         ]);
 
         if ($validate->fails()) {
-            return redirect('inventories')->withErrors($validate)->withInput($input);
+            return redirect('stocks')->withErrors($validate)->withInput($input);
         } else {
-            $inventory = Inventory::find($id);
+            $stock = Stock::find($id);
 
-            if ($inventory->update($input)) {
-                return redirect('inventories')->with('info', $inventory->name . ' berhasil diubah!');
+            if ($stock->update($input)) {
+                return redirect('stocks')->with('info', $stock->name . ' berhasil diubah!');
             } else {
-                return redirect('inventories')->with('error', $inventory->name . ' gagal diubah!');
+                return redirect('stocks')->with('error', $stock->name . ' gagal diubah!');
             }
         }
     }
@@ -142,44 +142,44 @@ class InventoryController extends Controller
      */
     public function destroy($id)
     {
-        Inventory::destroy($id);
-        return redirect('/inventories')->with('info', 'Produk berhasil dihapus!');
+        Stock::destroy($id);
+        return redirect('/stocks')->with('info', 'Produk berhasil dihapus!');
     }
 
     public function getTable(Request $request)
     {
-        $inventory = (new Inventory())->newQuery();
+        $stock = (new Stock())->newQuery();
 
         if ($request->has('brands')) {
-            $inventory->brands($request->brands);
+            $stock->brands($request->brands);
         }
 
         if ($request->has('branches')) {
-            $inventory->branches($request->branches);
+            $stock->branches($request->branches);
         }
 
-        return $inventory->get();
+        return $stock->get();
     }
 
     public function restock($id)
     {
-//        $d['brands'] = Inventory::distinct('brand')->pluck('brand');
-        $d['inventory'] = Inventory::find($id);
-        return view('inventory.restock', $d);
+//        $d['brands'] = Stock::distinct('brand_id')->pluck('brand_id');
+        $d['stock'] = Stock::find($id);
+        return view('stock.restock', $d);
     }
 
     public function restockSingular(Request $request, $id)
     {
-//        return view('inventory.restock', $d);
+//        return view('stock.restock', $d);
 //        dd($request->all());
         $input = $request->all();
         unset($input['_token']);
 
-        $inventory = Inventory::find($id);
+        $stock = Stock::find($id);
 
-        $inventory->stock = $inventory->stock + $input['add'];
+        $stock->stock = $stock->stock + $input['add'];
 
-        $inventory->save();
-        return redirect('/inventories')->with('info', 'Stok ' . $inventory->name . ' berhasil ditambahkan ' . $input['add'] . ' pcs menjadi ' . $inventory->stock .'pcs per batang');
+        $stock->save();
+        return redirect('/stocks')->with('info', 'Stok ' . $stock->name . ' berhasil ditambahkan ' . $input['add'] . ' pcs menjadi ' . $stock->stock .'pcs per batang');
     }
 }

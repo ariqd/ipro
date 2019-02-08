@@ -27,11 +27,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('pos', 'PosController');
     Route::resource('catalogues', 'CatalogueController');
 
-    Route::get('inventories/get', 'InventoryController@getJsonTable');
-//    Route::get('inventories/restock', 'InventoryController@restock');
-    Route::get('inventories/{id}/restock', 'InventoryController@restock');
-    Route::post('inventories/{id}/restock', 'InventoryController@restockSingular');
-    Route::resource('inventories', 'InventoryController');
+    Route::get('stocks/get', 'StockController@getJsonTable');
+//    Route::get('stocks/restock', 'StockController@restock');
+    Route::get('stocks/{id}/restock', 'StockController@restock');
+    Route::post('stocks/{id}/restock', 'StockController@restockSingular');
+    Route::resource('stocks', 'StockController');
 
     Route::resource('purchase-orders', 'PurchaseOrderController');
     Route::get('purchase-orders/create/add-items', 'PurchaseOrderController@addItems');
