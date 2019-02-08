@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
+//use Illuminate\Support\Facades\Validator;
+use Validator;
 
 class CustomerController extends Controller
 {
@@ -24,7 +26,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        return view('customer.form');
     }
 
     /**
@@ -35,7 +37,21 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        unset($input['_token']);
+
+        $validate = Validator::make($input, [
+            'name' => 'required',
+            'email' => 'required|unique:users',
+            'password' => 'required',
+            'user_type' => 'required'
+        ]);
+
+        if ($validate->fails()) { // if validation fails
+            return redirect('customers')->with('error', 'Your data is not complete.')->withErrors($validate->errors())->withInput($input);
+        } else {
+            //
+        }
     }
 
     /**

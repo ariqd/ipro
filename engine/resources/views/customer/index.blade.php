@@ -3,6 +3,7 @@
 @section('title', 'Customer Master Data')
 
 @section('content')
+    @include('layouts.ajax')
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -12,7 +13,10 @@
                         <h2>Customer</h2>
                     </div>
                     <div>
-                        <a href="#modalForm" class="btn btn-dark"><i class="fa fa-plus"></i> Tambah Customer</a>
+                        <a href="#modalForm" data-href="{{ url('customers/create') }}" data-toggle="modal"
+                           class="btn btn-dark">
+                            <i class="fa fa-plus"></i> Tambah Customer
+                        </a>
                     </div>
                 </div>
             </div>
