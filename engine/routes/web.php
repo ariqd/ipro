@@ -46,5 +46,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('branches', 'BranchController');
     Route::resource('deposits', 'DepositController');
 
+
     Route::resource('customers', 'CustomerController');
+
+
+    Route::resource('brands', 'BrandController');
+    Route::resource('categories', 'CategoryController');
 });
