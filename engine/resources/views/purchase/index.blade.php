@@ -12,7 +12,7 @@
                     </div>
                     <div>
                         <a href="{{ url('/purchase-orders/create') }}" class="btn btn-dark"><i
-                                    class="fa fa-plus"></i> Create P.O.</a>
+                                    class="fa fa-plus"></i> New Purchase Order</a>
                     </div>
                 </div>
             </div>

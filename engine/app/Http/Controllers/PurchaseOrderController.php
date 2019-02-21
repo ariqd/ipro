@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
+use App\Category;
 use Illuminate\Http\Request;
 
 class PurchaseOrderController extends Controller
@@ -13,11 +15,20 @@ class PurchaseOrderController extends Controller
 
     public function create()
     {
-        return view('purchase.form');
+        $data['brands'] = Brand::all();
+        $data['categories'] = Category::all();
+
+        return view('purchase.form', $data);
     }
 
     public function addItems()
     {
         return view('purchase.items');
+    }
+
+    public function getCategories($brand_id)
+    {
+//        $data['categories'] = Category::where('brand')
+        return response()->json();
     }
 }

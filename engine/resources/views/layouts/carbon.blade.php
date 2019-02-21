@@ -11,7 +11,6 @@
     {{--<link rel="stylesheet" href="{{ asset('carbon/vendor/font-awesome/css/fontawesome-all.min.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('assets/plugins/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('carbon/css/styles.css') }}">
-    {{--<link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('assets/css/ipro.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet">
     @stack('css')
@@ -180,7 +179,7 @@
                                 <li class="nav-item">
                                     <a href="{{ url('accounts') }}"
                                        class="nav-link {{ Request::is('accounts*') ? 'active' : '' }}">
-                                        <i class="fa fa-users"></i> Users
+                                        <i class="fa fa-arrow-right"></i> Users
                                     </a>
                                 </li>
                             @endif
@@ -267,12 +266,12 @@
                     {{--<i class="icon icon-umbrella"></i> Pages <i class="fa fa-caret-left"></i>--}}
                     {{--</a>--}}
 
-                    {{--<ul class="nav-dropdown-items">--}}
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="blank.html" class="nav-link">--}}
-                    {{--<i class="icon icon-umbrella"></i> Blank Page--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
+    {{--<ul class="nav-dropdown-items">--}}
+        {{--<li class="nav-item">--}}
+            {{--<a href="blank.html" class="nav-link">--}}
+                {{--<i class="icon icon-umbrella"></i> Blank Page--}}
+            {{--</a>--}}
+        {{--</li>--}}
 
                     {{--<li class="nav-item">--}}
                     {{--<a href="login.html" class="nav-link">--}}
