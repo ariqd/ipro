@@ -18,7 +18,7 @@
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="no_ktp" class="form-control-label">No. KTP</label>
-                <input id="no_ktp" type="number" class="form-control" name="no_ktp" value="{{ @$isEdit ? $customer->no_ktp : '' }}">
+                <input id="no_ktp" type="number" class="form-control" maxlength="16" name="no_ktp" value="{{ @$isEdit ? $customer->no_ktp : '' }}">
             </div>
         </div>
         <div class="form-group row">

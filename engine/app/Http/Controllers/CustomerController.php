@@ -37,20 +37,21 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $input = $request->all();
-        unset($input['_token']);
+     dd($request->all());
 
-        $validate = Validator::make($input, [
-            'name' => 'required',
-            'email' => 'required|unique:users',
-            'password' => 'required',
-            'user_type' => 'required'
-        ]);
+     $input = $request->all();
+     unset($input['_token']);
+
+     $validate = Validator::make($input, [
+        'project_owner' => 'required',
+        'email' => 'required|unique:users',
+        'password' => 'required',
+        'user_type' => 'required'
+    ]);
 
         if ($validate->fails()) { // if validation fails
             return redirect('customers')->with('error', 'Your data is not complete.')->withErrors($validate->errors())->withInput($input);
         } else {
-            //
         }
     }
 

@@ -87,9 +87,15 @@ class StockController extends Controller
      */
     public function show($id)
     {
-        $d['stock'] = Stock::find($id);
-        return view('stock.show', $d);
-    }
+      $d['stock'] = Stock::select("stocks.*","items.name as itemname","items.code","brands.name as brandname","categories.name as categoryname","branches.name as branchname")
+      ->leftjoin("items","items.id","stocks.item_id")
+      ->leftjoin("brands","brands.id","items.brand_id")
+      ->leftjoin("categories","categories.id","items.category_id")
+      ->leftjoin('branches','branches.id','stocks.branch_id')
+      ->where("stocks.id",$id)
+      ->first();
+      return view('stock.show', $d);
+  }
 
     /**
      * Show the form for editing the specified resource.
@@ -171,8 +177,13 @@ class StockController extends Controller
 
     public function restock($id)
     {
-//        $d['brands'] = Stock::distinct('brand_id')->pluck('brand_id');
-        $d['stock'] = Stock::find($id);
+        $d['stock'] = Stock::select("stocks.*","items.name as itemname","items.code","brands.name as brandname","categories.name as categoryname","branches.name as branchname")
+        ->leftjoin("items","items.id","stocks.item_id")
+        ->leftjoin("brands","brands.id","items.brand_id")
+        ->leftjoin("categories","categories.id","items.category_id")
+        ->leftjoin('branches','branches.id','stocks.branch_id')
+        ->where("stocks.id",$id)
+        ->first();
         return view('stock.restock', $d);
     }
 
