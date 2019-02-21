@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Stock;
+use App\Item;
+use App\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,10 +18,15 @@ class StockController extends Controller
      */
     public function index(Request $request)
     {
-        $d['brands'] = Stock::leftjoin("items","items.id","stocks.item_id")->leftjoin("brands","brands.id","items.brand_id")->distinct('brands.name')->pluck('brands.name');
-        $d['branches'] = Stock::distinct('branch')->pluck('branch');
+        $d['brands'] = Stock::leftjoin('items','items.id','stocks.item_id')->leftjoin('brands','brands.id','items.brand_id')->distinct('brands.name')->pluck('brands.name');
+        $d['branches'] = Stock::leftjoin("branches","branches.id","stocks.branch_id")->distinct('branch_id')->pluck('branch_id');
 
-        $d['stocks'] = $this->getTable($request);
+        $d['stocks'] = Stock::select("stocks.*","items.name as itemname","items.code","brands.name as brandname","categories.name as categoryname","branches.name as branchname")
+        ->leftjoin("items","items.id","stocks.item_id")
+        ->leftjoin("brands","brands.id","items.brand_id")
+        ->leftjoin("categories","categories.id","items.category_id")
+        ->leftjoin('branches','branches.id','stocks.branch_id')
+        ->get();
 
         $d['filtered'] = FALSE;
         if (!empty($request->all())) {
@@ -35,8 +42,10 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('stock.form');
+    {   
+        $d['items'] = Item::all();
+        $d['branches'] = Branch::all();
+        return view('stock.form', $d);
     }
 
     /**
@@ -51,9 +60,8 @@ class StockController extends Controller
         unset($input['_token']);
 
         $validate = Validator::make($input, [
-            'brand_id' => 'required',
-            'code' => 'required',
-            'name' => 'required',
+            'item_id' => 'required|numeric',
+            'branch_id' => 'required|numeric',
             'stock' => 'required|numeric',
             'weight' => 'required|numeric',
             'area' => 'required|numeric',

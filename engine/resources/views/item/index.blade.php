@@ -245,10 +245,11 @@
                     <table class="table table-bordered data-table table-light w-100">
                         <thead>
                             <tr>
+                                <th class="no">No</th>
+                                <th class="code">code</th>
                                 <th class="brand">Brand</th>
-                                <th class="kode">Category</th>
+                                <th class="kategori">Category</th>
                                 <th class="nama">Nama</th>
-
                                 <th></th>
                                 <th class="d-none"></th>
                             </tr>
@@ -256,10 +257,11 @@
                         <tbody>
                             @foreach($items as $item)
                             <tr>
+                                <td class="no">{{ $loop->iteration }}</td>
+                                <td class="code">{{ $item->code }}</td>
                                 <td class="brand">{{ $item->brandname }}</td>
-                                <td class="kode">{{ $item->categoryname }}</td>
+                                <td class="kategori">{{ $item->categoryname }}</td>
                                 <td class="nama">{{ $item->name }}</td>
-
                                 {{--<td class="cabang">{{ $item->branch }}</td>--}}
 
                             </tr>

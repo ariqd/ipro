@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -13,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $data = Category::all();
+        return view("category.index",["categories"=>$data]);
     }
 
     /**
@@ -23,7 +25,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('category.form');
     }
 
     /**
@@ -34,7 +36,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Category::create($request->all());
+
+        return redirect('categories')->with('info', 'Tambah kategori sukses!');
     }
 
     /**
@@ -56,7 +60,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $d['category'] = Category::find($id);
+        $d['isEdit'] = TRUE;
+        return view('category.form', $d);
     }
 
     /**
@@ -68,8 +74,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+       $category = Category::find($id);
+       $category->update($request->all());
+       return redirect('categories')->with('info', 'Edit kategori sukses!');
+   }
 
     /**
      * Remove the specified resource from storage.
@@ -79,6 +87,9 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+       $category = Category::find($id);
+       $category->softdelete();
+       return redirect('categories')->with('info', 'Hapus kategori sukses!');
+
+   }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Item;
+use App\Brand;
+use App\Category;
 class ItemController extends Controller
 {
 
@@ -15,14 +17,17 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-    	$d['items'] = Item::all();
+    	$d['items'] = Item::select("items.*","brands.name as brandname","categories.name as categoryname")
+        ->join("brands","brands.id","items.brand_id")
+        ->join("categories","categories.id","items.category_id")
+        ->get();
 
-    	if (!empty($request->all())) {
-    		$d['filtered'] = TRUE;
-    	}
+        if (!empty($request->all())) {
+          $d['filtered'] = TRUE;
+      }
 
-    	return view('item.index', $d);
-    }
+      return view('item.index', $d);
+  }
 
     /**
      * Show the form for creating a new resource.
@@ -30,8 +35,13 @@ class ItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-    	return view('item.form');
+    {      
+        $brand = Brand::all();
+        $category = Category::all();
+        return view('item.form',[
+            "brands"=>$brand,
+            "categories"=>$category
+        ]);
     }
 
     /**
@@ -45,7 +55,7 @@ class ItemController extends Controller
     	$input = $request->all();
     	unset($input['_token']);
 
-    	$validate = Validator::make($input, [
+    	$validate = \Validator::make($input, [
     		'name' => 'required',
     		'category_id' => 'required|numeric',
     		'brand_id' => 'required|numeric'
@@ -55,7 +65,7 @@ class ItemController extends Controller
     		return redirect('item')->withErrors($validate)->withInput($input);
     	} else {
     		$item = Item::create($input);
-    		return redirect('item')->with('info', $item->name . ' berhasil ditambahkan!');
+    		return redirect('items')->with('info', $item->name . ' berhasil ditambahkan!');
     	}
     }
 
