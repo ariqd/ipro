@@ -43,6 +43,13 @@ class CustomerController extends Controller
         $input = $request->all();
         unset($input['_token']);
 
+//     $validate = Validator::make($input, [
+//         'project_owner' => 'required',
+//         'no_ktp' => 'required|unique:customers',
+//         'email' => 'required|unique:users',
+//         'password' => 'required',
+//         'user_type' => 'required'
+//    ]);
         $validate = Validator::make($input, [
             'project_owner' => 'required',
             'no_ktp' => 'required|unique:customers',
@@ -53,7 +60,7 @@ class CustomerController extends Controller
         ]);
 
         if ($validate->fails()) { // if validation fails
-            return redirect('customers')->withErrors($validate->errors())->withInput($input);
+            return redirect('customers')->with('error', 'Your data is not complete.')->withErrors($validate->errors())->withInput($input);
         } else {
 //            dd($input);
             $input['user_id'] = Auth::id();

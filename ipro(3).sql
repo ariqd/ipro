@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 08, 2019 at 08:25 AM
+-- Generation Time: Feb 21, 2019 at 08:43 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -36,6 +36,13 @@ CREATE TABLE `branches` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `branches`
+--
+
+INSERT INTO `branches` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Bandung', 1, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -45,11 +52,18 @@ CREATE TABLE `branches` (
 CREATE TABLE `brands` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
-  `status` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `brands`
+--
+
+INSERT INTO `brands` (`id`, `name`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Brand 2', 1, '2019-02-20 22:50:42', '2019-02-20 23:08:38', NULL);
 
 -- --------------------------------------------------------
 
@@ -60,11 +74,18 @@ CREATE TABLE `brands` (
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
-  `status` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'cat 2', 1, '2019-02-20 22:52:27', '2019-02-20 23:07:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -93,12 +114,21 @@ CREATE TABLE `customers` (
 
 CREATE TABLE `items` (
   `id` int(10) UNSIGNED NOT NULL,
+  `code` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_id` int(11) NOT NULL,
   `brand_id` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `items`
+--
+
+INSERT INTO `items` (`id`, `code`, `name`, `category_id`, `brand_id`, `created_at`, `updated_at`) VALUES
+(1, '91230412', 'item 2', 1, 1, '2019-02-20 23:38:12', '2019-02-20 23:38:12'),
+(2, '1123456', 'Item 4', 1, 1, '2019-02-20 23:55:16', '2019-02-20 23:55:16');
 
 -- --------------------------------------------------------
 
@@ -209,9 +239,8 @@ CREATE TABLE `sales_details` (
 
 CREATE TABLE `stocks` (
   `id` int(10) UNSIGNED NOT NULL,
-  `code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `item_id` int(191) NOT NULL,
-  `branch` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `item_id` int(11) NOT NULL,
+  `branch_id` int(11) NOT NULL,
   `stock` int(11) NOT NULL,
   `weight` double(8,2) NOT NULL,
   `area` double(8,2) NOT NULL,
@@ -222,6 +251,13 @@ CREATE TABLE `stocks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `stocks`
+--
+
+INSERT INTO `stocks` (`id`, `item_id`, `branch_id`, `stock`, `weight`, `area`, `width`, `height`, `length`, `price`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 1.00, 1.00, 1.00, 1.00, 1.00, 1, '2019-02-21 00:33:05', '2019-02-21 00:33:05');
 
 -- --------------------------------------------------------
 
@@ -337,19 +373,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -361,7 +397,7 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -391,7 +427,7 @@ ALTER TABLE `sales_details`
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`

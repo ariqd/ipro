@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Brand;
 
 class BrandController extends Controller
 {
@@ -13,7 +14,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        $data = Brand::all();
+        return view("brand.index",["brands"=>$data]);
     }
 
     /**
@@ -23,7 +25,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('brand.form');
     }
 
     /**
@@ -34,7 +36,9 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Brand::create($request->all());
+
+        return redirect('brands')->with('info', 'Tambah brand sukses!');
     }
 
     /**
@@ -56,7 +60,9 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        //
+        $d['brand'] = Brand::find($id);
+        $d['isEdit'] = TRUE;
+        return view('brand.form', $d);
     }
 
     /**
@@ -68,7 +74,9 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $brand = Brand::find($id);
+        $brand->update($request->all());
+        return redirect('brands')->with('info', 'Edit brand sukses!');
     }
 
     /**

@@ -8,50 +8,55 @@
     <div class="table-responsive">
         <table class="table">
             <tbody>
-            <tr>
-                <td><b>Brand</b></td>
-                <td>{{ $stock->brand }}</td>
-            </tr>
-            <tr>
-                <td><b>Kode Produk</b></td>
-                <td>{{ $stock->code }}</td>
-            </tr>
-            <tr>
-                <td><b>Nama</b></td>
-                <td>{{ $stock->name }}</td>
-            </tr>
-            <tr>
-                <td><b>Cabang</b></td>
-                <td>{{ $stock->branch }}</td>
-            </tr>
-            <tr>
-                <td><b>Stok (per Batang)</b></td>
-                <td>{{ $stock->stock }} pcs</td>
-            </tr>
-            <tr>
-                <td><b>Harga</b></td>
-                <td>Rp {{ number_format($stock->price) }}</td>
-            </tr>
-            <tr>
-                <td><b>Berat</b></td>
-                <td>{{ $stock->weight }} Kg</td>
-            </tr>
-            <tr>
-                <td><b>Area</b></td>
-                <td>{{ $stock->area }} m2</td>
-            </tr>
-            <tr>
-                <td><b>Lebar</b></td>
-                <td>{{ $stock->width }} m</td>
-            </tr>
-            <tr>
-                <td><b>Tinggi</b></td>
-                <td>{{ $stock->height }} m</td>
-            </tr>
-            <tr>
-                <td><b>Panjang</b></td>
-                <td>{{ $stock->length }} m</td>
-            </tr>
+
+                <tr>
+                    <td><b>Kode Produk</b></td>
+                    <td>{{ $stock->code }}</td>
+                </tr>
+                <tr>
+                    <td><b>Kategori</b></td>
+                    <td>{{ $stock->categoryname }}</td>
+                </tr>
+                <tr>
+                    <td><b>Brand</b></td>
+                    <td>{{ $stock->brandname }}</td>
+                </tr>
+                <tr>
+                    <td><b>Nama</b></td>
+                    <td>{{ $stock->itemname }}</td>
+                </tr>
+                <tr>
+                    <td><b>Cabang</b></td>
+                    <td>{{ $stock->branchname }}</td>
+                </tr>
+                <tr>
+                    <td><b>Stok (per Batang)</b></td>
+                    <td>{{ $stock->stock }} pcs</td>
+                </tr>
+                <tr>
+                    <td><b>Harga</b></td>
+                    <td>Rp {{ number_format($stock->price) }}</td>
+                </tr>
+                <tr>
+                    <td><b>Berat</b></td>
+                    <td>{{ $stock->weight }} Kg</td>
+                </tr>
+                <tr>
+                    <td><b>Area</b></td>
+                    <td>{{ $stock->area }} m2</td>
+                </tr>
+                <tr>
+                    <td><b>Lebar</b></td>
+                    <td>{{ $stock->width }} m</td>
+                </tr>
+                <tr>
+                    <td><b>Tinggi</b></td>
+                    <td>{{ $stock->height }} m</td>
+                </tr>
+                <tr>
+                    <td><b>Panjang</b></td>
+                    <td>{{ $stock->length }} m</td>
+                </tr>
             </tbody>
         </table>
     </div>
