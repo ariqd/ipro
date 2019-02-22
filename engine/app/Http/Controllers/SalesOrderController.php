@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,7 @@ class SalesOrderController extends Controller
     public function create()
     {
         $d['customers'] = Customer::all();
+        $d['categories'] = Category::all();
         return view('sale.form', $d);
     }
 
