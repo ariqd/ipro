@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\Validator;
-use Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+//use Validator;
 
 class CustomerController extends Controller
 {
@@ -16,7 +17,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('customer.index');
+        $data['customers'] = Customer::all();
+
+        return view('customer.index', $data);
     }
 
     /**
@@ -37,21 +40,33 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-     dd($request->all());
+        $input = $request->all();
+        unset($input['_token']);
 
-     $input = $request->all();
-     unset($input['_token']);
-
-     $validate = Validator::make($input, [
-        'project_owner' => 'required',
-        'email' => 'required|unique:users',
-        'password' => 'required',
-        'user_type' => 'required'
-    ]);
+//     $validate = Validator::make($input, [
+//         'project_owner' => 'required',
+//         'no_ktp' => 'required|unique:customers',
+//         'email' => 'required|unique:users',
+//         'password' => 'required',
+//         'user_type' => 'required'
+//    ]);
+        $validate = Validator::make($input, [
+            'project_owner' => 'required',
+            'no_ktp' => 'required|unique:customers',
+            'email' => 'required',
+            'address' => 'required',
+            'phone' => 'required',
+            'fax' => 'required',
+        ]);
 
         if ($validate->fails()) { // if validation fails
             return redirect('customers')->with('error', 'Your data is not complete.')->withErrors($validate->errors())->withInput($input);
         } else {
+//            dd($input);
+            $input['user_id'] = Auth::id();
+            Customer::create($input);
+
+            return redirect('customers')->with('info', 'Create customer success!');
         }
     }
 

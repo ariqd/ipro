@@ -2,14 +2,85 @@
 
 @section('title', 'Purchase Order')
 
+@push("css")
+    <style>
+        .loading {
+            background: lightgrey;
+            padding: 15px;
+            position: fixed;
+            border-radius: 4px;
+            left: 50%;
+            top: 50%;
+            text-align: center;
+            margin: -40px 0 0 -50px;
+            z-index: 2000;
+            display: none;
+        }
+    </style>
+@endpush
+
+@push("js")
+    <script>
+        $(document).ready(function () {
+            $("#brands").select2({
+                placeholder: "Choose Brand"
+            });
+            $("#categories").select2({
+                placeholder: "Choose Category"
+            });
+            $("#items").select2({
+                placeholder: "Choose Item"
+            });
+            // $("#brands").change(function () {
+            //     $('.loading').show();
+            //     $.ajax({
+            //         type: "GET",
+            //         url: url("purchase-orders/create/get-categories/" + $("#brands").val()),
+            //         dataType: "json",
+            //         beforeSend: function (e) {
+            //             if (e && e.overrideMimeType) {
+            //                 e.overrideMimeType("application/json;charset=UTF-8");
+            //             }
+            //             $('#kota').html("");
+            //         },
+            //         success: function (response) {
+            //             console.dir(response);
+            //
+            //             $.each(response.data, function (i, item) {
+            //                 $('#kota').append($('<option>', {
+            //                     value: item.id,
+            //                     text: item.name
+            //                 }));
+            //             });
+            //
+            //             $("#kota").select2({
+            //                 placeholder: "Choose city"
+            //             });
+            //
+            //             $('.loading').hide();
+            //         },
+            //         error: function (xhr, ajaxOptions, thrownError) {
+            //             alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            //         }
+            //     });
+            // });
+        })
+    </script>
+@endpush
+
 @section('content')
-    @include('layouts.ajax', ['size' => 'lg'])
+    {{--@include('layouts.ajax', ['size' => 'lg'])--}}
+    <div class="loading">
+        <i class="fas fa-sync fa-spin fa-2x fa-fw"></i><br/>
+        <span>Loading</span>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex justify-content-between">
                     <div>
                         <h2>
+                            {{--Buat Purchase Order Baru--}}
                             <small>
                                 <a href="{{ url('purchase-orders') }}" class="text-dark">Purchase Orders</a> /
                             </small>
@@ -31,8 +102,42 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <a href="#modalForm" class="btn btn-primary float-right" data-toggle="modal"
-                       data-href="{{ url('purchase-orders/create/add-items') }}"><i class="fa fa-plus"></i> Add Items</a>
+                    <a href="#modalForm" class="btn btn-dark float-right" data-toggle="modal"
+                       data-href="{{ url('purchase-orders/create/add-items') }}"><i class="fa fa-plus"></i> Add
+                        Items</a>
+                </div>
+                <div class="col-lg-12 my-3">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            Cari Produk:
+                        </div>
+                        <div class="ml-3">
+                            <select name="brand" id="brands" class="custom-select brands" style="width: 250px">
+                                <option value="" selected disabled></option>
+                                @foreach($brands as $brand)
+                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="ml-3">
+                            <select name="category" id="categories" class="custom-select categories"
+                                    style="width: 250px">
+                                <option value="" selected disabled></option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="ml-3">
+                            <select name="items" id="items" class="custom-select items"
+                                    style="width: 250px">
+                                <option value="" selected disabled></option>
+                                {{--@foreach($categories as $category)--}}
+                                    {{--<option value="{{ $category->id }}">{{ $category->name }}</option>--}}
+                                {{--@endforeach--}}
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-12 ">
                     <div class="table-responsive">
