@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth'], function () {
 //    Route::get('stocks/restock', 'StockController@restock');
     Route::get('stocks/{id}/restock', 'StockController@restock');
     Route::post('stocks/{id}/restock', 'StockController@restockSingular');
+    Route::get('stocks/getdatabycategory/{id}', 'StockController@getDataByCategory');
     Route::resource('stocks', 'StockController');
 
     Route::resource('purchase-orders', 'PurchaseOrderController');

@@ -201,4 +201,14 @@ class StockController extends Controller
         $stock->save();
         return redirect('/stocks')->with('info', 'Stok ' . $stock->name . ' berhasil ditambahkan ' . $input['add'] . ' pcs menjadi ' . $stock->stock .'pcs per batang');
     }
+
+    public function getDataByCategory($id)
+    {   
+        $data["data"] = Stock::select("stocks.*","items.name as itemname","items.code","categories.name as catname")
+        ->leftjoin("items","items.id","stocks.item_id")
+        ->leftjoin("categories","categories.id","items.category_id")
+        ->where("category_id",$id)->get();
+        return response($data, 200);
+
+    }
 }

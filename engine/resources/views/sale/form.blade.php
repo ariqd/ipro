@@ -1,17 +1,22 @@
 @extends('layouts.carbon')
+@extends('layouts.ajax')
 
 @section('title', 'Sales Order')
 
 @push("css")
-    {{--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>--}}
+{{--<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>--}}
+<style type="text/css">
+.modal-dialog{
+    max-width: 1000px;
+}
+</style>
 @endpush
 
 @push("js")
-    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>--}}
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>--}}
 
 <script>
     $(document).ready(function () {
-        $('.select2').select2();
         $("#customer_select").change(function () {
             var id = $(this).val();
             $.ajax({
@@ -37,12 +42,52 @@
                 });
         });
     });
+
 </script>
 <script type="text/javascript">
   $(".category").select2({
-    placeholder: "Pilih Kategori",
-    allowClear: true,
+    placeholder: "Pilih Category",
+    allowClear: true
 });
+  $(".customer").select2({
+    placeholder: "Choose Customer",
+    allowClear: true
+
+});
+  $(".category").change(function () {
+      $('#modal').modal('show'); 
+      $.ajax({
+          url: '{{ url("stocks/getdatabycategory/") }}' +'/'+ $(".category").val(),
+          method: "get",
+          success: function (response) {
+            $('.item-temp').remove();
+            $.each(response["data"], function (i, item) {
+                console.dir(item);
+                var table = document.getElementById("table-pick-item-body");
+
+                var row = table.insertRow();
+                row.setAttribute('id', 'row');
+                row.setAttribute('class', 'item-temp');
+                var cell0 = row.insertCell(0);
+                var cell1 = row.insertCell(1);
+                var cell2 = row.insertCell(2);
+                var cell3 = row.insertCell(3);
+                var cell4 = row.insertCell(4);
+                var cell5 = row.insertCell(5);
+
+                cell0.innerHTML = item.catname;
+                cell1.innerHTML = item.code;
+                cell2.innerHTML = item.itemname;
+                cell3.innerHTML = item.stock;
+                cell4.innerHTML = item.weight;
+                cell5.innerHTML = item.price;
+            });
+        },
+        error: function (xhr, statusCode, error) {
+        }
+    })
+  });
+
 </script>
 @endpush
 
@@ -81,8 +126,8 @@
                         <div class="form-group">
                             <label for="customer">Customer</label>
                             {{--<input type="text" class="form-control" id="customer" name="customer">--}}
-                            <select class="form-control select2" id="customer_select" name="customer">
-                                <option selected disabled>Choose Customer</option>
+                            <select class="form-control customer" id="customer_select" name="customer" style="width: 100%">
+                                <option></option>
                                 @foreach($customers as $customer)
                                 <option value="{{ $customer->id }}">{{ $customer->project_owner }}</option>
                                 @endforeach
@@ -142,13 +187,15 @@
             </div>
             <div class="col-lg-8">
                 <h5 class="mb-2"><b>Input Data Barang</b></h5>
+                <h5 class="mb-2"><b>Add</b></h5>
+
                 <div class="form-group row">
-                    <label for="categories" class="col-sm-2 col-form-label">Kategori</label>
-                    <div class="col-sm-10">
-                        <select class="category form-control" id="categories" name="categories">
-                            <option> </option>
-                            @foreach($categories as $category)
-                            <option value="{{ $category->id }}"> {{ $category->name }} </option>
+                    <label for="categories" class="col-sm-2 col-form-label">Category : </label>
+                    <div class="col-sm-6">
+                        <select class="category form-control" id="categories" name="categories" style="width: 100%">
+                            <option></option>
+                            @foreach($categories as $key)
+                            <option value="{{ $key->id }}"> {{ $key->name }} </option>
                             @endforeach
                         </select>
                     </div>
@@ -165,51 +212,71 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><select class="category form-control">
-                                   @foreach($stocks as $stock)
-                                   <option value="{{ $stock->id }}"> {{ $stock->itemname }} </option>
-                                   @endforeach
-                               </select></td>
-                               <td>Barang</td>
-                               <td>Barang</td>
-                               <td>Barang</td>
-                               <td></td>
-                           </tr>
-                       </tbody>
-                   </table>
-               </div>
-               <div class="form-group row">
-                <label for="payment_method" class="col-4 col-form-label">Pilih metode pembayaran</label>
-                <div class="col-8">
-                    <select class="form-control" id="payment_method" name="payment_method">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                    </select>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <b>Sales:</b> Admin
+                <div class="form-group row">
+                    <label for="payment_method" class="col-4 col-form-label">Pilih metode pembayaran</label>
+                    <div class="col-8">
+                        <select class="form-control" id="payment_method" name="payment_method">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <b>Tanggal:</b> {{ date("d-m-Y") }}
+                <div class="row">
+                    <div class="col-6">
+                        <b>Sales:</b> Admin
+                    </div>
+                    <div class="col-6">
+                        <b>Tanggal:</b> {{ date("d-m-Y") }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-6">
 
+            </div>
+            <div class="col-lg-6">
+                <a href="#" class="btn btn-success float-right">Create Sales Order</a>
+            </div>
         </div>
-        <div class="col-lg-6">
-            <a href="#" class="btn btn-success float-right">Create Sales Order</a>
-        </div>
-    </div>
-</form>
+    </form>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Pilih Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+  <div class="modal-body">
+    <table class="table table-bordered table-stripped" id="table-pick">
+        <thead>
+            <th>Kategori</th>
+            <th>Kode Barang</th>
+            <th>Nama Barang</th>
+            <th>Stock</th>
+            <th>Berat/Pcs</th>
+            <th>Harga/Unit</th>
+        </thead>
+        <tbody id="table-pick-item-body"></tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary">Save changes</button>
+</div>
+</div>
+</div>
+</div>
 @endsection
