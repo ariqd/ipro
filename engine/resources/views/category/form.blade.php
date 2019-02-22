@@ -10,6 +10,19 @@
     <div class="modal-body">
         <div class="form-group row">
             <div class="col-lg-12">
+                <label for="brand" class="form-control-label">Brand</label>
+                <select class="brand form-control" name="brand_id">
+                    <option value="" selected disabled></option>
+                    @foreach($brands as $brand)
+                        <option value="{{ $brand->id }}" {{ @$isEdit && $brand->id == $category->brand->id ? 'selected' : '' }}>
+                            {{ $brand->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
                 <label for="name" class="form-control-label">Nama</label>
                 <input id="name" class="form-control" name="name" type="text"
                        value="{{ @$isEdit ? $category->name : '' }}">
@@ -18,8 +31,16 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal"> Batal</button>
-        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>
+        <button type="submit" class="btn btn-dark"><i class="fa fa-check"></i>
             {{ @$isEdit ? 'Edit' : 'Tambah' }}
         </button>
     </div>
 </form>
+
+<script type="text/javascript">
+    $(".brand").select2({
+        placeholder: "Pilih Brand",
+        allowClear: true,
+        dropdownParent: $("#modalForm")
+    });
+</script>

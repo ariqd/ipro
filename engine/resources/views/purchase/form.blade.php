@@ -102,72 +102,79 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <a href="#modalForm" class="btn btn-dark float-right" data-toggle="modal"
-                       data-href="{{ url('purchase-orders/create/add-items') }}"><i class="fa fa-plus"></i> Add
-                        Items</a>
+                    {{--<a href="#modalForm" class="btn btn-dark float-right" data-toggle="modal"--}}
+                       {{--data-href="{{ url('purchase-orders/create/add-items') }}"><i class="fa fa-plus"></i> Add--}}
+                        {{--Items</a>--}}
                 </div>
-                <div class="col-lg-12 my-3">
-                    <div class="d-flex align-items-center">
-                        <div>
-                            Cari Produk:
-                        </div>
-                        <div class="ml-3">
-                            <select name="brand" id="brands" class="custom-select brands" style="width: 250px">
-                                <option value="" selected disabled></option>
-                                @foreach($brands as $brand)
-                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="ml-3">
-                            <select name="category" id="categories" class="custom-select categories"
-                                    style="width: 250px">
-                                <option value="" selected disabled></option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="ml-3">
-                            <select name="items" id="items" class="custom-select items"
-                                    style="width: 250px">
-                                <option value="" selected disabled></option>
-                                {{--@foreach($categories as $category)--}}
-                                    {{--<option value="{{ $category->id }}">{{ $category->name }}</option>--}}
-                                {{--@endforeach--}}
-                            </select>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <h4>Cari Item</h4>
+                    <div class="form-group">
+                        <select name="brand" id="brands" class="form-control brands">
+                            <option value="" selected disabled></option>
+                            @foreach($brands as $brand)
+                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select name="category" id="categories" class="form-control categories">
+                            <option value="" selected disabled></option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select name="items" id="items" class="form-control items">
+                            <option value="" selected disabled></option>
+                            {{--@foreach($categories as $category)--}}
+                            {{--<option value="{{ $category->id }}">{{ $category->name }}</option>--}}
+                            {{--@endforeach--}}
+                        </select>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12 ">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-light">
-                            <thead>
-                            <tr>
-                                <th>Kategori</th>
-                                <th>Kode Barang</th>
-                                <th>Description</th>
-                                <th>Berat/pcs</th>
-                                <th>Order Qty/pcs</th>
-                                <th>Price/pcs</th>
-                                <th>Total Amount (IDR)</th>
-                                <th>GR Code</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                <div class="col-lg-8">
+                    <h4>Cart</h4>
+                    <div class="card">
+                        <div class="card-body">
+
+                        </div>
                     </div>
+                    {{--<div class="table-responsive">--}}
+                        {{--<table class="table table-bordered table-light">--}}
+                            {{--<thead>--}}
+                            {{--<tr>--}}
+                                {{--<th>Kategori</th>--}}
+                                {{--<th>Kode Barang</th>--}}
+                                {{--<th>Item</th>--}}
+                                {{--<th>Berat/pcs</th>--}}
+                                {{--<th>Order Qty/pcs</th>--}}
+                                {{--<th>Price/pcs</th>--}}
+                                {{--<th>Total Amount (IDR)</th>--}}
+                                {{--<th>GR Code</th>--}}
+                                {{--<th></th>--}}
+                            {{--</tr>--}}
+                            {{--</thead>--}}
+                            {{--<tbody>--}}
+                            {{--<tr>--}}
+                                {{--<td>-</td>--}}
+                                {{--<td>-</td>--}}
+                                {{--<td>-</td>--}}
+                                {{--<td>-</td>--}}
+                                {{--<td>-</td>--}}
+                                {{--<td>-</td>--}}
+                                {{--<td></td>--}}
+                            {{--</tr>--}}
+                            {{--</tbody>--}}
+                        {{--</table>--}}
+                    {{--</div>--}}
                 </div>
             </div>
             <div class="row">

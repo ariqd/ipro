@@ -11,34 +11,36 @@
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="code" class="form-control-label">Kode Produk</label>
-                <input autocomplete="off" id="code" class="form-control" name="code" value="{{ @$isEdit ? $stock->code : '' }}">
+                <input autocomplete="off" id="code" class="form-control" name="code"
+                       value="{{ @$isEdit ? $stock->code : '' }}">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="brand" class="form-control-label">Brand</label>
                 @if(@$isEdit)
-                <input id="brand" class="form-control" type="hidden" name="old_brand_id" value="{{ @$isEdit ? $stock->brand_id : '' }}">
+                    <input id="brand" class="form-control" type="hidden" name="old_brand_id"
+                           value="{{ @$isEdit ? $stock->brand_id : '' }}">
                 @endif
                 <select class="brand form-control" name="brand_id">
                     <option></option>
                     @foreach($brands as $brand)
-                    <option value="{{ $brand->id }}"> {{ $brand->name }} </option>
+                        <option value="{{ $brand->id }}"> {{ $brand->name }} </option>
                     @endforeach
                 </select>
-
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="category" class="form-control-label">Category</label>
                 @if(@$isEdit)
-                <input id="category" class="form-control" type="hidden" name="old_category_id" value="{{ @$isEdit ? $stock->category_id : '' }}">
+                    <input id="category" class="form-control" type="hidden" name="old_category_id"
+                           value="{{ @$isEdit ? $stock->category_id : '' }}">
                 @endif
                 <select class="category form-control" name="category_id">
-                    <option value="{{ $stock->category_id ?? null }}"> </option>
+                    <option value="{{ $stock->category_id ?? null }}"></option>
                     @foreach($categories as $category)
-                    <option value="{{ $category->id }}"> {{ $category->name }} </option>
+                        <option value="{{ $category->id }}"> {{ $category->name }} </option>
                     @endforeach
                 </select>
             </div>
@@ -46,7 +48,8 @@
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="name" class="form-control-label">Nama Produk</label>
-                <input autocomplete="off" id="name" class="form-control" name="name" value="{{ @$isEdit ? $stock->name : '' }}">
+                <input autocomplete="off" id="name" class="form-control" name="name"
+                       value="{{ @$isEdit ? $stock->name : '' }}">
             </div>
         </div>
     </div>

@@ -246,8 +246,8 @@
                         <thead>
                         <tr>
                             <th class="kode">Kode</th>
-                            <th class="brand">Category</th>
                             <th class="brand">Brand</th>
+                            <th class="brand">Category</th>
                             <th class="nama">Nama</th>
                             <th>Cabang</th>
                             <th class="stok">Stok (per Batang)</th>
@@ -262,8 +262,8 @@
                         @foreach($stocks as $stock)
                             <tr>
                                 <td class="kode">{{ $stock->code }}</td>
-                                <td class="brand">{{ $stock->categoryname }}</td>
                                 <td class="brand">{{ $stock->brandname }}</td>
+                                <td class="brand">{{ $stock->categoryname }}</td>
                                 <td class="nama">{{ $stock->itemname }}</td>
                                 <td class="cabang">{{ $stock->branchname }}</td>
                                 <td class="stock stok">

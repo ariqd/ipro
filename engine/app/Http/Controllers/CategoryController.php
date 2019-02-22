@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
 use App\Category;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $data = Category::all();
-        return view("category.index",["categories"=>$data]);
+        return view("category.index", ["categories" => $data]);
     }
 
     /**
@@ -25,17 +26,21 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category.form');
+        $data['brands'] = Brand::all();
+        return view('category.form', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+//        $input = $request->all();
+//        unset($input['_token']);
+
         Category::create($request->all());
 
         return redirect('categories')->with('info', 'Tambah kategori sukses!');
@@ -44,7 +49,7 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -55,41 +60,43 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $d['category'] = Category::find($id);
+        $d['brands'] = Brand::all();
         $d['isEdit'] = TRUE;
+
         return view('category.form', $d);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-       $category = Category::find($id);
-       $category->update($request->all());
-       return redirect('categories')->with('info', 'Edit kategori sukses!');
-   }
+        $category = Category::find($id);
+        $category->update($request->all());
+        return redirect('categories')->with('info', 'Edit kategori sukses!');
+    }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-       $category = Category::find($id);
-       $category->softdelete();
-       return redirect('categories')->with('info', 'Hapus kategori sukses!');
+        $category = Category::find($id);
+        $category->softdelete();
+        return redirect('categories')->with('info', 'Hapus kategori sukses!');
 
-   }
+    }
 }
