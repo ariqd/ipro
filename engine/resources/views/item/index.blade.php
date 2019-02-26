@@ -1,6 +1,6 @@
 @extends('layouts.carbon')
 
-@section('title', 'item')
+@section('title', 'Master Data Item')
 
 @push('css')
     <link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet"/>
@@ -122,38 +122,37 @@
 
 @section('content')
     @include('layouts.ajax')
-    <div class="container fill">
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Master Data Item</h2>
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <div>
+                <h5 class="mb-0">Master Data</h5>
+                <h2><b>Items</b></h2>
             </div>
-            <div class="col-lg-8">
-                <div class="d-flex">
-                    <div class="input-group mr-2">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="add-on"><i class="fa fa-search"></i></span>
-                        </div>
-                        <input type="text" id="myInput" class="form-control" placeholder="Search item..."
-                               aria-label="Search" aria-describedby="add-on">
+            <div class="d-flex align-items-center ">
+                <div class="input-group mr-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="add-on"><i class="fa fa-search"></i></span>
                     </div>
-                    {{--@if(isset($filtered))--}}
-                        {{--<a href="{{ url('items') }}" class="btn btn-dark mr-2"><i class="fa fa-refresh"></i> Clear--}}
-                            {{--Filter</a>--}}
-                    {{--@else--}}
-                        {{--<a class="btn btn-secondary mr-2" data-toggle="collapse" href="#collapseExample" role="button"--}}
-                           {{--aria-expanded="false" aria-controls="collapseExample">--}}
-                            {{--Filter <i class="fa fa-chevron-down"></i>--}}
-                        {{--</a>--}}
-                    {{--@endif--}}
-                    {{--<a href="{{ url('items/reitem') }}"--}}
-                    {{--class="btn btn-success mr-2"><i class="fa fa-plus-circle"></i> Reitem</a>--}}
-                    {{--<a href="#modalForm" data-toggle="modal" data-href="{{ url('items/reitem') }}"--}}
-                    {{--class="btn btn-success mr-2"><i class="fa fa-plus-circle"></i> Reitem</a>--}}
-                    @if(Gate::allows('isAdmin'))
-                        <a href="#modalForm" data-toggle="modal" data-href="{{ url('items/create') }}"
-                           class="btn btn-dark"><i class="fa fa-plus"></i> Tambah Item</a>
-                    @endif
+                    <input type="text" id="myInput" class="form-control" placeholder="Search item..."
+                           aria-label="Search" aria-describedby="add-on">
                 </div>
+                {{--@if(isset($filtered))--}}
+                {{--<a href="{{ url('items') }}" class="btn btn-dark mr-2"><i class="fa fa-refresh"></i> Clear--}}
+                {{--Filter</a>--}}
+                {{--@else--}}
+                {{--<a class="btn btn-secondary mr-2" data-toggle="collapse" href="#collapseExample" role="button"--}}
+                {{--aria-expanded="false" aria-controls="collapseExample">--}}
+                {{--Filter <i class="fa fa-chevron-down"></i>--}}
+                {{--</a>--}}
+                {{--@endif--}}
+                {{--<a href="{{ url('items/reitem') }}"--}}
+                {{--class="btn btn-success mr-2"><i class="fa fa-plus-circle"></i> Reitem</a>--}}
+                {{--<a href="#modalForm" data-toggle="modal" data-href="{{ url('items/reitem') }}"--}}
+                {{--class="btn btn-success mr-2"><i class="fa fa-plus-circle"></i> Reitem</a>--}}
+                @if(Gate::allows('isAdmin'))
+                    <a href="#modalForm" data-toggle="modal" data-href="{{ url('items/create') }}"
+                       class="btn btn-dark"><i class="fa fa-plus"></i> Add Item</a>
+                @endif
             </div>
         </div>
         @if(!empty(Request::all()))
@@ -245,23 +244,23 @@
                     <table class="table table-bordered data-table table-light w-100">
                         <thead>
                         <tr>
-                            <th class="no">No</th>
-                            <th class="code">code</th>
-                            <th class="brand">Brand</th>
-                            <th class="kategori">Category</th>
-                            <th class="nama">Nama</th>
+                            <th>No</th>
+                            <th>Code</th>
+                            <th>Brand</th>
+                            <th>Category</th>
+                            <th>Name</th>
                             {{--<th></th>--}}
-                            {{--<th class="d-none"></th>--}}
+                            {{--<th"></th>--}}
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($items as $item)
                             <tr>
-                                <td class="no">{{ $loop->iteration }}</td>
-                                <td class="code">{{ $item->code }}</td>
-                                <td class="brand">{{ $item->brandname }}</td>
-                                <td class="kategori">{{ $item->categoryname }}</td>
-                                <td class="nama">{{ $item->name }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->code }}</td>
+                                <td>{{ $item->category->brand->name }}</td>
+                                <td>{{ $item->category->name }}</td>
+                                <td>{{ $item->name }}</td>
                                 {{--<td class="cabang">{{ $item->branch }}</td>--}}
 
                             </tr>

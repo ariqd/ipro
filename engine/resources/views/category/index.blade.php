@@ -1,13 +1,13 @@
 @extends('layouts.carbon')
-@include('layouts.ajax')
 
 @section('title', 'Master Data User / Cabang')
 
 @section('content')
+    @include('layouts.ajax')
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <h5 class="mb-0">Master Data</h5>
                         <h2><b>Categories</b></h2>
@@ -15,7 +15,7 @@
 {{--                    <h3><a href="{{ url('accounts') }}" class="text-dark">Master Data Category</a></h3>--}}
                     <div>
                         <a href="#modalForm" data-toggle="modal" data-href="{{ url('categories/create') }}"
-                           class="btn btn-dark"><i class="fa fa-plus"></i> Tambah Category</a>
+                           class="btn btn-dark"><i class="fa fa-plus"></i> Add Category</a>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
 @push("script")
     <script>
         var table = $('#datatable').DataTable({
-            responsive: true,
+            responsive: true
         });
     </script>
 @endpush

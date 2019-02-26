@@ -10,12 +10,12 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <h5 class="mb-0">Master Data</h5>
-                    <h2>Customer</h2>
+                    <h2><b>Customer</b></h2>
                 </div>
                 <div>
                     <a href="#modalForm" data-href="{{ url('customers/create') }}" data-toggle="modal"
                        class="btn btn-dark">
-                        <i class="fa fa-plus"></i> Tambah Customer
+                        <i class="fa fa-plus"></i> Add Customer
                     </a>
                 </div>
             </div>

@@ -25,6 +25,11 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
+                @include("layouts.feedback")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="table table-responsive">
                     <table class="table bg-light table-bordered">
                         <thead>
@@ -35,6 +40,7 @@
                             <th>Username</th>
                             <th>Email</th>
                             <th>Role</th>
+                            <th>Cabang</th>
                             {{--<th>Branch</th>--}}
                             <th></th>
                         </tr>
@@ -47,16 +53,19 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->username }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->role }}</td>
+                                <td>{{ ucfirst($user->role) }}</td>
+                                <td>
+                                    {{ $user->role != 'admin' ? @$user->branch->name : '-' }}
+                                </td>
                                 {{--<td>{{ $user->branch }}</td>--}}
                                 {{--<td>Bandung</td>--}}
                                 <td>
                                     <a href="#modalForm" data-toggle="modal"
                                        data-href="{{ url('accounts/'.$user->id.'/edit') }}"
                                        class="btn btn-secondary btn-sm">Edit</a>
-                                    <a href="#modalForm" data-toggle="modal"
-                                       data-href="#"
-                                       class="btn btn-outline-dark btn-sm">Change Password</a>
+                                    {{--<a href="#modalForm" data-toggle="modal"--}}
+                                       {{--data-href="#"--}}
+                                       {{--class="btn btn-outline-dark btn-sm">Change Password</a>--}}
                                 </td>
                             </tr>
                         @endforeach

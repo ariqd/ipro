@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Item;
 use App\Brand;
 use App\Category;
+use Illuminate\Support\Facades\Validator;
+
 class ItemController extends Controller
 {
 
@@ -17,17 +19,19 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-    	$d['items'] = Item::select("items.*","brands.name as brandname","categories.name as categoryname")
-        ->join("brands","brands.id","items.brand_id")
-        ->join("categories","categories.id","items.category_id")
-        ->get();
+//    	$d['items'] = Item::select("items.*","brands.name as brandname","categories.name as categoryname")
+//        ->join("brands","brands.id","items.brand_id")
+//        ->join("categories","categories.id","items.category_id")
+//        ->get();
 
-        if (!empty($request->all())) {
-          $d['filtered'] = TRUE;
-      }
+        $d['items'] = Item::all();
 
-      return view('item.index', $d);
-  }
+//        if (!empty($request->all())) {
+//            $d['filtered'] = TRUE;
+//        }
+
+        return view('item.index', $d);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -35,13 +39,11 @@ class ItemController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {      
-        $brand = Brand::all();
+    {
+//        $brand = Brand::all();
         $category = Category::all();
-        return view('item.form',[
-            "brands"=>$brand,
-            "categories"=>$category
-        ]);
+
+        return view('item.form', ["categories" => $category]);
     }
 
     /**
@@ -52,21 +54,21 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-    	$input = $request->all();
-    	unset($input['_token']);
+        $input = $request->all();
+        unset($input['_token']);
 
-    	$validate = \Validator::make($input, [
-    		'name' => 'required',
-    		'category_id' => 'required|numeric',
-    		'brand_id' => 'required|numeric'
-    	]);
+        $validate = Validator::make($input, [
+            'name' => 'required',
+//            'category_id' => 'required|numeric',
+//            'brand_id' => 'required|numeric'
+        ]);
 
-    	if ($validate->fails()) {
-    		return redirect('item')->withErrors($validate)->withInput($input);
-    	} else {
-    		$item = Item::create($input);
-    		return redirect('items')->with('info', $item->name . ' berhasil ditambahkan!');
-    	}
+        if ($validate->fails()) {
+            return redirect('items')->withErrors($validate)->withInput($input);
+        } else {
+            $item = Item::create($input);
+            return redirect('items')->with('info', $item->name . ' berhasil ditambahkan!');
+        }
     }
 
     /**
@@ -77,8 +79,8 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-    	$d['item'] = Item::find($id);
-    	return view('item.show', $d);
+        $d['item'] = Item::find($id);
+        return view('item.show', $d);
     }
 
     /**
@@ -89,9 +91,9 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-    	$d['item'] = Item::find($id);
-    	$d['isEdit'] = TRUE;
-    	return view('item.form', $d);
+        $d['item'] = Item::find($id);
+        $d['isEdit'] = TRUE;
+        return view('item.form', $d);
     }
 
     /**
@@ -103,26 +105,26 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-    	$input = $request->all();
-    	unset($input['_token']);
+        $input = $request->all();
+        unset($input['_token']);
 
-    	$validate = Validator::make($input, [
-    		'name' => 'required',
-    		'category_id' => 'required|numeric',
-    		'brand_id' => 'required|numeric'
-    	]);
+        $validate = Validator::make($input, [
+            'name' => 'required',
+            'category_id' => 'required|numeric',
+            'brand_id' => 'required|numeric'
+        ]);
 
-    	if ($validate->fails()) {
-    		return redirect('inventories')->withErrors($validate)->withInput($input);
-    	} else {
-    		$item = Item::find($id);
+        if ($validate->fails()) {
+            return redirect('inventories')->withErrors($validate)->withInput($input);
+        } else {
+            $item = Item::find($id);
 
-    		if ($item->update($input)) {
-    			return redirect('item')->with('info', $item->name . ' berhasil diubah!');
-    		} else {
-    			return redirect('item')->with('error', $item->name . ' gagal diubah!');
-    		}
-    	}
+            if ($item->update($input)) {
+                return redirect('item')->with('info', $item->name . ' berhasil diubah!');
+            } else {
+                return redirect('item')->with('error', $item->name . ' gagal diubah!');
+            }
+        }
     }
 
     /**
@@ -133,7 +135,7 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-    	Item::destroy($id);
-    	return redirect('/item')->with('info', 'Item berhasil dihapus!');
+        Item::destroy($id);
+        return redirect('/item')->with('info', 'Item berhasil dihapus!');
     }
 }

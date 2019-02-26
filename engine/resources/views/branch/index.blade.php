@@ -7,11 +7,15 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <div class="d-flex justify-content-between">
-                    <h3><a href="{{ url('accounts') }}" class="text-dark">Master Data Users</a> / Cabang</h3>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0">Master Data</h5>
+                        <h2><b>Branches</b></h2>
+                    </div>
+                    {{--<h3><a href="{{ url('accounts') }}" class="text-dark">Master Data Users</a> / Cabang</h3>--}}
                     <div>
                         <a href="#modalForm" data-toggle="modal" data-href="{{ url('branches/create') }}"
-                           class="btn btn-dark"><i class="fa fa-plus"></i> Tambah Cabang</a>
+                           class="btn btn-dark"><i class="fa fa-plus"></i> Add Branch</a>
                     </div>
                 </div>
             </div>

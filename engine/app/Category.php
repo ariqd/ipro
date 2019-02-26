@@ -15,4 +15,9 @@ class Category extends Model
     {
         return $this->belongsTo('App\Brand');
     }
+
+    public function items()
+    {
+        return $this->hasMany('App\Item');
+    }
 }

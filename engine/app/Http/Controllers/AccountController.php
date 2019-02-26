@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Branch;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -26,9 +27,14 @@ class AccountController extends Controller
     public function create()
     {
         $d['types'] = [
-            'branch' => 'Branch Manager',
+//            'branch' => 'Branch Manager',
             'admin' => 'Admin',
+//            'manager' => 'Manajer Cabang',
+            'sales' => 'Sales Cabang',
         ];
+
+        $d['branches'] = Branch::all();
+
         return view('account.form', $d);
     }
 
@@ -42,10 +48,13 @@ class AccountController extends Controller
     {
         $input = $request->all();
         unset($input['_token']);
-        $input['password'] = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; //secret
-        $input['branch_id'] = 0;
-        User::create($input);
-        return redirect('accounts')->with('info', 'User created!');
+
+//        $input['password'] = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; //secret
+        $input['password'] = bcrypt($input['password']);
+
+        $user = User::create($input);
+
+        return redirect('accounts')->with('info', 'User ' . $user->name . ' created!');
     }
 
     /**
@@ -70,9 +79,13 @@ class AccountController extends Controller
         $d['user'] = User::find($id);
         $d['isEdit'] = TRUE;
         $d['types'] = [
-            'branch-manager' => 'Branch Manager',
+//            'branch' => 'Branch Manager',
             'admin' => 'Admin',
+//            'manager' => 'Manajer Cabang',
+            'sales' => 'Sales Cabang',
         ];
+
+        $d['branches'] = Branch::all();
 
         return view('account.form', $d);
     }
@@ -86,7 +99,19 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->all();
+        unset($input['_token']);
+
+        $user = User::find($id);
+
+        if (empty($input['password']))
+            $input['password'] = $user->password;
+        else
+            $input['password'] = bcrypt($input['password']);
+
+        $user->update($input);
+
+        return redirect('accounts')->with('info', 'User ' . $user->name . ' updated!');
     }
 
     /**

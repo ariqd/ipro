@@ -137,49 +137,56 @@
                             <li class="nav-item">
                                 <a href="{{ url('brands') }}"
                                    class="nav-link {{ (Request::is('brands*')) ? 'active' : '' }}">
-                                    <i class="fa fa-list"></i> Brand
+                                    <i class="fa fa-list"></i> Brands
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ url('categories') }}"
                                    class="nav-link {{ (Request::is('categories*')) ? 'active' : '' }}">
-                                    <i class="fa fa-list"></i> Category
+                                    <i class="fa fa-list"></i> Categories
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ url('items') }}"
                                    class="nav-link {{ (Request::is('items*')) ? 'active' : '' }}">
-                                    <i class="fa fa-list"></i> Item
+                                    <i class="fa fa-list"></i> Items
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ url('stocks') }}"
                                    class="nav-link {{ (Request::is('stocks*')) ? 'active' : '' }}">
-                                    <i class="fa fa-list"></i> Stock
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                {{--<a href="{{ url('pos/history') }}"--}}
-                                <a href="{{ url('customers') }}"
-                                   class="nav-link {{ Request::is('customers*') ? 'active' : '' }}">
-                                    <i class="fa fa-shopping-bag"></i> Customer
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                {{--<a href="{{ url('pos/report') }}"--}}
-                                <a href="#"
-                                   class="nav-link {{ Request::is('pos/report*') ? 'active' : '' }}">
-                                    <i class="fa fa-truck"></i> Vendor
+                                    <i class="fa fa-list"></i> Stocks
                                 </a>
                             </li>
 
                             @if(Gate::allows('isAdmin'))
                                 <li class="nav-item">
+                                    <a href="{{ url('branches') }}"
+                                       class="nav-link {{ (Request::is('branches*')) ? 'active' : '' }}">
+                                        <i class="fa fa-tree"></i> iPro Branches
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    {{--<a href="{{ url('pos/history') }}"--}}
+                                    <a href="{{ url('customers') }}"
+                                       class="nav-link {{ Request::is('customers*') ? 'active' : '' }}">
+                                        <i class="fa fa-shopping-bag"></i> Customers
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    {{--<a href="{{ url('pos/report') }}"--}}
+                                    <a href="#"
+                                       class="nav-link {{ Request::is('pos/report*') ? 'active' : '' }}">
+                                        <i class="fa fa-truck"></i> Vendors
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
                                     <a href="{{ url('accounts') }}"
                                        class="nav-link {{ Request::is('accounts*') ? 'active' : '' }}">
-                                        <i class="fa fa-arrow-right"></i> Users
+                                        <i class="fa fa-users"></i> Users
                                     </a>
                                 </li>
                             @endif

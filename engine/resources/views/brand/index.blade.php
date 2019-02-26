@@ -1,9 +1,9 @@
 @extends('layouts.carbon')
-@include('layouts.ajax')
 
 @section('title', 'Master Data User / Cabang')
 
 @section('content')
+    @include('layouts.ajax')
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -14,7 +14,7 @@
                     </div>
                     <div>
                         <a href="#modalForm" data-toggle="modal" data-href="{{ url('brands/create') }}"
-                           class="btn btn-dark"><i class="fa fa-plus"></i> Tambah Brand</a>
+                           class="btn btn-dark"><i class="fa fa-plus"></i> Add Brand</a>
                     </div>
                 </div>
             </div>
