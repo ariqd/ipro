@@ -10,9 +10,9 @@
     <div class="modal-body">
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="project_owner" class="form-control-label">Project Owner</label>
-                <input id="project_owner" class="form-control" name="project_owner"
-                       value="{{ @$isEdit ? $customer->project_owner : '' }}">
+                <label for="name" class="form-control-label">Project Owner</label>
+                <input id="name" class="form-control" name="name"
+                       value="{{ @$isEdit ? $customer->name : '' }}">
             </div>
         </div>
         <div class="form-group row">

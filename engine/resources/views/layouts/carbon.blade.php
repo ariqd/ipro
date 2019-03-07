@@ -7,8 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title') | iPro</title>
     <link rel="icon" href="{{ asset('assets/img/logo.png') }}">
-    {{--<link rel="stylesheet" href="{{ asset('carbon/vendor/simple-line-icons/css/simple-line-icons.css') }}">--}}
-    {{--<link rel="stylesheet" href="{{ asset('carbon/vendor/font-awesome/css/fontawesome-all.min.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('assets/plugins/font-awesome/css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('carbon/css/styles.css') }}">
     <link href="{{ asset('assets/css/ipro.css') }}" rel="stylesheet">
@@ -24,7 +22,6 @@
         </a>
 
         <a class="navbar-brand" href="#">
-            {{--<img src="./imgs/logo.png" alt="logo">--}}
             <img src="{{ asset('assets/img/logo.png') }}" width="80" alt="logo ipro">
         </a>
 
@@ -33,51 +30,16 @@
         </a>
 
         <ul class="navbar-nav ml-auto">
-            {{--<li class="nav-item d-md-down-none">--}}
-            {{--<a href="#">--}}
-            {{--<i class="fa fa-bell"></i>--}}
-            {{--<span class="badge badge-pill badge-danger">5</span>--}}
-            {{--</a>--}}
-            {{--</li>--}}
-
-            {{--<li class="nav-item d-md-down-none">--}}
-            {{--<a href="#">--}}
-            {{--<i class="fa fa-envelope-open"></i>--}}
-            {{--<span class="badge badge-pill badge-danger">5</span>--}}
-            {{--</a>--}}
-            {{--</li>--}}
-
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-toggle="dropdown"
                    aria-haspopup="true"
                    aria-expanded="false">
-                    {{--<img src="./imgs/avatar-1.png" class="avatar avatar-sm" alt="logo">--}}
                     <img src="{{ asset('carbon/imgs/avatar-1.png') }}" class="avatar avatar-sm" alt="logo">
                     <span class="small ml-1 d-md-down-none"></span>
                     {{ auth()->user()->name }}
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right">
-                    {{--<div class="dropdown-header">Account</div>--}}
-
-                    {{--<a href="#" class="dropdown-item">--}}
-                    {{--<i class="fa fa-user"></i> Profile--}}
-                    {{--</a>--}}
-
-                    {{--<a href="#" class="dropdown-item">--}}
-                    {{--<i class="fa fa-envelope"></i> Messages--}}
-                    {{--</a>--}}
-
-                    {{--<div class="dropdown-header">Settings</div>--}}
-
-                    {{--<a href="#" class="dropdown-item">--}}
-                    {{--<i class="fa fa-bell"></i> Notifications--}}
-                    {{--</a>--}}
-
-                    {{--<a href="#" class="dropdown-item">--}}
-                    {{--<i class="fa fa-wrench"></i> Settings--}}
-                    {{--</a>--}}
-
                     <a href="#" class="dropdown-item btnLogout">
                         <i class="fa fa-lock"></i> Logout
                     </a>
@@ -93,8 +55,6 @@
         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
-                    {{--<li class="nav-title">Navigation</li>--}}
-
                     <li class="nav-item">
                         <a href="{{ url('/') }}" class="nav-link {{ (Request::is('/')) ? 'active' : '' }}">
                             <i class="fa fa-home"></i> Home
@@ -121,77 +81,73 @@
                         </a>
                     </li>
 
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="{{ url('inventories') }}"--}}
-                    {{--class="nav-link {{ (Request::is('inventories*')) ? 'active' : '' }}">--}}
-                    {{--<i class="fa fa-list"></i> Inventory--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
+                    @if(Gate::allows('isAdmin'))
+                        <li class="nav-item nav-dropdown">
+                            <a href="#" class="nav-link nav-dropdown-toggle">
+                                <i class="fa fa-asterisk"></i> Master Data <i class="fa fa-caret-left"></i>
+                            </a>
 
-                    <li class="nav-item nav-dropdown">
-                        <a href="#" class="nav-link nav-dropdown-toggle">
-                            <i class="fa fa-asterisk"></i> Master Data <i class="fa fa-caret-left"></i>
-                        </a>
-
-                        <ul class="nav-dropdown-items">
-                            <li class="nav-item">
-                                <a href="{{ url('brands') }}"
-                                   class="nav-link {{ (Request::is('brands*')) ? 'active' : '' }}">
-                                    <i class="fa fa-list"></i> Brands
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('categories') }}"
-                                   class="nav-link {{ (Request::is('categories*')) ? 'active' : '' }}">
-                                    <i class="fa fa-list"></i> Categories
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('items') }}"
-                                   class="nav-link {{ (Request::is('items*')) ? 'active' : '' }}">
-                                    <i class="fa fa-list"></i> Items
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ url('stocks') }}"
-                                   class="nav-link {{ (Request::is('stocks*')) ? 'active' : '' }}">
-                                    <i class="fa fa-list"></i> Stocks
-                                </a>
-                            </li>
-
-                            @if(Gate::allows('isAdmin'))
+                            <ul class="nav-dropdown-items">
                                 <li class="nav-item">
-                                    <a href="{{ url('branches') }}"
-                                       class="nav-link {{ (Request::is('branches*')) ? 'active' : '' }}">
-                                        <i class="fa fa-tree"></i> iPro Branches
+                                    <a href="{{ url('brands') }}"
+                                       class="nav-link {{ (Request::is('brands*')) ? 'active' : '' }}">
+                                        <i class="fa fa-list"></i> Brands
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    {{--<a href="{{ url('pos/history') }}"--}}
-                                    <a href="{{ url('customers') }}"
-                                       class="nav-link {{ Request::is('customers*') ? 'active' : '' }}">
-                                        <i class="fa fa-shopping-bag"></i> Customers
+                                    <a href="{{ url('categories') }}"
+                                       class="nav-link {{ (Request::is('categories*')) ? 'active' : '' }}">
+                                        <i class="fa fa-list"></i> Categories
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    {{--<a href="{{ url('pos/report') }}"--}}
-                                    <a href="#"
-                                       class="nav-link {{ Request::is('pos/report*') ? 'active' : '' }}">
-                                        <i class="fa fa-truck"></i> Vendors
+                                    <a href="{{ url('items') }}"
+                                       class="nav-link {{ (Request::is('items*')) ? 'active' : '' }}">
+                                        <i class="fa fa-list"></i> Items
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="{{ url('accounts') }}"
-                                       class="nav-link {{ Request::is('accounts*') ? 'active' : '' }}">
-                                        <i class="fa fa-users"></i> Users
+                                    <a href="{{ url('stocks') }}"
+                                       class="nav-link {{ (Request::is('stocks*')) ? 'active' : '' }}">
+                                        <i class="fa fa-list"></i> Stocks
                                     </a>
                                 </li>
-                            @endif
-                        </ul>
-                    </li>
+
+                                @if(Gate::allows('isAdmin'))
+                                    <li class="nav-item">
+                                        <a href="{{ url('branches') }}"
+                                           class="nav-link {{ (Request::is('branches*')) ? 'active' : '' }}">
+                                            <i class="fa fa-tree"></i> iPro Branches
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('customers') }}"
+                                           class="nav-link {{ Request::is('customers*') ? 'active' : '' }}">
+                                            <i class="fa fa-shopping-bag"></i> Customers
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="#"
+                                           class="nav-link {{ Request::is('pos/report*') ? 'active' : '' }}">
+                                            <i class="fa fa-truck"></i> Vendors
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a href="{{ url('accounts') }}"
+                                           class="nav-link {{ Request::is('accounts*') ? 'active' : '' }}">
+                                            <i class="fa fa-users"></i> Users
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
 
                     <li class="nav-item">
                         <a href="{{ url('purchase-orders') }}"
@@ -207,6 +163,28 @@
                         </a>
                     </li>
 
+                    {{--<li class="nav-item nav-dropdown">--}}
+                        {{--<a href="#" class="nav-link nav-dropdown-toggle">--}}
+                            {{--<i class="fa fa-list"></i> Sales <i class="fa fa-caret-left"></i>--}}
+                        {{--</a>--}}
+                        {{--<ul class="nav-dropdown-items">--}}
+                            {{--<li class="nav-item">--}}
+                                {{--<a href="{{ url('quotations') }}"--}}
+                                   {{--class="nav-link {{ (Request::is('quotations*')) ? 'active' : '' }}">--}}
+                                    {{--<i class="fa fa-list"></i> Quotations--}}
+                                {{--</a>--}}
+                            {{--</li>--}}
+                        {{--</ul>--}}
+                        {{--<ul class="nav-dropdown-items">--}}
+                            {{--<li class="nav-item">--}}
+                                {{--<a href="{{ url('quotations') }}"--}}
+                                   {{--class="nav-link {{ (Request::is('quotations*')) ? 'active' : '' }}">--}}
+                                    {{--<i class="fa fa-list"></i> Sales Orders--}}
+                                {{--</a>--}}
+                            {{--</li>--}}
+                        {{--</ul>--}}
+                    {{--</li>--}}
+
                     <li class="nav-item">
                         <a href="{{ url('finances') }}"
                            class="nav-link {{ (Request::is('finances*')) ? 'active' : '' }}">
@@ -214,109 +192,12 @@
                         </a>
                     </li>
 
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="{{ url('accounts') }}"--}}
-                    {{--class="nav-link {{ (Request::is('accounts*')) ? 'active' : '' }}">--}}
-                    {{--<i class="fa fa-users"></i> User Accounts--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-
                     <li class="nav-item">
                         <a href="{{ url('deposits') }}"
                            class="nav-link {{ (Request::is('deposits*')) ? 'active' : '' }}">
                             <i class="fa fa-credit-card"></i> Deposits
                         </a>
                     </li>
-
-                    {{--<li class="nav-item nav-dropdown">--}}
-                    {{--<a href="#" class="nav-link nav-dropdown-toggle">--}}
-                    {{--<i class="icon icon-target"></i> Layouts <i class="fa fa-caret-left"></i>--}}
-                    {{--</a>--}}
-
-                    {{--<ul class="nav-dropdown-items">--}}
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="layouts-normal.html" class="nav-link">--}}
-                    {{--<i class="icon icon-target"></i> Normal--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="layouts-fixed-sidebar.html" class="nav-link">--}}
-                    {{--<i class="icon icon-target"></i> Fixed Sidebar--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="layouts-fixed-header.html" class="nav-link">--}}
-                    {{--<i class="icon icon-target"></i> Fixed Header--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="layouts-hidden-sidebar.html" class="nav-link">--}}
-                    {{--<i class="icon icon-target"></i> Hidden Sidebar--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-                    {{--</ul>--}}
-                    {{--</li>--}}
-
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="forms.html" class="nav-link">--}}
-                    {{--<i class="icon icon-puzzle"></i> Forms--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-
-                    {{--<li class="nav-title">More</li>--}}
-
-                    {{--<li class="nav-item nav-dropdown">--}}
-                    {{--<a href="#" class="nav-link nav-dropdown-toggle">--}}
-                    {{--<i class="icon icon-umbrella"></i> Pages <i class="fa fa-caret-left"></i>--}}
-                    {{--</a>--}}
-
-    {{--<ul class="nav-dropdown-items">--}}
-        {{--<li class="nav-item">--}}
-            {{--<a href="blank.html" class="nav-link">--}}
-                {{--<i class="icon icon-umbrella"></i> Blank Page--}}
-            {{--</a>--}}
-        {{--</li>--}}
-
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="login.html" class="nav-link">--}}
-                    {{--<i class="icon icon-umbrella"></i> Login--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="register.html" class="nav-link">--}}
-                    {{--<i class="icon icon-umbrella"></i> Register--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="invoice.html" class="nav-link">--}}
-                    {{--<i class="icon icon-umbrella"></i> Invoice--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="404.html" class="nav-link">--}}
-                    {{--<i class="icon icon-umbrella"></i> 404--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="500.html" class="nav-link">--}}
-                    {{--<i class="icon icon-umbrella"></i> 500--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-
-                    {{--<li class="nav-item">--}}
-                    {{--<a href="settings.html" class="nav-link">--}}
-                    {{--<i class="icon icon-umbrella"></i> Settings--}}
-                    {{--</a>--}}
-                    {{--</li>--}}
-                    {{--</ul>--}}
-                    {{--</li>--}}
                 </ul>
             </nav>
         </div>

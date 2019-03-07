@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Brand;
 use App\Customer;
 use App\Category;
 use App\Stock;
@@ -19,8 +20,9 @@ class SalesOrderController extends Controller
     public function create()
     {
         $d['customers'] = Customer::all();
-        $d['categories'] = Category::all();
-        $d['stocks'] = Stock::all();
+        $d['brands'] = Brand::all();
+//        $d['categories'] = Category::all();
+//        $d['stocks'] = Stock::all();
         return view('sale.form', $d);
     }
 
@@ -48,6 +50,15 @@ class SalesOrderController extends Controller
         return response()->json([
             'success' => true,
             'fill' => $fill
+        ]);
+    }
+
+    public function getCategories($brand_id)
+    {
+        $categories = Category::where('brand_id', '=', $brand_id);
+
+        return response()->json([
+            'categories' => $categories
         ]);
     }
 }

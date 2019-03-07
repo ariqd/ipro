@@ -12,7 +12,7 @@
                     </div>
                     <div>
                         <a href="{{ url('sales-orders/create') }}" class="btn btn-dark"><i
-                                    class="fa fa-plus"></i> Create S.O.</a>
+                                    class="fa fa-plus"></i> Create Sales Quotation</a>
                     </div>
                 </div>
             </div>
