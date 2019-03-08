@@ -138,4 +138,25 @@ class ItemController extends Controller
         Item::destroy($id);
         return redirect('/item')->with('info', 'Item berhasil dihapus!');
     }
+
+
+    public function search(Request $request, $id)
+    {
+        $data = Item::select("*");
+        $data = $data->where("category_id", "=", $id);
+        $data = $data->get();
+
+        return response()->json($data, 200);
+    }
+
+    public function searchdetail(Request $request, $id)
+    {
+        $data = Item::select("items.*","categories.name as catname","brands.name as brandname");
+        $data = $data->join("categories","categories.id","=","items.category_id");
+        $data = $data->join("brands","brands.id","=","categories.brand_id");
+        $data = $data->where("items.id", "=", $id);
+        $data = $data->first();
+
+        return response()->json($data, 200);
+    }
 }

@@ -18,11 +18,6 @@ class CreateStocksTable extends Migration
             $table->unsignedInteger('item_id');
             $table->unsignedInteger('branch_id');
             $table->integer('quantity');
-            $table->double('weight');
-            $table->double('area');
-            $table->double('width');
-            $table->double('height');
-            $table->double('length');
             $table->integer('price');
             $table->timestamps();
             $table->softDeletes();

@@ -53,4 +53,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('brands', 'BrandController');
     Route::resource('categories', 'CategoryController');
+    
+    Route::get('categories/search/{id}', 'CategoryController@search');
+    Route::get('items/search/{id}', 'ItemController@search');
+    Route::get('items/search/detail/{id}', 'ItemController@searchdetail');
 });

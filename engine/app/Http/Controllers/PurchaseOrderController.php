@@ -21,6 +21,18 @@ class PurchaseOrderController extends Controller
         return view('purchase.form', $data);
     }
 
+    public function show(){
+        $asu = Category::select("name")->where("brand_id",1)->get();
+        foreach($asu as $anakasu){
+            echo $anakasu->name;
+        }
+        dd($asu);
+    }
+
+    public function store(Request $request){
+        dd($request->all());
+    }
+
     public function addItems()
     {
         return view('purchase.items');

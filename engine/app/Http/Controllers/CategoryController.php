@@ -99,4 +99,13 @@ class CategoryController extends Controller
         return redirect('categories')->with('info', 'Hapus kategori sukses!');
 
     }
+
+    public function search(Request $request, $id)
+    {
+        $data = Category::select("*");
+        $data = $data->where("brand_id", "=", $id);
+        $data = $data->get();
+
+        return response()->json($data, 200);
+    }
 }

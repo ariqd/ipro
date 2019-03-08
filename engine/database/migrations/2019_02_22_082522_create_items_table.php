@@ -18,6 +18,12 @@ class CreateItemsTable extends Migration
             $table->unsignedInteger('category_id');
             $table->string('code');
             $table->string('name');
+            $table->double('purchase_price');
+            $table->double('weight');
+            $table->double('area');
+            $table->double('width');
+            $table->double('height');
+            $table->double('length');
             $table->timestamps();
             $table->softDeletes();
         });
