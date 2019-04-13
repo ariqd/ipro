@@ -246,8 +246,8 @@
                         <tr>
                             <th>No</th>
                             <th>Code</th>
-                            <th>Brand</th>
-                            <th>Category</th>
+{{--                            <th>Brand</th>--}}
+{{--                            <th>Category</th>--}}
                             <th>Name</th>
                             {{--<th></th>--}}
                             {{--<th"></th>--}}
@@ -258,9 +258,9 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->code }}</td>
-                                <td>{{ $item->category->brand->name }}</td>
-                                <td>{{ $item->category->name }}</td>
-                                <td>{{ $item->name }}</td>
+                                <td>{{ $item->category->brand->name }} {{ $item->category->name }} {{ $item->name }}</td>
+                                <td></td>
+                                <td></td>
                                 {{--<td class="cabang">{{ $item->branch }}</td>--}}
 
                             </tr>

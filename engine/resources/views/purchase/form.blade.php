@@ -89,12 +89,12 @@
     </script>
 
     <script>
-        $(document).on('keypress',function(e) {
-            if(e.which == 13) {
+        $(document).on('keypress', function (e) {
+            if (e.which == 13) {
                 e.preventDefault();
-                if($("#qty").val()==0 || !(/^\d*$/.test($("#qty").val()))){
+                if ($("#qty").val() == 0 || !(/^\d*$/.test($("#qty").val()))) {
                     alert('Mohon masukan angka yang sesuai!');
-                } else{
+                } else {
                     var id = $("#items").val();
                     $.ajax({
                         url: "{!! url("items/search/detail") !!}/" + id,
@@ -171,109 +171,109 @@
         </div>
 
 
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="form-group row">
-                        <label for="payment_method" class="col-4 col-form-label">Purchase Order ID</label>
-                        <div class="col-7">
-                            <input type="text" class="form-control" id="customer" name="customer">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="form-group row">
-                        <label for="payment_method" class="col-4 col-form-label">Sales Order ID</label>
-                        <div class="col-7">
-                            <input type="text" class="form-control" id="customer" name="customer">
-                        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="payment_method" class="col-4 col-form-label">Purchase Order ID</label>
+                    <div class="col-7">
+                        <input type="text" class="form-control" id="customer" name="customer">
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <h4>Cari Item</h4>
-                    <div class="form-group">
-                        Brand
-                        <select autocomplete="off" name="brand" id="brands" class="form-control brands">
-                            <option value="" selected disabled></option>
-                            @foreach($brands as $brand)
-                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        Category
-                        <select autocomplete="off" name="category" id="categories" class="form-control categories">
-                            <option value="" selected disabled></option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        Item
-                        <select autocomplete="off" name="items" id="items" class="form-control items">
-                            <option value="" selected disabled></option>
-                            {{--@foreach($categories as $category)--}}
-                            {{--<option value="{{ $category->id }}">{{ $category->name }}</option>--}}
-                            {{--@endforeach--}}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        Quantity
-                        <input type="number" class="form-control" step="1" id="qty">
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <h4>Cart</h4>
-                    {{--<div class="card">--}}
-                        {{--<div class="card-body">--}}
-
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-light">
-                            <thead>
-                            <tr>
-                                <th>Kategori</th>
-                                <th>Kode Barang</th>
-                                <th>Item</th>
-                                <th>Berat/pcs</th>
-                                <th>Order Qty/pcs</th>
-                                <th>Price/pcs</th>
-                                <th>Total Amount (IDR)</th>
-                                <th>GR Code</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody id="purchase-body">
-                            <tr>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td></td>
-                            </tr>
-                            </tbody>
-                        </table>
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="payment_method" class="col-4 col-form-label">Sales Order ID</label>
+                    <div class="col-7">
+                        <input type="text" class="form-control" id="customer" name="customer">
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-6">
-
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <h4>Cari Item</h4>
+                <div class="form-group">
+                    Brand
+                    <select autocomplete="off" name="brand" id="brands" class="form-control brands">
+                        <option value="" selected disabled></option>
+                        @foreach($brands as $brand)
+                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <div class="col-lg-6">
-                    <form action="{{url("/purchase-orders")}}" method="POST">
-                        @csrf
-                        <div id="input-body">
-
-                        </div>
-                        <input type="submit" class="form-control btn btn-success" value="Create Purchase Order">
-                    </form>
+                <div class="form-group">
+                    Category
+                    <select autocomplete="off" name="category" id="categories" class="form-control categories">
+                        <option value="" selected disabled></option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    Item
+                    <select autocomplete="off" name="items" id="items" class="form-control items">
+                        <option value="" selected disabled></option>
+                        {{--@foreach($categories as $category)--}}
+                        {{--<option value="{{ $category->id }}">{{ $category->name }}</option>--}}
+                        {{--@endforeach--}}
+                    </select>
+                </div>
+                <div class="form-group">
+                    Quantity
+                    <input type="number" class="form-control" step="1" id="qty">
                 </div>
             </div>
+            <div class="col-lg-8">
+                <h4>Cart</h4>
+                {{--<div class="card">--}}
+                {{--<div class="card-body">--}}
+
+                {{--</div>--}}
+                {{--</div>--}}
+                <div class="table-responsive">
+                    <table class="table table-bordered table-light">
+                        <thead>
+                        <tr>
+                            <th>Kategori</th>
+                            <th>Kode Barang</th>
+                            <th>Item</th>
+                            <th>Berat/pcs</th>
+                            <th>Order Qty/pcs</th>
+                            <th>Price/pcs</th>
+                            <th>Total Amount (IDR)</th>
+                            <th>GR Code</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody id="purchase-body">
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+
+            </div>
+            <div class="col-lg-6">
+                <form action="{{url("/purchase-orders")}}" method="POST">
+                    @csrf
+                    <div id="input-body">
+
+                    </div>
+                    <input type="submit" class="form-control btn btn-success" value="Create Purchase Order">
+                </form>
+            </div>
+        </div>
     </div>
 @endsection

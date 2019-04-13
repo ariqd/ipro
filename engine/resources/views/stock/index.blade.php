@@ -148,10 +148,6 @@
                                 Filter <i class="fa fa-chevron-down"></i>
                             </a>
                         @endif
-                        {{--<a href="{{ url('stocks/restock') }}"--}}
-                        {{--class="btn btn-success mr-2"><i class="fa fa-plus-circle"></i> Restock</a>--}}
-                        {{--<a href="#modalForm" data-toggle="modal" data-href="{{ url('stocks/restock') }}"--}}
-                        {{--class="btn btn-success mr-2"><i class="fa fa-plus-circle"></i> Restock</a>--}}
                         @if(Gate::allows('isAdmin'))
                             <a href="#modalForm" data-toggle="modal" data-href="{{ url('stocks/create') }}"
                                class="btn btn-dark"><i class="fa fa-plus"></i> Add Stock</a>
@@ -243,17 +239,11 @@
         @include('layouts.feedback')
         <div class="row" id="table">
             <div class="col-lg-12">
-                {{--<div class="card">--}}
-                {{--<div class="card-body">--}}
                 <div class="table-responsive">
                     <table class="table table-bordered data-table table-light w-100">
                         <thead>
                         <tr>
                             <th>No.</th>
-                            {{--<th class="kode">Kode</th>--}}
-                            {{--<th class="brand">Brand</th>--}}
-                            {{--<th class="brand">Category</th>--}}
-                            {{--<th class="nama">Nama</th>--}}
                             <th>Item</th>
                             <th>Branch</th>
                             <th class="stok">Stock (per Batang)</th>
@@ -268,11 +258,7 @@
                         @foreach($stocks as $stock)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                {{--<td class="kode">{{ $stock->code }}</td>--}}
-                                {{--<td class="brand">{{ $stock->brandname }}</td>--}}
-                                {{--<td class="brand">{{ $stock->categoryname }}</td>--}}
-                                {{--<td class="nama">{{ $stock->itemname }}</td>--}}
-                                <td>{{ $stock->item->name }}</td>
+                                <td>{{ $stock->item->category->brand->name .' '. $stock->item->category->name .' '. $stock->item->name }}</td>
                                 <td class="cabang">{{ $stock->branch->name }}</td>
                                 <td class="stock stok">
                                     {{ $stock->quantity }}
@@ -281,10 +267,10 @@
                                     10
                                 </td>
                                 <td class="berat weight">
-                                    {{ $stock->weight }}
+                                    {{ $stock->item->weight }}
                                 </td>
                                 <td class="harga">
-                                    Rp {{ number_format($stock->price) }}
+                                    Rp {{ number_format($stock->item->purchase_price) }}
                                 </td>
                                 <td>
                                     <div class="btn-group">
@@ -324,59 +310,16 @@
                                                 </form>
                                             @endif
                                         </div>
-                                    {{--</div>--}}
-
-                                    {{--<div class="btn-group">--}}
-                                        {{--<button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle"--}}
-                                                {{--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-                                            {{--<i class="fa fa-bars"></i>--}}
-                                        {{--</button>--}}
-                                        {{--<div class="dropdown-menu dropdown-menu-right">--}}
-                                            {{--<a href="#modalForm"--}}
-                                               {{--data-href="{{ url('stocks/'.$stock->id.'/restock') }}"--}}
-                                               {{--data-toggle="modal"--}}
-                                               {{--class="dropdown-item pt-3">--}}
-                                                {{--<i class="fa fa-plus text-success"></i>--}}
-                                                {{--Restock--}}
-                                            {{--</a>--}}
-                                            {{--@if(Gate::allows('isAdmin'))--}}
-                                                {{--<a href="#modalForm" data-toggle="modal"--}}
-                                                   {{--data-href="{{ url('stocks/'.$stock->id) }}"--}}
-                                                   {{--class="dropdown-item">--}}
-                                                    {{--<i class="fa fa-eye"></i> Detail</a>--}}
-                                                {{--<a title="Edit"--}}
-                                                   {{--class="dropdown-item"--}}
-                                                   {{--href="#modalForm"--}}
-                                                   {{--data-toggle="modal"--}}
-                                                   {{--data-href="{{ url('stocks/'.$stock->id.'/edit') }}">--}}
-                                                    {{--<i class="fa fa-edit text-warning"></i> Edit--}}
-                                                {{--</a>--}}
-                                                {{--<a href="#"--}}
-                                                   {{--class="dropdown-item btnDelete">--}}
-                                                    {{--<i class="fa fa-trash text-danger"></i>--}}
-                                                    {{--Delete--}}
-                                                {{--</a>--}}
-                                                {{--<form action="{{ url('stocks/'.$stock->id) }}"--}}
-                                                      {{--method="post" class="formDelete d-none">--}}
-                                                    {{--{!! csrf_field() !!}--}}
-                                                    {{--{!! method_field('delete') !!}--}}
-                                                {{--</form>--}}
-                                            {{--@endif--}}
-                                        {{--</div>--}}
-                                    {{--</div>--}}
+                                    </div>
                                 </td>
                                 <td class="price d-none">
-                                    {{ $stock->price }}
+                                    {{ $stock->item->purchase_price }}
                                 </td>
                             </tr>
                         @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
-                            {{--<td class="nama"></td>--}}
-                            {{--<td class="brand"></td>--}}
-                            {{--<td class="kode"></td>--}}
-                            {{--<td class="kode"></td>--}}
                             <td></td>
                             <td></td>
                             <td class="cabang">
@@ -400,8 +343,6 @@
                         </tfoot>
                     </table>
                 </div>
-                {{--</div>--}}
-                {{--</div>--}}
             </div>
         </div>
     </div>

@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
 
             $table->string('role')->nullable();
             $table->unsignedInteger('branch_id')->nullable();
+            $table->integer('saldo')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

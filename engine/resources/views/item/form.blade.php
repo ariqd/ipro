@@ -50,6 +50,48 @@
                        value="{{ @$isEdit ? $item->name : '' }}">
             </div>
         </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="purchase_price" class="form-control-label">Harga Beli</label>
+                <input autocomplete="off" id="purchase_price" class="form-control" name="purchase_price"
+                       value="{{ @$isEdit ? $item->purchase_price : '' }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="weight" class="form-control-label">Berat (Kg)</label>
+                <input autocomplete="off" id="weight" class="form-control" name="weight"
+                       value="{{ @$isEdit ? $item->weight : '' }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="area" class="form-control-label">Area (m2)</label>
+                <input autocomplete="off" id="area" class="form-control" name="area"
+                       value="{{ @$isEdit ? $item->area : '' }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="width" class="form-control-label">Lebar (m)</label>
+                <input autocomplete="off" id="width" class="form-control" name="width"
+                       value="{{ @$isEdit ? $item->width : '' }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="height" class="form-control-label">Tinggi (m)</label>
+                <input autocomplete="off" id="height" class="form-control" name="height"
+                       value="{{ @$isEdit ? $item->height : '' }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="length" class="form-control-label">Panjang (m)</label>
+                <input autocomplete="off" id="length" class="form-control" name="length"
+                       value="{{ @$isEdit ? $item->length : '' }}">
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal"> Batal</button>
@@ -60,11 +102,6 @@
 </form>
 
 <script type="text/javascript">
-    // $(".brand").select2({
-    //     placeholder: "Pilih Brand",
-    //     allowClear: true,
-    //     dropdownParent: $("#modalForm")
-    // });
     $(".category").select2({
         placeholder: "Pilih Kategori",
         allowClear: true,

@@ -51,7 +51,7 @@ class CustomerController extends Controller
 //         'user_type' => 'required'
 //    ]);
         $validate = Validator::make($input, [
-            'name' => 'required',
+            'project_owner' => 'required',
             'no_ktp' => 'required|unique:customers',
             'email' => 'required',
             'address' => 'required',

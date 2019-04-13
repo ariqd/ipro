@@ -15,15 +15,15 @@ class CreateSalesOrderDetailsTable extends Migration
     {
         Schema::create('sales_order_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('sales_id');
+            $table->unsignedInteger('sales_order_id');
             $table->unsignedInteger('stock_id');
             $table->integer('qty');
-            $table->float('berat');
-            $table->integer('harga_modal');
-            $table->integer('harga_jual');
-            $table->integer('subtotal');
-            $table->integer('diskon_persen');
-            $table->integer('diskon_rupiah');
+//            $table->float('weight')->nullable();
+//            $table->integer('harga_modal');
+            $table->integer('price');
+            $table->integer('total');
+            $table->integer('discount');
+//            $table->integer('discount_nominal');
             $table->timestamps();
             $table->softDeletes();
         });

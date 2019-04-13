@@ -71,12 +71,12 @@ class StockController extends Controller
             'item_id' => 'required|numeric',
             'branch_id' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'weight' => 'required|numeric',
-            'area' => 'required|numeric',
-            'width' => 'required|numeric',
-            'height' => 'required|numeric',
-            'length' => 'required|numeric',
-            'price' => 'required|numeric',
+//            'weight' => 'required|numeric',
+//            'area' => 'required|numeric',
+//            'width' => 'required|numeric',
+//            'height' => 'required|numeric',
+//            'length' => 'required|numeric',
+//            'price' => 'required|numeric',
         ]);
 
         if ($validate->fails()) {

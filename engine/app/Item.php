@@ -15,4 +15,9 @@ class Item extends Model
     {
         return $this->belongsTo('App\Category');
 	}
+
+    public function stocks()
+    {
+        return $this->hasMany('App\Stock');
+	}
 }
