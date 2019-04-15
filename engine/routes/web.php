@@ -56,4 +56,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('categories/search/{id}', 'CategoryController@search');
     Route::get('items/search/{id}', 'ItemController@search');
     Route::get('items/search/detail/{id}', 'ItemController@searchdetail');
+
+    Route::get('sales-orders/search/{id}',"SalesOrderController@searchdetailSO");
 });

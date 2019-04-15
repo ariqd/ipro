@@ -102,4 +102,23 @@ class SalesOrderController extends Controller
 
         return response()->json($stocks->get(), 200);
     }
+
+    public function searchDetailSO($id)
+    {
+        $query = Sale::find($id);
+        $data["header"]=$query;
+        $data["detail"] = $query->sale_detail;
+        foreach ($data["detail"] as $key) {
+            $key["stock"]=$key->stock;
+            $key["item"]= $key["stock"]->item;
+            $key["category"]= $key["item"]->category;
+            $key["brand"]=$key["category"]->brand;
+
+            // $key->stock;
+            // $key->item;
+            // $key->category;
+            // $key->brand;
+        }
+        return response()->json($data, 200);
+    }
 }

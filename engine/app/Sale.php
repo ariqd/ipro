@@ -18,9 +18,14 @@ class Sale extends Model
         'payment_method',
         'note'
     ];
-
+  
     public function customer()
     {
         return $this->hasOne('App\Customer', 'id', 'customer_id');
+    }
+
+     public function sale_detail()
+    {
+        return $this->hasMany('App\Sale_Detail','sales_order_id');
     }
 }
