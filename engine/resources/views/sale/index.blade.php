@@ -25,6 +25,7 @@
                     <tr>
                         <th>Date</th>
                         <th>Customer</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -32,6 +33,14 @@
                         <tr>
                             <td>{{ $sale->created_at }}</td>
                             <td>{{ $sale->customer->project_owner }}</td>
+                            <td>
+                                <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm">
+                                    Show
+                                </a>
+                                <a href="{{ url('sales-orders/'.$sale->id.'/edit') }}" class="btn btn-secondary btn-sm">
+                                    Edit
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                     </tbody>

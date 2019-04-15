@@ -26,7 +26,7 @@ class SalesOrderController extends Controller
         $d['customers'] = Customer::all();
         $d['brands'] = Brand::all();
 //        $d['categories'] = Category::all();
-        $d['stocks'] = Stock::all();
+//        $d['stocks'] = Stock::all();
         return view('sale.form', $d);
     }
 
@@ -90,17 +90,37 @@ class SalesOrderController extends Controller
     public function searchStocks()
     {
         $category_id = request()->get('category_id');
-        $stocks = Stock::with('item')->whereHas('item', function ($query) use ($category_id) {
-            $query->where('category_id', '=', $category_id);
-        });
 
-        if (Auth::user()->role != 'admin') {
-            $stocks->where('branch_id', '=', Auth::user()->branch_id);
-        }
-
-//        dd($stocks);
+        $stocks = Stock::with('item')
+            ->whereHas('item', function ($query) use ($category_id) {
+                $query->where('category_id', '=', $category_id);
+            })->tap(function ($query) {
+                Auth::user()->role == 'admin' ?: $query->where('branch_id', '=', Auth::user()->branch_id);
+            });
 
         return response()->json($stocks->get(), 200);
+    }
+
+    public function show($id)
+    {
+        $d['sale'] = Sale::find($id);
+
+        return view('sale.show', $d);
+    }
+
+    public function edit($id)
+    {
+        $d['isEdit'] = TRUE;
+        $d['sale'] = Sale::find($id);
+        $d['customers'] = Customer::all();
+        $d['brands'] = Brand::all();
+
+        return view('sale.form', $d);
+    }
+
+    public function update(Request $request, $id)
+    {
+
     }
 
     public function searchDetailSO($id)

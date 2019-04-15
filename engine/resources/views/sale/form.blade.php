@@ -237,7 +237,7 @@
         </div>
         <div class="row">
             <div class="col-6">
-                <h5><b><label for="customer_select">Customer</label></b></h5>
+                <h4><b><label for="customer_select">Customer</label></b></h4>
             </div>
             <div class="col-6">
                 <div class="float-right">
@@ -257,7 +257,9 @@
                                     style="width: 100%">
                                 <option></option>
                                 @foreach($customers as $customer)
-                                    <option value="{{ $customer->id }}">{{ $customer->project_owner }}</option>
+                                    <option value="{{ $customer->id }}" {{ @$isEdit && $customer->id == $sale->customer->id ? 'selected' : '' }}>
+                                        {{ $customer->project_owner }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -280,30 +282,34 @@
                                 <div class="form-group col-lg-2">
                                     <label for="register_id">Register ID</label>
                                     <input type="text" class="form-control" id="register_id" disabled
-                                           name="register_id">
+                                           name="register_id" value="{{ @$isEdit ? $sale->customer->id : '' }}">
                                 </div>
                                 <div class="form-group col-lg-5">
                                     <label for="name">Pemilik Project</label>
                                     <input type="text" class="form-control" id="name" disabled
-                                           name="name">
+                                           name="name" value="{{ @$isEdit ? $sale->customer->project_owner : '' }}">
                                 </div>
                                 <div class="form-group col-lg-5">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" disabled name="email">
+                                    <input type="email" class="form-control" id="email" disabled name="email"
+                                           value="{{ @$isEdit ? $sale->customer->email : '' }}">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-lg-6">
                                     <label for="address">Alamat</label>
-                                    <input type="text" class="form-control" id="address" disabled name="address">
+                                    <input type="text" class="form-control" id="address" disabled name="address"
+                                           value="{{ @$isEdit ? $sale->customer->address : '' }}">
                                 </div>
                                 <div class="form-group col-lg-3">
                                     <label for="phone">Telp</label>
-                                    <input type="text" class="form-control" id="phone" disabled name="phone">
+                                    <input type="text" class="form-control" id="phone" disabled name="phone"
+                                           value="{{ @$isEdit ? $sale->customer->phone : '' }}">
                                 </div>
                                 <div class="form-group col-lg-3">
                                     <label for="fax">Fax</label>
-                                    <input type="text" class="form-control" id="fax" disabled name="fax">
+                                    <input type="text" class="form-control" id="fax" disabled name="fax"
+                                           value="{{ @$isEdit ? $sale->customer->fax : '' }}">
                                 </div>
                             </div>
                         </div>
@@ -311,13 +317,65 @@
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-lg-12">
-                <h5><b>Items</b></h5>
+                <h4><b>Items</b></h4>
                 <div class="card">
                     <div class="card-body">
+                        @if(@$isEdit && !empty($sale->details))
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5><b>Current Items</b></h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Name</th>
+                                                <th>Qty</th>
+                                                <th>Price</th>
+                                                <th>Discount</th>
+                                                <th>Total</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @forelse($sale->details as $details)
+                                                <tr>
+                                                    <td>
+                                                        {{ $details->id }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $details->stock->item->name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $details->qty }}
+                                                    </td>
+                                                    <td>
+                                                        Rp{{number_format($details->price) }},00
+                                                    </td>
+                                                    <td>
+                                                        {{ $details->discount }}%
+                                                    </td>
+                                                    <td>
+                                                        Rp{{number_format($details->total)}},00
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center">No items yet</td>
+                                                </tr>
+                                            @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        @endif
                         <div class="row">
+                            <div class="col-12">
+                                <h5><b>Add Items</b></h5>
+                            </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="brands">Brand</label>
@@ -339,8 +397,8 @@
 
                                 <div class="card mb-0" id="itemsList">
                                     <div class="card-body p-0" id="items">
-                                        <div id="items-text" class="text-secondary p-3">Hasil pencarian akan muncul
-                                            disini
+                                        <div id="items-text" class="text-secondary p-3">
+                                            Hasil pencarian akan muncul disini
                                         </div>
                                     </div>
                                 </div>
@@ -349,8 +407,8 @@
                                 <div class="card">
                                     <div class="card-body p-0" id="items2">
                                         <div class="d-flex justify-content-between align-items-center p-3">
-                                            <div id="items2-text" class="count text-secondary">Belum ada barang
-                                                dipilih
+                                            <div id="items2-text" class="count text-secondary">
+                                                Belum ada barang dipilih
                                             </div>
                                             <div>
                                                 <b>Total:</b> <span id="grand-total-span">Rp 0</span>
@@ -366,7 +424,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <h5 class="card-title"><b>Details</b></h5>
+                <h4 class="card-title"><b>Details</b></h4>
                 <div class="card">
                     <div class="card-body">
                         <div class="form-row">
