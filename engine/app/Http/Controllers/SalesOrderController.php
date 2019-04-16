@@ -127,12 +127,12 @@ class SalesOrderController extends Controller
     {
         $query = Sale::find($id);
         $data["header"]=$query;
-        $data["detail"] = $query->sale_detail;
+        $data["detail"] = $query->details()->get();
         foreach ($data["detail"] as $key) {
-            $key["stock"]=$key->stock;
-            $key["item"]= $key["stock"]->item;
-            $key["category"]= $key["item"]->category;
-            $key["brand"]=$key["category"]->brand;
+            $key["stock"]=$key->stock()->first();
+            $key["item"]= $key["stock"]->item()->first();
+            $key["category"]= $key["item"]->category()->first();
+            $key["brand"]=$key["category"]->brand()->first();
 
             // $key->stock;
             // $key->item;
