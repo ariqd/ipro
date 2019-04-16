@@ -30,16 +30,18 @@ class PurchaseOrderController extends Controller
 
     public function show()
     {
-        $asu = Category::select("name")->where("brand_id", 1)->get();
-        foreach ($asu as $anakasu) {
-            echo $anakasu->name;
-        }
-        dd($asu);
+      //
     }
 
     public function store(Request $request)
     {
         dd($request->all());
+
+        $counter = Counter::where("name","=","PO")->first();
+        $branch_id = Auth::user()->branch_id;
+        $branch = Branch::find($branch_id);
+        $nopo = "PO".date("ymd").str_pad($branch_id, 2, 0, STR_PAD_LEFT).str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
+
     }
 
     public function addItems()
@@ -49,7 +51,6 @@ class PurchaseOrderController extends Controller
 
     public function getCategories($brand_id)
     {
-//        $data['categories'] = Category::where('brand')
         return response()->json();
     }
 }

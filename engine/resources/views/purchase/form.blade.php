@@ -159,7 +159,6 @@
                             var cell4 = row.insertCell(4);
                             var cell5 = row.insertCell(5);
                             var cell6 = row.insertCell(6);
-                            var cell7 = row.insertCell(7);
 
                             // cell0.setAttribute('class', "form_id");
                             cell0.innerHTML = response.catname;
@@ -169,7 +168,6 @@
                             cell4.innerHTML = $("#qty").val();
                             cell5.innerHTML = response.purchase_price;
                             cell6.innerHTML = response.purchase_price * $("#qty").val();
-                            cell7.innerHTML = "";
 
                             var container = document.getElementById("input-body");
                             var input = document.createElement("input");
@@ -292,7 +290,6 @@
                             <th>Price/pcs</th>
                             <th>Total Amount (IDR)</th>
                             <th>GR Code</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="purchase-body">
@@ -303,7 +300,6 @@
                             <td>-</td>
                             <td>-</td>
                             <td>-</td>
-                            <td></td>
                         </tr>
                     </tbody>
                 </table>
