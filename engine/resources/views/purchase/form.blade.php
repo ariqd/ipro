@@ -21,123 +21,132 @@
 
 @push("js")
 <script>
-    $("#brands").select2({
-        placeholder: "Choose Brand"
+   var count = 0;
+
+   $("#brands").select2({
+    placeholder: "Choose Brand"
+});
+   $("#brands").change(function () {
+    var id = $("#brands").val();
+
+    $("#categories").select2({
+        selectOnClose: true,
+        placeholder: 'Choose Category',
+        ajax: {
+            url: "{!! url("categories/search") !!}/" + id,
+            dataType: 'json',
+            delay: 600,
+            processResults: function (data) {
+
+                return {
+                    results: $.map(data, function (item) {
+
+                        return {
+                            text: item.name,
+                            id: item.id
+
+                        }
+                    })
+                };
+            },
+            cache: true
+        }
     });
-    $("#brands").change(function () {
-        var id = $("#brands").val();
 
-        $("#categories").select2({
-            selectOnClose: true,
-            placeholder: 'Choose Category',
-            ajax: {
-                url: "{!! url("categories/search") !!}/" + id,
-                dataType: 'json',
-                delay: 600,
-                processResults: function (data) {
+});
 
-                    return {
-                        results: $.map(data, function (item) {
+   $("#categories").change(function () {
+    var id = $("#categories").val();
 
-                            return {
-                                text: item.name,
-                                id: item.id
+    $("#items").select2({
+        selectOnClose: true,
+        placeholder: 'Choose Item',
+        ajax: {
+            url: "{!! url("items/search") !!}/" + id,
+            dataType: 'json',
+            delay: 600,
+            processResults: function (data) {
 
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
+                return {
+                    results: $.map(data, function (item) {
+
+                        return {
+                            text: item.name,
+                            id: item.id
+
+                        }
+                    })
+                };
+            },
+            cache: true
+        }
+    });
+
+});
+
+   function searchSales(){
+      $.ajax({
+        url: "{!! url("sales-orders/search") !!}/" + $("#salesorderid").val(),
+        method: "get",
+        success: function (response) {
+         $("#purchase-body").empty()
+         var table = document.getElementById("purchase-body");
+         $(response.detail).each(function(key,value) {
+            var row = table.insertRow();
+            row.setAttribute('class', 'item-' + count);
+            var cell0 = row.insertCell(0);
+            var cell1 = row.insertCell(1);
+            var cell2 = row.insertCell(2);
+            var cell3 = row.insertCell(3);
+            var cell4 = row.insertCell(4);
+            var cell5 = row.insertCell(5);
+            var cell6 = row.insertCell(6);
+            var cell7 = row.insertCell(7);
+            var cell8 = row.insertCell(8);
+            cell0.setAttribute('class', "form_id");
+            cell8.setAttribute('class', "subtotal");
+
+            cell1.innerHTML = value.category.name;
+            cell2.innerHTML = value.item.code;
+            cell3.innerHTML = value.item.name;
+            cell4.innerHTML = value.item.weight;
+            cell5.innerHTML = value.qty;
+            cell6.innerHTML = value.item.purchase_price;
+            cell7.innerHTML = value.total;
+            cell8.innerHTML = '<button onclick=voidItem("item-'+count+'") class="btn btn-dark" type="button"/>';
+
+            var container = document.getElementById("input-body");
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "item-id[]";
+            input.setAttribute('value', value.item.id);
+            input.setAttribute('class', "item-"+count);
+            container.appendChild(input);
+
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "qty[]";
+            input.setAttribute('value', value.qty);
+            input.setAttribute('class', "item-"+count);
+            container.appendChild(input);
+
+            count++;
         });
+         updateRowOrder();
 
-    });
+     },
+     error: function (xhr, statusCode, error) {
+     }
+ });
+  }
 
-    $("#categories").change(function () {
-        var id = $("#categories").val();
+  function voidItem(id){
+    $("."+id).remove();
+    updateRowOrder();
+}
+</script>)
 
-        $("#items").select2({
-            selectOnClose: true,
-            placeholder: 'Choose Item',
-            ajax: {
-                url: "{!! url("items/search") !!}/" + id,
-                dataType: 'json',
-                delay: 600,
-                processResults: function (data) {
-
-                    return {
-                        results: $.map(data, function (item) {
-
-                            return {
-                                text: item.name,
-                                id: item.id
-
-                            }
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
-
-    });
-
-        // $("#items").select2({
-        //     placeholder: "Choose Item"
-        // });
-
-        function searchSales(){
-          $.ajax({
-            url: "{!! url("sales-orders/search") !!}/" + $("#salesorderid").val(),
-            method: "get",
-            success: function (response) {
-             $("#purchase-body").empty()
-             var table = document.getElementById("purchase-body");
-             $(response.detail).each(function(key,value) {
-                console.dir(value);
-                var row = table.insertRow();
-                            // row.setAttribute('id', 'row' + count);
-                            var cell0 = row.insertCell(0);
-                            var cell1 = row.insertCell(1);
-                            var cell2 = row.insertCell(2);
-                            var cell3 = row.insertCell(3);
-                            var cell4 = row.insertCell(4);
-                            var cell5 = row.insertCell(5);
-                            var cell6 = row.insertCell(6);
-                            var cell7 = row.insertCell(7);
-
-                            // cell0.setAttribute('class', "form_id");
-                            cell0.innerHTML = value.category.name;
-                            cell1.innerHTML = value.item.code;
-                            cell2.innerHTML = value.item.name;
-                            cell3.innerHTML = value.item.weight;
-                            cell4.innerHTML = value.qty;
-                            cell5.innerHTML = value.item.purchase_price;
-                            cell6.innerHTML = value.total;
-                            cell7.innerHTML = "";
-
-                            var container = document.getElementById("input-body");
-                            var input = document.createElement("input");
-                            input.type = "hidden";
-                            input.name = "item-id[]";
-                            input.setAttribute('value', value.item.id);
-                            container.appendChild(input);
-
-                            var input = document.createElement("input");
-                            input.type = "hidden";
-                            input.name = "qty[]";
-                            input.setAttribute('value', value.qty);
-                            container.appendChild(input);
-                        });
-         },
-         error: function (xhr, statusCode, error) {
-         }
-     });
-      }
-
-  </script>
-
-  <script>
+<script>
     $(document).on('keypress', function (e) {
         if (e.which == 13) {
             e.preventDefault();
@@ -149,43 +158,52 @@
                     url: "{!! url("items/search/detail") !!}/" + id,
                     method: "get",
                     success: function (response) {
+                        console.dir(response);
                         var table = document.getElementById("purchase-body");
                         var row = table.insertRow();
-                            // row.setAttribute('id', 'row' + count);
-                            var cell0 = row.insertCell(0);
-                            var cell1 = row.insertCell(1);
-                            var cell2 = row.insertCell(2);
-                            var cell3 = row.insertCell(3);
-                            var cell4 = row.insertCell(4);
-                            var cell5 = row.insertCell(5);
-                            var cell6 = row.insertCell(6);
+                        row.setAttribute('class', 'item-' + count);
+                        var cell0 = row.insertCell(0);
+                        var cell1 = row.insertCell(1);
+                        var cell2 = row.insertCell(2);
+                        var cell3 = row.insertCell(3);
+                        var cell4 = row.insertCell(4);
+                        var cell5 = row.insertCell(5);
+                        var cell6 = row.insertCell(6);
+                        var cell7 = row.insertCell(7);
+                        var cell8 = row.insertCell(8);
+                        cell0.setAttribute('class', "form_id");
+                        cell8.setAttribute('class', "subtotal");
 
-                            // cell0.setAttribute('class', "form_id");
-                            cell0.innerHTML = response.catname;
-                            cell1.innerHTML = response.code;
-                            cell2.innerHTML = response.name;
-                            cell3.innerHTML = response.weight;
-                            cell4.innerHTML = $("#qty").val();
-                            cell5.innerHTML = response.purchase_price;
-                            cell6.innerHTML = response.purchase_price * $("#qty").val();
+                        cell1.innerHTML = response.item.category.name;
+                        cell2.innerHTML = response.item.code;
+                        cell3.innerHTML = response.item.name;
+                        cell4.innerHTML = response.item.weight;
+                        cell5.innerHTML = $("#qty").val();
+                        cell6.innerHTML = response.item.purchase_price;
+                        cell7.innerHTML = $("#qty").val()*response.item.purchase_price;
+                        cell8.innerHTML = '<button onclick=voidItem("item-'+count+'") class="btn btn-dark" type="button"/>';
 
-                            var container = document.getElementById("input-body");
-                            var input = document.createElement("input");
-                            input.type = "hidden";
-                            input.name = "item-id[]";
-                            input.setAttribute('value', response.id);
-                            container.appendChild(input);
+                        var container = document.getElementById("input-body");
+                        var input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = "item-id[]";
+                        input.setAttribute('value', response.item.id);
+                        input.setAttribute('class', "item-"+count);
+                        container.appendChild(input);
 
-                            var input = document.createElement("input");
-                            input.type = "hidden";
-                            input.name = "qty[]";
-                            input.setAttribute('value', $("#qty").val());
-                            container.appendChild(input);
+                        var input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = "qty[]";
+                        input.setAttribute('value', $("#qty").val());
+                        input.setAttribute('class', "item-"+count);
+                        container.appendChild(input);
+                        count++;
+                        updateRowOrder();
 
-                        },
-                        error: function (xhr, statusCode, error) {
-                        }
-                    });
+                    },
+                    error: function (xhr, statusCode, error) {
+                    }
+                });
             }
         }
     });
@@ -282,6 +300,7 @@
                 <table class="table table-bordered table-light">
                     <thead>
                         <tr>
+                            <th>No.</th>
                             <th>Kategori</th>
                             <th>Kode Barang</th>
                             <th>Item</th>
@@ -294,6 +313,9 @@
                     </thead>
                     <tbody id="purchase-body">
                         <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                             <td>-</td>
                             <td>-</td>
                             <td>-</td>

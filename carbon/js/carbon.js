@@ -2,7 +2,7 @@ $(document).ready(function () {
     /**
      * Sidebar Dropdown
      */
-    $('.nav-dropdown-toggle').on('click', function (e) {
+     $('.nav-dropdown-toggle').on('click', function (e) {
         e.preventDefault();
         $(this).parent().toggleClass('open');
     });
@@ -13,7 +13,7 @@ $(document).ready(function () {
     /**
      * Sidebar Toggle
      */
-    $('.sidebar-toggle').on('click', function (e) {
+     $('.sidebar-toggle').on('click', function (e) {
         e.preventDefault();
         $('body').toggleClass('sidebar-hidden');
     });
@@ -21,7 +21,8 @@ $(document).ready(function () {
     /**
      * Mobile Sidebar Toggle
      */
-    $('.sidebar-mobile-toggle').on('click', function () {
+     $('.sidebar-mobile-toggle').on('click', function () {
         $('body').toggleClass('sidebar-mobile-show');
     });
-});
+ });
+

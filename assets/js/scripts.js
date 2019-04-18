@@ -9,7 +9,7 @@ function number_format(number, decimals, decPoint, thousandsSep) { // eslint-dis
     var toFixedFix = function (n, prec) {
         var k = Math.pow(10, prec)
         return '' + (Math.round(n * k) / k)
-            .toFixed(prec)
+        .toFixed(prec)
     }
 
     // @todo: for IE parseFloat(0.55).toFixed(0) = 0;
@@ -42,7 +42,7 @@ var items_count = 0;
 /**
  * Enable / disable PAY button based on items count
  */
-function setButtonState() {
+ function setButtonState() {
     if (items_count <= 0) {
         $('#btnPay').attr('disabled', 'disabled');
     } else {
@@ -55,7 +55,7 @@ function setButtonState() {
  *
  * @param id Product Code Part
  */
-function addProduct(id) {
+ function addProduct(id) {
     // console.log("aaa");
     var btn = $('.addProduct-' + id);
     var description = btn.data("description");
@@ -139,14 +139,14 @@ function addProduct(id) {
             '       </div>' +
             '   </div>' +
             '</div>'
-        );
+            );
 
-        items_count++;
-        setButtonState();
-        countTotal();
-        $('.count').text(items_count + " barang dalam keranjang");
+items_count++;
+setButtonState();
+countTotal();
+$('.count').text(items_count + " barang dalam keranjang");
 
-    }
+}
 }
 
 /**
@@ -154,7 +154,7 @@ function addProduct(id) {
  *
  * @param product_code Product Code Part
  */
-function removeProduct(product_code) {
+ function removeProduct(product_code) {
     $("#product-" + product_code).remove();
     items_count--;
     setButtonState();
@@ -171,7 +171,7 @@ function removeProduct(product_code) {
  *
  * @param product_code Product Code Part
  */
-function countSubtotal(product_code) {
+ function countSubtotal(product_code) {
     var actual_price = parseFloat($('#price-' + product_code).text().replace('Rp ', '') || 0);
     var qty = parseFloat($("#item-qty-" + product_code).val()) || 0;
     var discount = parseFloat($("#item-disc-" + product_code).val() || 0)
@@ -207,7 +207,7 @@ function countSubtotal(product_code) {
 /**
  * Count grand total based on subtotals
  */
-function countTotal() {
+ function countTotal() {
     var all_subtotals_length = $('.subtotal').length;
     var grand_subtotal = 0;
 
@@ -241,3 +241,4 @@ function countTotal() {
 function print(name) {
     printJS(name);
 }
+

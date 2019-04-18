@@ -151,12 +151,10 @@ class ItemController extends Controller
 
     public function searchdetail(Request $request, $id)
     {
-        $data = Item::select("items.*","categories.name as catname","brands.name as brandname");
-        $data = $data->join("categories","categories.id","=","items.category_id");
-        $data = $data->join("brands","brands.id","=","categories.brand_id");
-        $data = $data->where("items.id", "=", $id);
-        $data = $data->first();
-
+        $query = Item::find($id);
+        $data["item"] = $query;
+        $data["item"]["category"]= $query->category()->first();
+        $data["item"]["brand"]= $query->category->brand()->first();
         return response()->json($data, 200);
     }
 }

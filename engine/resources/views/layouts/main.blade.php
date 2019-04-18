@@ -10,9 +10,9 @@
     <title>@yield('title') - iPro</title>
 
     <!-- Scripts -->
-{{--    <script src="{{ asset('js/app.js') }}" defer></script>--}}
+    {{--    <script src="{{ asset('js/app.js') }}" defer></script>--}}
 
-<!-- Fonts -->
+    <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
@@ -28,131 +28,131 @@
 
 </head>
 <body>
-<div id="app">
+    <div id="app">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">
-            <img src="{{ asset('assets/img/logo.png') }}" width="55" alt="logo ipro">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="{{ asset('assets/img/logo.png') }}" width="55" alt="logo ipro">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarText">
             <div class="navbar-nav ml-auto">
                 <li class="nav-item dropleft">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Welcome, Admin
-                        {{--Welcome, {{ Auth::user()->name }}--}}
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        {{--<a class="dropdown-item" href="#">Action</a>--}}
-                        {{--<a class="dropdown-item" href="#">Another action</a>--}}
-                        {{--<div class="dropdown-divider"></div>--}}
-                        <a class="dropdown-item btnLogout" href="{{ url('logout') }}">Logout</a>
-                        <form class="hidden" id="formLogout" action="{{ url('logout') }}" method="post">
-                            {!! csrf_field() !!}
-                        </form>
-                    </div>
-                </li>
-            </div>
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Welcome, Admin
+                    {{--Welcome, {{ Auth::user()->name }}--}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {{--<a class="dropdown-item" href="#">Action</a>--}}
+                    {{--<a class="dropdown-item" href="#">Another action</a>--}}
+                    {{--<div class="dropdown-divider"></div>--}}
+                    <a class="dropdown-item btnLogout" href="{{ url('logout') }}">Logout</a>
+                    <form class="hidden" id="formLogout" action="{{ url('logout') }}" method="post">
+                        {!! csrf_field() !!}
+                    </form>
+                </div>
+            </li>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light border-bottom">
-        {{--<a class="navbar-brand" href="#">Navbar</a>--}}
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item {{ (Request::is('/')) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/') }}">Home</a>
-                </li>
-                <li class="nav-item {{ (Request::is('dashboard*')) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
-                </li>
-                <li class="nav-item {{ (Request::is('pos*')) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/pos') }}">Point of Sales</a>
-                </li>
-                <li class="nav-item {{ (Request::is('catalogues*')) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/catalogues') }}">Catalogue</a>
-                </li>
-                <li class="nav-item {{ (Request::is('inventories*')) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/inventories') }}">Inventory</a>
-                </li>
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light border-bottom">
+    {{--<a class="navbar-brand" href="#">Navbar</a>--}}
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mx-auto">
+        <li class="nav-item {{ (Request::is('/')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{ url('/') }}">Home</a>
+        </li>
+        <li class="nav-item {{ (Request::is('dashboard*')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
+        </li>
+        <li class="nav-item {{ (Request::is('pos*')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{ url('/pos') }}">Point of Sales</a>
+        </li>
+        <li class="nav-item {{ (Request::is('catalogues*')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{ url('/catalogues') }}">Catalogue</a>
+        </li>
+        <li class="nav-item {{ (Request::is('inventories*')) ? 'active' : '' }}">
+            <a class="nav-link" href="{{ url('/inventories') }}">Inventory</a>
+        </li>
 
-                <li class="nav-item nav-dropdown">
-                    <a href="#" class="nav-link nav-dropdown-toggle">
-                        <i class="fas fa-file-invoice-dollar"></i> Point of Sales <i class="fa fa-caret-left"></i>
-                    </a>
+        <li class="nav-item nav-dropdown">
+            <a href="#" class="nav-link nav-dropdown-toggle">
+                <i class="fas fa-file-invoice-dollar"></i> Point of Sales <i class="fa fa-caret-left"></i>
+            </a>
 
-                    <ul class="nav-dropdown-items">
-                        <li class="nav-item">
-                            <a href="{{ url('pos/console') }}"
-                               class="nav-link {{ Request::is('pos/console*') ? 'active' : '' }}">
-                                <i class="fas fa-shopping-cart"></i> POS Console
-                            </a>
-                        </li>
+            <ul class="nav-dropdown-items">
+                <li class="nav-item">
+                    <a href="{{ url('pos/console') }}"
+                    class="nav-link {{ Request::is('pos/console*') ? 'active' : '' }}">
+                    <i class="fas fa-shopping-cart"></i> POS Console
+                </a>
+            </li>
 
-                        <li class="nav-item">
-                            <a href="{{ url('pos/history') }}"
-                               class="nav-link {{ Request::is('pos/history*') ? 'active' : '' }}">
-                                <i class="fas fa-book"></i> History
-                            </a>
-                        </li>
+            <li class="nav-item">
+                <a href="{{ url('pos/history') }}"
+                class="nav-link {{ Request::is('pos/history*') ? 'active' : '' }}">
+                <i class="fas fa-book"></i> History
+            </a>
+        </li>
 
-                        <li class="nav-item">
-                            <a href="{{ url('pos/report') }}"
-                               class="nav-link {{ Request::is('pos/report*') ? 'active' : '' }}">
-                                <i class="fas fa-file"></i> Sales Report
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item {{ (Request::is('purchase-order*')) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/purchase-order') }}">Purchase Order</a>
-                </li>
-                <li class="nav-item {{ (Request::is('sales-order*')) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/sales-order') }}">Sales Order</a>
-                </li>
-                <li class="nav-item {{ (Request::is('finances*')) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/finances') }}">Finance</a>
-                </li>
-                <li class="nav-item {{ (Request::is('accounts*')) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/accounts') }}">User Account</a>
-                </li>
-                <li class="nav-item {{ (Request::is('deposits*')) ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ url('/deposits') }}">Deposits</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        <li class="nav-item">
+            <a href="{{ url('pos/report') }}"
+            class="nav-link {{ Request::is('pos/report*') ? 'active' : '' }}">
+            <i class="fas fa-file"></i> Sales Report
+        </a>
+    </li>
+</ul>
+</li>
+<li class="nav-item {{ (Request::is('purchase-order*')) ? 'active' : '' }}">
+    <a class="nav-link" href="{{ url('/purchase-order') }}">Purchase Order</a>
+</li>
+<li class="nav-item {{ (Request::is('sales-order*')) ? 'active' : '' }}">
+    <a class="nav-link" href="{{ url('/sales-order') }}">Sales Order</a>
+</li>
+<li class="nav-item {{ (Request::is('finances*')) ? 'active' : '' }}">
+    <a class="nav-link" href="{{ url('/finances') }}">Finance</a>
+</li>
+<li class="nav-item {{ (Request::is('accounts*')) ? 'active' : '' }}">
+    <a class="nav-link" href="{{ url('/accounts') }}">User Account</a>
+</li>
+<li class="nav-item {{ (Request::is('deposits*')) ? 'active' : '' }}">
+    <a class="nav-link" href="{{ url('/deposits') }}">Deposits</a>
+</li>
+</ul>
+</div>
+</nav>
 
-    <main class="mt-4 main">
-        @yield('content')
-    </main>
+<main class="mt-4 main">
+    @yield('content')
+</main>
 
-    <footer class="footer mt-5 text-light py-3">
-        <div class="text-center">
-            Indoteknik Pratama Pro <br>
-            Jl. Jendral Sudirman No. 672B Bandung <br>
-            Telp. 022-20573322 <br>
-        </div>
-    </footer>
+<footer class="footer mt-5 text-light py-3">
+    <div class="text-center">
+        Indoteknik Pratama Pro <br>
+        Jl. Jendral Sudirman No. 672B Bandung <br>
+        Telp. 022-20573322 <br>
+    </div>
+</footer>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
+integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+crossorigin="anonymous"></script>
 {{--<script src="{{ asset('assets') }}/plugins/jquery/jquery-3.1.0.min.js"></script>--}}
 {{--<script--}}
 {{--src="https://code.jquery.com/jquery-2.2.4.min.js"--}}
@@ -172,6 +172,12 @@
             $('#formLogout').submit();
         })
     });
+
+    function updateRowOrder(){
+        $('td.form_id').each(function(i){
+            $(this).text(i+1);
+        });
+    }
 </script>
 </body>
 </html>

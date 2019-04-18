@@ -6,7 +6,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Branch;
 use App\Brand;
 use App\Category;
+use App\Purchase;
+use App\Purchase_Detail;
 use App\Counter;
+use App\Item;
 use Illuminate\Http\Request;
 
 class PurchaseOrderController extends Controller
@@ -35,12 +38,31 @@ class PurchaseOrderController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
 
         $counter = Counter::where("name","=","PO")->first();
         $branch_id = Auth::user()->branch_id;
         $branch = Branch::find($branch_id);
         $nopo = "PO".date("ymd").str_pad($branch_id, 2, 0, STR_PAD_LEFT).str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
+        $item = "item-id";
+        $count = count($request->$item);
+        $purchase = [
+            "purchase_number" => $nopo
+        ];
+        $purchase = Purchase::create($purchase);
+        for($i = 0 ; $i < $count ; $i++){
+            $itemdetail = Item::find($request->$item[$i]);
+            $purchase_detail = [
+                "item_id" => $request->$item[$i],
+                "qty" => $request->qty[$i],
+                "purchase_price" => $itemdetail->purchase_price,
+                "total_price" => $request->qty[$i]*$itemdetail->purchase_price,
+                "purchase_id" => $purchase->id
+            ];
+            Purchase_Detail::create($purchase_detail);
+        }
+        $counter->counter +=1;
+        $counter->save();
 
     }
 
