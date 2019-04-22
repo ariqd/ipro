@@ -16,7 +16,8 @@ class PurchaseOrderController extends Controller
 {
     public function index()
     {
-        return view('purchase.index');
+        $d["data"] = Purchase::all();
+        return view('purchase.index',$d);
     }
 
     public function create()
@@ -31,9 +32,16 @@ class PurchaseOrderController extends Controller
         return view('purchase.form', $data);
     }
 
-    public function show()
+    public function show($id)
     {
-      //
+        $d["header"] = Purchase::find($id);
+        $d["line"]=$d["header"]->details()->get();  
+        foreach ($d["line"] as $value) {
+            $value["item"] = $value->item()->first();
+            $value["item"]["category"] = $value["item"]->category()->first();
+            $value["item"]["category"]["brand"] = $value["item"]["category"]->brand()->first();
+        }
+        return view("purchase.show",$d);
     }
 
     public function store(Request $request)
@@ -64,6 +72,7 @@ class PurchaseOrderController extends Controller
         $counter->counter +=1;
         $counter->save();
 
+        return redirect("purchase-orders")->with("info","PO Berhasil Dibuat Dengan Nomor ".$nopo);
     }
 
     public function addItems()

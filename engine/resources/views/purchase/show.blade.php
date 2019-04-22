@@ -229,7 +229,7 @@
                         <small>
                             <a href="{{ url('purchase-orders') }}" class="text-dark">Purchase Orders</a> /
                         </small>
-                        <b>Create</b>
+                        <b>Show</b>
                     </h2>
                 </div>
             </div>
@@ -242,11 +242,11 @@
             <div class="form-group row">
                 <label for="payment_method" class="col-4 col-form-label">Purchase Order ID</label>
                 <div class="col-7">
-                    <input disabled="" type="text" class="form-control" id="customer" name="po_order" value="{{ $no_po }}">
+                    <input disabled="" type="text" class="form-control" id="customer" name="po_order" value="{{ $header->purchase_number }}">
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 d-none">
             <div class="form-group row">
                 <label for="payment_method" class="col-4 col-form-label">Sales Order ID</label>
                 <div class="col-7">
@@ -256,8 +256,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
-            <h4>Cari Item</h4>
+        <div class="col-lg-4 d-none">
+           {{--  <h4>Cari Item</h4>
             <div class="form-group">
                 Brand
                 <select autocomplete="off" name="brand" id="brands" class="form-control brands">
@@ -280,18 +280,18 @@
                 Item
                 <select autocomplete="off" name="items" id="items" class="form-control items">
                     <option value="" selected disabled></option>
-                    {{--@foreach($categories as $category)--}}
-                    {{--<option value="{{ $category->id }}">{{ $category->name }}</option>--}}
-                    {{--@endforeach--}}
+                    //@foreach($categories as $category)
+                    //<option value="{{ $category->id }}">{{ $category->name }}</option>
+                    //@endforeach
                 </select>
             </div>
             <div class="form-group">
                 Quantity
                 <input type="number" class="form-control" step="1" id="qty">
-            </div>
+            </div> --}}
         </div>
-        <div class="col-lg-8">
-            <h4>Cart</h4>
+        <div class="col-lg-12">
+            <h4>List PO</h4>
             {{--<div class="card">--}}
                 {{--<div class="card-body">--}}
 
@@ -309,21 +309,21 @@
                             <th>Order Qty/pcs</th>
                             <th>Price/pcs</th>
                             <th>Total Amount (IDR)</th>
-                            <th>GR Code</th>
                         </tr>
                     </thead>
                     <tbody id="purchase-body">
+                        @foreach($line as $key)
                         <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $key->item->category->brand->name }} {{ $key->item->category->name }}</td>
+                            <td>{{ $key->item->code }}</td>
+                            <td>{{ $key->item->name }}</td>
+                            <td>{{ $key->item->weight }}</td>
+                            <td>{{ $key->qty }}</td>
+                            <td>{{ $key->purchase_price }}</td>
+                            <td>{{ $key->total_price }}</td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -333,7 +333,7 @@
         <div class="col-lg-6">
 
         </div>
-        <div class="col-lg-6">
+        {{-- <div class="col-lg-6">
             <form action="{{url("/purchase-orders")}}" method="POST">
                 @csrf
                 <div id="input-body">
@@ -341,7 +341,7 @@
                 </div>
                 <input type="submit" class="form-control btn btn-success" value="Create Purchase Order">
             </form>
-        </div>
+        </div> --}}
     </div>
 </div>
 @endsection
