@@ -15,6 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        setlocale (LC_TIME, 'id_ID');
+        
         Schema::defaultStringLength(191);
         if ($this->app->environment() == 'production') {
             URL::forceScheme('https');

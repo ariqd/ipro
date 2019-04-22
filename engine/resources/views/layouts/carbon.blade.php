@@ -184,13 +184,14 @@
 {{--</li>--}}
 {{--</ul>--}}
 {{--</li>--}}
-
+@if(Gate::allows('isFinane'))
 <li class="nav-item">
     <a href="{{ url('finances') }}"
     class="nav-link {{ (Request::is('finances*')) ? 'active' : '' }}">
     <i class="fa fa-line-chart"></i> Finance
 </a>
 </li>
+@endif
 
 <li class="nav-item">
     <a href="{{ url('deposits') }}"
