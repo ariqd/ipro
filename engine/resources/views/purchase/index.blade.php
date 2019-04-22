@@ -25,6 +25,7 @@
                             <tr>
                                 <th>Date</th>
                                 <th>No Purchase</th>
+                                <th>Disetujui</th>
                                 <th></th>
                             </tr>
                         </thead>

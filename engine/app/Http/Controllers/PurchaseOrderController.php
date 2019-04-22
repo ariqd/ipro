@@ -84,4 +84,28 @@ class PurchaseOrderController extends Controller
     {
         return response()->json();
     }
+
+    public function approve(Request $request, $id){
+        $query = Purchase::find($id);
+        $detail = $query->details()->get();
+        $count = count($detail);
+        foreach ($detail as $value) {
+            $i = $value->id;
+            $stringqty = "qty-$i";
+            $stringapprove = "approve-$i";
+            if($request->has("approve-$i")){
+                if($request->$stringqty == null){
+                    $value->qty_approval = $value->qty;
+                }else{
+                    $value->qty_approval = $request->$stringqty;
+                }
+                $value->approval_finance = 1;
+                $value->save();
+            }
+        }
+        $query->approval_status = 1;
+        $query->save();
+
+        return redirect("purchase-orders")->with("info","PO dengan nomor $query->purchase_number disetujui");
+    }
 }

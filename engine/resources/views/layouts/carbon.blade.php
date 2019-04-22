@@ -184,7 +184,7 @@
 {{--</li>--}}
 {{--</ul>--}}
 {{--</li>--}}
-@if(Gate::allows('isFinane'))
+@if(Gate::allows('isFinance'))
 <li class="nav-item">
     <a href="{{ url('finances') }}"
     class="nav-link {{ (Request::is('finances*')) ? 'active' : '' }}">
