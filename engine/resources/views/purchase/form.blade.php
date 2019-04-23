@@ -113,7 +113,7 @@
             cell5.innerHTML = value.qty;
             cell6.innerHTML = value.item.purchase_price;
             cell7.innerHTML = value.total;
-            cell8.innerHTML = response.header.no_order;
+            cell8.innerHTML = response.header.no_so;
             cell9.innerHTML = '<button onclick=voidItem("item-'+count+'") class="btn btn-dark" type="button"/>';
 
             var container = document.getElementById("input-body");
