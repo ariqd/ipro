@@ -155,13 +155,23 @@
     <i class="fa fa-arrow-up"></i> Purchase Order
 </a>
 </li>
-
+@if(!Gate::allows('isFinance'))
 <li class="nav-item">
-    <a href="{{ url('sales-orders') }}"
+    <a href="{{ url('sales-orders/check/approve') }}"
     class="nav-link {{ (Request::is('sales-orders*')) ? 'active' : '' }}">
     <i class="fa fa-arrow-down"></i> Sales Order
 </a>
 </li>
+@endif
+
+@if(Gate::allows('isFinance'))
+<li class="nav-item">
+    <a href="{{ url('sales-orders/check/approve') }}"
+    class="nav-link {{ (Request::is('sales-orders*')) ? 'active' : '' }}">
+    <i class="fa fa-arrow-down"></i> Sales Order Approve
+</a>
+</li>
+@endif
 
 {{--<li class="nav-item nav-dropdown">--}}
     {{--<a href="#" class="nav-link nav-dropdown-toggle">--}}

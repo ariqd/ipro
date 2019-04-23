@@ -45,5 +45,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('sales-orders/search/{id}',"SalesOrderController@searchdetailSO");
 
-    Route::post('purchase-orders/{id}/approve',"PurchaseOrderController@approve");
+    Route::post('purchase-orders/{id}/approve',"PurchaseOrderController@searchApprove");
+    Route::get('sales-orders/check/approve', 'SalesOrderController@unapprovedList');
+    Route::get('sales-orders/{id}/payment', 'SalesOrderController@getPaymentForm');
+    Route::post('sales-orders/{id}/payment', 'SalesOrderController@postPaymentForm');
+
+
 });

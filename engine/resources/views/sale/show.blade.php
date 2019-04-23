@@ -1,13 +1,13 @@
 @extends('layouts.carbon')
 
-@section('title', 'Sales Order #' . $sale->quotation_Id .' - '. $sale->created_at)
+@section('title', 'Quotation Order #' . $sale->quotation_id .' - '. $sale->created_at)
 
 @section('content')
     <div class="row">
         <div class="col-lg-12">
             <div class="d-flex justify-content-between">
                 <div>
-                    <h2><b>Sales Order #{{ $sale->quotation_id }}</b></h2>
+                    <h2><b>Quotation Order #{{ $sale->quotation_id }}</b></h2>
                 </div>
                 <div>
                     <a href="{{ url('sales-orders/'.$sale->id.'/edit') }}" class="btn btn-secondary mr-3">
@@ -141,7 +141,7 @@
                             </b>
                         </div>
                         <div class="col-8">
-                            {{ $sale->send_date }}
+                            {{ date("d-m-Y",strtotime($sale->send_date)) }}
                         </div>
                     </div>
 
