@@ -89,7 +89,6 @@
         url: "{!! url("sales-orders/search") !!}/" + $("#salesorderid").val(),
         method: "get",
         success: function (response) {
-         $("#purchase-body").empty()
          var table = document.getElementById("purchase-body");
          $(response.detail).each(function(key,value) {
             var row = table.insertRow();
@@ -103,8 +102,9 @@
             var cell6 = row.insertCell(6);
             var cell7 = row.insertCell(7);
             var cell8 = row.insertCell(8);
+            var cell9 = row.insertCell(9);
             cell0.setAttribute('class', "form_id");
-            cell8.setAttribute('class', "subtotal");
+            cell7.setAttribute('class', "subtotal");
 
             cell1.innerHTML = value.category.name;
             cell2.innerHTML = value.item.code;
@@ -113,7 +113,8 @@
             cell5.innerHTML = value.qty;
             cell6.innerHTML = value.item.purchase_price;
             cell7.innerHTML = value.total;
-            cell8.innerHTML = '<button onclick=voidItem("item-'+count+'") class="btn btn-dark" type="button"/>';
+            cell8.innerHTML = response.header.no_order;
+            cell9.innerHTML = '<button onclick=voidItem("item-'+count+'") class="btn btn-dark" type="button"/>';
 
             var container = document.getElementById("input-body");
             var input = document.createElement("input");
@@ -171,8 +172,9 @@
                         var cell6 = row.insertCell(6);
                         var cell7 = row.insertCell(7);
                         var cell8 = row.insertCell(8);
+                        var cell9 = row.insertCell(9);
                         cell0.setAttribute('class', "form_id");
-                        cell8.setAttribute('class', "subtotal");
+                        cell7.setAttribute('class', "subtotal");
 
                         cell1.innerHTML = response.item.category.name;
                         cell2.innerHTML = response.item.code;
@@ -181,7 +183,8 @@
                         cell5.innerHTML = $("#qty").val();
                         cell6.innerHTML = response.item.purchase_price;
                         cell7.innerHTML = $("#qty").val()*response.item.purchase_price;
-                        cell8.innerHTML = '<button onclick=voidItem("item-'+count+'") class="btn btn-dark" type="button"/>';
+                        cell8.innerHTML = "";
+                        cell9.innerHTML = '<button onclick=voidItem("item-'+count+'") class="btn btn-dark" type="button"/>';
 
                         var container = document.getElementById("input-body");
                         var input = document.createElement("input");
@@ -256,9 +259,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-lg-12">
             <h4>Cari Item</h4>
-            <div class="form-group">
+            <div class="form-group col-lg-3">
                 Brand
                 <select autocomplete="off" name="brand" id="brands" class="form-control brands">
                     <option value="" selected disabled></option>
@@ -267,7 +270,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group col-lg-3">
                 Category
                 <select autocomplete="off" name="category" id="categories" class="form-control categories">
                     <option value="" selected disabled></option>
@@ -276,7 +279,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group col-lg-3">
                 Item
                 <select autocomplete="off" name="items" id="items" class="form-control items">
                     <option value="" selected disabled></option>
@@ -285,12 +288,12 @@
                     {{--@endforeach--}}
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group col-lg-3">
                 Quantity
                 <input type="number" class="form-control" step="1" id="qty">
             </div>
         </div>
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <h4>Cart</h4>
             {{--<div class="card">--}}
                 {{--<div class="card-body">--}}
@@ -309,20 +312,13 @@
                             <th>Order Qty/pcs</th>
                             <th>Price/pcs</th>
                             <th>Total Amount (IDR)</th>
-                            <th>GR Code</th>
+                            <th>No Sales</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody id="purchase-body">
                         <tr>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
+                           
                         </tr>
                     </tbody>
                 </table>
