@@ -125,7 +125,7 @@ class SalesOrderController extends Controller
 
     public function searchDetailSO($id)
     {
-        $query = Sale::find($id);
+        $query = Sale::where("no_order","=",$id)->first();
         $data["header"]=$query;
         $data["detail"] = $query->details()->get();
         foreach ($data["detail"] as $key) {

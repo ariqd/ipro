@@ -34,6 +34,7 @@
                             <tr>
                                 <td>{{ date("l, d-m-Y",strtotime($key->created_at)) }}</td>
                                 <td>{{ $key->purchase_number }}</td>
+                                <td>{{ $key->purchase_number }}</td>
                                 <td>
                                     <a href="{{ url('purchase-orders/'.$key->id) }}" class="btn btn-dark btn-sm">
                                         Show
