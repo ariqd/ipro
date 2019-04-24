@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Purchase extends Model
 {
 	protected $guarded = [];
+    protected $table = 'purchases';
 
-	public function details()
+    public function details()
 	{
 		return $this->hasMany('App\Purchase_Detail', 'purchase_id', 'id');
 	}

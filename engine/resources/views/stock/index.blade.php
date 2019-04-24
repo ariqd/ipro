@@ -156,14 +156,14 @@
                 </div>
             </div>
         </div>
-        @if(!empty(Request::all()))
+        @if(!empty(request()->all()))
             <div class="row">
                 <div class="col-lg-12">
                     <b>Filters:</b> <br>
-                    @if(Request::has("brands"))
+                    @if(request()->has("brands"))
                         Brands:
                         @php
-                            $brands = Request::get("brands");
+                            $brands = request()->get("brands");
                         @endphp
                         @foreach($brands as $key => $brand)
                             {{ $brand }}{{ $key == (count($brands) - 1) ? '' : ',' }}
@@ -171,10 +171,10 @@
                         <br>
                     @endif
 
-                    @if(Request::has("branches"))
+                    @if(request()->has("branches"))
                         Branches:
                         @php
-                            $branches = Request::get("branches");
+                            $branches = request()->get("branches");
                         @endphp
                         @foreach($branches as $key => $branch)
                             {{ $branch }}{{ $key == (count($branches) - 1) ? '' : ',' }}
@@ -182,60 +182,62 @@
                     @endif
                 </div>
             </div>
-        @endif
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
-                        <form action="{{ url('stocks') }}" id="find-table" method="get">
-                            <div class="row">
-                                <label for="brands" class="col-lg-2 col-form-label text-right"><h4>Brands :</h4></label>
-                                <div class="col-lg-10">
-                                    <div class="row p-2">
-                                        @foreach($brands as $key => $brand)
-                                            <div class="col-lg-2 mb-2">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" name="brands[]"
-                                                           class="custom-control-input check" id="{{ $brand->name }}"
-                                                           value="{{ $brand->name }}"
-                                                            {{--                                                           {{ $brand == Request::get("brands")[$i] ? 'checked' : '' }}--}}
-                                                    >
-                                                    <label class="custom-control-label"
-                                                           for="{{ $brand->name }}">{{ $brand->name }}</label>
+        @else
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body">
+                            <form action="{{ url('stocks') }}" id="find-table" method="get">
+                                <div class="row">
+                                    <label for="brands" class="col-lg-2 col-form-label text-right"><h4>Brands :</h4>
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <div class="row p-2">
+                                            @foreach($brands as $key => $brand)
+                                                <div class="col-lg-2 mb-2">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="brands[]"
+                                                               class="custom-control-input check"
+                                                               id="{{ $brand->name }}"
+                                                               value="{{ $brand->id }}">
+                                                        <label class="custom-control-label"
+                                                               for="{{ $brand->name }}">{{ $brand->name }}</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <label for="brands" class="col-lg-2 col-form-label text-right"><h4>Branch :</h4></label>
-                                <div class="col-lg-10">
-                                    <div class="row p-2">
-                                        @foreach($branches as $branch)
-                                            <div class="col-lg-2 mb-2">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" name="branches[]"
-                                                           class="custom-control-input check" id="{{ $branch->name }}"
-                                                           value="{{ $branch->name }}"
-                                                    >
-                                                    <label class="custom-control-label"
-                                                           for="{{ $branch->name }}">{{ $branch->name }}</label>
+                                <div class="row">
+                                    <label for="brands" class="col-lg-2 col-form-label text-right"><h4>Branches :</h4>
+                                    </label>
+                                    <div class="col-lg-10">
+                                        <div class="row p-2">
+                                            @foreach($branches as $branch)
+                                                <div class="col-lg-2 mb-2">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="branches[]"
+                                                               class="custom-control-input check"
+                                                               id="{{ $branch->name }}"
+                                                               value="{{ $branch->id }}">
+                                                        <label class="custom-control-label"
+                                                               for="{{ $branch->name }}">{{ $branch->name }}</label>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group mb-0">
-                                <button type="submit" class="btn btn-dark float-right" id="btnFilter">Apply Filter
-                                </button>
-                            </div>
-                        </form>
+                                <div class="form-group mb-0">
+                                    <button type="submit" class="btn btn-dark float-right" id="btnFilter">Apply Filter
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
         @include('layouts.feedback')
         <div class="row" id="table">
             <div class="col-lg-12">

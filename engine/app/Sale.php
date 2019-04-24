@@ -28,4 +28,9 @@ class Sale extends Model
     {
         return $this->hasMany('App\Sale_Detail', 'sales_order_id', 'id');
     }
+
+    public function scopeNotApproved()
+    {
+        return $this->whereNull("no_so");
+    }
 }

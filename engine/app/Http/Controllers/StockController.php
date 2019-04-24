@@ -6,6 +6,7 @@ use App\Brand;
 use App\Stock;
 use App\Item;
 use App\Branch;
+use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -36,10 +37,29 @@ class StockController extends Controller
 
         $d['filtered'] = FALSE;
         if (!empty($request->all())) {
-            $d['filtered'] = TRUE;
-        }
+            $brands = $request->get('brands');
+            $branches = $request->get('branches');
 
-//        dd($d['brands']);
+            $query = new Stock;
+            if (!empty($brands)) {
+//                $query = Stock::whereIn('brand_id', [$brands]);
+                $query = Stock::whereHas('item', function ($q) use ($brands) {
+                    $q->whereHas('brands', function($x) use ($brands) {
+                        $x->whereIn('brand_id', [$brands]);
+                    });
+                });
+            }
+
+            if (!empty($branches)) {
+                $query = Stock::whereIn('branch_id', [$branches]);
+            }
+
+            $d['stocks'] = $query->get();
+
+            $d['filtered'] = TRUE;
+            dd($d['stocks']);
+
+        }
 
         return view('stock.index', $d);
     }
@@ -59,7 +79,7 @@ class StockController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -90,7 +110,7 @@ class StockController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -109,7 +129,7 @@ class StockController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -124,8 +144,8 @@ class StockController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -161,7 +181,7 @@ class StockController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -199,8 +219,6 @@ class StockController extends Controller
 
     public function restockSingular(Request $request, $id)
     {
-//        return view('stock.restock', $d);
-//        dd($request->all());
         $input = $request->all();
         unset($input['_token']);
 

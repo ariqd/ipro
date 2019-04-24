@@ -19,16 +19,7 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-//    	$d['items'] = Item::select("items.*","brands.name as brandname","categories.name as categoryname")
-//        ->join("brands","brands.id","items.brand_id")
-//        ->join("categories","categories.id","items.category_id")
-//        ->get();
-
         $d['items'] = Item::all();
-
-//        if (!empty($request->all())) {
-//            $d['filtered'] = TRUE;
-//        }
 
         return view('item.index', $d);
     }
@@ -40,7 +31,6 @@ class ItemController extends Controller
      */
     public function create()
     {
-//        $brand = Brand::all();
         $category = Category::all();
 
         return view('item.form', ["categories" => $category]);
@@ -49,7 +39,7 @@ class ItemController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -59,8 +49,6 @@ class ItemController extends Controller
 
         $validate = Validator::make($input, [
             'name' => 'required',
-//            'category_id' => 'required|numeric',
-//            'brand_id' => 'required|numeric'
         ]);
 
         if ($validate->fails()) {
@@ -74,7 +62,7 @@ class ItemController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -86,21 +74,22 @@ class ItemController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
         $d['item'] = Item::find($id);
         $d['isEdit'] = TRUE;
+        $d['categories'] = Category::all();
         return view('item.form', $d);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -110,8 +99,6 @@ class ItemController extends Controller
 
         $validate = Validator::make($input, [
             'name' => 'required',
-            'category_id' => 'required|numeric',
-            'brand_id' => 'required|numeric'
         ]);
 
         if ($validate->fails()) {
@@ -120,9 +107,9 @@ class ItemController extends Controller
             $item = Item::find($id);
 
             if ($item->update($input)) {
-                return redirect('item')->with('info', $item->name . ' berhasil diubah!');
+                return redirect('items')->with('info', $item->name . ' berhasil diubah!');
             } else {
-                return redirect('item')->with('error', $item->name . ' gagal diubah!');
+                return redirect('items')->with('error', $item->name . ' gagal diubah!');
             }
         }
     }
@@ -130,13 +117,13 @@ class ItemController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         Item::destroy($id);
-        return redirect('/item')->with('info', 'Item berhasil dihapus!');
+        return redirect('items')->with('info', 'Item berhasil dihapus!');
     }
 
 
@@ -153,8 +140,8 @@ class ItemController extends Controller
     {
         $query = Item::find($id);
         $data["item"] = $query;
-        $data["item"]["category"]= $query->category()->first();
-        $data["item"]["brand"]= $query->category->brand()->first();
+        $data["item"]["category"] = $query->category()->first();
+        $data["item"]["brand"] = $query->category->brand()->first();
         return response()->json($data, 200);
     }
 }
