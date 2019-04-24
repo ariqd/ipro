@@ -21,12 +21,14 @@
 
 @push("js")
 <script>
-   var count = 0;
-
-   $("#brands").select2({
+ var count = 0;
+ $("#salesorderid").select2({
+    placeholder: "Choose Sales Number"
+});
+ $("#brands").select2({
     placeholder: "Choose Brand"
 });
-   $("#brands").change(function () {
+ $("#brands").change(function () {
     var id = $("#brands").val();
 
     $("#categories").select2({
@@ -55,7 +57,7 @@
 
 });
 
-   $("#categories").change(function () {
+ $("#categories").change(function () {
     var id = $("#categories").val();
 
     $("#items").select2({
@@ -84,64 +86,65 @@
 
 });
 
-   function searchSales(){
-      $.ajax({
-        url: "{!! url("sales-orders/search") !!}/" + $("#salesorderid").val(),
-        method: "get",
-        success: function (response) {
-         var table = document.getElementById("purchase-body");
-         $(response.detail).each(function(key,value) {
-            var row = table.insertRow();
-            row.setAttribute('class', 'item-' + count);
-            var cell0 = row.insertCell(0);
-            var cell1 = row.insertCell(1);
-            var cell2 = row.insertCell(2);
-            var cell3 = row.insertCell(3);
-            var cell4 = row.insertCell(4);
-            var cell5 = row.insertCell(5);
-            var cell6 = row.insertCell(6);
-            var cell7 = row.insertCell(7);
-            var cell8 = row.insertCell(8);
-            var cell9 = row.insertCell(9);
-            cell0.setAttribute('class', "form_id");
-            cell7.setAttribute('class', "subtotal");
+ $("#salesorderid").change(function(){
+  $.ajax({
+    url: "{!! url("sales-orders/search") !!}/" + $("#salesorderid").val(),
+    method: "get",
+    success: function (response) {
+       var table = document.getElementById("purchase-body");
+       $(response.detail).each(function(key,value) {
+        var row = table.insertRow();
+        row.setAttribute('class', 'item-' + count);
+        var cell0 = row.insertCell(0);
+        var cell1 = row.insertCell(1);
+        var cell2 = row.insertCell(2);
+        var cell3 = row.insertCell(3);
+        var cell4 = row.insertCell(4);
+        var cell5 = row.insertCell(5);
+        var cell6 = row.insertCell(6);
+        var cell7 = row.insertCell(7);
+        var cell8 = row.insertCell(8);
+        var cell9 = row.insertCell(9);
+        cell0.setAttribute('class', "form_id");
+        cell7.setAttribute('class', "subtotal");
 
-            cell1.innerHTML = value.category.name;
-            cell2.innerHTML = value.item.code;
-            cell3.innerHTML = value.item.name;
-            cell4.innerHTML = value.item.weight;
-            cell5.innerHTML = value.qty;
-            cell6.innerHTML = value.item.purchase_price;
-            cell7.innerHTML = value.total;
-            cell8.innerHTML = response.header.no_so;
-            cell9.innerHTML = '<button onclick=voidItem("item-'+count+'") class="btn btn-dark" type="button"/>';
+        cell1.innerHTML = value.category.name;
+        cell2.innerHTML = value.item.code;
+        cell3.innerHTML = value.item.name;
+        cell4.innerHTML = value.item.weight;
+        cell5.innerHTML = value.qty;
+        cell6.innerHTML = value.item.purchase_price;
+        cell7.innerHTML = value.total;
+        cell8.innerHTML = response.header.no_so;
+        cell9.innerHTML = '<button onclick=voidItem("item-'+count+'") class="btn btn-dark" type="button"/>';
 
-            var container = document.getElementById("input-body");
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "item-id[]";
-            input.setAttribute('value', value.item.id);
-            input.setAttribute('class', "item-"+count);
-            container.appendChild(input);
+        var container = document.getElementById("input-body");
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "item-id[]";
+        input.setAttribute('value', value.item.id);
+        input.setAttribute('class', "item-"+count);
+        container.appendChild(input);
 
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "qty[]";
-            input.setAttribute('value', value.qty);
-            input.setAttribute('class', "item-"+count);
-            container.appendChild(input);
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "qty[]";
+        input.setAttribute('value', value.qty);
+        input.setAttribute('class', "item-"+count);
+        container.appendChild(input);
 
-            count++;
-        });
-         updateRowOrder();
+        count++;
+    });
+       updateRowOrder();
 
-     },
-     error: function (xhr, statusCode, error) {
-     }
- });
-  }
+   },
+   error: function (xhr, statusCode, error) {
+   }
+});
+});
 
-  function voidItem(id){
+
+ function voidItem(id){
     $("."+id).remove();
     updateRowOrder();
 }
@@ -253,54 +256,59 @@
             <div class="form-group row">
                 <label for="payment_method" class="col-4 col-form-label">Sales Order ID</label>
                 <div class="col-7">
-                    <input type="text" autocomplete="off" onchange="searchSales()" class="form-control" id="salesorderid" name="so_order">
-                </div>
+                   {{--  <input type="text" autocomplete="off" onchange="searchSales()" class="form-control" id="salesorderid" name="so_order"> --}}
+                   <select autocomplete="off" name="so_order" id="salesorderid" class="form-control brands w-100">
+                    <option value="" selected disabled></option>
+                    @foreach($sales as $sale)
+                    <option value="{{ $sale->no_so}}">{{ $sale->no_so }}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <h4>Cari Item</h4>
-            <div class="form-group col-lg-3">
-                Brand
-                <select autocomplete="off" name="brand" id="brands" class="form-control brands">
-                    <option value="" selected disabled></option>
-                    @foreach($brands as $brand)
-                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group col-lg-3">
-                Category
-                <select autocomplete="off" name="category" id="categories" class="form-control categories">
-                    <option value="" selected disabled></option>
-                    @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="form-group col-lg-3">
-                Item
-                <select autocomplete="off" name="items" id="items" class="form-control items">
-                    <option value="" selected disabled></option>
-                    {{--@foreach($categories as $category)--}}
-                    {{--<option value="{{ $category->id }}">{{ $category->name }}</option>--}}
-                    {{--@endforeach--}}
-                </select>
-            </div>
-            <div class="form-group col-lg-3">
-                Quantity
-                <input type="number" class="form-control" step="1" id="qty">
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <h4>Cart</h4>
-            {{--<div class="card">--}}
-                {{--<div class="card-body">--}}
+</div>
+<div class="row">
 
-                {{--</div>--}}
-            {{--</div>--}}
-            <div class="table-responsive">
+    <h4>Cari Item</h4>
+
+    <div class="col-lg-12 d-inline-flex">
+        <div class="form-group col-lg-3">
+            Brand
+            <select autocomplete="off" name="brand" id="brands" class="form-control brands w-100">
+                <option value="" selected disabled></option>
+                @foreach($brands as $brand)
+                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group col-lg-3">
+            Category
+            <select autocomplete="off" name="category" id="categories" class="form-control categories">
+                <option value="" selected disabled></option>
+                @foreach($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group col-lg-3">
+            Item
+            <select autocomplete="off" name="items" id="items" class="form-control items">
+                <option value="" selected disabled></option>
+                {{--@foreach($categories as $category)--}}
+                {{--<option value="{{ $category->id }}">{{ $category->name }}</option>--}}
+                {{--@endforeach--}}
+            </select>
+        </div>
+        <div class="form-group col-lg-3">
+            Quantity
+            <input type="number" class="form-control" step="1" id="qty">
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <h4>Cart</h4>
+        <div class="card">
+          <div class="card-body">
+              <div class="table-responsive">
                 <table class="table table-bordered table-light">
                     <thead>
                         <tr>
@@ -318,26 +326,29 @@
                     </thead>
                     <tbody id="purchase-body">
                         <tr>
-                           
+
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6">
 
-        </div>
-        <div class="col-lg-6">
-            <form action="{{url("/purchase-orders")}}" method="POST">
-                @csrf
-                <div id="input-body">
+</div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
 
-                </div>
-                <input type="submit" class="form-control btn btn-success" value="Create Purchase Order">
-            </form>
-        </div>
     </div>
+    <div class="col-lg-6">
+        <form action="{{url("/purchase-orders")}}" method="POST">
+            @csrf
+            <div id="input-body">
+
+            </div>
+            <input type="submit" class="form-control btn btn-success" value="Create Purchase Order">
+        </form>
+    </div>
+</div>
 </div>
 @endsection
