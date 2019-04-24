@@ -10,6 +10,8 @@ use App\Purchase;
 use App\Purchase_Detail;
 use App\Counter;
 use App\Item;
+use App\Sale;
+
 use Illuminate\Http\Request;
 
 class PurchaseOrderController extends Controller
@@ -28,6 +30,7 @@ class PurchaseOrderController extends Controller
         $branch = Branch::find($branch_id);
         $data['brands'] = Brand::all();
         $data['categories'] = Category::all();
+        $data['sales'] = Sale::all();
         $data['no_po'] = "PO".date("ymd").str_pad($branch_id, 2, 0, STR_PAD_LEFT).str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         return view('purchase.form', $data);
     }
