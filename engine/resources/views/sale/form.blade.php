@@ -390,7 +390,7 @@
                                 <div class="form-group">
                                     <label for="categories">Category</label>
                                     <select autocomplete="off" name="category" id="categories"
-                                            class="form-control categories">
+                                            class="form-control categories w-100" >
                                         <option value="" selected disabled></option>
                                     </select>
                                 </div>
