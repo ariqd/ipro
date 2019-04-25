@@ -1,6 +1,6 @@
 @extends('layouts.carbon')
 
-@section('title', 'Purchase Order')
+@section('title', 'Receive Goods')
 
 @push("css")
 <style>

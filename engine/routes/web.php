@@ -42,4 +42,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('customers', 'CustomerController');
     Route::resource('brands', 'BrandController');
     Route::resource('categories', 'CategoryController');
+    Route::resource('goods-receive', 'ReceiveController');
 });

@@ -155,6 +155,12 @@
                             <i class="fa fa-arrow-up"></i> Purchase Order
                         </a>
                     </li>
+                     <li class="nav-item">
+                        <a href="{{ url('goods-receive') }}"
+                           class="nav-link {{ (request()->is('goods-receive*')) ? 'active' : '' }}">
+                            <i class="fa fa-arrow-up"></i> Goods Receive
+                        </a>
+                    </li>
 
                     @if(Gate::denies('isFinance'))
                         <li class="nav-item">
