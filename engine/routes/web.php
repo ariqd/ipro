@@ -15,7 +15,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('purchase-orders', 'PurchaseOrderController');
     Route::get('purchase-orders/create/add-items', 'PurchaseOrderController@addItems');
-    Route::post('purchase-orders/{id}/approve', "PurchaseOrderController@searchApprove");
+    Route::post('purchase-orders/{id}/approve', "PurchaseOrderController@approve");
+    Route::get('purchase-orders/{id}/search', "PurchaseOrderController@search");
 
     Route::resource('sales-orders', 'SalesOrder\SalesOrderController');
     Route::get('sales-orders/create/search-stocks', 'SalesOrder\SalesOrderSearchController@searchStocks');

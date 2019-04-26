@@ -32,6 +32,7 @@ return array(
     'App\\Http\\Controllers\\ItemController' => $baseDir . '/app/Http/Controllers/ItemController.php',
     'App\\Http\\Controllers\\PosController' => $baseDir . '/app/Http/Controllers/PosController.php',
     'App\\Http\\Controllers\\PurchaseOrderController' => $baseDir . '/app/Http/Controllers/PurchaseOrderController.php',
+    'App\\Http\\Controllers\\ReceiveController' => $baseDir . '/app/Http/Controllers/ReceiveController.php',
     'App\\Http\\Controllers\\SalesOrder\\SalesOrderApproveController' => $baseDir . '/app/Http/Controllers/SalesOrder/SalesOrderApproveController.php',
     'App\\Http\\Controllers\\SalesOrder\\SalesOrderController' => $baseDir . '/app/Http/Controllers/SalesOrder/SalesOrderController.php',
     'App\\Http\\Controllers\\SalesOrder\\SalesOrderCustomerController' => $baseDir . '/app/Http/Controllers/SalesOrder/SalesOrderCustomerController.php',

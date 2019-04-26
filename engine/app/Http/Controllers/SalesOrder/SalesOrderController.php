@@ -27,7 +27,7 @@ class SalesOrderController extends Controller
     {
         $counter = Counter::where("name", "=", "QO")->first();
         $branch_id = Auth::user()->branch_id;
-        $data['no_po'] = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
+        $d['no_qo'] = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         $d['customers'] = Customer::all();
         $d['brands'] = Brand::all();
 

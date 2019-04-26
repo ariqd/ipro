@@ -68,7 +68,8 @@ class PurchaseOrderController extends Controller
                 "qty" => $request->qty[$i],
                 "purchase_price" => $itemdetail->purchase_price,
                 "total_price" => $request->qty[$i]*$itemdetail->purchase_price,
-                "purchase_id" => $purchase->id
+                "purchase_id" => $purchase->id,
+                "sales_id" => $request->sales[$i]
             ];
             Purchase_Detail::create($purchase_detail);
         }
@@ -111,4 +112,21 @@ class PurchaseOrderController extends Controller
 
         return redirect("purchase-orders")->with("info","PO dengan nomor $query->purchase_number disetujui");
     }
+
+
+    public function search(Request $request, $id){
+        $query = Purchase::find($id);
+        $data["header"] = $query;
+        $data["detail"] = $query->details()->get();
+
+        foreach ($data["detail"] as $key) {
+            $key["item"] = $key->item()->first();
+            $key["category"] = $key["item"]->category()->first();
+            $key["brand"] = $key["category"]->brand()->first();
+            $key["sales"] = $key->sale()->first();
+        }
+        return response()->json($data, 200);
+    }
+
+
 }

@@ -133,6 +133,13 @@
         input.setAttribute('class', "item-"+count);
         container.appendChild(input);
 
+         var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "sales[]";
+        input.setAttribute('value', response.header.id);
+        input.setAttribute('class', "item-"+count);
+        container.appendChild(input);
+
         count++;
     });
        updateRowOrder();

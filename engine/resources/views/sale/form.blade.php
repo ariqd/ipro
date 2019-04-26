@@ -227,7 +227,7 @@
                         <div class="form-group row">
                             <label for="quotation_id" class="col-5 col-form-label text-right">Quotation ID</label>
                             <div class="col-7">
-                                <input type="text" class="form-control" id="quotation_id" name="quotation_id" required>
+                                <input type="text" class="form-control" id="quotation_id" name="quotation_id" value="{{ $no_qo }}" required>
                             </div>
                         </div>
                     </div>
@@ -474,7 +474,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <button type="submit" class="btn btn-success float-right">Create Sales Order</button>
+                <button type="submit" class="btn btn-success float-right">Create Quotation Order</button>
             </div>
         </div>
     </form>

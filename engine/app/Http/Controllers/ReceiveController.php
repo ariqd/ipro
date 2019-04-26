@@ -26,7 +26,7 @@ class ReceiveController extends Controller
      */
     public function create()
     {
-        $d['purchase']=Purchase::where("approval_status")->get();
+        $d['purchase']=Purchase::where("approval_status","=","1")->get();
         return view("receive.form",$d);
     }
 
@@ -38,8 +38,13 @@ class ReceiveController extends Controller
      */
     public function store(Request $request)
     {
-        //
+     for ($i=0; $i <count($request->qty) ; $i++) { 
+        $data["qty_get"]=$request->qtyget[$i];
+        $data["purchase_detail_id"]=$request->purchasedetailid[$i];
+        Receive::create($data);
+
     }
+}
 
     /**
      * Display the specified resource.

@@ -456,6 +456,7 @@ class ComposerStaticInitd00b1304668a13262bb2da3216ad9563
         'App\\Http\\Controllers\\ItemController' => __DIR__ . '/../..' . '/app/Http/Controllers/ItemController.php',
         'App\\Http\\Controllers\\PosController' => __DIR__ . '/../..' . '/app/Http/Controllers/PosController.php',
         'App\\Http\\Controllers\\PurchaseOrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/PurchaseOrderController.php',
+        'App\\Http\\Controllers\\ReceiveController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReceiveController.php',
         'App\\Http\\Controllers\\SalesOrder\\SalesOrderApproveController' => __DIR__ . '/../..' . '/app/Http/Controllers/SalesOrder/SalesOrderApproveController.php',
         'App\\Http\\Controllers\\SalesOrder\\SalesOrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/SalesOrder/SalesOrderController.php',
         'App\\Http\\Controllers\\SalesOrder\\SalesOrderCustomerController' => __DIR__ . '/../..' . '/app/Http/Controllers/SalesOrder/SalesOrderCustomerController.php',
