@@ -14,7 +14,7 @@ class AddQtyApprovalToPurchaseDetails extends Migration
     public function up()
     {
         Schema::table('purchase_details', function (Blueprint $table) {
-            $table->integer('qty_approval');
+//            $table->integer('qty_approval');
         });
     }
 

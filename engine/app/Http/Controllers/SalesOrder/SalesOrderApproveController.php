@@ -24,10 +24,10 @@ class SalesOrderApproveController extends Controller
         $d['sale'] = Sale::find($id);
         $d['sale_detail'] = $d['sale']->details()->first();
 
-        return view('sale.formapprove', $d);
+        return view('sale.form-approve', $d);
     }
 
-    public function insert($id, Request $request)
+    public function postPaymentForm($id, Request $request)
     {
         $counter = Counter::where("name", "=", "SO")->first();
         $branch_id = Auth::user()->branch_id;

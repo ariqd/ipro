@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPurchaseDetailIdToReceives extends Migration
+class CreatePurchasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddPurchaseDetailIdToReceives extends Migration
      */
     public function up()
     {
-        Schema::table('receives', function (Blueprint $table) {
-            $table->integer('purchase_detail_id');
+        Schema::create('purchases', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('sales_id');
+            $table->text('purchase_number');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -25,8 +29,6 @@ class AddPurchaseDetailIdToReceives extends Migration
      */
     public function down()
     {
-        Schema::table('receives', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('purchases');
     }
 }

@@ -14,7 +14,7 @@ class AddApprovalFinanceToPurchaseDetails extends Migration
     public function up()
     {
         Schema::table('purchase_details', function (Blueprint $table) {
-            $table->integer('approval_finance');
+            $table->integer('approval_status');
         });
     }
 

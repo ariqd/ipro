@@ -93,16 +93,16 @@
                     </div>
                 </div>
 
-                <div class="row mt-3">
-                    <div class="col-4">
-                        <b>
-                            Email
-                        </b>
-                    </div>
-                    <div class="col-8">
-                        {{ $sale->customer->email }}
-                    </div>
-                </div>
+{{--                <div class="row mt-3">--}}
+{{--                    <div class="col-4">--}}
+{{--                        <b>--}}
+{{--                            Email--}}
+{{--                        </b>--}}
+{{--                    </div>--}}
+{{--                    <div class="col-8">--}}
+{{--                        {{ $sale->customer->email }}--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
             </div>
         </div>
@@ -118,7 +118,7 @@
                     </b>
                 </div>
                 <div class="col-8">
-                    {{ $sale->no_so ?? "" }}
+                    {{ $sale->no_so }}
                 </div>
             </div>
 
