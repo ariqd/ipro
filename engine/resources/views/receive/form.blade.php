@@ -34,8 +34,8 @@
             url: "{!! url("purchase-orders/") !!}/" + $("#purchaseid").val()+"/search",
             method: "get",
             success: function (response) {
-             var table = document.getElementById("purchase-body");
-             $(response.detail).each(function(key,value) {
+               var table = document.getElementById("purchase-body");
+               $(response.detail).each(function(key,value) {
                 var row = table.insertRow();
                 row.setAttribute('class', 'item-' + count);
                 var cell0 = row.insertCell(0);
@@ -90,7 +90,7 @@
                 input.setAttribute('class', "item-"+count);
                 container.appendChild(input);
 
-                  var input = document.createElement("input");
+                var input = document.createElement("input");
                 input.type = "hidden";
                 input.name = "purchasedetailid[]";
                 input.setAttribute('value', value.id);
@@ -99,13 +99,13 @@
 
                 count++;
             });
-             updateRowOrder();
-             calculateTotalAmmount();
+               updateRowOrder();
+               calculateTotalAmmount();
 
-         },
-         error: function (xhr, statusCode, error) {
-         }
-     });
+           },
+           error: function (xhr, statusCode, error) {
+           }
+       });
     });
 
 
@@ -122,6 +122,30 @@
         });
         $("#grandtotal").text("Rp. "+grandtotal);
     }
+
+    $("#receipt").change(function(){
+        $(".receipt").remove();
+        var receiptnumber = $("#receipt").val();
+        var container = document.getElementById("input-body");
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "receipt";
+        input.setAttribute('value', receiptnumber);
+        input.setAttribute('class', "receipt");
+        container.appendChild(input);
+    })
+
+     $("#purchaseid").change(function(){
+        $(".purchaseid").remove();
+        var purchaseidnumber = $("#purchaseid").val();
+        var container = document.getElementById("input-body");
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "purchaseid";
+        input.setAttribute('value', purchaseidnumber);
+        input.setAttribute('class', "purchaseid");
+        container.appendChild(input);
+    })
 </script>
 @endpush
 
@@ -152,7 +176,7 @@
             <div class="form-group row">
                 <label for="payment_method" class="col-4 col-form-label">Purchase Order ID</label>
                 <div class="col-7">
-                 <select autocomplete="off" name="purchase_id" id="purchaseid" class="form-control brands w-100">
+                   <select autocomplete="off" name="purchase_id" id="purchaseid" class="form-control brands w-100">
                     <option></option>
                     @foreach($purchase as $key)
                     <option value="{{ $key->id }}" >{{ $key->purchase_number }}</option>
@@ -166,7 +190,7 @@
         <div class="form-group row">
             <label for="payment_method" class="col-4 col-form-label">Receipt ID</label>
             <div class="col-7">
-                <input type="text" class="form-control" id="customer" name="receipt" value="">
+                <input type="text" class="form-control" id="receipt" name="receipt" value="">
             </div>
         </div>
     </div>
@@ -199,9 +223,7 @@
                                 </tr>
                             </thead>
                             <tbody id="purchase-body">
-                                <tr>
-
-                                </tr>
+                               
                             </tbody>
                         </table>
                     </div>

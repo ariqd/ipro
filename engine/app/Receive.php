@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Receive extends Model
 {
 	protected $guarded = [];
-	protected $table = 'receives';
 
-	public function sale()
+	public function purchase()
 	{
-		return $this->belongsTo('App\Purchase_Detail', 'purchase_detail_id', 'id');
+		return $this->belongsTo('App\Purchase', 'purchase_id', 'id');
 	}
 }

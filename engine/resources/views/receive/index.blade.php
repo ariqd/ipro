@@ -30,16 +30,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>-</td>
+                            @foreach($data as $key)
+                            <tr>
+                              <td>{{ date("d-m-Y",strtotime($key->created_at)) }}</td>
+                              <td>{{ $key->receipt }}</td>
+                              <td>{{ $key->purchase->purchase_number }}</td>
+                              <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-bars"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+
+                                    @if(Gate::allows('isAdmin'))
+                                    <a href="{{ url('goods-receive/'.$key->id) }}"
+                                    class="dropdown-item">
+                                    <i class="fa fa-eye"></i> Detail</a>
+                                    <form action="{{ url('goods-receive/'.$key->id) }}"
+                                      method="post" class="formDelete d-none">
+                                      {!! csrf_field() !!}
+                                      {!! method_field('delete') !!}
+                                  </form>
+                                  @endif
+                              </div>
+                              </
                           </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    @endsection
+                          @endforeach
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+  </div>
+  @endsection
