@@ -11,6 +11,9 @@
 
 namespace Symfony\Component\HttpFoundation\Session\Attribute;
 
+use function array_key_exists;
+use function count;
+
 /**
  * This class provides structured storage of session attributes using
  * a name spacing character in the key.
@@ -110,7 +113,7 @@ class NamespacedAttributeBag extends AttributeBag
         }
 
         $parts = explode($this->namespaceCharacter, $name);
-        if (\count($parts) < 2) {
+        if (count($parts) < 2) {
             if (!$writeContext) {
                 return $array;
             }
@@ -120,7 +123,7 @@ class NamespacedAttributeBag extends AttributeBag
             return $array;
         }
 
-        unset($parts[\count($parts) - 1]);
+        unset($parts[count($parts) - 1]);
 
         foreach ($parts as $part) {
             if (null !== $array && !array_key_exists($part, $array)) {

@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\VarDumper\Caster;
 
+use function array_key_exists;
 use Doctrine\Common\Proxy\Proxy as CommonProxy;
 use Doctrine\ORM\PersistentCollection;
 use Doctrine\ORM\Proxy\Proxy as OrmProxy;

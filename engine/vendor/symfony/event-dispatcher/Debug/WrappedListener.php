@@ -11,6 +11,12 @@
 
 namespace Symfony\Component\EventDispatcher\Debug;
 
+use Closure;
+use function get_class;
+use function is_array;
+use function is_object;
+use function is_string;
+use ReflectionFunction;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -29,6 +35,7 @@ class WrappedListener
     private $dispatcher;
     private $pretty;
     private $stub;
+    private $priority;
     private static $hasClassStub;
 
     public function __construct($listener, $name, Stopwatch $stopwatch, EventDispatcherInterface $dispatcher = null)
@@ -39,11 +46,11 @@ class WrappedListener
         $this->called = false;
         $this->stoppedPropagation = false;
 
-        if (\is_array($listener)) {
-            $this->name = \is_object($listener[0]) ? \get_class($listener[0]) : $listener[0];
+        if (is_array($listener)) {
+            $this->name = is_object($listener[0]) ? get_class($listener[0]) : $listener[0];
             $this->pretty = $this->name.'::'.$listener[1];
-        } elseif ($listener instanceof \Closure) {
-            $r = new \ReflectionFunction($listener);
+        } elseif ($listener instanceof Closure) {
+            $r = new ReflectionFunction($listener);
             if (false !== strpos($r->name, '{closure}')) {
                 $this->pretty = $this->name = 'closure';
             } elseif ($class = $r->getClosureScopeClass()) {
@@ -52,10 +59,10 @@ class WrappedListener
             } else {
                 $this->pretty = $this->name = $r->name;
             }
-        } elseif (\is_string($listener)) {
+        } elseif (is_string($listener)) {
             $this->pretty = $this->name = $listener;
         } else {
-            $this->name = \get_class($listener);
+            $this->name = get_class($listener);
             $this->pretty = $this->name.'::__invoke';
         }
 
@@ -96,7 +103,7 @@ class WrappedListener
 
         return [
             'event' => $eventName,
-            'priority' => null !== $this->dispatcher ? $this->dispatcher->getListenerPriority($eventName, $this->listener) : null,
+            'priority' => null !== $this->priority ? $this->priority : (null !== $this->dispatcher ? $this->dispatcher->getListenerPriority($eventName, $this->listener) : null),
             'pretty' => $this->pretty,
             'stub' => $this->stub,
         ];
@@ -104,11 +111,14 @@ class WrappedListener
 
     public function __invoke(Event $event, $eventName, EventDispatcherInterface $dispatcher)
     {
+        $dispatcher = $this->dispatcher ?: $dispatcher;
+
         $this->called = true;
+        $this->priority = $dispatcher->getListenerPriority($eventName, $this->listener);
 
         $e = $this->stopwatch->start($this->name, 'event_listener');
 
-        ($this->listener)($event, $eventName, $this->dispatcher ?: $dispatcher);
+        ($this->listener)($event, $eventName, $dispatcher);
 
         if ($e->isStarted()) {
             $e->stop();

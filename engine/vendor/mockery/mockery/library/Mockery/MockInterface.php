@@ -24,39 +24,39 @@ interface MockInterface
 {
     /**
      * @param mixed $something  String method name or map of method => return
-     * @return self|\Mockery\ExpectationInterface|\Mockery\Expectation|\Mockery\HigherOrderMessage
+     * @return self|ExpectationInterface|Expectation|HigherOrderMessage
      */
     public function allows($something = []);
 
     /**
      * @param mixed $something  String method name (optional)
-     * @return \Mockery\ExpectationInterface|\Mockery\Expectation|\Mockery\ExpectsHigherOrderMessage
+     * @return ExpectationInterface|Expectation|ExpectsHigherOrderMessage
      */
     public function expects($something = null);
 
     /**
      * Alternative setup method to constructor
      *
-     * @param \Mockery\Container $container
+     * @param Container $container
      * @param object $partialObject
      * @return void
      */
-    public function mockery_init(\Mockery\Container $container = null, $partialObject = null);
+    public function mockery_init(Container $container = null, $partialObject = null);
 
     /**
      * Set expected method calls
      *
-     * @param array ...$methodNames one or many methods that are expected to be called in this mock
+     * @param mixed ...$methodNames one or many methods that are expected to be called in this mock
      *
-     * @return \Mockery\ExpectationInterface|\Mockery\Expectation|\Mockery\HigherOrderMessage
+     * @return ExpectationInterface|Expectation|HigherOrderMessage
      */
     public function shouldReceive(...$methodNames);
 
     /**
      * Shortcut method for setting an expectation that a method should not be called.
      *
-     * @param array ...$methodNames one or many methods that are expected not to be called in this mock
-     * @return \Mockery\ExpectationInterface|\Mockery\Expectation|\Mockery\HigherOrderMessage
+     * @param mixed ...$methodNames one or many methods that are expected not to be called in this mock
+     * @return ExpectationInterface|Expectation|HigherOrderMessage
      */
     public function shouldNotReceive(...$methodNames);
 
@@ -99,7 +99,7 @@ interface MockInterface
      * @param null $args
      * @return mixed
      */
-    public function shouldHaveReceived($method, $args = null);
+    public function shouldHaveReceived($method = null, $args = null);
 
     /**
      * @return mixed
@@ -184,7 +184,7 @@ interface MockInterface
      *
      * @param string $method
      * @param int $order
-     * @throws \Mockery\Exception
+     * @throws Exception
      * @return void
      */
     public function mockery_validateOrder($method, $order);
@@ -199,32 +199,32 @@ interface MockInterface
     /**
      * Return the expectations director for the given method
      *
+     * @return ExpectationDirector|null
      * @var string $method
-     * @return \Mockery\ExpectationDirector|null
      */
-    public function mockery_setExpectationsFor($method, \Mockery\ExpectationDirector $director);
+    public function mockery_setExpectationsFor($method, ExpectationDirector $director);
 
     /**
      * Return the expectations director for the given method
      *
+     * @return ExpectationDirector|null
      * @var string $method
-     * @return \Mockery\ExpectationDirector|null
      */
     public function mockery_getExpectationsFor($method);
 
     /**
      * Find an expectation matching the given method and arguments
      *
+     * @return Expectation|null
+     *@var array $args
      * @var string $method
-     * @var array $args
-     * @return \Mockery\Expectation|null
      */
     public function mockery_findExpectation($method, array $args);
 
     /**
      * Return the container for this mock
      *
-     * @return \Mockery\Container
+     * @return Container
      */
     public function mockery_getContainer();
 

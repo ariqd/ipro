@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\File;
 
+use function extension_loaded;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\Exception\CannotWriteFileException;
 use Symfony\Component\HttpFoundation\File\Exception\ExtensionFileException;
@@ -53,7 +54,7 @@ class UploadedFileTest extends TestCase
 
         $this->assertEquals('application/octet-stream', $file->getClientMimeType());
 
-        if (\extension_loaded('fileinfo')) {
+        if (extension_loaded('fileinfo')) {
             $this->assertEquals('image/gif', $file->getMimeType());
         }
     }
@@ -94,6 +95,18 @@ class UploadedFileTest extends TestCase
         $this->assertEquals('jpeg', $file->guessClientExtension());
     }
 
+    public function testCaseSensitiveMimeType()
+    {
+        $file = new UploadedFile(
+            __DIR__.'/Fixtures/case-sensitive-mime-type.xlsm',
+            'test.xlsm',
+            'application/vnd.ms-excel.sheet.macroEnabled.12',
+            null
+        );
+
+        $this->assertEquals('xlsm', $file->guessClientExtension());
+    }
+
     public function testErrorIsOkByDefault()
     {
         $file = new UploadedFile(
@@ -131,7 +144,7 @@ class UploadedFileTest extends TestCase
     }
 
     /**
-     * @expectedException \Symfony\Component\HttpFoundation\File\Exception\FileException
+     * @expectedException FileException
      */
     public function testMoveLocalFileIsNotAllowed()
     {

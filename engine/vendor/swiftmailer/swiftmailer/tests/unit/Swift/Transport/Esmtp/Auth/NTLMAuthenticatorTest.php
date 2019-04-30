@@ -1,6 +1,6 @@
 <?php
 
-class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestCase
+class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends SwiftMailerTestCase
 {
     private $message1 = '4e544c4d535350000100000007020000';
     private $message2 = '4e544c4d53535000020000000c000c003000000035828980514246973ea892c10000000000000000460046003c00000054004500530054004e00540002000c0054004500530054004e00540001000c004d0045004d0042004500520003001e006d0065006d006200650072002e0074006500730074002e0063006f006d0000000000';
@@ -8,7 +8,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
 
     protected function setUp()
     {
-        if (!function_exists('openssl_encrypt') || !function_exists('bcmul') || !function_exists('iconv')) {
+        if (!function_exists('openssl_encrypt') || !function_exists('bcmul')) {
             $this->markTestSkipped('One of the required functions is not available.');
         }
     }
@@ -161,7 +161,7 @@ class Swift_Transport_Esmtp_Auth_NTLMAuthenticatorTest extends \SwiftMailerTestC
     }
 
     /**
-     * @expectedException \Swift_TransportException
+     * @expectedException Swift_TransportException
      */
     public function testAuthenticationFailureSendRset()
     {

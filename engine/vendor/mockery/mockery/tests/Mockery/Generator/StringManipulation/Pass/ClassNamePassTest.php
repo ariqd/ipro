@@ -21,16 +21,15 @@
 
 namespace Mockery\Generator\StringManipulation\Pass;
 
-use Mockery as m;
+use function mb_strpos;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\Generator\MockConfiguration;
-use Mockery\Generator\StringManipulation\Pass\ClassNamePass;
-use PHPUnit\Framework\TestCase;
 
-class ClassNamePassTest extends TestCase
+class ClassNamePassTest extends MockeryTestCase
 {
     const CODE = "namespace Mockery; class Mock {}";
 
-    public function setup()
+    public function mockeryTestSetUp()
     {
         $this->pass = new ClassNamePass();
     }
@@ -42,7 +41,7 @@ class ClassNamePassTest extends TestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "Dave\Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertNotContains('namespace Mockery;', $code);
+        $this->assertTrue(mb_strpos($code, 'namespace Mockery;') === false);
     }
 
     /**
@@ -52,8 +51,8 @@ class ClassNamePassTest extends TestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "Dave\Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertNotContains('namespace Mockery;', $code);
-        $this->assertContains('namespace Dave;', $code);
+        $this->assertTrue(mb_strpos($code, 'namespace Mockery;') === false);
+        $this->assertTrue(mb_strpos($code, 'namespace Dave;') !== false);
     }
 
     /**
@@ -63,7 +62,7 @@ class ClassNamePassTest extends TestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertContains('class Dave', $code);
+        $this->assertTrue(mb_strpos($code, 'class Dave') !== false);
     }
 
     /**
@@ -73,6 +72,6 @@ class ClassNamePassTest extends TestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "\Dave\Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertContains('namespace Dave;', $code);
+        $this->assertTrue(mb_strpos($code, 'namespace Dave;') !== false);
     }
 }

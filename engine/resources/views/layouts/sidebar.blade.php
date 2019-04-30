@@ -102,7 +102,7 @@
             <li class="nav-item">
                 <a href="{{ url('goods-receive') }}"
                    class="nav-link {{ (request()->is('goods-receive*')) ? 'active' : '' }}">
-                    <i class="fa fa-arrow-up"></i> Goods Receive
+                    <i class="fa fa-truck"></i> Goods Receive
                 </a>
             </li>
 
@@ -116,12 +116,6 @@
             @endif
 
             @if(Gate::allows('isFinance') || Gate::allows("isAdmin"))
-{{--                <li class="nav-item">--}}
-{{--                    <a href="{{ url('sales-orders/check/approve') }}"--}}
-{{--                       class="nav-link {{ (request()->is('sales-orders/check/approve')) ? 'active' : '' }}">--}}
-{{--                        <i class="fa fa-arrow-down"></i> Sales Order Approve--}}
-{{--                    </a>--}}
-{{--                </li>--}}
                 <li class="nav-item">
                     <a href="{{ url('finances') }}"
                        class="nav-link {{ (request()->is('finances*')) ? 'active' : '' }}">

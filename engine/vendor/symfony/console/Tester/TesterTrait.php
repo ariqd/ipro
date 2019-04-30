@@ -11,6 +11,10 @@
 
 namespace Symfony\Component\Console\Tester;
 
+use function array_key_exists;
+use LogicException;
+use ReflectionObject;
+use RuntimeException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -35,6 +39,10 @@ trait TesterTrait
      */
     public function getDisplay($normalize = false)
     {
+        if (null === $this->output) {
+            throw new RuntimeException('Output not initialized, did you execute the command before requesting the display?');
+        }
+
         rewind($this->output->getStream());
 
         $display = stream_get_contents($this->output->getStream());
@@ -56,7 +64,7 @@ trait TesterTrait
     public function getErrorOutput($normalize = false)
     {
         if (!$this->captureStreamsIndependently) {
-            throw new \LogicException('The error output is not available when the tester is run without "capture_stderr_separately" option set.');
+            throw new LogicException('The error output is not available when the tester is run without "capture_stderr_separately" option set.');
         }
 
         rewind($this->output->getErrorOutput()->getStream());
@@ -146,7 +154,7 @@ trait TesterTrait
             $errorOutput->setVerbosity($this->output->getVerbosity());
             $errorOutput->setDecorated($this->output->isDecorated());
 
-            $reflectedOutput = new \ReflectionObject($this->output);
+            $reflectedOutput = new ReflectionObject($this->output);
             $strErrProperty = $reflectedOutput->getProperty('stderr');
             $strErrProperty->setAccessible(true);
             $strErrProperty->setValue($this->output, $errorOutput);

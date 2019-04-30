@@ -22,15 +22,16 @@
 namespace test\Mockery;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery\Container;
 
 class MockClassWithFinalWakeupTest extends MockeryTestCase
 {
-    protected function setUp()
+    protected function mockeryTestSetUp()
     {
-        $this->container = new \Mockery\Container;
+        $this->container = new Container;
     }
 
-    protected function tearDown()
+    protected function mockeryTestTearDown()
     {
         $this->container->mockery_close();
     }

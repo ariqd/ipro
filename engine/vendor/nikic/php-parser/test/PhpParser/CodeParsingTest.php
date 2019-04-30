@@ -2,10 +2,9 @@
 
 namespace PhpParser;
 
+use Exception;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Stmt;
-
-require_once __DIR__ . '/CodeTestAbstract.php';
 
 class CodeParsingTest extends CodeTestAbstract
 {
@@ -79,9 +78,9 @@ class CodeParsingTest extends CodeTestAbstract
     private function formatErrorMessage(Error $e, $code) {
         if ($e->hasColumnInfo()) {
             return $e->getMessageWithColumnInfo($code);
-        } else {
-            return $e->getMessage();
         }
+
+        return $e->getMessage();
     }
 
     private function checkAttributes($stmts) {
@@ -102,7 +101,7 @@ class CodeParsingTest extends CodeTestAbstract
                     $startFilePos < 0 || $endFilePos < 0 ||
                     $startTokenPos < 0 || $endTokenPos < 0
                 ) {
-                    throw new \Exception('Missing location information on ' . $node->getType());
+                    throw new Exception('Missing location information on ' . $node->getType());
                 }
 
                 if ($endLine < $startLine ||
@@ -111,7 +110,7 @@ class CodeParsingTest extends CodeTestAbstract
                 ) {
                     // Nops and error can have inverted order, if they are empty
                     if (!$node instanceof Stmt\Nop && !$node instanceof Expr\Error) {
-                        throw new \Exception('End < start on ' . $node->getType());
+                        throw new Exception('End < start on ' . $node->getType());
                     }
                 }
             }

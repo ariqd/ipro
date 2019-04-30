@@ -11,6 +11,13 @@
 
 namespace Symfony\Component\Console\Helper;
 
+use function call_user_func;
+use function count;
+use const DIRECTORY_SEPARATOR;
+use Exception;
+use function is_array;
+use function ord;
+use function strlen;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
@@ -49,7 +56,13 @@ class QuestionHelper extends Helper
         if (!$input->isInteractive()) {
             $default = $question->getDefault();
 
-            if (null !== $default && $question instanceof ChoiceQuestion) {
+            if (null === $default) {
+                return $default;
+            }
+
+            if ($validator = $question->getValidator()) {
+                return call_user_func($question->getValidator(), $default);
+            } elseif ($question instanceof ChoiceQuestion) {
                 $choices = $question->getChoices();
 
                 if (!$question->isMultiselect()) {
@@ -126,19 +139,19 @@ class QuestionHelper extends Helper
             if (false === $ret) {
                 $ret = fgets($inputStream, 4096);
                 if (false === $ret) {
-                    throw new RuntimeException('Aborted');
+                    throw new RuntimeException('Aborted.');
                 }
                 $ret = trim($ret);
             }
         } else {
-            $ret = trim($this->autocomplete($output, $question, $inputStream, \is_array($autocomplete) ? $autocomplete : iterator_to_array($autocomplete, false)));
+            $ret = trim($this->autocomplete($output, $question, $inputStream, is_array($autocomplete) ? $autocomplete : iterator_to_array($autocomplete, false)));
         }
 
         if ($output instanceof ConsoleSectionOutput) {
             $output->addContent($ret);
         }
 
-        $ret = \strlen($ret) > 0 ? $ret : $question->getDefault();
+        $ret = strlen($ret) > 0 ? $ret : $question->getDefault();
 
         if ($normalizer = $question->getNormalizer()) {
             return $normalizer($ret);
@@ -174,7 +187,7 @@ class QuestionHelper extends Helper
     /**
      * Outputs an error message.
      */
-    protected function writeError(OutputInterface $output, \Exception $error)
+    protected function writeError(OutputInterface $output, Exception $error)
     {
         if (null !== $this->getHelperSet() && $this->getHelperSet()->has('formatter')) {
             $message = $this->getHelperSet()->get('formatter')->formatBlock($error->getMessage(), 'error');
@@ -199,7 +212,7 @@ class QuestionHelper extends Helper
         $i = 0;
         $ofs = -1;
         $matches = $autocomplete;
-        $numMatches = \count($matches);
+        $numMatches = count($matches);
 
         $sttyMode = shell_exec('stty -g');
 
@@ -213,8 +226,11 @@ class QuestionHelper extends Helper
         while (!feof($inputStream)) {
             $c = fread($inputStream, 1);
 
-            // Backspace Character
-            if ("\177" === $c) {
+            // as opposed to fgets(), fread() returns an empty string when the stream content is empty, not false.
+            if (false === $c || ('' === $ret && '' === $c && null === $question->getDefault())) {
+                shell_exec(sprintf('stty %s', $sttyMode));
+                throw new RuntimeException('Aborted.');
+            } elseif ("\177" === $c) { // Backspace Character
                 if (0 === $numMatches && 0 !== $i) {
                     --$i;
                     // Move cursor backwards
@@ -224,7 +240,7 @@ class QuestionHelper extends Helper
                 if (0 === $i) {
                     $ofs = -1;
                     $matches = $autocomplete;
-                    $numMatches = \count($matches);
+                    $numMatches = count($matches);
                 } else {
                     $numMatches = 0;
                 }
@@ -248,13 +264,13 @@ class QuestionHelper extends Helper
                     $ofs += ('A' === $c[2]) ? -1 : 1;
                     $ofs = ($numMatches + $ofs) % $numMatches;
                 }
-            } elseif (\ord($c) < 32) {
+            } elseif (ord($c) < 32) {
                 if ("\t" === $c || "\n" === $c) {
                     if ($numMatches > 0 && -1 !== $ofs) {
                         $ret = $matches[$ofs];
                         // Echo out remaining chars for current match
                         $output->write(substr($ret, $i));
-                        $i = \strlen($ret);
+                        $i = strlen($ret);
                     }
 
                     if ("\n" === $c) {
@@ -267,6 +283,10 @@ class QuestionHelper extends Helper
 
                 continue;
             } else {
+                if ("\x80" <= $c) {
+                    $c .= fread($inputStream, ["\xC0" => 1, "\xD0" => 1, "\xE0" => 2, "\xF0" => 3][$c & "\xF0"]);
+                }
+
                 $output->write($c);
                 $ret .= $c;
                 ++$i;
@@ -311,7 +331,7 @@ class QuestionHelper extends Helper
      */
     private function getHiddenResponse(OutputInterface $output, $inputStream): string
     {
-        if ('\\' === \DIRECTORY_SEPARATOR) {
+        if ('\\' === DIRECTORY_SEPARATOR) {
             $exe = __DIR__.'/../Resources/bin/hiddeninput.exe';
 
             // handle code running from a phar
@@ -339,7 +359,7 @@ class QuestionHelper extends Helper
             shell_exec(sprintf('stty %s', $sttyMode));
 
             if (false === $value) {
-                throw new RuntimeException('Aborted');
+                throw new RuntimeException('Aborted.');
             }
 
             $value = trim($value);
@@ -369,7 +389,7 @@ class QuestionHelper extends Helper
      *
      * @return mixed The validated response
      *
-     * @throws \Exception In case the max number of attempts has been reached and no valid response has been given
+     * @throws Exception In case the max number of attempts has been reached and no valid response has been given
      */
     private function validateAttempts(callable $interviewer, OutputInterface $output, Question $question)
     {
@@ -384,7 +404,7 @@ class QuestionHelper extends Helper
                 return $question->getValidator()($interviewer());
             } catch (RuntimeException $e) {
                 throw $e;
-            } catch (\Exception $error) {
+            } catch (Exception $error) {
             }
         }
 

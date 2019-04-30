@@ -11,6 +11,7 @@ use Closure;
 use Serializable;
 use SplObjectStorage;
 use ReflectionObject;
+use stdClass;
 
 /**
  * Provides a wrapper for serialization of closures
@@ -359,7 +360,7 @@ class SerializableClosure implements Serializable
             }
             unset($value);
             unset($data[self::ARRAY_RECURSIVE_KEY]);
-        } elseif($data instanceof \stdClass){
+        } elseif($data instanceof stdClass){
             if(isset($storage[$data])){
                 $data = $storage[$data];
                 return;
@@ -387,7 +388,7 @@ class SerializableClosure implements Serializable
                     break;
                 }
                 foreach ($reflection->getProperties() as $property){
-                    if($property->isStatic()){
+                    if($property->isStatic() || !$property->getDeclaringClass()->isUserDefined()){
                         continue;
                     }
                     $property->setAccessible(true);
@@ -430,7 +431,7 @@ class SerializableClosure implements Serializable
                 static::unwrapClosures($value, $storage);
             }
             unset($data[self::ARRAY_RECURSIVE_KEY]);
-        }elseif ($data instanceof \stdClass){
+        }elseif ($data instanceof stdClass){
             if(isset($storage[$data])){
                 return;
             }
@@ -450,7 +451,7 @@ class SerializableClosure implements Serializable
                     break;
                 }
                 foreach ($reflection->getProperties() as $property){
-                    if($property->isStatic()){
+                    if($property->isStatic() || !$property->getDeclaringClass()->isUserDefined()){
                         continue;
                     }
                     $property->setAccessible(true);
@@ -493,7 +494,7 @@ class SerializableClosure implements Serializable
             }
             unset($value);
             unset($data[self::ARRAY_RECURSIVE_KEY]);
-        } elseif ($data instanceof \stdClass) {
+        } elseif ($data instanceof stdClass) {
             if(isset($scope[$data])){
                 return;
             }
@@ -517,7 +518,7 @@ class SerializableClosure implements Serializable
                     break;
                 }
                 foreach ($reflection->getProperties() as $property){
-                    if($property->isStatic()){
+                    if($property->isStatic() || !$property->getDeclaringClass()->isUserDefined()){
                         continue;
                     }
                     $property->setAccessible(true);
@@ -578,7 +579,7 @@ class SerializableClosure implements Serializable
             }
             unset($value);
             unset($data[self::ARRAY_RECURSIVE_KEY]);
-        } elseif ($data instanceof \stdClass) {
+        } elseif ($data instanceof stdClass) {
             if(isset($this->scope[$data])){
                 $data = $this->scope[$data];
                 return;
@@ -609,7 +610,7 @@ class SerializableClosure implements Serializable
                     break;
                 }
                 foreach ($reflection->getProperties() as $property){
-                    if($property->isStatic()){
+                    if($property->isStatic() || !$property->getDeclaringClass()->isUserDefined()){
                         continue;
                     }
                     $property->setAccessible(true);

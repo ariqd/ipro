@@ -2,6 +2,8 @@
 
 namespace Cron;
 
+use OutOfRangeException;
+
 /**
  * Abstract CRON expression field
  */
@@ -31,7 +33,9 @@ abstract class AbstractField implements FieldInterface
      */
     protected $rangeEnd;
 
-
+    /**
+     * Constructor
+     */
     public function __construct()
     {
         $this->fullRange = range($this->rangeStart, $this->rangeEnd);
@@ -132,11 +136,11 @@ abstract class AbstractField implements FieldInterface
         $rangeEnd = isset($rangeChunks[1]) ? $rangeChunks[1] : $rangeStart;
 
         if ($rangeStart < $this->rangeStart || $rangeStart > $this->rangeEnd || $rangeStart > $rangeEnd) {
-            throw new \OutOfRangeException('Invalid range start requested');
+            throw new OutOfRangeException('Invalid range start requested');
         }
 
         if ($rangeEnd < $this->rangeStart || $rangeEnd > $this->rangeEnd || $rangeEnd < $rangeStart) {
-            throw new \OutOfRangeException('Invalid range end requested');
+            throw new OutOfRangeException('Invalid range end requested');
         }
 
         // Steps larger than the range need to wrap around and be handled slightly differently than smaller steps
@@ -204,12 +208,18 @@ abstract class AbstractField implements FieldInterface
         return $values;
     }
 
+    /**
+     * Convert literal
+     *
+     * @param string $value
+     * @return string
+     */
     protected function convertLiterals($value)
     {
         if (count($this->literals)) {
             $key = array_search($value, $this->literals);
             if ($key !== false) {
-                return $key;
+                return (string) $key;
             }
         }
 

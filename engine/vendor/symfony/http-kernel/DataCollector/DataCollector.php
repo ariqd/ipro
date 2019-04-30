@@ -11,6 +11,11 @@
 
 namespace Symfony\Component\HttpKernel\DataCollector;
 
+use DateTimeInterface;
+use function is_array;
+use function is_object;
+use LogicException;
+use Serializable;
 use Symfony\Component\VarDumper\Caster\CutStub;
 use Symfony\Component\VarDumper\Cloner\ClonerInterface;
 use Symfony\Component\VarDumper\Cloner\Data;
@@ -25,7 +30,7 @@ use Symfony\Component\VarDumper\Cloner\VarCloner;
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Bernhard Schussek <bschussek@symfony.com>
  */
-abstract class DataCollector implements DataCollectorInterface, \Serializable
+abstract class DataCollector implements DataCollectorInterface, Serializable
 {
     protected $data = [];
 
@@ -34,9 +39,6 @@ abstract class DataCollector implements DataCollectorInterface, \Serializable
      */
     private $cloner;
 
-    /**
-     * @internal
-     */
     public function serialize()
     {
         $trace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 2);
@@ -45,12 +47,9 @@ abstract class DataCollector implements DataCollectorInterface, \Serializable
         return $isCalledFromOverridingMethod ? $this->data : serialize($this->data);
     }
 
-    /**
-     * @internal
-     */
     public function unserialize($data)
     {
-        $this->data = \is_array($data) ? $data : unserialize($data);
+        $this->data = is_array($data) ? $data : unserialize($data);
     }
 
     /**
@@ -70,7 +69,7 @@ abstract class DataCollector implements DataCollectorInterface, \Serializable
         }
         if (null === $this->cloner) {
             if (!class_exists(CutStub::class)) {
-                throw new \LogicException(sprintf('The VarDumper component is needed for the %s() method. Install symfony/var-dumper version 3.4 or above.', __METHOD__));
+                throw new LogicException(sprintf('The VarDumper component is needed for the %s() method. Install symfony/var-dumper version 3.4 or above.', __METHOD__));
             }
             $this->cloner = new VarCloner();
             $this->cloner->setMaxItems(-1);
@@ -89,7 +88,7 @@ abstract class DataCollector implements DataCollectorInterface, \Serializable
             '*' => function ($v, array $a, Stub $s, $isNested) {
                 if (!$v instanceof Stub) {
                     foreach ($a as $k => $v) {
-                        if (\is_object($v) && !$v instanceof \DateTimeInterface && !$v instanceof Stub) {
+                        if (is_object($v) && !$v instanceof DateTimeInterface && !$v instanceof Stub) {
                             $a[$k] = new CutStub($v);
                         }
                     }

@@ -7,9 +7,8 @@ use PhpParser\Lexer;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Stmt;
+use PhpParser\Parser;
 use PhpParser\ParserTest;
-
-require_once __DIR__ . '/../ParserTest.php';
 
 class MultipleTest extends ParserTest
 {
@@ -82,13 +81,13 @@ class MultipleTest extends ParserTest
         $this->expectException(Error::class);
         $this->expectExceptionMessage('FAIL A');
 
-        $parserA = $this->getMockBuilder(\PhpParser\Parser::class)->getMock();
+        $parserA = $this->getMockBuilder(Parser::class)->getMock();
         $parserA->expects($this->at(0))
-            ->method('parse')->will($this->throwException(new Error('FAIL A')));
+            ->method('parse')->willThrowException(new Error('FAIL A'));
 
-        $parserB = $this->getMockBuilder(\PhpParser\Parser::class)->getMock();
+        $parserB = $this->getMockBuilder(Parser::class)->getMock();
         $parserB->expects($this->at(0))
-            ->method('parse')->will($this->throwException(new Error('FAIL B')));
+            ->method('parse')->willThrowException(new Error('FAIL B'));
 
         $parser = new Multiple([$parserA, $parserB]);
         $parser->parse('dummy');

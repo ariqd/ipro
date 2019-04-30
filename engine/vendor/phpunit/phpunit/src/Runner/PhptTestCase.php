@@ -9,6 +9,19 @@
  */
 namespace PHPUnit\Runner;
 
+use function basename;
+use function defined;
+use const DIRECTORY_SEPARATOR;
+use function dirname;
+use function explode;
+use function file;
+use function file_get_contents;
+use function file_put_contents;
+use function is_array;
+use function is_file;
+use function is_readable;
+use function is_string;
+use function ltrim;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\IncompleteTestError;
@@ -17,9 +30,28 @@ use PHPUnit\Framework\SkippedTestError;
 use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\PHP\AbstractPhpProcess;
+use function preg_match;
+use function preg_replace;
+use function realpath;
+use ReflectionException;
+use function rtrim;
+use SebastianBergmann\CodeCoverage\CoveredCodeNotExecutedException;
+use SebastianBergmann\CodeCoverage\MissingCoversAnnotationException;
+use SebastianBergmann\CodeCoverage\RuntimeException;
+use SebastianBergmann\CodeCoverage\UnintentionallyCoveredCodeException;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use SebastianBergmann\Timer\Timer;
+use function sprintf;
+use function str_replace;
+use function strncasecmp;
+use function strpos;
+use function substr;
 use Text_Template;
 use Throwable;
+use function trim;
+use function unlink;
+use function unserialize;
+use function var_export;
 
 /**
  * Runner for PHPT test cases.
@@ -74,9 +106,9 @@ class PhptTestCase implements Test, SelfDescribing
      */
     public function __construct(string $filename, AbstractPhpProcess $phpUtil = null)
     {
-        if (!\is_file($filename)) {
+        if (!is_file($filename)) {
             throw new Exception(
-                \sprintf(
+                sprintf(
                     'File "%s" does not exist.',
                     $filename
                 )
@@ -99,23 +131,31 @@ class PhptTestCase implements Test, SelfDescribing
      * Runs a test and collects its result in a TestResult instance.
      *
      * @throws Exception
-     * @throws \ReflectionException
-     * @throws \SebastianBergmann\CodeCoverage\CoveredCodeNotExecutedException
+     * @throws ReflectionException
+     * @throws CoveredCodeNotExecutedException
      * @throws \SebastianBergmann\CodeCoverage\InvalidArgumentException
-     * @throws \SebastianBergmann\CodeCoverage\MissingCoversAnnotationException
-     * @throws \SebastianBergmann\CodeCoverage\RuntimeException
-     * @throws \SebastianBergmann\CodeCoverage\UnintentionallyCoveredCodeException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws MissingCoversAnnotationException
+     * @throws RuntimeException
+     * @throws UnintentionallyCoveredCodeException
+     * @throws InvalidArgumentException
      */
     public function run(TestResult $result = null): TestResult
     {
-        $sections = $this->parse();
-        $code     = $this->render($sections['FILE']);
-
         if ($result === null) {
             $result = new TestResult;
         }
 
+        try {
+            $sections = $this->parse();
+        } catch (Exception $e) {
+            $result->startTest($this);
+            $result->addFailure($this, new SkippedTestError($e->getMessage()), 0);
+            $result->endTest($this, 0);
+
+            return $result;
+        }
+
+        $code     = $this->render($sections['FILE']);
         $xfail    = false;
         $settings = $this->parseIniSection(self::SETTINGS);
 
@@ -143,7 +183,7 @@ class PhptTestCase implements Test, SelfDescribing
         }
 
         if (isset($sections['XFAIL'])) {
-            $xfail = \trim($sections['XFAIL']);
+            $xfail = trim($sections['XFAIL']);
         }
 
         if (isset($sections['STDIN'])) {
@@ -235,18 +275,18 @@ class PhptTestCase implements Test, SelfDescribing
      */
     private function parseIniSection($content, $ini = []): array
     {
-        if (\is_string($content)) {
-            $content = \explode("\n", \trim($content));
+        if (is_string($content)) {
+            $content = explode("\n", trim($content));
         }
 
         foreach ($content as $setting) {
-            if (\strpos($setting, '=') === false) {
+            if (strpos($setting, '=') === false) {
                 continue;
             }
 
-            $setting = \explode('=', $setting, 2);
-            $name    = \trim($setting[0]);
-            $value   = \trim($setting[1]);
+            $setting = explode('=', $setting, 2);
+            $name    = trim($setting[0]);
+            $value   = trim($setting[1]);
 
             if ($name === 'extension' || $name === 'zend_extension') {
                 if (!isset($ini[$name])) {
@@ -268,8 +308,8 @@ class PhptTestCase implements Test, SelfDescribing
     {
         $env = [];
 
-        foreach (\explode("\n", \trim($content)) as $e) {
-            $e = \explode('=', \trim($e), 2);
+        foreach (explode("\n", trim($content)) as $e) {
+            $e = explode('=', trim($e), 2);
 
             if (!empty($e[0]) && isset($e[1])) {
                 $env[$e[0]] = $e[1];
@@ -290,11 +330,11 @@ class PhptTestCase implements Test, SelfDescribing
             'EXPECTREGEX' => 'assertRegExp',
         ];
 
-        $actual = \preg_replace('/\r\n/', "\n", \trim($output));
+        $actual = preg_replace('/\r\n/', "\n", trim($output));
 
         foreach ($assertions as $sectionName => $sectionAssertion) {
             if (isset($sections[$sectionName])) {
-                $sectionContent = \preg_replace('/\r\n/', "\n", \trim($sections[$sectionName]));
+                $sectionContent = preg_replace('/\r\n/', "\n", trim($sections[$sectionName]));
                 $expected       = $sectionName === 'EXPECTREGEX' ? "/{$sectionContent}/" : $sectionContent;
 
                 if ($expected === null) {
@@ -310,7 +350,7 @@ class PhptTestCase implements Test, SelfDescribing
     }
 
     /**
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function runSkip(array &$sections, TestResult $result, array $settings): bool
     {
@@ -321,11 +361,11 @@ class PhptTestCase implements Test, SelfDescribing
         $skipif    = $this->render($sections['SKIPIF']);
         $jobResult = $this->phpUtil->runJob($skipif, $this->stringifyIni($settings));
 
-        if (!\strncasecmp('skip', \ltrim($jobResult['stdout']), 4)) {
+        if (!strncasecmp('skip', ltrim($jobResult['stdout']), 4)) {
             $message = '';
 
-            if (\preg_match('/^\s*skip\s*(.+)\s*/i', $jobResult['stdout'], $skipMatch)) {
-                $message = \substr($skipMatch[1], 2);
+            if (preg_match('/^\s*skip\s*(.+)\s*/i', $jobResult['stdout'], $skipMatch)) {
+                $message = substr($skipMatch[1], 2);
             }
 
             $result->addFailure($this, new SkippedTestError($message), 0);
@@ -374,8 +414,8 @@ class PhptTestCase implements Test, SelfDescribing
             'PHPDBG',
         ];
 
-        foreach (\file($this->filename) as $line) {
-            if (\preg_match('/^--([_A-Z]+)--/', $line, $result)) {
+        foreach (file($this->filename) as $line) {
+            if (preg_match('/^--([_A-Z]+)--/', $line, $result)) {
                 $section            = $result[1];
                 $sections[$section] = '';
 
@@ -383,14 +423,14 @@ class PhptTestCase implements Test, SelfDescribing
             }
 
             if (empty($section)) {
-                throw new Exception('Invalid PHPT file');
+                throw new Exception('Invalid PHPT file: empty section header');
             }
 
             $sections[$section] .= $line;
         }
 
         if (isset($sections['FILEEOF'])) {
-            $sections['FILE'] = \rtrim($sections['FILEEOF'], "\r\n");
+            $sections['FILE'] = rtrim($sections['FILEEOF'], "\r\n");
             unset($sections['FILEEOF']);
         }
 
@@ -403,7 +443,7 @@ class PhptTestCase implements Test, SelfDescribing
         foreach ($unsupportedSections as $section) {
             if (isset($sections[$section])) {
                 throw new Exception(
-                    'PHPUnit does not support this PHPT file'
+                    "PHPUnit does not support PHPT $section sections"
                 );
             }
         }
@@ -422,16 +462,16 @@ class PhptTestCase implements Test, SelfDescribing
             'EXPECTF',
             'EXPECTREGEX',
         ];
-        $testDirectory = \dirname($this->filename) . \DIRECTORY_SEPARATOR;
+        $testDirectory = dirname($this->filename) . DIRECTORY_SEPARATOR;
 
         foreach ($allowSections as $section) {
             if (isset($sections[$section . '_EXTERNAL'])) {
-                $externalFilename = \trim($sections[$section . '_EXTERNAL']);
+                $externalFilename = trim($sections[$section . '_EXTERNAL']);
 
-                if (!\is_file($testDirectory . $externalFilename) ||
-                    !\is_readable($testDirectory . $externalFilename)) {
+                if (!is_file($testDirectory . $externalFilename) ||
+                    !is_readable($testDirectory . $externalFilename)) {
                     throw new Exception(
-                        \sprintf(
+                        sprintf(
                             'Could not load --%s-- %s for PHPT file',
                             $section . '_EXTERNAL',
                             $testDirectory . $externalFilename
@@ -439,7 +479,7 @@ class PhptTestCase implements Test, SelfDescribing
                     );
                 }
 
-                $sections[$section] = \file_get_contents($testDirectory . $externalFilename);
+                $sections[$section] = file_get_contents($testDirectory . $externalFilename);
 
                 unset($sections[$section . '_EXTERNAL']);
             }
@@ -458,7 +498,7 @@ class PhptTestCase implements Test, SelfDescribing
         ];
 
         foreach ($requiredSections as $section) {
-            if (\is_array($section)) {
+            if (is_array($section)) {
                 $foundSection = false;
 
                 foreach ($section as $anySection) {
@@ -486,13 +526,13 @@ class PhptTestCase implements Test, SelfDescribing
 
     private function render(string $code): string
     {
-        return \str_replace(
+        return str_replace(
             [
                 '__DIR__',
                 '__FILE__',
             ],
             [
-                "'" . \dirname($this->filename) . "'",
+                "'" . dirname($this->filename) . "'",
                 "'" . $this->filename . "'",
             ],
             $code
@@ -501,8 +541,8 @@ class PhptTestCase implements Test, SelfDescribing
 
     private function getCoverageFiles(): array
     {
-        $baseDir  = \dirname(\realpath($this->filename)) . \DIRECTORY_SEPARATOR;
-        $basename = \basename($this->filename, 'phpt');
+        $baseDir  = dirname(realpath($this->filename)) . DIRECTORY_SEPARATOR;
+        $basename = basename($this->filename, 'phpt');
 
         return [
             'coverage' => $baseDir . $basename . 'coverage',
@@ -520,22 +560,22 @@ class PhptTestCase implements Test, SelfDescribing
 
         $composerAutoload = '\'\'';
 
-        if (\defined('PHPUNIT_COMPOSER_INSTALL') && !\defined('PHPUNIT_TESTSUITE')) {
-            $composerAutoload = \var_export(PHPUNIT_COMPOSER_INSTALL, true);
+        if (defined('PHPUNIT_COMPOSER_INSTALL') && !defined('PHPUNIT_TESTSUITE')) {
+            $composerAutoload = var_export(PHPUNIT_COMPOSER_INSTALL, true);
         }
 
         $phar = '\'\'';
 
-        if (\defined('__PHPUNIT_PHAR__')) {
-            $phar = \var_export(__PHPUNIT_PHAR__, true);
+        if (defined('__PHPUNIT_PHAR__')) {
+            $phar = var_export(__PHPUNIT_PHAR__, true);
         }
 
         $globals = '';
 
         if (!empty($GLOBALS['__PHPUNIT_BOOTSTRAP'])) {
-            $globals = '$GLOBALS[\'__PHPUNIT_BOOTSTRAP\'] = ' . \var_export(
+            $globals = '$GLOBALS[\'__PHPUNIT_BOOTSTRAP\'] = ' . var_export(
                 $GLOBALS['__PHPUNIT_BOOTSTRAP'],
-                    true
+                true
             ) . ";\n";
         }
 
@@ -549,21 +589,21 @@ class PhptTestCase implements Test, SelfDescribing
             ]
         );
 
-        \file_put_contents($files['job'], $job);
+        file_put_contents($files['job'], $job);
         $job = $template->render();
     }
 
     private function cleanupForCoverage(): array
     {
         $files    = $this->getCoverageFiles();
-        $coverage = @\unserialize(\file_get_contents($files['coverage']));
+        $coverage = @unserialize(file_get_contents($files['coverage']));
 
         if ($coverage === false) {
             $coverage = [];
         }
 
         foreach ($files as $file) {
-            @\unlink($file);
+            @unlink($file);
         }
 
         return $coverage;
@@ -574,7 +614,7 @@ class PhptTestCase implements Test, SelfDescribing
         $settings = [];
 
         foreach ($ini as $key => $value) {
-            if (\is_array($value)) {
+            if (is_array($value)) {
                 foreach ($value as $val) {
                     $settings[] = $key . '=' . $val;
                 }

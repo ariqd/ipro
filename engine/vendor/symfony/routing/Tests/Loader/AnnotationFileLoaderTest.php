@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Routing\Tests\Loader;
 
+use InvalidArgumentException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Loader\AnnotationFileLoader;
@@ -43,7 +44,7 @@ class AnnotationFileLoaderTest extends AbstractAnnotationLoaderTest
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Did you forgot to add the "<?php" start tag at the beginning of the file?
      */
     public function testLoadFileWithoutStartTag()
@@ -70,6 +71,14 @@ class AnnotationFileLoaderTest extends AbstractAnnotationLoaderTest
         $this->reader->expects($this->never())->method('getMethodAnnotations');
 
         $this->loader->load(__DIR__.'/../Fixtures/OtherAnnotatedClasses/AnonymousClassInTrait.php');
+    }
+
+    public function testLoadAbstractClass()
+    {
+        $this->reader->expects($this->never())->method('getClassAnnotation');
+        $this->reader->expects($this->never())->method('getMethodAnnotations');
+
+        $this->loader->load(__DIR__.'/../Fixtures/AnnotatedClasses/AbstractClass.php');
     }
 
     public function testSupports()

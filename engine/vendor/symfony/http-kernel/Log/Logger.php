@@ -11,6 +11,13 @@
 
 namespace Symfony\Component\HttpKernel\Log;
 
+use DateTime;
+use DateTimeInterface;
+use function get_class;
+use function gettype;
+use function is_object;
+use function is_resource;
+use const PHP_EOL;
 use Psr\Log\AbstractLogger;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LogLevel;
@@ -40,7 +47,7 @@ class Logger extends AbstractLogger
     public function __construct(string $minLevel = null, $output = 'php://stderr', callable $formatter = null)
     {
         if (null === $minLevel) {
-            $minLevel = LogLevel::WARNING;
+            $minLevel = 'php://stdout' === $output || 'php://stderr' === $output ? LogLevel::CRITICAL : LogLevel::WARNING;
 
             if (isset($_ENV['SHELL_VERBOSITY']) || isset($_SERVER['SHELL_VERBOSITY'])) {
                 switch ((int) (isset($_ENV['SHELL_VERBOSITY']) ? $_ENV['SHELL_VERBOSITY'] : $_SERVER['SHELL_VERBOSITY'])) {
@@ -58,7 +65,7 @@ class Logger extends AbstractLogger
 
         $this->minLevelIndex = self::$levels[$minLevel];
         $this->formatter = $formatter ?: [$this, 'format'];
-        if (false === $this->handle = \is_resource($output) ? $output : @fopen($output, 'a')) {
+        if (false === $this->handle = is_resource($output) ? $output : @fopen($output, 'a')) {
             throw new InvalidArgumentException(sprintf('Unable to open "%s".', $output));
         }
     }
@@ -85,20 +92,20 @@ class Logger extends AbstractLogger
         if (false !== strpos($message, '{')) {
             $replacements = [];
             foreach ($context as $key => $val) {
-                if (null === $val || is_scalar($val) || (\is_object($val) && method_exists($val, '__toString'))) {
+                if (null === $val || is_scalar($val) || (is_object($val) && method_exists($val, '__toString'))) {
                     $replacements["{{$key}}"] = $val;
-                } elseif ($val instanceof \DateTimeInterface) {
-                    $replacements["{{$key}}"] = $val->format(\DateTime::RFC3339);
-                } elseif (\is_object($val)) {
-                    $replacements["{{$key}}"] = '[object '.\get_class($val).']';
+                } elseif ($val instanceof DateTimeInterface) {
+                    $replacements["{{$key}}"] = $val->format(DateTime::RFC3339);
+                } elseif (is_object($val)) {
+                    $replacements["{{$key}}"] = '[object '. get_class($val).']';
                 } else {
-                    $replacements["{{$key}}"] = '['.\gettype($val).']';
+                    $replacements["{{$key}}"] = '['. gettype($val).']';
                 }
             }
 
             $message = strtr($message, $replacements);
         }
 
-        return sprintf('%s [%s] %s', date(\DateTime::RFC3339), $level, $message).\PHP_EOL;
+        return sprintf('%s [%s] %s', date(DateTime::RFC3339), $level, $message). PHP_EOL;
     }
 }

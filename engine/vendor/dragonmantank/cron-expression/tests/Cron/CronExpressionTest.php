@@ -5,6 +5,7 @@ namespace Cron\Tests;
 use Cron\CronExpression;
 use Cron\MonthField;
 use DateTime;
+use DateTimeImmutable;
 use DateTimeZone;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -47,7 +48,7 @@ class CronExpressionTest extends TestCase
      * @covers \Cron\CronExpression::__construct
      * @covers \Cron\CronExpression::getExpression
      * @covers \Cron\CronExpression::__toString
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Invalid CRON field value A at position 0
      */
     public function testParsesCronScheduleThrowsAnException()
@@ -228,6 +229,7 @@ class CronExpressionTest extends TestCase
         $this->assertTrue($cron->isDue('now'));
         $this->assertTrue($cron->isDue(new DateTime('now')));
         $this->assertTrue($cron->isDue(date('Y-m-d H:i')));
+        $this->assertTrue($cron->isDue(new DateTimeImmutable('now')));
     }
 
     /**
@@ -285,9 +287,9 @@ class CronExpressionTest extends TestCase
     {
         $cron      = CronExpression::factory('0 15 * * 3'); //Wednesday at 15:00
         $date      = '2014-01-01 15:00'; //Wednesday
-        $utc       = new \DateTimeZone('UTC');
-        $amsterdam = new \DateTimeZone('Europe/Amsterdam');
-        $tokyo     = new \DateTimeZone('Asia/Tokyo');
+        $utc       = new DateTimeZone('UTC');
+        $amsterdam = new DateTimeZone('Europe/Amsterdam');
+        $tokyo     = new DateTimeZone('Asia/Tokyo');
         $this->assertTrue($cron->isDue(new DateTime($date, $utc), 'UTC'));
         $this->assertFalse($cron->isDue(new DateTime($date, $amsterdam), 'UTC'));
         $this->assertFalse($cron->isDue(new DateTime($date, $tokyo), 'UTC'));
@@ -306,21 +308,21 @@ class CronExpressionTest extends TestCase
     {
         $cron = CronExpression::factory("0 7 * * *");
         $tzCron = "America/New_York";
-        $tzServer = new \DateTimeZone("Europe/London");
+        $tzServer = new DateTimeZone("Europe/London");
 
-        $dtCurrent = \DateTime::createFromFormat("!Y-m-d H:i:s", "2017-10-17 10:00:00", $tzServer);
+        $dtCurrent = DateTime::createFromFormat("!Y-m-d H:i:s", "2017-10-17 10:00:00", $tzServer);
         $dtPrev = $cron->getPreviousRunDate($dtCurrent, 0, true, $tzCron);
         $this->assertEquals('1508151600 : 2017-10-16T07:00:00-04:00 : America/New_York', $dtPrev->format("U \: c \: e"));
 
-        $dtCurrent = \DateTimeImmutable::createFromFormat("!Y-m-d H:i:s", "2017-10-17 10:00:00", $tzServer);
+        $dtCurrent = DateTimeImmutable::createFromFormat("!Y-m-d H:i:s", "2017-10-17 10:00:00", $tzServer);
         $dtPrev = $cron->getPreviousRunDate($dtCurrent, 0, true, $tzCron);
         $this->assertEquals('1508151600 : 2017-10-16T07:00:00-04:00 : America/New_York', $dtPrev->format("U \: c \: e"));
 
-        $dtCurrent = \DateTimeImmutable::createFromFormat("!Y-m-d H:i:s", "2017-10-17 10:00:00", $tzServer);
+        $dtCurrent = DateTimeImmutable::createFromFormat("!Y-m-d H:i:s", "2017-10-17 10:00:00", $tzServer);
         $dtPrev = $cron->getPreviousRunDate($dtCurrent->format("c"), 0, true, $tzCron);
         $this->assertEquals('1508151600 : 2017-10-16T07:00:00-04:00 : America/New_York', $dtPrev->format("U \: c \: e"));
 
-        $dtCurrent = \DateTimeImmutable::createFromFormat("!Y-m-d H:i:s", "2017-10-17 10:00:00", $tzServer);
+        $dtCurrent = DateTimeImmutable::createFromFormat("!Y-m-d H:i:s", "2017-10-17 10:00:00", $tzServer);
         $dtPrev = $cron->getPreviousRunDate($dtCurrent->format("\@U"), 0, true, $tzCron);
         $this->assertEquals('1508151600 : 2017-10-16T07:00:00-04:00 : America/New_York', $dtPrev->format("U \: c \: e"));
 
@@ -410,6 +412,18 @@ class CronExpressionTest extends TestCase
     /**
      * @covers \Cron\CronExpression::getRunDate
      */
+    public function testGetRunDateHandlesDifferentDates()
+    {
+        $cron = CronExpression::factory('@weekly');
+        $date = new DateTime("2019-03-10 00:00:00");
+        $this->assertEquals($date, $cron->getNextRunDate("2019-03-03 08:00:00"));
+        $this->assertEquals($date, $cron->getNextRunDate(new DateTime("2019-03-03 08:00:00")));
+        $this->assertEquals($date, $cron->getNextRunDate(new DateTimeImmutable("2019-03-03 08:00:00")));
+    }
+
+    /**
+     * @covers \Cron\CronExpression::getRunDate
+     */
     public function testSkipsCurrentDateByDefault()
     {
         $cron = CronExpression::factory('* * * * *');
@@ -473,7 +487,7 @@ class CronExpressionTest extends TestCase
      */
     public function testKeepOriginalTime()
     {
-        $now = new \DateTime;
+        $now = new DateTime;
         $strNow = $now->format(DateTime::ISO8601);
         $cron = CronExpression::factory('0 0 * * *');
         $cron->getPreviousRunDate($now);
@@ -556,5 +570,17 @@ class CronExpressionTest extends TestCase
 
         $nextRunDate = $e->getNextRunDate(new DateTime('2014-05-07 00:00:00'));
         $this->assertSame('2015-04-01 00:00:00', $nextRunDate->format('Y-m-d H:i:s'));
+    }
+
+    /**
+     * When there is an issue with a field, we should report the human readable position
+     *
+     * @see https://github.com/dragonmantank/cron-expression/issues/29
+     */
+    public function testFieldPositionIsHumanAdjusted()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("6 is not a valid position");
+        $e = CronExpression::factory('0 * * * * ? *');
     }
 }

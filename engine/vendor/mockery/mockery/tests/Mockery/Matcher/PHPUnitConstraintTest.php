@@ -19,11 +19,11 @@
  * @license    http://github.com/padraic/mockery/blob/master/LICENSE New BSD License
  */
 
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Mockery\Matcher\PHPUnitConstraint;
-use PHPUnit\Framework\TestCase;
 
-class PHPUnitConstraintTest extends TestCase
+class PHPUnitConstraintTest extends MockeryTestCase
 {
     /** @var  PHPUnitConstraint */
     protected $matcher;
@@ -32,7 +32,7 @@ class PHPUnitConstraintTest extends TestCase
     /** @var  MockInterface */
     protected $constraint;
 
-    public function setUp()
+    public function mockeryTestSetUp()
     {
         /*
          * Revise by PHPUnit version
@@ -45,7 +45,7 @@ class PHPUnitConstraintTest extends TestCase
             $this->frameworkConstraint = '\PHPUnit_Framework_Constraint';
         }
 
-        $this->constraint = \Mockery::mock($this->frameworkConstraint);
+        $this->constraint = Mockery::mock($this->frameworkConstraint);
         $this->matcher = new PHPUnitConstraint($this->constraint);
         $this->rethrowingMatcher = new PHPUnitConstraint($this->constraint, true);
     }

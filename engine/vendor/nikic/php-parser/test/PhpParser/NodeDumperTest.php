@@ -2,7 +2,9 @@
 
 namespace PhpParser;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class NodeDumperTest extends TestCase
 {
@@ -99,9 +101,9 @@ OUT;
     }
 
     public function testError() {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Can only dump nodes and arrays.');
         $dumper = new NodeDumper;
-        $dumper->dump(new \stdClass);
+        $dumper->dump(new stdClass);
     }
 }

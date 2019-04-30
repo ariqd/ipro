@@ -20,11 +20,14 @@
 
 namespace Mockery\Generator;
 
+use Mockery;
+use ReflectionMethod;
+
 class Method
 {
     private $method;
 
-    public function __construct(\ReflectionMethod $method)
+    public function __construct(ReflectionMethod $method)
     {
         $this->method = $method;
     }
@@ -44,16 +47,13 @@ class Method
     public function getReturnType()
     {
         if (defined('HHVM_VERSION') && method_exists($this->method, 'getReturnTypeText') && $this->method->hasReturnType()) {
-            // Available in HHVM
-            $returnType = $this->method->getReturnTypeText();
-
-            // Remove tuple, ImmVector<>, ImmSet<>, ImmMap<>, array<>, anything with <>, void, mixed which cause eval() errors
-            if (preg_match('/(\w+<.*>)|(\(.+\))|(HH\\\\(void|mixed|this))/', $returnType)) {
-                return '';
-            }
-
-            // return directly without going through php logic.
-            return $returnType;
+            // Strip all return type for hhvm.
+            // eval() errors on hhvm return type include but not limited to
+            // tuple, ImmVector<>, ImmSet<>, ImmMap<>, array<>,
+            // anything with <>, void, mixed, this, and type-constant.
+            // For type-constant Can see https://docs.hhvm.com/hack/type-constants/introduction
+            // for more details.
+            return '';
         }
 
         if (version_compare(PHP_VERSION, '7.0.0-dev') >= 0 && $this->method->hasReturnType()) {
@@ -61,7 +61,7 @@ class Method
 
             if ('self' === $returnType) {
                 $returnType = "\\".$this->method->getDeclaringClass()->getName();
-            } elseif (!\Mockery::isBuiltInType($returnType)) {
+            } elseif (!Mockery::isBuiltInType($returnType)) {
                 $returnType = '\\'.$returnType;
             }
 

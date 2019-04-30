@@ -3,6 +3,8 @@
 namespace Illuminate\Foundation\Testing;
 
 use Closure;
+use Illuminate\Http\Response;
+use Illuminate\Session\Store;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
@@ -10,11 +12,12 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Traits\Macroable;
 use PHPUnit\Framework\Assert as PHPUnit;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Foundation\Testing\Constraints\SeeInOrder;
 
 /**
- * @mixin \Illuminate\Http\Response
+ * @mixin Response
  */
 class TestResponse
 {
@@ -25,7 +28,7 @@ class TestResponse
     /**
      * The response to delegate to.
      *
-     * @var \Illuminate\Http\Response
+     * @var Response
      */
     public $baseResponse;
 
@@ -39,7 +42,7 @@ class TestResponse
     /**
      * Create a new test response instance.
      *
-     * @param  \Illuminate\Http\Response  $response
+     * @param  Response  $response
      * @return void
      */
     public function __construct($response)
@@ -50,7 +53,7 @@ class TestResponse
     /**
      * Create a new TestResponse from another response.
      *
-     * @param  \Illuminate\Http\Response  $response
+     * @param  Response  $response
      * @return static
      */
     public static function fromBaseResponse($response)
@@ -323,7 +326,7 @@ class TestResponse
      * Get the given cookie from the response.
      *
      * @param  string  $cookieName
-     * @return \Symfony\Component\HttpFoundation\Cookie|null
+     * @return Cookie|null
      */
     protected function getCookie($cookieName)
     {
@@ -638,13 +641,22 @@ class TestResponse
      */
     public function assertJsonValidationErrors($keys)
     {
+        $keys = Arr::wrap($keys);
+
+        PHPUnit::assertNotEmpty($keys, 'No keys were provided.');
+
         $errors = $this->json()['errors'] ?? [];
 
-        foreach (Arr::wrap($keys) as $key) {
+        $errorMessage = $errors
+                ? 'Response has the following JSON validation errors:'.
+                        PHP_EOL.PHP_EOL.json_encode($errors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE).PHP_EOL
+                : 'Response does not have JSON validation errors.';
+
+        foreach ($keys as $key) {
             PHPUnit::assertArrayHasKey(
                 $key,
                 $errors,
-                "Failed to find a validation error in the response for key: '{$key}'"
+                "Failed to find a validation error in the response for key: '{$key}'".PHP_EOL.PHP_EOL.$errorMessage
             );
         }
 
@@ -986,7 +998,7 @@ class TestResponse
     /**
      * Get the current session store.
      *
-     * @return \Illuminate\Session\Store
+     * @return Store
      */
     protected function session()
     {

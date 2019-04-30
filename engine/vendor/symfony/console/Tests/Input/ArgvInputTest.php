@@ -12,6 +12,7 @@
 namespace Symfony\Component\Console\Tests\Input;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionObject;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -23,7 +24,7 @@ class ArgvInputTest extends TestCase
     {
         $_SERVER['argv'] = ['cli.php', 'foo'];
         $input = new ArgvInput();
-        $r = new \ReflectionObject($input);
+        $r = new ReflectionObject($input);
         $p = $r->getProperty('tokens');
         $p->setAccessible(true);
 
@@ -312,6 +313,14 @@ class ArgvInputTest extends TestCase
 
         $input = new ArgvInput(['cli.php', '-fbbar', 'foo']);
         $this->assertEquals('foo', $input->getFirstArgument(), '->getFirstArgument() returns the first argument from the raw input');
+
+        $input = new ArgvInput(['cli.php', '--foo', 'fooval', 'bar']);
+        $input->bind(new InputDefinition([new InputOption('foo', 'f', InputOption::VALUE_OPTIONAL), new InputArgument('arg')]));
+        $this->assertSame('bar', $input->getFirstArgument());
+
+        $input = new ArgvInput(['cli.php', '-bf', 'fooval', 'argval']);
+        $input->bind(new InputDefinition([new InputOption('bar', 'b', InputOption::VALUE_NONE), new InputOption('foo', 'f', InputOption::VALUE_OPTIONAL), new InputArgument('arg')]));
+        $this->assertSame('argval', $input->getFirstArgument());
     }
 
     public function testHasParameterOption()

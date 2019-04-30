@@ -26,21 +26,31 @@ class Mockery_MockTest extends MockeryTestCase
 {
     public function testAnonymousMockWorksWithNotAllowingMockingOfNonExistentMethods()
     {
-        \Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
         $m = mock();
         $m->shouldReceive("test123")->andReturn(true);
         assertThat($m->test123(), equalTo(true));
-        \Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
+        Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
     }
 
     public function testMockWithNotAllowingMockingOfNonExistentMethodsCanBeGivenAdditionalMethodsToMockEvenIfTheyDontExistOnClass()
     {
-        \Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
         $m = mock('ExampleClassForTestingNonExistentMethod');
         $m->shouldAllowMockingMethod('testSomeNonExistentMethod');
         $m->shouldReceive("testSomeNonExistentMethod")->andReturn(true);
         assertThat($m->testSomeNonExistentMethod(), equalTo(true));
-        \Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
+        Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
+    }
+
+    public function testProtectedMethodMockWithNotAllowingMockingOfNonExistentMethodsWhenShouldAllowMockingProtectedMethodsIsCalled()
+    {
+        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+        $m = mock('ClassWithProtectedMethod');
+        $m->shouldAllowMockingProtectedMethods();
+        $m->shouldReceive('foo')->andReturn(true);
+        assertThat($m->foo(), equalTo(true));
+        Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
     }
 
     public function testShouldAllowMockingMethodReturnsMockInstance()
@@ -82,23 +92,19 @@ class Mockery_MockTest extends MockeryTestCase
         $this->assertNull($mock->nonExistingMethod());
     }
 
-    /**
-     * @expectedException Mockery\Exception
-     */
     public function testShouldIgnoreMissingDisallowMockingNonExistentMethodsUsingGlobalConfiguration()
     {
         Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
         $mock = mock('ClassWithMethods')->shouldIgnoreMissing();
+        $this->expectException(\Mockery\Exception::class);
         $mock->shouldReceive('nonExistentMethod');
     }
 
-    /**
-     * @expectedException BadMethodCallException
-     */
     public function testShouldIgnoreMissingCallingNonExistentMethodsUsingGlobalConfiguration()
     {
         Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
         $mock = mock('ClassWithMethods')->shouldIgnoreMissing();
+        $this->expectException(BadMethodCallException::class);
         $mock->nonExistentMethod();
     }
 
@@ -147,11 +153,9 @@ class Mockery_MockTest extends MockeryTestCase
         $mock->shouldReceive("");
     }
 
-    /**
-     * @expectedException Mockery\Exception
-     */
     public function testShouldThrowExceptionWithInvalidClassName()
     {
+        $this->expectException(\Mockery\Exception::class);
         mock('ClassName.CannotContainDot');
     }
 
@@ -215,5 +219,13 @@ class ClassWithMethods
     public function bar()
     {
         return 'bar';
+    }
+}
+
+class ClassWithProtectedMethod
+{
+    protected function foo()
+    {
+        return 'foo';
     }
 }

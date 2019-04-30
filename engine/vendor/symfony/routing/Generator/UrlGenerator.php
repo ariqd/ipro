@@ -11,6 +11,9 @@
 
 namespace Symfony\Component\Routing\Generator;
 
+use function array_key_exists;
+use function count;
+use function in_array;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Routing\Exception\InvalidParameterException;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
@@ -157,8 +160,8 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
         foreach ($tokens as $token) {
             if ('variable' === $token[0]) {
                 if (!$optional || !array_key_exists($token[3], $defaults) || null !== $mergedParams[$token[3]] && (string) $mergedParams[$token[3]] !== (string) $defaults[$token[3]]) {
-                    // check requirement
-                    if (null !== $this->strictRequirements && !preg_match('#^'.$token[2].'$#'.(empty($token[4]) ? '' : 'u'), $mergedParams[$token[3]])) {
+                    // check requirement (while ignoring look-around patterns)
+                    if (null !== $this->strictRequirements && !preg_match('#^'.preg_replace('/\(\?(?:=|<=|!|<!)((?:[^()\\\\]+|\\\\.|\((?1)\))*)\)/', '', $token[2]).'$#'.(empty($token[4]) ? '' : 'u'), $mergedParams[$token[3]])) {
                         if ($this->strictRequirements) {
                             throw new InvalidParameterException(strtr($message, ['{parameter}' => $token[3], '{route}' => $name, '{expected}' => $token[2], '{given}' => $mergedParams[$token[3]]]));
                         }
@@ -202,7 +205,7 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
         $scheme = $this->context->getScheme();
 
         if ($requiredSchemes) {
-            if (!\in_array($scheme, $requiredSchemes, true)) {
+            if (!in_array($scheme, $requiredSchemes, true)) {
                 $referenceType = self::ABSOLUTE_URL;
                 $scheme = current($requiredSchemes);
             }
@@ -212,7 +215,8 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
             $routeHost = '';
             foreach ($hostTokens as $token) {
                 if ('variable' === $token[0]) {
-                    if (null !== $this->strictRequirements && !preg_match('#^'.$token[2].'$#i'.(empty($token[4]) ? '' : 'u'), $mergedParams[$token[3]])) {
+                    // check requirement (while ignoring look-around patterns)
+                    if (null !== $this->strictRequirements && !preg_match('#^'.preg_replace('/\(\?(?:=|<=|!|<!)((?:[^()\\\\]+|\\\\.|\((?1)\))*)\)/', '', $token[2]).'$#i'.(empty($token[4]) ? '' : 'u'), $mergedParams[$token[3]])) {
                         if ($this->strictRequirements) {
                             throw new InvalidParameterException(strtr($message, ['{parameter}' => $token[3], '{route}' => $name, '{expected}' => $token[2], '{given}' => $mergedParams[$token[3]]]));
                         }
@@ -322,7 +326,7 @@ class UrlGenerator implements UrlGeneratorInterface, ConfigurableRequirementsInt
         }
 
         $targetDirs[] = $targetFile;
-        $path = str_repeat('../', \count($sourceDirs)).implode('/', $targetDirs);
+        $path = str_repeat('../', count($sourceDirs)).implode('/', $targetDirs);
 
         // A reference to the same base directory or an empty subdirectory must be prefixed with "./".
         // This also applies to a segment with a colon character (e.g., "file:colon") that cannot be used

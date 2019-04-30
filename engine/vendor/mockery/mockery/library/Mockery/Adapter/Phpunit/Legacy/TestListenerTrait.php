@@ -20,7 +20,7 @@
 
 namespace Mockery\Adapter\Phpunit\Legacy;
 
-if (class_exists('PHPUnit_Framework_TestCase') && ! class_exists('PHPUnit\Framework\TestCase')) {
+if (class_exists('PHPUnit_Framework_TestCase') && ! class_exists('PHPUnit\Util\Blacklist')) {
     class_alias('PHPUnit_Framework_ExpectationFailedException', 'PHPUnit\Framework\ExpectationFailedException');
     class_alias('PHPUnit_Framework_Test', 'PHPUnit\Framework\Test');
     class_alias('PHPUnit_Framework_TestCase', 'PHPUnit\Framework\TestCase');
@@ -28,11 +28,15 @@ if (class_exists('PHPUnit_Framework_TestCase') && ! class_exists('PHPUnit\Framew
     class_alias('PHPUnit_Runner_BaseTestRunner', 'PHPUnit\Runner\BaseTestRunner');
 }
 
+use LogicException;
+use Mockery;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\Test;
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestResult;
 use PHPUnit\Util\Blacklist;
 use PHPUnit\Runner\BaseTestRunner;
+use function sprintf;
 
 class TestListenerTrait
 {
@@ -62,20 +66,20 @@ class TestListenerTrait
         try {
             // The self() call is used as a sentinel. Anything that throws if
             // the container is closed already will do.
-            \Mockery::self();
-        } catch (\LogicException $_) {
+            Mockery::self();
+        } catch (LogicException $_) {
             return;
         }
 
         $e = new ExpectationFailedException(
-            \sprintf(
+            sprintf(
                 "Mockery's expectations have not been verified. Make sure that \Mockery::close() is called at the end of the test. Consider using %s\MockeryPHPUnitIntegration or extending %s\MockeryTestCase.",
                 __NAMESPACE__,
                 __NAMESPACE__
             )
         );
 
-        /** @var \PHPUnit\Framework\TestResult $result */
+        /** @var TestResult $result */
         $result = $test->getTestResultObject();
 
         if ($result !== null) {
@@ -85,6 +89,6 @@ class TestListenerTrait
 
     public function startTestSuite()
     {
-        Blacklist::$blacklistedClassNames[\Mockery::class] = 1;
+        Blacklist::$blacklistedClassNames[Mockery::class] = 1;
     }
 }

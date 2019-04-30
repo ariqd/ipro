@@ -11,15 +11,15 @@ class TaggedCache extends Repository
     /**
      * The tag set instance.
      *
-     * @var \Illuminate\Cache\TagSet
+     * @var TagSet
      */
     protected $tags;
 
     /**
      * Create a new tagged cache instance.
      *
-     * @param  \Illuminate\Contracts\Cache\Store  $store
-     * @param  \Illuminate\Cache\TagSet  $tags
+     * @param Store $store
+     * @param TagSet $tags
      * @return void
      */
     public function __construct(Store $store, TagSet $tags)
@@ -93,5 +93,15 @@ class TaggedCache extends Repository
     protected function event($event)
     {
         parent::event($event->setTags($this->tags->getNames()));
+    }
+
+    /**
+     * Get the tag set instance.
+     *
+     * @return TagSet
+     */
+    public function getTags()
+    {
+        return $this->tags;
     }
 }

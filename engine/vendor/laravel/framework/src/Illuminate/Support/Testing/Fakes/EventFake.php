@@ -4,6 +4,7 @@ namespace Illuminate\Support\Testing\Fakes;
 
 use Closure;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use PHPUnit\Framework\Assert as PHPUnit;
 use Illuminate\Contracts\Events\Dispatcher;
 
@@ -12,7 +13,7 @@ class EventFake implements Dispatcher
     /**
      * The original event dispatcher.
      *
-     * @var \Illuminate\Contracts\Events\Dispatcher
+     * @var Dispatcher
      */
     protected $dispatcher;
 
@@ -33,7 +34,7 @@ class EventFake implements Dispatcher
     /**
      * Create a new event fake instance.
      *
-     * @param  \Illuminate\Contracts\Events\Dispatcher  $dispatcher
+     * @param Dispatcher $dispatcher
      * @param  array|string  $eventsToFake
      * @return void
      */
@@ -98,7 +99,7 @@ class EventFake implements Dispatcher
      *
      * @param  string  $event
      * @param  callable|null  $callback
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function dispatched($event, $callback = null)
     {
@@ -211,7 +212,7 @@ class EventFake implements Dispatcher
         if ($this->shouldFakeEvent($name, $payload)) {
             $this->events[$name][] = func_get_args();
         } else {
-            $this->dispatcher->dispatch($event, $payload, $halt);
+            return $this->dispatcher->dispatch($event, $payload, $halt);
         }
     }
 

@@ -11,6 +11,9 @@
 
 namespace Symfony\Component\HttpFoundation;
 
+use function array_key_exists;
+use InvalidArgumentException;
+
 /**
  * RedirectResponse represents an HTTP response doing a redirect.
  *
@@ -28,7 +31,7 @@ class RedirectResponse extends Response
      * @param int    $status  The status code (302 by default)
      * @param array  $headers The headers (Location is always set to the given URL)
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      *
      * @see http://tools.ietf.org/html/rfc2616#section-10.3
      */
@@ -39,7 +42,7 @@ class RedirectResponse extends Response
         $this->setTargetUrl($url);
 
         if (!$this->isRedirect()) {
-            throw new \InvalidArgumentException(sprintf('The HTTP status code is not a redirect ("%s" given).', $status));
+            throw new InvalidArgumentException(sprintf('The HTTP status code is not a redirect ("%s" given).', $status));
         }
 
         if (301 == $status && !array_key_exists('cache-control', $headers)) {
@@ -78,12 +81,12 @@ class RedirectResponse extends Response
      *
      * @return $this
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setTargetUrl($url)
     {
         if (empty($url)) {
-            throw new \InvalidArgumentException('Cannot redirect to an empty URL.');
+            throw new InvalidArgumentException('Cannot redirect to an empty URL.');
         }
 
         $this->targetUrl = $url;

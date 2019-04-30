@@ -11,6 +11,8 @@
 
 namespace Symfony\Component\Routing;
 
+use function array_key_exists;
+use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Config\ConfigCacheFactory;
 use Symfony\Component\Config\ConfigCacheFactoryInterface;
@@ -120,7 +122,7 @@ class Router implements RouterInterface, RequestMatcherInterface
      *
      * @param array $options An array of options
      *
-     * @throws \InvalidArgumentException When unsupported option is provided
+     * @throws InvalidArgumentException When unsupported option is provided
      */
     public function setOptions(array $options)
     {
@@ -150,7 +152,7 @@ class Router implements RouterInterface, RequestMatcherInterface
         }
 
         if ($invalid) {
-            throw new \InvalidArgumentException(sprintf('The Router does not support the following options: "%s".', implode('", "', $invalid)));
+            throw new InvalidArgumentException(sprintf('The Router does not support the following options: "%s".', implode('", "', $invalid)));
         }
     }
 
@@ -160,12 +162,12 @@ class Router implements RouterInterface, RequestMatcherInterface
      * @param string $key   The key
      * @param mixed  $value The value
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function setOption($key, $value)
     {
         if (!array_key_exists($key, $this->options)) {
-            throw new \InvalidArgumentException(sprintf('The Router does not support the "%s" option.', $key));
+            throw new InvalidArgumentException(sprintf('The Router does not support the "%s" option.', $key));
         }
 
         $this->options[$key] = $value;
@@ -178,12 +180,12 @@ class Router implements RouterInterface, RequestMatcherInterface
      *
      * @return mixed The value
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function getOption($key)
     {
         if (!array_key_exists($key, $this->options)) {
-            throw new \InvalidArgumentException(sprintf('The Router does not support the "%s" option.', $key));
+            throw new InvalidArgumentException(sprintf('The Router does not support the "%s" option.', $key));
         }
 
         return $this->options[$key];

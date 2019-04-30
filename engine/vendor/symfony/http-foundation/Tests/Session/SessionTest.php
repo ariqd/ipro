@@ -11,11 +11,15 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\Session;
 
+use function count;
+use Exception;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
 /**
  * SessionTest.
@@ -27,12 +31,12 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 class SessionTest extends TestCase
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface
+     * @var SessionStorageInterface
      */
     protected $storage;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @var SessionInterface
      */
     protected $session;
 
@@ -78,14 +82,14 @@ class SessionTest extends TestCase
         $e = null;
         try {
             $this->session->setId($id);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
 
         $this->assertNull($e);
 
         try {
             $this->session->setId('different');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
 
         $this->assertInstanceOf('\LogicException', $e);
@@ -227,7 +231,7 @@ class SessionTest extends TestCase
             ++$i;
         }
 
-        $this->assertEquals(\count($attributes), $i);
+        $this->assertEquals(count($attributes), $i);
     }
 
     public function testGetCount()
@@ -259,5 +263,15 @@ class SessionTest extends TestCase
 
         $flash->get('hello');
         $this->assertTrue($this->session->isEmpty());
+    }
+
+    public function testSaveIfNotStarted()
+    {
+        $storage = $this->getMockBuilder('Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface')->getMock();
+        $session = new Session($storage);
+
+        $storage->expects($this->once())->method('isStarted')->willReturn(false);
+        $storage->expects($this->never())->method('save');
+        $session->save();
     }
 }

@@ -13,6 +13,7 @@ namespace Symfony\Component\Translation\Tests\Loader;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Resource\FileResource;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class PoFileLoaderTest extends TestCase
@@ -23,7 +24,7 @@ class PoFileLoaderTest extends TestCase
         $resource = __DIR__.'/../fixtures/resources.po';
         $catalogue = $loader->load($resource, 'en', 'domain1');
 
-        $this->assertEquals(['foo' => 'bar'], $catalogue->all('domain1'));
+        $this->assertEquals(['foo' => 'bar', 'bar' => 'foo'], $catalogue->all('domain1'));
         $this->assertEquals('en', $catalogue->getLocale());
         $this->assertEquals([new FileResource($resource)], $catalogue->getResources());
     }
@@ -51,7 +52,7 @@ class PoFileLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException \Symfony\Component\Translation\Exception\NotFoundResourceException
+     * @expectedException NotFoundResourceException
      */
     public function testLoadNonExistingResource()
     {

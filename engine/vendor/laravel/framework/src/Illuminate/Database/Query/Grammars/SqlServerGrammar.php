@@ -2,6 +2,7 @@
 
 namespace Illuminate\Database\Query\Grammars;
 
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Query\Builder;
 
@@ -21,7 +22,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile a select query into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @return string
      */
     public function compileSelect(Builder $query)
@@ -45,7 +46,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile the "select *" portion of the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @param  array  $columns
      * @return string|null
      */
@@ -70,7 +71,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile the "from" portion of the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @param  string  $table
      * @return string
      */
@@ -92,7 +93,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile a "where date" clause.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @param  array  $where
      * @return string
      */
@@ -106,7 +107,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile a "where time" clause.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @param  array  $where
      * @return string
      */
@@ -160,7 +161,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Create a full ANSI offset clause for the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @param  array  $components
      * @return string
      */
@@ -203,7 +204,7 @@ class SqlServerGrammar extends Grammar
      * Compile a common table expression for a query.
      *
      * @param  string  $sql
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @return string
      */
     protected function compileTableExpression($sql, $query)
@@ -216,7 +217,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile the limit / offset row constraint for a query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @return string
      */
     protected function compileRowConstraint($query)
@@ -246,7 +247,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile the "limit" portions of the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @param  int  $limit
      * @return string
      */
@@ -258,7 +259,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile the "offset" portions of the query.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @param  int  $offset
      * @return string
      */
@@ -270,7 +271,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile the lock into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @param  bool|string  $value
      * @return string
      */
@@ -282,7 +283,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile an exists statement into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @return string
      */
     public function compileExists(Builder $query)
@@ -297,7 +298,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile a delete statement into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @return string
      */
     public function compileDelete(Builder $query)
@@ -314,7 +315,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile a delete statement with joins into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @param  string  $table
      * @param  string  $where
      * @return string
@@ -332,7 +333,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile a truncate table statement into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @return array
      */
     public function compileTruncate(Builder $query)
@@ -343,7 +344,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Compile an update statement into SQL.
      *
-     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param Builder $query
      * @param  array  $values
      * @return string
      */
@@ -416,16 +417,6 @@ class SqlServerGrammar extends Grammar
     }
 
     /**
-     * Determine if the grammar supports savepoints.
-     *
-     * @return bool
-     */
-    public function supportsSavepoints()
-    {
-        return true;
-    }
-
-    /**
      * Compile the SQL statement to define a savepoint.
      *
      * @param  string  $name
@@ -486,7 +477,7 @@ class SqlServerGrammar extends Grammar
     /**
      * Wrap a table in keyword identifiers.
      *
-     * @param  \Illuminate\Database\Query\Expression|string  $table
+     * @param  Expression|string  $table
      * @return string
      */
     public function wrapTable($table)

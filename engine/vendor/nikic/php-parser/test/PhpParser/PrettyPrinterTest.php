@@ -2,6 +2,9 @@
 
 namespace PhpParser;
 
+use const INF;
+use LogicException;
+use const NAN;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\DNumber;
@@ -11,8 +14,6 @@ use PhpParser\Node\Scalar\LNumber;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt;
 use PhpParser\PrettyPrinter\Standard;
-
-require_once __DIR__ . '/CodeTestAbstract.php';
 
 class PrettyPrinterTest extends CodeTestAbstract
 {
@@ -178,14 +179,14 @@ class PrettyPrinterTest extends CodeTestAbstract
             [new LNumber(-1, ['kind' => LNumber::KIND_BIN]), '-0b1'],
             [new LNumber(-1, ['kind' => LNumber::KIND_OCT]), '-01'],
             [new LNumber(-1, ['kind' => LNumber::KIND_HEX]), '-0x1'],
-            [new DNumber(\INF), '\INF'],
-            [new DNumber(-\INF), '-\INF'],
-            [new DNumber(-\NAN), '\NAN'],
+            [new DNumber(INF), '\INF'],
+            [new DNumber(-INF), '-\INF'],
+            [new DNumber(-NAN), '\NAN'],
         ];
     }
 
     public function testPrettyPrintWithError() {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Cannot pretty-print AST with Error nodes');
         $stmts = [new Stmt\Expression(
             new Expr\PropertyFetch(new Expr\Variable('a'), new Expr\Error())
@@ -195,7 +196,7 @@ class PrettyPrinterTest extends CodeTestAbstract
     }
 
     public function testPrettyPrintWithErrorInClassConstFetch() {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Cannot pretty-print AST with Error nodes');
         $stmts = [new Stmt\Expression(
             new Expr\ClassConstFetch(new Name('Foo'), new Expr\Error())
@@ -205,7 +206,7 @@ class PrettyPrinterTest extends CodeTestAbstract
     }
 
     public function testPrettyPrintEncapsedStringPart() {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Cannot directly print EncapsedStringPart');
         $expr = new Node\Scalar\EncapsedStringPart('foo');
         $prettyPrinter = new PrettyPrinter\Standard;

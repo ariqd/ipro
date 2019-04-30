@@ -9,11 +9,22 @@
  */
 namespace PHPUnit\Framework\MockObject\Invocation;
 
+use function array_map;
+use Exception;
+use function implode;
+use function is_object;
 use PHPUnit\Framework\MockObject\Generator;
 use PHPUnit\Framework\MockObject\Invocation;
+use PHPUnit\Framework\MockObject\RuntimeException;
 use PHPUnit\Framework\SelfDescribing;
+use ReflectionException;
 use ReflectionObject;
 use SebastianBergmann\Exporter\Exporter;
+use function sprintf;
+use stdClass;
+use function strpos;
+use function strtolower;
+use function substr;
 
 /**
  * Represents a static invocation.
@@ -71,6 +82,11 @@ class StaticInvocation implements Invocation, SelfDescribing
     private $isReturnTypeNullable = false;
 
     /**
+     * @var bool
+     */
+    private $proxiedCall = false;
+
+    /**
      * @param string $className
      * @param string $methodName
      * @param string $returnType
@@ -82,12 +98,12 @@ class StaticInvocation implements Invocation, SelfDescribing
         $this->methodName = $methodName;
         $this->parameters = $parameters;
 
-        if (\strtolower($methodName) === '__tostring') {
+        if (strtolower($methodName) === '__tostring') {
             $returnType = 'string';
         }
 
-        if (\strpos($returnType, '?') === 0) {
-            $returnType                 = \substr($returnType, 1);
+        if (strpos($returnType, '?') === 0) {
+            $returnType                 = substr($returnType, 1);
             $this->isReturnTypeNullable = true;
         }
 
@@ -98,7 +114,7 @@ class StaticInvocation implements Invocation, SelfDescribing
         }
 
         foreach ($this->parameters as $key => $value) {
-            if (\is_object($value)) {
+            if (is_object($value)) {
                 $this->parameters[$key] = $this->cloneObject($value);
             }
         }
@@ -130,19 +146,19 @@ class StaticInvocation implements Invocation, SelfDescribing
     }
 
     /**
-     * @throws \ReflectionException
-     * @throws \PHPUnit\Framework\MockObject\RuntimeException
+     * @throws ReflectionException
+     * @throws RuntimeException
      * @throws \PHPUnit\Framework\Exception
      *
      * @return mixed Mocked return value
      */
     public function generateReturnValue()
     {
-        if ($this->isReturnTypeNullable) {
+        if ($this->isReturnTypeNullable || $this->proxiedCall) {
             return;
         }
 
-        switch (\strtolower($this->returnType)) {
+        switch (strtolower($this->returnType)) {
             case '':
             case 'void':
                 return;
@@ -163,7 +179,7 @@ class StaticInvocation implements Invocation, SelfDescribing
                 return [];
 
             case 'object':
-                return new \stdClass;
+                return new stdClass;
 
             case 'callable':
             case 'closure':
@@ -186,22 +202,27 @@ class StaticInvocation implements Invocation, SelfDescribing
         }
     }
 
+    public function setProxiedCall(): void
+    {
+        $this->proxiedCall = true;
+    }
+
     public function toString(): string
     {
         $exporter = new Exporter;
 
-        return \sprintf(
+        return sprintf(
             '%s::%s(%s)%s',
             $this->className,
             $this->methodName,
-            \implode(
+            implode(
                 ', ',
-                \array_map(
+                array_map(
                     [$exporter, 'shortenedExport'],
                     $this->parameters
                 )
             ),
-            $this->returnType ? \sprintf(': %s', $this->returnType) : ''
+            $this->returnType ? sprintf(': %s', $this->returnType) : ''
         );
     }
 
@@ -248,7 +269,7 @@ class StaticInvocation implements Invocation, SelfDescribing
         if ($cloneable) {
             try {
                 return clone $original;
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 return $original;
             }
         } else {

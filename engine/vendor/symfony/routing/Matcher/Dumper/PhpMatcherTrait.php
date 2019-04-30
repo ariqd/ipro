@@ -11,6 +11,9 @@
 
 namespace Symfony\Component\Routing\Matcher\Dumper;
 
+use function count;
+use function in_array;
+use function strlen;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\NoConfigurationException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -41,7 +44,7 @@ trait PhpMatcherTrait
         if (!$this instanceof RedirectableUrlMatcherInterface) {
             throw new ResourceNotFoundException();
         }
-        if (!\in_array($this->context->getMethod(), ['HEAD', 'GET'], true)) {
+        if (!in_array($this->context->getMethod(), ['HEAD', 'GET'], true)) {
             // no-op
         } elseif ($allowSchemes) {
             redirect_scheme:
@@ -131,15 +134,20 @@ trait PhpMatcherTrait
                     }
 
                     $hasTrailingVar = $trimmedPathinfo !== $pathinfo && $hasTrailingVar;
+
+                    if ($hasTrailingVar && ($hasTrailingSlash || '/' !== substr($matches[count($vars)], -1)) && preg_match($regex, $this->matchHost ? $host.'.'.$trimmedPathinfo : $trimmedPathinfo, $n) && $m === (int) $n['MARK']) {
+                        if ($hasTrailingSlash) {
+                            $matches = $n;
+                        } else {
+                            $hasTrailingVar = false;
+                        }
+                    }
+
                     if ('/' !== $pathinfo && !$hasTrailingVar && $hasTrailingSlash === ($trimmedPathinfo === $pathinfo)) {
                         if ($supportsRedirections && (!$requiredMethods || isset($requiredMethods['GET']))) {
                             return $allow = $allowSchemes = [];
                         }
                         continue;
-                    }
-
-                    if ($hasTrailingSlash && $hasTrailingVar && preg_match($regex, $this->matchHost ? $host.'.'.$trimmedPathinfo : $trimmedPathinfo, $n) && $m === (int) $n['MARK']) {
-                        $matches = $n;
                     }
 
                     foreach ($vars as $i => $v) {
@@ -163,8 +171,8 @@ trait PhpMatcherTrait
                     return $ret;
                 }
 
-                $regex = substr_replace($regex, 'F', $m - $offset, 1 + \strlen($m));
-                $offset += \strlen($m);
+                $regex = substr_replace($regex, 'F', $m - $offset, 1 + strlen($m));
+                $offset += strlen($m);
             }
         }
 

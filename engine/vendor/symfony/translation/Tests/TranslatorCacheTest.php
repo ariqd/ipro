@@ -12,6 +12,9 @@
 namespace Symfony\Component\Translation\Tests;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit_Framework_MockObject_MockObject;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use Symfony\Component\Config\Resource\SelfCheckingResourceInterface;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\Loader\LoaderInterface;
@@ -39,7 +42,7 @@ class TranslatorCacheTest extends TestCase
             return;
         }
 
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->tmpDir), \RecursiveIteratorIterator::CHILD_FIRST);
+        $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($this->tmpDir), RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($iterator as $path) {
             if (preg_match('#[/\\\\]\.\.?$#', $path->__toString())) {
                 continue;
@@ -99,7 +102,7 @@ class TranslatorCacheTest extends TestCase
         $catalogue = new MessageCatalogue($locale, []);
         $catalogue->addResource(new StaleResource()); // better use a helper class than a mock, because it gets serialized in the cache and re-loaded
 
-        /** @var LoaderInterface|\PHPUnit_Framework_MockObject_MockObject $loader */
+        /** @var LoaderInterface|PHPUnit_Framework_MockObject_MockObject $loader */
         $loader = $this->getMockBuilder('Symfony\Component\Translation\Loader\LoaderInterface')->getMock();
         $loader
             ->expects($this->exactly(2))
@@ -202,7 +205,7 @@ class TranslatorCacheTest extends TestCase
          * messages provided by the loader. This must also be the case when these catalogues
          * are (internally) read from a cache.
          *
-         * Optimizations inside the translator must not change this behaviour.
+         * Optimizations inside the translator must not change this behavior.
          */
 
         /*

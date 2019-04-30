@@ -3,6 +3,9 @@
 namespace Illuminate\Auth;
 
 use Closure;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\StatefulGuard;
+use Illuminate\Foundation\Application;
 use InvalidArgumentException;
 use Illuminate\Contracts\Auth\Factory as FactoryContract;
 
@@ -13,7 +16,7 @@ class AuthManager implements FactoryContract
     /**
      * The application instance.
      *
-     * @var \Illuminate\Foundation\Application
+     * @var Application
      */
     protected $app;
 
@@ -36,14 +39,14 @@ class AuthManager implements FactoryContract
      *
      * Determines the default user for Gate, Request, and the Authenticatable contract.
      *
-     * @var \Closure
+     * @var Closure
      */
     protected $userResolver;
 
     /**
      * Create a new Auth manager instance.
      *
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param  Application  $app
      * @return void
      */
     public function __construct($app)
@@ -59,7 +62,7 @@ class AuthManager implements FactoryContract
      * Attempt to get the guard from the local cache.
      *
      * @param  string  $name
-     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     * @return Guard|StatefulGuard
      */
     public function guard($name = null)
     {
@@ -72,9 +75,9 @@ class AuthManager implements FactoryContract
      * Resolve the given guard.
      *
      * @param  string  $name
-     * @return \Illuminate\Contracts\Auth\Guard|\Illuminate\Contracts\Auth\StatefulGuard
+     * @return Guard|StatefulGuard
      *
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function resolve($name)
     {
@@ -114,7 +117,7 @@ class AuthManager implements FactoryContract
      *
      * @param  string  $name
      * @param  array  $config
-     * @return \Illuminate\Auth\SessionGuard
+     * @return SessionGuard
      */
     public function createSessionDriver($name, $config)
     {
@@ -145,7 +148,7 @@ class AuthManager implements FactoryContract
      *
      * @param  string  $name
      * @param  array  $config
-     * @return \Illuminate\Auth\TokenGuard
+     * @return TokenGuard
      */
     public function createTokenDriver($name, $config)
     {
@@ -154,7 +157,9 @@ class AuthManager implements FactoryContract
         // user in the database or another persistence layer where users are.
         $guard = new TokenGuard(
             $this->createUserProvider($config['provider'] ?? null),
-            $this->app['request']
+            $this->app['request'],
+            $config['input_key'] ?? 'api_token',
+            $config['storage_key'] ?? 'api_token'
         );
 
         $this->app->refresh('request', $guard, 'setRequest');
@@ -232,7 +237,7 @@ class AuthManager implements FactoryContract
     /**
      * Get the user resolver callback.
      *
-     * @return \Closure
+     * @return Closure
      */
     public function userResolver()
     {
@@ -242,7 +247,7 @@ class AuthManager implements FactoryContract
     /**
      * Set the callback to be used to resolve users.
      *
-     * @param  \Closure  $userResolver
+     * @param Closure $userResolver
      * @return $this
      */
     public function resolveUsersUsing(Closure $userResolver)
@@ -256,7 +261,7 @@ class AuthManager implements FactoryContract
      * Register a custom driver creator Closure.
      *
      * @param  string  $driver
-     * @param  \Closure  $callback
+     * @param Closure $callback
      * @return $this
      */
     public function extend($driver, Closure $callback)
@@ -270,7 +275,7 @@ class AuthManager implements FactoryContract
      * Register a custom provider creator Closure.
      *
      * @param  string  $name
-     * @param  \Closure  $callback
+     * @param Closure $callback
      * @return $this
      */
     public function provider($name, Closure $callback)

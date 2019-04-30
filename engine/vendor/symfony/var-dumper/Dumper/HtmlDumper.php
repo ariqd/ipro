@@ -11,6 +11,10 @@
 
 namespace Symfony\Component\VarDumper\Dumper;
 
+use InvalidArgumentException;
+use function is_string;
+use function ord;
+use function strlen;
 use Symfony\Component\VarDumper\Cloner\Cursor;
 use Symfony\Component\VarDumper\Cloner\Data;
 
@@ -97,7 +101,7 @@ class HtmlDumper extends CliDumper
     public function setTheme(string $themeName)
     {
         if (!isset(static::$themes[$themeName])) {
-            throw new \InvalidArgumentException(sprintf('Theme "%s" does not exist in class "%s".', $themeName, static::class));
+            throw new InvalidArgumentException(sprintf('Theme "%s" does not exist in class "%s".', $themeName, static::class));
         }
 
         $this->setStyles(static::$themes[$themeName]);
@@ -522,14 +526,10 @@ return function (root, x) {
             <input type="text" class="sf-dump-search-input">
             <span class="sf-dump-search-count">0 of 0<\/span>
             <button type="button" class="sf-dump-search-input-previous" tabindex="-1">
-                <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1683 1331l-166 165q-19 19-45 19t-45-19l-531-531-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"\/>
-                <\/svg>
+                <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"\/><\/svg>
             <\/button>
             <button type="button" class="sf-dump-search-input-next" tabindex="-1">
-                <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1683 808l-742 741q-19 19-45 19t-45-19l-742-741q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"\/>
-                <\/svg>
+                <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"\/><\/svg>
             <\/button>
         ';
         root.insertBefore(search, root.firstChild);
@@ -869,10 +869,10 @@ EOHTML
             }
             $label = esc(substr($value, -$attr['ellipsis']));
             $style = str_replace(' title="', " title=\"$v\n", $style);
-            $v = sprintf('<span class=%s>%s</span>', $class, substr($v, 0, -\strlen($label)));
+            $v = sprintf('<span class=%s>%s</span>', $class, substr($v, 0, -strlen($label)));
 
             if (!empty($attr['ellipsis-tail'])) {
-                $tail = \strlen(esc(substr($value, -$attr['ellipsis'], $attr['ellipsis-tail'])));
+                $tail = strlen(esc(substr($value, -$attr['ellipsis'], $attr['ellipsis-tail'])));
                 $v .= sprintf('<span class=sf-dump-ellipsis>%s</span>%s', substr($label, 0, $tail), substr($label, $tail));
             } else {
                 $v .= $label;
@@ -895,7 +895,7 @@ EOHTML
                     $s .= '">';
                 }
 
-                $s .= isset($map[$c[$i]]) ? $map[$c[$i]] : sprintf('\x%02X', \ord($c[$i]));
+                $s .= isset($map[$c[$i]]) ? $map[$c[$i]] : sprintf('\x%02X', ord($c[$i]));
             } while (isset($c[++$i]));
 
             return $s.'</span>';
@@ -950,7 +950,7 @@ EOHTML
         $options = $this->extraDisplayOptions + $this->displayOptions;
 
         if ($fmt = $options['fileLinkFormat']) {
-            return \is_string($fmt) ? strtr($fmt, ['%f' => $file, '%l' => $line]) : $fmt->format($file, $line);
+            return is_string($fmt) ? strtr($fmt, ['%f' => $file, '%l' => $line]) : $fmt->format($file, $line);
         }
 
         return false;

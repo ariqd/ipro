@@ -11,6 +11,8 @@
 
 namespace Symfony\Component\Console\Input;
 
+use function array_key_exists;
+use function count;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Exception\RuntimeException;
 
@@ -72,7 +74,7 @@ abstract class Input implements InputInterface, StreamableInputInterface
             return !array_key_exists($argument, $givenArguments) && $definition->getArgument($argument)->isRequired();
         });
 
-        if (\count($missingArguments) > 0) {
+        if (count($missingArguments) > 0) {
             throw new RuntimeException(sprintf('Not enough arguments (missing: "%s").', implode(', ', $missingArguments)));
         }
     }

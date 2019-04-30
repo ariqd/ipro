@@ -11,7 +11,13 @@
 
 namespace Symfony\Component\VarDumper\Tests\Caster;
 
+use function defined;
+use function extension_loaded;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionGenerator;
+use ReflectionMethod;
+use ReflectionParameter;
 use Symfony\Component\VarDumper\Caster\Caster;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 use Symfony\Component\VarDumper\Tests\Fixtures\GeneratorDemo;
@@ -26,7 +32,7 @@ class ReflectionCasterTest extends TestCase
 
     public function testReflectionCaster()
     {
-        $var = new \ReflectionClass('ReflectionClass');
+        $var = new ReflectionClass('ReflectionClass');
 
         $this->assertDumpMatchesFormat(
             <<<'EOTXT'
@@ -37,7 +43,7 @@ ReflectionClass {
 %A]
   constants: array:3 [
     "IS_IMPLICIT_ABSTRACT" => 16
-    "IS_EXPLICIT_ABSTRACT" => 32
+    "IS_EXPLICIT_ABSTRACT" => %d
     "IS_FINAL" => %d
   ]
   properties: array:%d [
@@ -87,12 +93,12 @@ EOTXT
 
     public function testFromCallableClosureCaster()
     {
-        if (\defined('HHVM_VERSION_ID')) {
+        if (defined('HHVM_VERSION_ID')) {
             $this->markTestSkipped('Not for HHVM.');
         }
         $var = [
-            (new \ReflectionMethod($this, __FUNCTION__))->getClosure($this),
-            (new \ReflectionMethod(__CLASS__, 'tearDownAfterClass'))->getClosure(),
+            (new ReflectionMethod($this, __FUNCTION__))->getClosure($this),
+            (new ReflectionMethod(__CLASS__, 'tearDownAfterClass'))->getClosure(),
         ];
 
         $this->assertDumpMatchesFormat(
@@ -122,7 +128,7 @@ EOTXT
 
     public function testReflectionParameter()
     {
-        $var = new \ReflectionParameter(__NAMESPACE__.'\reflectionParameterFixture', 0);
+        $var = new ReflectionParameter(__NAMESPACE__.'\reflectionParameterFixture', 0);
 
         $this->assertDumpMatchesFormat(
             <<<'EOTXT'
@@ -140,7 +146,7 @@ EOTXT
     public function testReflectionParameterScalar()
     {
         $f = eval('return function (int $a) {};');
-        $var = new \ReflectionParameter($f, 0);
+        $var = new ReflectionParameter($f, 0);
 
         $this->assertDumpMatchesFormat(
             <<<'EOTXT'
@@ -175,7 +181,7 @@ EOTXT
 
     public function testGenerator()
     {
-        if (\extension_loaded('xdebug')) {
+        if (extension_loaded('xdebug')) {
             $this->markTestSkipped('xdebug is active');
         }
 
@@ -234,7 +240,7 @@ array:2 [
 ]
 EODUMP;
 
-        $r = new \ReflectionGenerator($generator);
+        $r = new ReflectionGenerator($generator);
         $this->assertDumpMatchesFormat($expectedDump, [$r, $r->getExecutingGenerator()]);
 
         foreach ($generator as $v) {

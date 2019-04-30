@@ -14,7 +14,7 @@ class Pipeline implements PipelineContract
     /**
      * The container implementation.
      *
-     * @var \Illuminate\Contracts\Container\Container
+     * @var Container
      */
     protected $container;
 
@@ -42,7 +42,7 @@ class Pipeline implements PipelineContract
     /**
      * Create a new class instance.
      *
-     * @param  \Illuminate\Contracts\Container\Container|null  $container
+     * @param Container|null  $container
      * @return void
      */
     public function __construct(Container $container = null)
@@ -92,7 +92,7 @@ class Pipeline implements PipelineContract
     /**
      * Run the pipeline with a final destination callback.
      *
-     * @param  \Closure  $destination
+     * @param Closure $destination
      * @return mixed
      */
     public function then(Closure $destination)
@@ -105,10 +105,22 @@ class Pipeline implements PipelineContract
     }
 
     /**
+     * Run the pipeline and return the result.
+     *
+     * @return mixed
+     */
+    public function thenReturn()
+    {
+        return $this->then(function ($passable) {
+            return $passable;
+        });
+    }
+
+    /**
      * Get the final piece of the Closure onion.
      *
-     * @param  \Closure  $destination
-     * @return \Closure
+     * @param Closure $destination
+     * @return Closure
      */
     protected function prepareDestination(Closure $destination)
     {
@@ -120,7 +132,7 @@ class Pipeline implements PipelineContract
     /**
      * Get a Closure that represents a slice of the application onion.
      *
-     * @return \Closure
+     * @return Closure
      */
     protected function carry()
     {
@@ -152,7 +164,7 @@ class Pipeline implements PipelineContract
                                 : $pipe(...$parameters);
 
                 return $response instanceof Responsable
-                            ? $response->toResponse($this->container->make(Request::class))
+                            ? $response->toResponse($this->getContainer()->make(Request::class))
                             : $response;
             };
         };
@@ -178,9 +190,9 @@ class Pipeline implements PipelineContract
     /**
      * Get the container instance.
      *
-     * @return \Illuminate\Contracts\Container\Container
+     * @return Container
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     protected function getContainer()
     {

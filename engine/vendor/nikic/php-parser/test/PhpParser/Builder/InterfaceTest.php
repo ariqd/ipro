@@ -2,10 +2,12 @@
 
 namespace PhpParser\Builder;
 
+use LogicException;
 use PhpParser\Comment;
 use PhpParser\Node;
 use PhpParser\Node\Scalar\DNumber;
 use PhpParser\Node\Stmt;
+use PhpParser\PrettyPrinter\Standard;
 use PHPUnit\Framework\TestCase;
 
 class InterfaceTest extends TestCase
@@ -18,7 +20,7 @@ class InterfaceTest extends TestCase
     }
 
     private function dump($node) {
-        $pp = new \PhpParser\PrettyPrinter\Standard;
+        $pp = new Standard;
         return $pp->prettyPrint([$node]);
     }
 
@@ -80,7 +82,7 @@ class InterfaceTest extends TestCase
     }
 
     public function testInvalidStmtError() {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Unexpected node of type "Stmt_PropertyProperty"');
         $this->builder->addStmt(new Stmt\PropertyProperty('invalid'));
     }

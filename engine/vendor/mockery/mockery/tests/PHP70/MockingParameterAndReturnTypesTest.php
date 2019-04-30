@@ -23,6 +23,8 @@ declare(strict_types=1); // Use strict types to ensure exact types are returned 
 
 namespace test\Mockery;
 
+use Generator;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class MockingParameterAndReturnTypesTest extends MockeryTestCase
@@ -80,7 +82,7 @@ class MockingParameterAndReturnTypesTest extends MockeryTestCase
         $mock = mock("test\Mockery\TestWithParameterAndReturnType");
 
         $mock->shouldReceive("returnCallable");
-        $this->assertInternalType('callable', $mock->returnCallable());
+        $this->assertTrue(is_callable($mock->returnCallable()));
     }
 
     public function testMockingClassReturnTypes()
@@ -110,14 +112,14 @@ class MockingParameterAndReturnTypesTest extends MockeryTestCase
         $this->assertSame(0.0, $mock->returnFloat());
         $this->assertFalse( $mock->returnBoolean());
         $this->assertSame([], $mock->returnArray());
-        $this->assertInternalType('callable', $mock->returnCallable());
+        $this->assertTrue(is_callable($mock->returnCallable()));
         $this->assertInstanceOf("\Generator", $mock->returnGenerator());
         $this->assertInstanceOf("test\Mockery\TestWithParameterAndReturnType", $mock->withClassReturnType());
     }
 
     public function testAutoStubbingSelf()
     {
-        $spy = \Mockery::spy("test\Mockery\TestWithParameterAndReturnType");
+        $spy = Mockery::spy("test\Mockery\TestWithParameterAndReturnType");
 
         $this->assertInstanceOf("test\Mockery\TestWithParameterAndReturnType", $spy->returnSelf());
     }
@@ -125,14 +127,14 @@ class MockingParameterAndReturnTypesTest extends MockeryTestCase
     public function testItShouldMockClassWithHintedParamsInMagicMethod()
     {
         $this->assertNotNull(
-            \Mockery::mock('test\Mockery\MagicParams')
+            Mockery::mock('test\Mockery\MagicParams')
         );
     }
 
     public function testItShouldMockClassWithHintedReturnInMagicMethod()
     {
         $this->assertNotNull(
-            \Mockery::mock('test\Mockery\MagicReturns')
+            Mockery::mock('test\Mockery\MagicReturns')
         );
     }
 }
@@ -167,7 +169,7 @@ abstract class TestWithParameterAndReturnType
 
     public function returnCallable(): callable {}
 
-    public function returnGenerator(): \Generator {}
+    public function returnGenerator(): Generator {}
 
     public function withClassReturnType(): TestWithParameterAndReturnType {}
 

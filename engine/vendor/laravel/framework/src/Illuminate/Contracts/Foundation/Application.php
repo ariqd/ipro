@@ -3,6 +3,7 @@
 namespace Illuminate\Contracts\Foundation;
 
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Support\ServiceProvider;
 
 interface Application extends Container
 {
@@ -58,9 +59,9 @@ interface Application extends Container
     /**
      * Register a service provider with the application.
      *
-     * @param  \Illuminate\Support\ServiceProvider|string  $provider
+     * @param  ServiceProvider|string  $provider
      * @param  bool   $force
-     * @return \Illuminate\Support\ServiceProvider
+     * @return ServiceProvider
      */
     public function register($provider, $force = false);
 
@@ -83,7 +84,7 @@ interface Application extends Container
     /**
      * Register a new boot listener.
      *
-     * @param  mixed  $callback
+     * @param  callable  $callback
      * @return void
      */
     public function booting($callback);
@@ -91,7 +92,7 @@ interface Application extends Container
     /**
      * Register a new "booted" listener.
      *
-     * @param  mixed  $callback
+     * @param  callable  $callback
      * @return void
      */
     public function booted($callback);

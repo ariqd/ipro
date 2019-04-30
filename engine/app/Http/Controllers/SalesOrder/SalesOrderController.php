@@ -10,6 +10,7 @@ use App\Sale;
 use App\Sale_Detail;
 use App\Stock;
 use App\Counter;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -46,10 +47,11 @@ class SalesOrderController extends Controller
         $branch_id = Auth::user()->branch_id;
         $branch = Branch::find($branch_id);
         $no_po = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
-        $input["quotation_id"] = $nopo;
+        $input["quotation_id"] = $no_po;
         $sales_order = Sale::create($input);
         $counter->counter += 1;
         $counter->save();
+
         foreach ($sales_order_details as $sales_order_detail) {
             $sales_order_detail['sales_order_id'] = $sales_order->id;
             Sale_Detail::create($sales_order_detail);

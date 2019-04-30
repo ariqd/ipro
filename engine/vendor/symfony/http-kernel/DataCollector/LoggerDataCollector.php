@@ -11,6 +11,9 @@
 
 namespace Symfony\Component\HttpKernel\DataCollector;
 
+use ErrorException;
+use Exception;
+use function in_array;
 use Symfony\Component\Debug\Exception\SilencedErrorContext;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -42,7 +45,7 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
     /**
      * {@inheritdoc}
      */
-    public function collect(Request $request, Response $response, \Exception $exception = null)
+    public function collect(Request $request, Response $response, Exception $exception = null)
     {
         $this->currentRequest = $this->requestStack && $this->requestStack->getMasterRequest() !== $request ? $request : null;
     }
@@ -127,9 +130,13 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
             return [];
         }
 
+        if ('' === $logContent = trim(file_get_contents($file))) {
+            return [];
+        }
+
         $bootTime = filemtime($file);
         $logs = [];
-        foreach (unserialize(file_get_contents($file)) as $log) {
+        foreach (unserialize($logContent) as $log) {
             $log['context'] = ['exception' => new SilencedErrorContext($log['type'], $log['file'], $log['line'], $log['trace'], $log['count'])];
             $log['timestamp'] = $bootTime;
             $log['priority'] = 100;
@@ -223,7 +230,7 @@ class LoggerDataCollector extends DataCollector implements LateDataCollectorInte
             return true;
         }
 
-        if ($exception instanceof \ErrorException && \in_array($exception->getSeverity(), [E_DEPRECATED, E_USER_DEPRECATED], true)) {
+        if ($exception instanceof ErrorException && in_array($exception->getSeverity(), [E_DEPRECATED, E_USER_DEPRECATED], true)) {
             return true;
         }
 

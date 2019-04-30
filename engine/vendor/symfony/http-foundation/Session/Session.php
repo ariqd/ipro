@@ -11,6 +11,10 @@
 
 namespace Symfony\Component\HttpFoundation\Session;
 
+use ArrayIterator;
+use function count;
+use Countable;
+use IteratorAggregate;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBagInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
@@ -22,7 +26,7 @@ use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Drak <drak@zikula.org>
  */
-class Session implements SessionInterface, \IteratorAggregate, \Countable
+class Session implements SessionInterface, IteratorAggregate, Countable
 {
     protected $storage;
 
@@ -124,11 +128,11 @@ class Session implements SessionInterface, \IteratorAggregate, \Countable
     /**
      * Returns an iterator for attributes.
      *
-     * @return \ArrayIterator An \ArrayIterator instance
+     * @return ArrayIterator An \ArrayIterator instance
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->getAttributeBag()->all());
+        return new ArrayIterator($this->getAttributeBag()->all());
     }
 
     /**
@@ -138,7 +142,7 @@ class Session implements SessionInterface, \IteratorAggregate, \Countable
      */
     public function count()
     {
-        return \count($this->getAttributeBag()->all());
+        return count($this->getAttributeBag()->all());
     }
 
     /**
@@ -193,7 +197,9 @@ class Session implements SessionInterface, \IteratorAggregate, \Countable
      */
     public function save()
     {
-        $this->storage->save();
+        if ($this->isStarted()) {
+            $this->storage->save();
+        }
     }
 
     /**

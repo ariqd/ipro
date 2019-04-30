@@ -11,6 +11,12 @@
 
 namespace Symfony\Component\EventDispatcher;
 
+use function array_key_exists;
+use ArrayAccess;
+use ArrayIterator;
+use InvalidArgumentException;
+use IteratorAggregate;
+
 /**
  * Event encapsulation class.
  *
@@ -18,7 +24,7 @@ namespace Symfony\Component\EventDispatcher;
  *
  * @author Drak <drak@zikula.org>
  */
-class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
+class GenericEvent extends Event implements ArrayAccess, IteratorAggregate
 {
     protected $subject;
     protected $arguments;
@@ -52,7 +58,7 @@ class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
      *
      * @return mixed Contents of array key
      *
-     * @throws \InvalidArgumentException if key is not found
+     * @throws InvalidArgumentException if key is not found
      */
     public function getArgument($key)
     {
@@ -60,7 +66,7 @@ class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
             return $this->arguments[$key];
         }
 
-        throw new \InvalidArgumentException(sprintf('Argument "%s" not found.', $key));
+        throw new InvalidArgumentException(sprintf('Argument "%s" not found.', $key));
     }
 
     /**
@@ -121,7 +127,7 @@ class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
      *
      * @return mixed
      *
-     * @throws \InvalidArgumentException if key does not exist in $this->args
+     * @throws InvalidArgumentException if key does not exist in $this->args
      */
     public function offsetGet($key)
     {
@@ -166,10 +172,10 @@ class GenericEvent extends Event implements \ArrayAccess, \IteratorAggregate
     /**
      * IteratorAggregate for iterating over the object like an array.
      *
-     * @return \ArrayIterator
+     * @return ArrayIterator
      */
     public function getIterator()
     {
-        return new \ArrayIterator($this->arguments);
+        return new ArrayIterator($this->arguments);
     }
 }

@@ -3,6 +3,7 @@
 namespace PhpParser\NodeVisitor;
 
 use PhpParser;
+use PhpParser\Error;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Name;
@@ -16,7 +17,7 @@ class NameResolverTest extends TestCase
     }
 
     /**
-     * @covers PhpParser\NodeVisitor\NameResolver
+     * @covers \PhpParser\NodeVisitor\NameResolver
      */
     public function testResolveNames() {
         $code = <<<'EOC'
@@ -194,7 +195,7 @@ EOC;
     }
 
     /**
-     * @covers PhpParser\NodeVisitor\NameResolver
+     * @covers \PhpParser\NodeVisitor\NameResolver
      */
     public function testResolveLocations() {
         $code = <<<'EOC'
@@ -360,7 +361,7 @@ EOC;
      * @dataProvider provideTestError
      */
     public function testError(Node $stmt, $errorMsg) {
-        $this->expectException(\PhpParser\Error::class);
+        $this->expectException(Error::class);
         $this->expectExceptionMessage($errorMsg);
 
         $traverser = new PhpParser\NodeTraverser;

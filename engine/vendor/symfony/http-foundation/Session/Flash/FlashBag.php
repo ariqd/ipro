@@ -11,6 +11,8 @@
 
 namespace Symfony\Component\HttpFoundation\Session\Flash;
 
+use function array_key_exists;
+
 /**
  * FlashBag flash message container.
  *

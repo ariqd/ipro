@@ -3,6 +3,45 @@
 namespace Illuminate\Foundation;
 
 use Closure;
+use Illuminate\Auth\AuthManager;
+use Illuminate\Auth\Passwords\PasswordBrokerManager;
+use Illuminate\Cache\CacheManager;
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Contracts\Auth\PasswordBrokerFactory;
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Cookie\QueueingFactory;
+use Illuminate\Contracts\Encryption\Encrypter;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Filesystem\Cloud;
+use Illuminate\Contracts\Hashing\Hasher;
+use Illuminate\Contracts\Mail\Mailer;
+use Illuminate\Contracts\Mail\MailQueue;
+use Illuminate\Contracts\Queue\Monitor;
+use Illuminate\Contracts\Queue\Queue;
+use Illuminate\Contracts\Routing\BindingRegistrar;
+use Illuminate\Contracts\Routing\Registrar;
+use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Contracts\Session\Session;
+use Illuminate\Contracts\Translation\Translator;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Cookie\CookieJar;
+use Illuminate\Database\Connection;
+use Illuminate\Database\ConnectionInterface;
+use Illuminate\Database\DatabaseManager;
+use Illuminate\Filesystem\FilesystemManager;
+use Illuminate\Hashing\HashManager;
+use Illuminate\Log\LogManager;
+use Illuminate\Queue\Failed\FailedJobProviderInterface;
+use Illuminate\Queue\QueueManager;
+use Illuminate\Redis\RedisManager;
+use Illuminate\Routing\Redirector;
+use Illuminate\Routing\Router;
+use Illuminate\Session\SessionManager;
+use Illuminate\Session\Store;
+use Illuminate\View\Compilers\BladeCompiler;
+use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -29,7 +68,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      *
      * @var string
      */
-    const VERSION = '5.7.25';
+    const VERSION = '5.7.28';
 
     /**
      * The base path for the Laravel installation.
@@ -55,28 +94,28 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * The array of booting callbacks.
      *
-     * @var array
+     * @var callable[]
      */
     protected $bootingCallbacks = [];
 
     /**
      * The array of booted callbacks.
      *
-     * @var array
+     * @var callable[]
      */
     protected $bootedCallbacks = [];
 
     /**
      * The array of terminating callbacks.
      *
-     * @var array
+     * @var callable[]
      */
     protected $terminatingCallbacks = [];
 
     /**
      * All of the registered service providers.
      *
-     * @var array
+     * @var ServiceProvider[]
      */
     protected $serviceProviders = [];
 
@@ -198,7 +237,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Run the given array of bootstrap classes.
      *
-     * @param  array  $bootstrappers
+     * @param  string[]  $bootstrappers
      * @return void
      */
     public function bootstrapWith(array $bootstrappers)
@@ -217,7 +256,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Register a callback to run after loading the environment.
      *
-     * @param  \Closure  $callback
+     * @param Closure $callback
      * @return void
      */
     public function afterLoadingEnvironment(Closure $callback)
@@ -231,7 +270,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * Register a callback to run before a bootstrapper.
      *
      * @param  string  $bootstrapper
-     * @param  \Closure  $callback
+     * @param Closure $callback
      * @return void
      */
     public function beforeBootstrapping($bootstrapper, Closure $callback)
@@ -243,7 +282,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * Register a callback to run after a bootstrapper.
      *
      * @param  string  $bootstrapper
-     * @param  \Closure  $callback
+     * @param Closure $callback
      * @return void
      */
     public function afterBootstrapping($bootstrapper, Closure $callback)
@@ -522,7 +561,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Detect the application's current environment.
      *
-     * @param  \Closure  $callback
+     * @param Closure $callback
      * @return string
      */
     public function detectEnvironment(Closure $callback)
@@ -577,9 +616,9 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Register a service provider with the application.
      *
-     * @param  \Illuminate\Support\ServiceProvider|string  $provider
+     * @param ServiceProvider|string  $provider
      * @param  bool   $force
-     * @return \Illuminate\Support\ServiceProvider
+     * @return ServiceProvider
      */
     public function register($provider, $force = false)
     {
@@ -628,8 +667,8 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Get the registered service provider instance if it exists.
      *
-     * @param  \Illuminate\Support\ServiceProvider|string  $provider
-     * @return \Illuminate\Support\ServiceProvider|null
+     * @param ServiceProvider|string  $provider
+     * @return ServiceProvider|null
      */
     public function getProvider($provider)
     {
@@ -639,7 +678,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Get the registered service provider instances if any exist.
      *
-     * @param  \Illuminate\Support\ServiceProvider|string  $provider
+     * @param ServiceProvider|string  $provider
      * @return array
      */
     public function getProviders($provider)
@@ -655,7 +694,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * Resolve a service provider instance from the class name.
      *
      * @param  string  $provider
-     * @return \Illuminate\Support\ServiceProvider
+     * @return ServiceProvider
      */
     public function resolveProvider($provider)
     {
@@ -665,7 +704,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Mark the given provider as registered.
      *
-     * @param  \Illuminate\Support\ServiceProvider  $provider
+     * @param ServiceProvider $provider
      * @return void
      */
     protected function markAsRegistered($provider)
@@ -810,7 +849,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Boot the given service provider.
      *
-     * @param  \Illuminate\Support\ServiceProvider  $provider
+     * @param ServiceProvider $provider
      * @return mixed
      */
     protected function bootProvider(ServiceProvider $provider)
@@ -823,7 +862,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Register a new boot listener.
      *
-     * @param  mixed  $callback
+     * @param  callable  $callback
      * @return void
      */
     public function booting($callback)
@@ -834,7 +873,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Register a new "booted" listener.
      *
-     * @param  mixed  $callback
+     * @param  callable  $callback
      * @return void
      */
     public function booted($callback)
@@ -849,7 +888,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Call the booting callbacks for the application.
      *
-     * @param  array  $callbacks
+     * @param  callable[]  $callbacks
      * @return void
      */
     protected function fireAppCallbacks(array $callbacks)
@@ -956,7 +995,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      * @param  array   $headers
      * @return void
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\HttpException
+     * @throws HttpException
      */
     public function abort($code, $message = '', array $headers = [])
     {
@@ -970,7 +1009,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     /**
      * Register a terminating callback with the application.
      *
-     * @param  \Closure  $callback
+     * @param Closure $callback
      * @return $this
      */
     public function terminating(Closure $callback)
@@ -1100,41 +1139,41 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
     public function registerCoreContainerAliases()
     {
         foreach ([
-            'app'                  => [\Illuminate\Foundation\Application::class, \Illuminate\Contracts\Container\Container::class, \Illuminate\Contracts\Foundation\Application::class,  \Psr\Container\ContainerInterface::class],
-            'auth'                 => [\Illuminate\Auth\AuthManager::class, \Illuminate\Contracts\Auth\Factory::class],
-            'auth.driver'          => [\Illuminate\Contracts\Auth\Guard::class],
-            'blade.compiler'       => [\Illuminate\View\Compilers\BladeCompiler::class],
-            'cache'                => [\Illuminate\Cache\CacheManager::class, \Illuminate\Contracts\Cache\Factory::class],
+            'app'                  => [Application::class, \Illuminate\Contracts\Container\Container::class, ApplicationContract::class,  ContainerInterface::class],
+            'auth'                 => [AuthManager::class, \Illuminate\Contracts\Auth\Factory::class],
+            'auth.driver'          => [Guard::class],
+            'blade.compiler'       => [BladeCompiler::class],
+            'cache'                => [CacheManager::class, \Illuminate\Contracts\Cache\Factory::class],
             'cache.store'          => [\Illuminate\Cache\Repository::class, \Illuminate\Contracts\Cache\Repository::class],
-            'config'               => [\Illuminate\Config\Repository::class, \Illuminate\Contracts\Config\Repository::class],
-            'cookie'               => [\Illuminate\Cookie\CookieJar::class, \Illuminate\Contracts\Cookie\Factory::class, \Illuminate\Contracts\Cookie\QueueingFactory::class],
-            'encrypter'            => [\Illuminate\Encryption\Encrypter::class, \Illuminate\Contracts\Encryption\Encrypter::class],
-            'db'                   => [\Illuminate\Database\DatabaseManager::class],
-            'db.connection'        => [\Illuminate\Database\Connection::class, \Illuminate\Database\ConnectionInterface::class],
-            'events'               => [\Illuminate\Events\Dispatcher::class, \Illuminate\Contracts\Events\Dispatcher::class],
-            'files'                => [\Illuminate\Filesystem\Filesystem::class],
-            'filesystem'           => [\Illuminate\Filesystem\FilesystemManager::class, \Illuminate\Contracts\Filesystem\Factory::class],
+            'config'               => [\Illuminate\Config\Repository::class, Repository::class],
+            'cookie'               => [CookieJar::class, \Illuminate\Contracts\Cookie\Factory::class, QueueingFactory::class],
+            'encrypter'            => [\Illuminate\Encryption\Encrypter::class, Encrypter::class],
+            'db'                   => [DatabaseManager::class],
+            'db.connection'        => [Connection::class, ConnectionInterface::class],
+            'events'               => [\Illuminate\Events\Dispatcher::class, Dispatcher::class],
+            'files'                => [Filesystem::class],
+            'filesystem'           => [FilesystemManager::class, \Illuminate\Contracts\Filesystem\Factory::class],
             'filesystem.disk'      => [\Illuminate\Contracts\Filesystem\Filesystem::class],
-            'filesystem.cloud'     => [\Illuminate\Contracts\Filesystem\Cloud::class],
-            'hash'                 => [\Illuminate\Hashing\HashManager::class],
-            'hash.driver'          => [\Illuminate\Contracts\Hashing\Hasher::class],
-            'translator'           => [\Illuminate\Translation\Translator::class, \Illuminate\Contracts\Translation\Translator::class],
-            'log'                  => [\Illuminate\Log\LogManager::class, \Psr\Log\LoggerInterface::class],
-            'mailer'               => [\Illuminate\Mail\Mailer::class, \Illuminate\Contracts\Mail\Mailer::class, \Illuminate\Contracts\Mail\MailQueue::class],
-            'auth.password'        => [\Illuminate\Auth\Passwords\PasswordBrokerManager::class, \Illuminate\Contracts\Auth\PasswordBrokerFactory::class],
-            'auth.password.broker' => [\Illuminate\Auth\Passwords\PasswordBroker::class, \Illuminate\Contracts\Auth\PasswordBroker::class],
-            'queue'                => [\Illuminate\Queue\QueueManager::class, \Illuminate\Contracts\Queue\Factory::class, \Illuminate\Contracts\Queue\Monitor::class],
-            'queue.connection'     => [\Illuminate\Contracts\Queue\Queue::class],
-            'queue.failer'         => [\Illuminate\Queue\Failed\FailedJobProviderInterface::class],
-            'redirect'             => [\Illuminate\Routing\Redirector::class],
-            'redis'                => [\Illuminate\Redis\RedisManager::class, \Illuminate\Contracts\Redis\Factory::class],
-            'request'              => [\Illuminate\Http\Request::class, \Symfony\Component\HttpFoundation\Request::class],
-            'router'               => [\Illuminate\Routing\Router::class, \Illuminate\Contracts\Routing\Registrar::class, \Illuminate\Contracts\Routing\BindingRegistrar::class],
-            'session'              => [\Illuminate\Session\SessionManager::class],
-            'session.store'        => [\Illuminate\Session\Store::class, \Illuminate\Contracts\Session\Session::class],
-            'url'                  => [\Illuminate\Routing\UrlGenerator::class, \Illuminate\Contracts\Routing\UrlGenerator::class],
+            'filesystem.cloud'     => [Cloud::class],
+            'hash'                 => [HashManager::class],
+            'hash.driver'          => [Hasher::class],
+            'translator'           => [\Illuminate\Translation\Translator::class, Translator::class],
+            'log'                  => [LogManager::class, LoggerInterface::class],
+            'mailer'               => [\Illuminate\Mail\Mailer::class, Mailer::class, MailQueue::class],
+            'auth.password'        => [PasswordBrokerManager::class, PasswordBrokerFactory::class],
+            'auth.password.broker' => [\Illuminate\Auth\Passwords\PasswordBroker::class, PasswordBroker::class],
+            'queue'                => [QueueManager::class, \Illuminate\Contracts\Queue\Factory::class, Monitor::class],
+            'queue.connection'     => [Queue::class],
+            'queue.failer'         => [FailedJobProviderInterface::class],
+            'redirect'             => [Redirector::class],
+            'redis'                => [RedisManager::class, \Illuminate\Contracts\Redis\Factory::class],
+            'request'              => [Request::class, SymfonyRequest::class],
+            'router'               => [Router::class, Registrar::class, BindingRegistrar::class],
+            'session'              => [SessionManager::class],
+            'session.store'        => [Store::class, Session::class],
+            'url'                  => [\Illuminate\Routing\UrlGenerator::class, UrlGenerator::class],
             'validator'            => [\Illuminate\Validation\Factory::class, \Illuminate\Contracts\Validation\Factory::class],
-            'view'                 => [\Illuminate\View\Factory::class, \Illuminate\Contracts\View\Factory::class],
+            'view'                 => [\Illuminate\View\Factory::class, Factory::class],
         ] as $key => $aliases) {
             foreach ($aliases as $alias) {
                 $this->alias($key, $alias);
@@ -1168,7 +1207,7 @@ class Application extends Container implements ApplicationContract, HttpKernelIn
      *
      * @return string
      *
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public function getNamespace()
     {

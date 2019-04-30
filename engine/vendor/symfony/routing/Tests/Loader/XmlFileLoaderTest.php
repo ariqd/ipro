@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Routing\Tests\Loader;
 
+use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\Loader\XmlFileLoader;
@@ -83,6 +84,26 @@ class XmlFileLoaderTest extends TestCase
         }
     }
 
+    public function testUtf8Route()
+    {
+        $loader = new XmlFileLoader(new FileLocator([__DIR__.'/../Fixtures/localized']));
+        $routeCollection = $loader->load('utf8.xml');
+        $routes = $routeCollection->all();
+
+        $this->assertCount(2, $routes, 'Two routes are loaded');
+        $this->assertContainsOnly('Symfony\Component\Routing\Route', $routes);
+
+        $utf8Route = $routeCollection->get('app_utf8');
+
+        $this->assertSame('/utf8', $utf8Route->getPath());
+        $this->assertTrue($utf8Route->getOption('utf8'), 'Must be utf8');
+
+        $noUtf8Route = $routeCollection->get('app_no_utf8');
+
+        $this->assertSame('/no-utf8', $noUtf8Route->getPath());
+        $this->assertFalse($noUtf8Route->getOption('utf8'), 'Must not be utf8');
+    }
+
     public function testLoadLocalized()
     {
         $loader = new XmlFileLoader(new FileLocator([__DIR__.'/../Fixtures']));
@@ -123,7 +144,7 @@ class XmlFileLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      * @dataProvider getPathsToInvalidFiles
      */
     public function testLoadThrowsExceptionWithInvalidFile($filePath)
@@ -133,7 +154,7 @@ class XmlFileLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      * @dataProvider getPathsToInvalidFiles
      */
     public function testLoadThrowsExceptionWithInvalidFileEvenWithoutSchemaValidation($filePath)
@@ -148,7 +169,7 @@ class XmlFileLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessage Document types are not allowed.
      */
     public function testDocTypeIsNotAllowed()
@@ -358,7 +379,7 @@ class XmlFileLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessageRegExp /The routing file "[^"]*" must not specify both the "controller" attribute and the defaults key "_controller" for "app_blog"/
      */
     public function testOverrideControllerInDefaults()
@@ -392,7 +413,7 @@ class XmlFileLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      * @expectedExceptionMessageRegExp /The routing file "[^"]*" must not specify both the "controller" attribute and the defaults key "_controller" for the "import" tag/
      */
     public function testImportWithOverriddenController()

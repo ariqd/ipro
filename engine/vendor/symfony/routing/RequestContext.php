@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Routing;
 
+use function array_key_exists;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

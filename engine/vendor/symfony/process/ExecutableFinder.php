@@ -11,6 +11,8 @@
 
 namespace Symfony\Component\Process;
 
+use const DIRECTORY_SEPARATOR;
+
 /**
  * Generic executable finder.
  *
@@ -51,7 +53,7 @@ class ExecutableFinder
     public function find($name, $default = null, array $extraDirs = [])
     {
         if (ini_get('open_basedir')) {
-            $searchPath = explode(PATH_SEPARATOR, ini_get('open_basedir'));
+            $searchPath = array_merge(explode(PATH_SEPARATOR, ini_get('open_basedir')), $extraDirs);
             $dirs = [];
             foreach ($searchPath as $path) {
                 // Silencing against https://bugs.php.net/69240
@@ -71,13 +73,13 @@ class ExecutableFinder
         }
 
         $suffixes = [''];
-        if ('\\' === \DIRECTORY_SEPARATOR) {
+        if ('\\' === DIRECTORY_SEPARATOR) {
             $pathExt = getenv('PATHEXT');
             $suffixes = array_merge($pathExt ? explode(PATH_SEPARATOR, $pathExt) : $this->suffixes, $suffixes);
         }
         foreach ($suffixes as $suffix) {
             foreach ($dirs as $dir) {
-                if (@is_file($file = $dir.\DIRECTORY_SEPARATOR.$name.$suffix) && ('\\' === \DIRECTORY_SEPARATOR || @is_executable($file))) {
+                if (@is_file($file = $dir. DIRECTORY_SEPARATOR.$name.$suffix) && ('\\' === DIRECTORY_SEPARATOR || @is_executable($file))) {
                     return $file;
                 }
             }

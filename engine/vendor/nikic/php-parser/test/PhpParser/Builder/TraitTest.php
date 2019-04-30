@@ -2,6 +2,7 @@
 
 namespace PhpParser\Builder;
 
+use LogicException;
 use PhpParser\Comment;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt;
@@ -38,7 +39,7 @@ class TraitTest extends TestCase
     }
 
     public function testInvalidStmtError() {
-        $this->expectException(\LogicException::class);
+        $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Unexpected node of type "Stmt_Echo"');
         $this->createTraitBuilder('Test')
             ->addStmt(new Stmt\Echo_([]))
