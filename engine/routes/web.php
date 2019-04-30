@@ -44,4 +44,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('brands', 'BrandController');
     Route::resource('categories', 'CategoryController');
     Route::resource('goods-receive', 'ReceiveController');
+
+
+    //additional
+    Route::get('sales-orders/{id}/delivery-orders', 'SalesOrder\DeliveryOrderController@getForm');
+    Route::post('sales-orders/{id}/delivery-orders', 'SalesOrder\DeliveryOrderController@store');
+
 });

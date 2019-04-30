@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 29, 2019 at 10:02 AM
+-- Generation Time: Apr 30, 2019 at 10:13 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -110,7 +110,8 @@ CREATE TABLE `counters` (
 INSERT INTO `counters` (`id`, `name`, `counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'PO', 8, NULL, '2019-04-25 20:36:49', NULL),
 (2, 'SO', 4, NULL, '2019-04-23 01:04:02', NULL),
-(3, 'QO', 1, NULL, '2019-04-23 01:04:02', NULL);
+(3, 'QO', 1, NULL, '2019-04-23 01:04:02', NULL),
+(4, 'DO', 7, NULL, '2019-04-30 01:07:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -138,6 +139,52 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`id`, `user_id`, `no_ktp`, `project_owner`, `address`, `phone`, `fax`, `email`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 1, 1234567891012131, 'Asep Jeck Sadikin', 'Jalan Kemayu Oke Oce', '08987654321', '0101010101', 'ujeck.sadik@asep.com', '2019-04-15 00:37:50', '2019-04-15 00:37:50', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `delivery_orders`
+--
+
+CREATE TABLE `delivery_orders` (
+  `id` int(11) NOT NULL,
+  `nomor_surat` text NOT NULL,
+  `sales_order_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `delivery_orders`
+--
+
+INSERT INTO `delivery_orders` (`id`, `nomor_surat`, `sales_order_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'DO1904300100006', 1, '2019-04-30 01:07:02', '2019-04-30 01:07:02', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `delivery_order_details`
+--
+
+CREATE TABLE `delivery_order_details` (
+  `id` int(11) NOT NULL,
+  `do_id` int(11) NOT NULL,
+  `sales_order_detail_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `delivery_order_details`
+--
+
+INSERT INTO `delivery_order_details` (`id`, `do_id`, `sales_order_detail_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 1, '2019-04-30 01:07:02', '2019-04-30 01:07:02', NULL),
+(2, 1, 2, '2019-04-30 01:07:02', '2019-04-30 01:07:02', NULL),
+(3, 1, 3, '2019-04-30 01:07:02', '2019-04-30 01:07:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -427,6 +474,7 @@ CREATE TABLE `sales_order_details` (
   `price` int(11) NOT NULL,
   `total` int(11) NOT NULL,
   `discount` int(11) NOT NULL,
+  `status` int(11) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -436,13 +484,13 @@ CREATE TABLE `sales_order_details` (
 -- Dumping data for table `sales_order_details`
 --
 
-INSERT INTO `sales_order_details` (`id`, `sales_order_id`, `stock_id`, `qty`, `price`, `total`, `discount`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1, 2, 15000, 30000, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL),
-(2, 1, 1, 2, 15000, 30000, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL),
-(3, 1, 1, 2, 15000, 30000, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL),
-(4, 2, 1, 2, 15000, 30000, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL),
-(5, 2, 1, 2, 15000, 30000, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL),
-(6, 2, 1, 2, 15000, 30000, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL);
+INSERT INTO `sales_order_details` (`id`, `sales_order_id`, `stock_id`, `qty`, `price`, `total`, `discount`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 1, 2, 15000, 30000, 0, 1, '2019-04-15 01:00:40', '2019-04-30 01:07:02', NULL),
+(2, 1, 1, 2, 15000, 30000, 0, 1, '2019-04-15 01:00:40', '2019-04-30 01:07:02', NULL),
+(3, 1, 1, 2, 15000, 30000, 0, 1, '2019-04-15 01:00:40', '2019-04-30 01:07:02', NULL),
+(4, 2, 1, 2, 15000, 30000, 0, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL),
+(5, 2, 1, 2, 15000, 30000, 0, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL),
+(6, 2, 1, 2, 15000, 30000, 0, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -530,6 +578,18 @@ ALTER TABLE `counters`
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `customers_no_ktp_unique` (`no_ktp`);
+
+--
+-- Indexes for table `delivery_orders`
+--
+ALTER TABLE `delivery_orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `delivery_order_details`
+--
+ALTER TABLE `delivery_order_details`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `holds`
@@ -631,13 +691,25 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `counters`
 --
 ALTER TABLE `counters`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `delivery_orders`
+--
+ALTER TABLE `delivery_orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `delivery_order_details`
+--
+ALTER TABLE `delivery_order_details`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `holds`

@@ -93,16 +93,16 @@
                     </div>
                 </div>
 
-{{--                <div class="row mt-3">--}}
-{{--                    <div class="col-4">--}}
-{{--                        <b>--}}
-{{--                            Email--}}
-{{--                        </b>--}}
-{{--                    </div>--}}
-{{--                    <div class="col-8">--}}
-{{--                        {{ $sale->customer->email }}--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+                {{--                <div class="row mt-3">--}}
+                    {{--                    <div class="col-4">--}}
+                        {{--                        <b>--}}
+                            {{--                            Email--}}
+                        {{--                        </b>--}}
+                    {{--                    </div>--}}
+                    {{--                    <div class="col-8">--}}
+                        {{--                        {{ $sale->customer->email }}--}}
+                    {{--                    </div>--}}
+                {{--                </div>--}}
 
             </div>
         </div>
@@ -210,30 +210,55 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($sale->details as $details)
-                        <tr>
-                            <td>
-                                {{ $details->id }}
-                            </td>
-                            <td>
-                                {{ $details->stock->item->name }}
-                            </td>
-                            <td>
-                                {{ $details->qty }}
-                            </td>
-                            <td>
-                                Rp{{number_format($details->price) }},00
-                            </td>
-                            <td>
-                                {{ $details->discount}}%
-                            </td>
-                            <td>
-                                Rp{{number_format($details->total)}},00
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                     {{ $flag = 0 }} 
+
+                     @foreach($sale->details as $details)
+                     @if($details->status==1) @php $flag++ @endphp @endif
+                     <tr>
+                        <td>
+                            {{ $details->id }}
+                        </td>
+                        <td>
+                            {{ $details->stock->item->name }}
+                        </td>
+                        <td>
+                            {{ $details->qty }}
+                        </td>
+                        <td>
+                            Rp{{number_format($details->price) }},00
+                        </td>
+                        <td>
+                            {{ $details->discount}}%
+                        </td>
+                        <td>
+                            Rp{{number_format($details->total)}},00
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <a href="#" class="btn btn-info form-control"> Print Quotation</a>
+                </div>
+                <div class="col-lg-6">
+                    <a href="#" class="btn btn-success form-control"> Print Invoice</a>
+                </div>
+                @if($flag != count($sale->details))
+                <div class="col-lg-12 mt-2">
+                    <a href="{{ url("sales-orders/$sale->id/delivery-orders") }}" class="btn btn-danger form-control"> Buat Surat Jalan</a>
+                </div>
+                @endif
+
             </div>
         </div>
     </div>
