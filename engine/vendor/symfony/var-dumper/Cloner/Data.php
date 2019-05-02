@@ -11,22 +11,12 @@
 
 namespace Symfony\Component\VarDumper\Cloner;
 
-use function array_key_exists;
-use ArrayAccess;
-use BadMethodCallException;
-use function count;
-use Countable;
-use function gettype;
-use function is_array;
-use IteratorAggregate;
-use LogicException;
-use RuntimeException;
 use Symfony\Component\VarDumper\Caster\Caster;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  */
-class Data implements ArrayAccess, Countable, IteratorAggregate
+class Data implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     private $data;
     private $position = 0;
@@ -54,7 +44,7 @@ class Data implements ArrayAccess, Countable, IteratorAggregate
             $item = $item->value;
         }
         if (!$item instanceof Stub) {
-            return gettype($item);
+            return \gettype($item);
         }
         if (Stub::TYPE_STRING === $item->type) {
             return 'string';
@@ -116,13 +106,13 @@ class Data implements ArrayAccess, Countable, IteratorAggregate
 
     public function count()
     {
-        return count($this->getValue());
+        return \count($this->getValue());
     }
 
     public function getIterator()
     {
-        if (!is_array($value = $this->getValue())) {
-            throw new LogicException(sprintf('%s object holds non-iterable type "%s".', self::class, gettype($value)));
+        if (!\is_array($value = $this->getValue())) {
+            throw new \LogicException(sprintf('%s object holds non-iterable type "%s".', self::class, \gettype($value)));
         }
 
         yield from $value;
@@ -154,23 +144,23 @@ class Data implements ArrayAccess, Countable, IteratorAggregate
 
     public function offsetSet($key, $value)
     {
-        throw new BadMethodCallException(self::class.' objects are immutable.');
+        throw new \BadMethodCallException(self::class.' objects are immutable.');
     }
 
     public function offsetUnset($key)
     {
-        throw new BadMethodCallException(self::class.' objects are immutable.');
+        throw new \BadMethodCallException(self::class.' objects are immutable.');
     }
 
     public function __toString()
     {
         $value = $this->getValue();
 
-        if (!is_array($value)) {
+        if (!\is_array($value)) {
             return (string) $value;
         }
 
-        return sprintf('%s (count=%d)', $this->getType(), count($value));
+        return sprintf('%s (count=%d)', $this->getType(), \count($value));
     }
 
     /**
@@ -255,7 +245,7 @@ class Data implements ArrayAccess, Countable, IteratorAggregate
         $children = $this->data[$item->position];
 
         foreach ($keys as $key) {
-            if (isset($children[$key]) || array_key_exists($key, $children)) {
+            if (isset($children[$key]) || \array_key_exists($key, $children)) {
                 $data = clone $this;
                 $data->key = $key;
                 $data->position = $item->position;
@@ -292,7 +282,7 @@ class Data implements ArrayAccess, Countable, IteratorAggregate
 
         if (!$item instanceof Stub) {
             $cursor->attr = [];
-            $type = gettype($item);
+            $type = \gettype($item);
             if ($item && 'array' === $type) {
                 $item = $this->getStub($item);
             }
@@ -308,7 +298,7 @@ class Data implements ArrayAccess, Countable, IteratorAggregate
                 $cursor->hardRefCount = $item->refCount;
             }
             $cursor->attr = $item->attr;
-            $type = $item->class ?: gettype($item->value);
+            $type = $item->class ?: \gettype($item->value);
             $item = $this->getStub($item->value);
         }
         if ($item instanceof Stub) {
@@ -330,7 +320,7 @@ class Data implements ArrayAccess, Countable, IteratorAggregate
 
                 if ($cursor->stop) {
                     if ($cut >= 0) {
-                        $cut += count($children);
+                        $cut += \count($children);
                     }
                     $children = [];
                 }
@@ -359,14 +349,14 @@ class Data implements ArrayAccess, Countable, IteratorAggregate
                             $cut = $this->dumpChildren($dumper, $cursor, $refs, $children, $cut, $item->type, null !== $item->class);
                         }
                     } elseif ($children && 0 <= $cut) {
-                        $cut += count($children);
+                        $cut += \count($children);
                     }
                     $cursor->skipChildren = false;
                     $dumper->leaveHash($cursor, $item->type, $item->class, $withChildren, $cut);
                     break;
 
                 default:
-                    throw new RuntimeException(sprintf('Unexpected Stub type: %s', $item->type));
+                    throw new \RuntimeException(sprintf('Unexpected Stub type: %s', $item->type));
             }
         } elseif ('array' === $type) {
             $dumper->enterHash($cursor, Cursor::HASH_INDEXED, 0, false);
@@ -397,7 +387,7 @@ class Data implements ArrayAccess, Countable, IteratorAggregate
         ++$cursor->depth;
         $cursor->hashType = $hashType;
         $cursor->hashIndex = 0;
-        $cursor->hashLength = count($children);
+        $cursor->hashLength = \count($children);
         $cursor->hashCut = $hashCut;
         foreach ($children as $key => $child) {
             $cursor->hashKeyIsBinary = isset($key[0]) && !preg_match('//u', $key);
@@ -415,7 +405,7 @@ class Data implements ArrayAccess, Countable, IteratorAggregate
 
     private function getStub($item)
     {
-        if (!$item || !is_array($item)) {
+        if (!$item || !\is_array($item)) {
             return $item;
         }
 
@@ -426,7 +416,7 @@ class Data implements ArrayAccess, Countable, IteratorAggregate
         if (isset($item[0])) {
             $stub->cut = $item[0];
         }
-        $stub->value = $stub->cut + ($stub->position ? count($this->data[$stub->position]) : 0);
+        $stub->value = $stub->cut + ($stub->position ? \count($this->data[$stub->position]) : 0);
 
         return $stub;
     }

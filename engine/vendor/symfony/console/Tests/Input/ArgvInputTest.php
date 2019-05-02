@@ -12,7 +12,6 @@
 namespace Symfony\Component\Console\Tests\Input;
 
 use PHPUnit\Framework\TestCase;
-use ReflectionObject;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
@@ -24,7 +23,7 @@ class ArgvInputTest extends TestCase
     {
         $_SERVER['argv'] = ['cli.php', 'foo'];
         $input = new ArgvInput();
-        $r = new ReflectionObject($input);
+        $r = new \ReflectionObject($input);
         $p = $r->getProperty('tokens');
         $p->setAccessible(true);
 

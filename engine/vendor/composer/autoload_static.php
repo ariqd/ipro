@@ -4,8 +4,6 @@
 
 namespace Composer\Autoload;
 
-use Closure;
-
 class ComposerStaticInitd00b1304668a13262bb2da3216ad9563
 {
     public static $files = array (
@@ -476,8 +474,9 @@ class ComposerStaticInitd00b1304668a13262bb2da3216ad9563
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Counter' => __DIR__ . '/../..' . '/app/Counter.php',
         'App\\Customer' => __DIR__ . '/../..' . '/app/Customer.php',
+        'App\\Delivery_Order' => __DIR__ . '/../..' . '/app/Delivery_Order.php',
+        'App\\Delivery_Order_Detail' => __DIR__ . '/../..' . '/app/Delivery_Order_Detail.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
-        'App\\Hold' => __DIR__ . '/../..' . '/app/Hold.php',
         'App\\Http\\Controllers\\AccountController' => __DIR__ . '/../..' . '/app/Http/Controllers/AccountController.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
@@ -498,6 +497,7 @@ class ComposerStaticInitd00b1304668a13262bb2da3216ad9563
         'App\\Http\\Controllers\\PosController' => __DIR__ . '/../..' . '/app/Http/Controllers/PosController.php',
         'App\\Http\\Controllers\\PurchaseOrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/PurchaseOrderController.php',
         'App\\Http\\Controllers\\ReceiveController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReceiveController.php',
+        'App\\Http\\Controllers\\SalesOrder\\DeliveryOrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/SalesOrder/DeliveryOrderController.php',
         'App\\Http\\Controllers\\SalesOrder\\SalesOrderApproveController' => __DIR__ . '/../..' . '/app/Http/Controllers/SalesOrder/SalesOrderApproveController.php',
         'App\\Http\\Controllers\\SalesOrder\\SalesOrderController' => __DIR__ . '/../..' . '/app/Http/Controllers/SalesOrder/SalesOrderController.php',
         'App\\Http\\Controllers\\SalesOrder\\SalesOrderCustomerController' => __DIR__ . '/../..' . '/app/Http/Controllers/SalesOrder/SalesOrderCustomerController.php',
@@ -521,6 +521,7 @@ class ComposerStaticInitd00b1304668a13262bb2da3216ad9563
         'App\\Purchase' => __DIR__ . '/../..' . '/app/Purchase.php',
         'App\\Purchase_Detail' => __DIR__ . '/../..' . '/app/Purchase_Detail.php',
         'App\\Receive' => __DIR__ . '/../..' . '/app/Receive.php',
+        'App\\Receive_Detail' => __DIR__ . '/../..' . '/app/Receive_Detail.php',
         'App\\Sale' => __DIR__ . '/../..' . '/app/Sale.php',
         'App\\Sale_Detail' => __DIR__ . '/../..' . '/app/Sale_Detail.php',
         'App\\Stock' => __DIR__ . '/../..' . '/app/Stock.php',
@@ -2267,11 +2268,7 @@ class ComposerStaticInitd00b1304668a13262bb2da3216ad9563
         'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerForV7' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerForV7.php',
         'Mockery\\Adapter\\Phpunit\\Legacy\\TestListenerTrait' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/Legacy/TestListenerTrait.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
-        'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditionsForV7AndPrevious' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditionsForV7AndPrevious.php',
-        'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditionsForV8' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditionsForV8.php',
         'Mockery\\Adapter\\Phpunit\\MockeryTestCase' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCase.php',
-        'Mockery\\Adapter\\Phpunit\\MockeryTestCaseSetUpForV7AndPrevious' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCaseSetUpForV7AndPrevious.php',
-        'Mockery\\Adapter\\Phpunit\\MockeryTestCaseSetUpForV8' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCaseSetUpForV8.php',
         'Mockery\\Adapter\\Phpunit\\TestListener' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/TestListener.php',
         'Mockery\\ClosureWrapper' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/ClosureWrapper.php',
         'Mockery\\CompositeExpectation' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/CompositeExpectation.php',
@@ -2444,7 +2441,6 @@ class ComposerStaticInitd00b1304668a13262bb2da3216ad9563
         'Monolog\\Utils' => __DIR__ . '/..' . '/monolog/monolog/src/Monolog/Utils.php',
         'Nexmo\\Account\\Balance' => __DIR__ . '/..' . '/nexmo/client/src/Account/Balance.php',
         'Nexmo\\Account\\Client' => __DIR__ . '/..' . '/nexmo/client/src/Account/Client.php',
-        'Nexmo\\Account\\Config' => __DIR__ . '/..' . '/nexmo/client/src/Account/Config.php',
         'Nexmo\\Account\\PrefixPrice' => __DIR__ . '/..' . '/nexmo/client/src/Account/PrefixPrice.php',
         'Nexmo\\Account\\Price' => __DIR__ . '/..' . '/nexmo/client/src/Account/Price.php',
         'Nexmo\\Account\\Secret' => __DIR__ . '/..' . '/nexmo/client/src/Account/Secret.php',
@@ -3083,7 +3079,6 @@ class ComposerStaticInitd00b1304668a13262bb2da3216ad9563
         'PhpParser\\Node\\Expr\\AssignOp\\BitwiseAnd' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/AssignOp/BitwiseAnd.php',
         'PhpParser\\Node\\Expr\\AssignOp\\BitwiseOr' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/AssignOp/BitwiseOr.php',
         'PhpParser\\Node\\Expr\\AssignOp\\BitwiseXor' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/AssignOp/BitwiseXor.php',
-        'PhpParser\\Node\\Expr\\AssignOp\\Coalesce' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/AssignOp/Coalesce.php',
         'PhpParser\\Node\\Expr\\AssignOp\\Concat' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/AssignOp/Concat.php',
         'PhpParser\\Node\\Expr\\AssignOp\\Div' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/AssignOp/Div.php',
         'PhpParser\\Node\\Expr\\AssignOp\\Minus' => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser/Node/Expr/AssignOp/Minus.php',
@@ -4448,7 +4443,7 @@ class ComposerStaticInitd00b1304668a13262bb2da3216ad9563
 
     public static function getInitializer(ClassLoader $loader)
     {
-        return Closure::bind(function () use ($loader) {
+        return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitd00b1304668a13262bb2da3216ad9563::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitd00b1304668a13262bb2da3216ad9563::$prefixDirsPsr4;
             $loader->fallbackDirsPsr4 = ComposerStaticInitd00b1304668a13262bb2da3216ad9563::$fallbackDirsPsr4;

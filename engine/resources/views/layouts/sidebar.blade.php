@@ -106,16 +106,13 @@
                 </a>
             </li>
 
-            @if(Gate::denies('isFinance'))
                 <li class="nav-item">
                     <a href="{{ url('sales-orders') }}"
                        class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
                         <i class="fa fa-arrow-down"></i> Sales Order
                     </a>
                 </li>
-            @endif
-
-            @if(Gate::allows('isFinance') || Gate::allows("isAdmin"))
+            @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                 <li class="nav-item">
                     <a href="{{ url('finances') }}"
                        class="nav-link {{ (request()->is('finances*')) ? 'active' : '' }}">

@@ -16,8 +16,14 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $data['customers'] = Customer::all();
+    {   
+        $data;
+        if(Auth::user()->role="admin"){
+            $data['customers'] = Customer::all();
+        }
+        else{
+            $data['customers'] = Customer::where("user_id","=",Auth::user()->id)->get();
+        }
 
         return view('customer.index', $data);
     }

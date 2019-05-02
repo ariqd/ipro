@@ -48,7 +48,7 @@
                 <td>{{ $key->qty_get }}</td>
                 <td>{{ $key->price }}</td>
                 <td>{{ $key->total_price }}</td>
-                <td>{{ $key->purchase_details->sales->no_so }}</td>
+                <td>{{ $key->purchase_details->sales->no_so ?? "-" }}</td>
               </tr>
               @endforeach
             </tbody>

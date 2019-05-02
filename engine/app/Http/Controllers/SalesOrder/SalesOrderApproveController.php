@@ -13,8 +13,9 @@ class SalesOrderApproveController extends Controller
 {
     public function index()
     {
-//        $d['sales'] = Sale::whereNull("no_so")->get();
-        $d['sales'] = Sale::notApproved()->get();
+        $d['sales'] = Sale::all();
+       // $d['sales'] = Sale::whereNull("no_so")->get();
+        // $d['sales'] = Sale::notApproved()->get();
 
         return view('sale.index', $d);
     }

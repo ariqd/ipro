@@ -11,7 +11,6 @@
 
 namespace Symfony\Component\Routing\Tests\Matcher;
 
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
@@ -39,7 +38,7 @@ class RedirectableUrlMatcherTest extends UrlMatcherTest
     }
 
     /**
-     * @expectedException ResourceNotFoundException
+     * @expectedException \Symfony\Component\Routing\Exception\ResourceNotFoundException
      */
     public function testRedirectWhenNoSlashForNonSafeMethod()
     {
@@ -197,6 +196,17 @@ class RedirectableUrlMatcherTest extends UrlMatcherTest
         $matcher->expects($this->once())->method('redirect')->with('/123')->willReturn([]);
 
         $this->assertEquals(['_route' => 'a', 'a' => '123'], $matcher->match('/123/'));
+    }
+
+    public function testTrailingRequirementWithDefault_A()
+    {
+        $coll = new RouteCollection();
+        $coll->add('a', new Route('/fr-fr/{a}', ['a' => 'aaa'], ['a' => '.+']));
+
+        $matcher = $this->getUrlMatcher($coll);
+        $matcher->expects($this->once())->method('redirect')->with('/fr-fr')->willReturn([]);
+
+        $this->assertEquals(['_route' => 'a', 'a' => 'aaa'], $matcher->match('/fr-fr/'));
     }
 
     protected function getUrlMatcher(RouteCollection $routes, RequestContext $context = null)

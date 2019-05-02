@@ -1,13 +1,20 @@
 @extends('layouts.carbon')
-
+@if($sale->no_so == null || isset($sale->no_so))
 @section('title', 'Quotation Order #' . $sale->quotation_id .' - '. $sale->created_at)
+@else
+@section('title', 'Sales Order #' . $sale->no_so .' - '. $sale->updated_at)
+@endif
 
 @section('content')
 <div class="row">
     <div class="col-lg-12">
         <div class="d-flex justify-content-between">
             <div>
+                @if($sale->no_so == null)
                 <h2><b>Quotation Order #{{ $sale->quotation_id }}</b></h2>
+                @else
+                <h2><b>Sales Order #{{ $sale->no_so }}</b></h2>
+                @endif
             </div>
             <div>
                 <a href="{{ url('sales-orders/'.$sale->id.'/edit') }}" class="btn btn-secondary mr-3">
@@ -210,36 +217,37 @@
                         </tr>
                     </thead>
                     <tbody>
-                     {{ $flag = 0 }} 
-
-                     @foreach($sale->details as $details)
-                     @if($details->status==1) @php $flag++ @endphp @endif
-                     <tr>
-                        <td>
-                            {{ $details->id }}
-                        </td>
-                        <td>
-                            {{ $details->stock->item->name }}
-                        </td>
-                        <td>
-                            {{ $details->qty }}
-                        </td>
-                        <td>
-                            Rp{{number_format($details->price) }},00
-                        </td>
-                        <td>
-                            {{ $details->discount}}%
-                        </td>
-                        <td>
-                            Rp{{number_format($details->total)}},00
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                        @php
+                        $flag = 0;
+                        @endphp
+                        @foreach($sale->details as $details)
+                        @if($details->status==1) @php $flag++ @endphp @endif
+                        <tr>
+                            <td>
+                                {{ $loop->iteration }}
+                            </td>
+                            <td>
+                                {{ $details->stock->item->name }}
+                            </td>
+                            <td>
+                                {{ $details->qty }}
+                            </td>
+                            <td>
+                                Rp{{number_format($details->price) }},00
+                            </td>
+                            <td>
+                                {{ $details->discount}}%
+                            </td>
+                            <td>
+                                Rp{{number_format($details->total)}},00
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 <div class="row">

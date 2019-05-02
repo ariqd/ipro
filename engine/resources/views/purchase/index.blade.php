@@ -2,6 +2,19 @@
 
 @section('title', 'Purchase Order')
 
+@push('css')
+<link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet"/>
+<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet"/>
+@endpush
+
+@push('js')
+<script src="{{ asset('assets/plugins/DataTables/datatables.min.js') }}"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.19/features/scrollResize/dataTables.scrollResize.min.js"></script>
+
+<script type="text/javascript">
+    $('.data-table').DataTable();
+</script>
+@endpush
 @section('content')
 <div class="container">
     <div class="row">
@@ -20,7 +33,7 @@
             </div>
             <div class="col-lg-12">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-light">
+                    <table class="table data-table table-bordered table-light">
                         <thead>
                             <tr>
                                 <th>Date</th>
@@ -34,7 +47,11 @@
                             <tr>
                                 <td>{{ date("l, d-m-Y",strtotime($key->created_at)) }}</td>
                                 <td>{{ $key->purchase_number }}</td>
-                                <td>{{ $key->purchase_number }}</td>
+                                <td>@if($key->approval_status == 1)
+                                    <span class="badge badge-success">Approved</span>
+                                    @else
+                                    <span class="badge badge-danger">Not Approved</span>
+                                @endif</td>
                                 <td>
                                     <a href="{{ url('purchase-orders/'.$key->id) }}" class="btn btn-dark btn-sm">
                                         Show

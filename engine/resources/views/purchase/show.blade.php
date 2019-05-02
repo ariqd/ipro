@@ -5,16 +5,16 @@
 @push("css")
 <style>
 .loading {
-    background: lightgrey;
-    padding: 15px;
-    position: fixed;
-    border-radius: 4px;
-    left: 50%;
-    top: 50%;
-    text-align: center;
-    margin: -40px 0 0 -50px;
-    z-index: 2000;
-    display: none;
+  background: lightgrey;
+  padding: 15px;
+  position: fixed;
+  border-radius: 4px;
+  left: 50%;
+  top: 50%;
+  text-align: center;
+  margin: -40px 0 0 -50px;
+  z-index: 2000;
+  display: none;
 }
 /* The switch - the box around the slider */
 .switch {
@@ -87,105 +87,118 @@ input:checked + .slider:before {
 @section('content')
 {{--@include('layouts.ajax', ['size' => 'lg'])--}}
 <div class="loading">
-    <i class="fas fa-sync fa-spin fa-2x fa-fw"></i><br/>
-    <span>Loading</span>
+  <i class="fas fa-sync fa-spin fa-2x fa-fw"></i><br/>
+  <span>Loading</span>
 </div>
 <div class="container">
-    <div class="row">
-        <div class="col-lg-12">
-            @include("layouts.feedback")
-            <div class="d-flex justify-content-between">
-                <div>
-                    <h2>
-                        {{--Buat Purchase Order Baru--}}
-                        <small>
-                            <a href="{{ url('purchase-orders') }}" class="text-dark">Purchase Orders</a> /
-                        </small>
-                        <b>Show</b>
-                    </h2>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-lg-12">
+      @include("layouts.feedback")
+      <div class="d-flex justify-content-between">
+        <div>
+          <h2>
+            {{--Buat Purchase Order Baru--}}
+            <small>
+              <a href="{{ url('purchase-orders') }}" class="text-dark">Purchase Orders</a> /
+            </small>
+            <b>Show</b>
+          </h2>
         </div>
+      </div>
     </div>
+  </div>
 
 
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="form-group row">
-                <label for="payment_method" class="col-4 col-form-label">Purchase Order ID</label>
-                <div class="col-7">
-                    <input disabled="" type="text" class="form-control" id="customer" name="po_order" value="{{ $header->purchase_number }}">
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="form-group row">
+        <label for="payment_method" class="col-4 col-form-label">Purchase Order ID</label>
+        <div class="col-7">
+          <input disabled="" type="text" class="form-control" id="customer" name="po_order" value="{{ $header->purchase_number }}">
         </div>
-        <div class="col-lg-6 d-none">
-            <div class="form-group row">
-                <label for="payment_method" class="col-4 col-form-label">Sales Order ID</label>
-                <div class="col-7">
-                    <input type="text" autocomplete="off" onchange="searchSales()" class="form-control" id="salesorderid" name="so_order">
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="row">
-
-        <div class="col-lg-12">
-            <h4>List PO</h4>
-            <div class="table-responsive">
-                <table class="table table-bordered table-light">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Kategori</th>
-                            <th>Kode Barang</th>
-                            <th>Item</th>
-                            <th>Berat/pcs</th>
-                            <th>Order Qty/pcs</th>
-                            <th>Approval Qty/pcs</th>
-                            <th>Price/pcs</th>
-                            <th>Total Amount (IDR)</th>
-                            @if(Gate::allows('isFinance'))
-                            <th>Approve</th>
-                            @endif
-                        </tr>
-                    </thead>
-                    <tbody id="purchase-body">
-                        <form action="{{ url("purchase-orders/$header->id/approve") }}" method="post">
-                            @csrf
-                            @foreach($line as $key)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $key->item->category->brand->name }} {{ $key->item->category->name }}</td>
-                                <td>{{ $key->item->code }}</td>
-                                <td>{{ $key->item->name }}</td>
-                                <td>{{ $key->item->weight }}</td>
-                                <td>{{ $key->qty }}</td>
-                                <td><input type="number" name="{{ "qty-".$key->id }}" class="form-control"></td>
-                                <td>{{ $key->purchase_price }}</td>
-                                <td>{{ $key->total_price }}</td>
-                                @if(Gate::allows('isFinance'))
-                                <td><label class="switch">
-                                    <input type="checkbox" name="{{"approve-".$key->id }}">
-                                    <span class="slider"></span>
-                                </label>
-                            </td>
-                            @endif
-                        </tr>
-                        @endforeach
-
-                    </tbody>
-                </table>
-            </div>
+    <div class="col-lg-6 d-none">
+      <div class="form-group row">
+        <label for="payment_method" class="col-4 col-form-label">Sales Order ID</label>
+        <div class="col-7">
+          <input type="text" autocomplete="off" onchange="searchSales()" class="form-control" id="salesorderid" name="so_order">
         </div>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6">
+  </div>
+  <div class="row">
 
-        </div>
-        <div class="col-lg-6">
+    <div class="col-lg-12">
+      <h4>List PO</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered table-light">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>Kategori</th>
+              <th>Kode Barang</th>
+              <th>Item</th>
+              <th>Berat/pcs</th>
+              <th>Order Qty/pcs</th>
+              <th>Approval Qty/pcs</th>              
+              <th>Price/pcs</th>
+              <th>Total Amount (IDR)</th>
+              @if(Gate::allows('isFinance'))
+              <th>Approve</th>
+              @endif
+            </tr>
+          </thead>
+          <tbody id="purchase-body">
+            <form action="{{ url("purchase-orders/$header->id/approve") }}" method="post">
+              @csrf
+              @foreach($line as $key)
 
-            <input type="submit" class="form-control btn btn-success" value="Create Purchase Order">
-        </form>
+              <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $key->item->category->brand->name }} {{ $key->item->category->name }}</td>
+                <td>{{ $key->item->code }}</td>
+                <td>{{ $key->item->name }}</td>
+                <td>{{ $key->item->weight }}</td>
+                <td>{{ $key->qty }}</td>
+                @if(Gate::allows('isFinance'))
+                @if($key->approval_finance > 1)
+                <td><input type="number" min="1" max="{{ $key->qty }}" value="{{ $key->qty }}" name="{{ "qty-".$key->id }}" class="form-control"></td>
+                @else
+                <td>{{ $key->qty_approval }}</td>
+                @endif
+                @else
+                <td>{{ $key->qty_approval }}</td>
+                @endif
+                <td>{{ $key->purchase_price }}</td>
+                <td>{{ $key->total_price }}</td>
+                @if(Gate::allows('isFinance'))
+                <td><label class="switch">
+                  <input  @if($key->approval_finance == 0)  @else checked="" @endif type="checkbox" name="{{"approve-".$key->id }}">
+                  <span class="slider"></span>
+                </label>
+              </td>
+              @endif
+            </tr>
+            @endforeach
+
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+
+    </div>
+    <div class="col-lg-6">
+      @if(Gate::allows('isFinance'))
+      @if($key->approval_finance == 0)
+      @elseif($key->approval_finance == null)
+      <input type="submit" class="form-control btn btn-success" value="Create Purchase Order">
+      @endif
+      @endif
+    </form>
+  </div>
 </div>
 @endsection

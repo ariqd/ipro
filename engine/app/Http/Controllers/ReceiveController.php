@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Receive;
 use App\Receive_Detail;
 use App\Purchase;
+use App\Purchase_Detail;
 
 class ReceiveController extends Controller
 {
@@ -53,7 +54,15 @@ class ReceiveController extends Controller
             $data["receive_id"]=$receive->id;
             $data["qty_get"]=$request->qtyget[$i];
             $data["purchase_detail_id"]=$request->purchasedetailid[$i];
+
+            $purchasedetails = Purchase_Detail::find($request->purchasedetailid[$i]);
+            $purchasedetails->qty = $request->qtyget[$i];
+            $purchasedetails->save();
+            $price = $purchasedetails->total_price / $purchasedetails->qty;
+            $data["total_price"]=$price * $request->qtyget[$i];
+            
             Receive_Detail::create($data);
+
         }
         return redirect('goods-receive')->with("info","Barang diterima dengan nomor ".$request->receipt);
     }

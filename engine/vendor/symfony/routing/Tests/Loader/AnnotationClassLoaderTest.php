@@ -13,9 +13,6 @@ namespace Symfony\Component\Routing\Tests\Loader;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\AnnotationRegistry;
-use LogicException;
-use ReflectionClass;
-use ReflectionMethod;
 use Symfony\Component\Routing\Annotation\Route as RouteAnnotation;
 use Symfony\Component\Routing\Loader\AnnotationClassLoader;
 use Symfony\Component\Routing\Route;
@@ -50,7 +47,7 @@ class AnnotationClassLoaderTest extends AbstractAnnotationLoaderTest
     {
         $reader = new AnnotationReader();
         $this->loader = new class($reader) extends AnnotationClassLoader {
-            protected function configureRoute(Route $route, ReflectionClass $class, ReflectionMethod $method, $annot)
+            protected function configureRoute(Route $route, \ReflectionClass $class, \ReflectionMethod $method, $annot)
             {
             }
         };
@@ -216,7 +213,7 @@ class AnnotationClassLoaderTest extends AbstractAnnotationLoaderTest
             ->will($this->returnValue([]))
         ;
         $loader = new class($reader) extends AnnotationClassLoader {
-            protected function configureRoute(Route $route, ReflectionClass $class, ReflectionMethod $method, $annot)
+            protected function configureRoute(Route $route, \ReflectionClass $class, \ReflectionMethod $method, $annot)
             {
             }
         };
@@ -237,13 +234,13 @@ class AnnotationClassLoaderTest extends AbstractAnnotationLoaderTest
 
     public function testMissingPrefixLocale()
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(\LogicException::class);
         $this->loader->load(LocalizedPrefixMissingLocaleActionController::class);
     }
 
     public function testMissingRouteLocale()
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(\LogicException::class);
         $this->loader->load(LocalizedPrefixMissingRouteLocaleActionController::class);
     }
 
@@ -263,13 +260,13 @@ class AnnotationClassLoaderTest extends AbstractAnnotationLoaderTest
 
     public function testNonExistingClass()
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(\LogicException::class);
         $this->loader->load('ClassThatDoesNotExist');
     }
 
     public function testLoadingAbstractClass()
     {
-        $this->expectException(LogicException::class);
+        $this->expectException(\LogicException::class);
         $this->loader->load(AbstractClassController::class);
     }
 

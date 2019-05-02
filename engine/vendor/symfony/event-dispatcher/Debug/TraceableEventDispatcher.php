@@ -11,10 +11,7 @@
 
 namespace Symfony\Component\EventDispatcher\Debug;
 
-use Exception;
-use function is_int;
 use Psr\Log\LoggerInterface;
-use SplObjectStorage;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -128,7 +125,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
     public function dispatch($eventName, Event $event = null)
     {
         if (null === $this->callStack) {
-            $this->callStack = new SplObjectStorage();
+            $this->callStack = new \SplObjectStorage();
         }
 
         if (null === $event) {
@@ -187,7 +184,7 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
     {
         try {
             $allListeners = $this->getListeners();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             if (null !== $this->logger) {
                 $this->logger->info('An exception was thrown while getting the uncalled listeners.', ['exception' => $e]);
             }
@@ -331,11 +328,11 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
             return $cmp;
         }
 
-        if (is_int($a['priority']) && !is_int($b['priority'])) {
+        if (\is_int($a['priority']) && !\is_int($b['priority'])) {
             return 1;
         }
 
-        if (!is_int($a['priority']) && is_int($b['priority'])) {
+        if (!\is_int($a['priority']) && \is_int($b['priority'])) {
             return -1;
         }
 

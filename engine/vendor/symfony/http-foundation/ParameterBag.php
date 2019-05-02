@@ -11,19 +11,12 @@
 
 namespace Symfony\Component\HttpFoundation;
 
-use function array_key_exists;
-use ArrayIterator;
-use function count;
-use Countable;
-use function is_array;
-use IteratorAggregate;
-
 /**
  * ParameterBag is a container for key/value pairs.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class ParameterBag implements IteratorAggregate, Countable
+class ParameterBag implements \IteratorAggregate, \Countable
 {
     /**
      * Parameter storage.
@@ -88,7 +81,7 @@ class ParameterBag implements IteratorAggregate, Countable
      */
     public function get($key, $default = null)
     {
-        return array_key_exists($key, $this->parameters) ? $this->parameters[$key] : $default;
+        return \array_key_exists($key, $this->parameters) ? $this->parameters[$key] : $default;
     }
 
     /**
@@ -111,7 +104,7 @@ class ParameterBag implements IteratorAggregate, Countable
      */
     public function has($key)
     {
-        return array_key_exists($key, $this->parameters);
+        return \array_key_exists($key, $this->parameters);
     }
 
     /**
@@ -207,12 +200,12 @@ class ParameterBag implements IteratorAggregate, Countable
         $value = $this->get($key, $default);
 
         // Always turn $options into an array - this allows filter_var option shortcuts.
-        if (!is_array($options) && $options) {
+        if (!\is_array($options) && $options) {
             $options = ['flags' => $options];
         }
 
         // Add a convenience check for arrays.
-        if (is_array($value) && !isset($options['flags'])) {
+        if (\is_array($value) && !isset($options['flags'])) {
             $options['flags'] = FILTER_REQUIRE_ARRAY;
         }
 
@@ -222,11 +215,11 @@ class ParameterBag implements IteratorAggregate, Countable
     /**
      * Returns an iterator for parameters.
      *
-     * @return ArrayIterator An \ArrayIterator instance
+     * @return \ArrayIterator An \ArrayIterator instance
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->parameters);
+        return new \ArrayIterator($this->parameters);
     }
 
     /**
@@ -236,6 +229,6 @@ class ParameterBag implements IteratorAggregate, Countable
      */
     public function count()
     {
-        return count($this->parameters);
+        return \count($this->parameters);
     }
 }

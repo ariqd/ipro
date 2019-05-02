@@ -11,9 +11,6 @@
 
 namespace Symfony\Component\VarDumper\Cloner;
 
-use function get_class;
-use ReflectionClass;
-
 /**
  * Represents the main properties of a PHP variable.
  *
@@ -51,10 +48,10 @@ class Stub
     {
         $properties = [];
 
-        if (!isset(self::$defaultProperties[$c = get_class($this)])) {
+        if (!isset(self::$defaultProperties[$c = \get_class($this)])) {
             self::$defaultProperties[$c] = get_class_vars($c);
 
-            foreach ((new ReflectionClass($c))->getStaticProperties() as $k => $v) {
+            foreach ((new \ReflectionClass($c))->getStaticProperties() as $k => $v) {
                 unset(self::$defaultProperties[$c][$k]);
             }
         }

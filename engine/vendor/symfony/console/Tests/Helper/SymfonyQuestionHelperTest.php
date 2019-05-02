@@ -2,8 +2,6 @@
 
 namespace Symfony\Component\Console\Tests\Helper;
 
-use InvalidArgumentException;
-use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\SymfonyQuestionHelper;
@@ -49,7 +47,7 @@ class SymfonyQuestionHelperTest extends AbstractQuestionHelperTest
             $question->setMaxAttempts(1);
             $questionHelper->ask($this->createStreamableInputInterfaceMock($inputStream), $output = $this->createOutputInterface(), $question);
             $this->fail();
-        } catch (InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException $e) {
             $this->assertEquals('Value "Fabien" is invalid', $e->getMessage());
         }
 
@@ -125,7 +123,7 @@ class SymfonyQuestionHelperTest extends AbstractQuestionHelperTest
     }
 
     /**
-     * @expectedException        RuntimeException
+     * @expectedException        \Symfony\Component\Console\Exception\RuntimeException
      * @expectedExceptionMessage Aborted.
      */
     public function testAskThrowsExceptionOnMissingInput()

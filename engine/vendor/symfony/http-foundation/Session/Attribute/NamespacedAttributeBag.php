@@ -11,9 +11,6 @@
 
 namespace Symfony\Component\HttpFoundation\Session\Attribute;
 
-use function array_key_exists;
-use function count;
-
 /**
  * This class provides structured storage of session attributes using
  * a name spacing character in the key.
@@ -47,7 +44,7 @@ class NamespacedAttributeBag extends AttributeBag
             return false;
         }
 
-        return array_key_exists($name, $attributes);
+        return \array_key_exists($name, $attributes);
     }
 
     /**
@@ -63,7 +60,7 @@ class NamespacedAttributeBag extends AttributeBag
             return $default;
         }
 
-        return array_key_exists($name, $attributes) ? $attributes[$name] : $default;
+        return \array_key_exists($name, $attributes) ? $attributes[$name] : $default;
     }
 
     /**
@@ -84,7 +81,7 @@ class NamespacedAttributeBag extends AttributeBag
         $retval = null;
         $attributes = &$this->resolveAttributePath($name);
         $name = $this->resolveKey($name);
-        if (null !== $attributes && array_key_exists($name, $attributes)) {
+        if (null !== $attributes && \array_key_exists($name, $attributes)) {
             $retval = $attributes[$name];
             unset($attributes[$name]);
         }
@@ -113,7 +110,7 @@ class NamespacedAttributeBag extends AttributeBag
         }
 
         $parts = explode($this->namespaceCharacter, $name);
-        if (count($parts) < 2) {
+        if (\count($parts) < 2) {
             if (!$writeContext) {
                 return $array;
             }
@@ -123,10 +120,10 @@ class NamespacedAttributeBag extends AttributeBag
             return $array;
         }
 
-        unset($parts[count($parts) - 1]);
+        unset($parts[\count($parts) - 1]);
 
         foreach ($parts as $part) {
-            if (null !== $array && !array_key_exists($part, $array)) {
+            if (null !== $array && !\array_key_exists($part, $array)) {
                 if (!$writeContext) {
                     $null = null;
 

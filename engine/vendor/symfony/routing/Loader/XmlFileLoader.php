@@ -11,12 +11,6 @@
 
 namespace Symfony\Component\Routing\Loader;
 
-use function dirname;
-use DOMDocument;
-use DOMElement;
-use InvalidArgumentException;
-use function is_array;
-use function is_string;
 use Symfony\Component\Config\Loader\FileLoader;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Config\Util\XmlUtils;
@@ -42,7 +36,7 @@ class XmlFileLoader extends FileLoader
      *
      * @return RouteCollection A RouteCollection instance
      *
-     * @throws InvalidArgumentException when the file cannot be loaded or when the XML cannot be
+     * @throws \InvalidArgumentException when the file cannot be loaded or when the XML cannot be
      *                                   parsed because it does not validate against the scheme
      */
     public function load($file, $type = null)
@@ -56,7 +50,7 @@ class XmlFileLoader extends FileLoader
 
         // process routes and imports
         foreach ($xml->documentElement->childNodes as $node) {
-            if (!$node instanceof DOMElement) {
+            if (!$node instanceof \DOMElement) {
                 continue;
             }
 
@@ -70,13 +64,13 @@ class XmlFileLoader extends FileLoader
      * Parses a node from a loaded XML file.
      *
      * @param RouteCollection $collection Collection to associate with the node
-     * @param DOMElement     $node       Element to parse
+     * @param \DOMElement     $node       Element to parse
      * @param string          $path       Full path of the XML file being processed
      * @param string          $file       Loaded file name
      *
-     * @throws InvalidArgumentException When the XML is invalid
+     * @throws \InvalidArgumentException When the XML is invalid
      */
-    protected function parseNode(RouteCollection $collection, DOMElement $node, $path, $file)
+    protected function parseNode(RouteCollection $collection, \DOMElement $node, $path, $file)
     {
         if (self::NAMESPACE_URI !== $node->namespaceURI) {
             return;
@@ -90,7 +84,7 @@ class XmlFileLoader extends FileLoader
                 $this->parseImport($collection, $node, $path, $file);
                 break;
             default:
-                throw new InvalidArgumentException(sprintf('Unknown tag "%s" used in file "%s". Expected "route" or "import".', $node->localName, $path));
+                throw new \InvalidArgumentException(sprintf('Unknown tag "%s" used in file "%s". Expected "route" or "import".', $node->localName, $path));
         }
     }
 
@@ -99,22 +93,22 @@ class XmlFileLoader extends FileLoader
      */
     public function supports($resource, $type = null)
     {
-        return is_string($resource) && 'xml' === pathinfo($resource, PATHINFO_EXTENSION) && (!$type || 'xml' === $type);
+        return \is_string($resource) && 'xml' === pathinfo($resource, PATHINFO_EXTENSION) && (!$type || 'xml' === $type);
     }
 
     /**
      * Parses a route and adds it to the RouteCollection.
      *
      * @param RouteCollection $collection RouteCollection instance
-     * @param DOMElement     $node       Element to parse that represents a Route
+     * @param \DOMElement     $node       Element to parse that represents a Route
      * @param string          $path       Full path of the XML file being processed
      *
-     * @throws InvalidArgumentException When the XML is invalid
+     * @throws \InvalidArgumentException When the XML is invalid
      */
-    protected function parseRoute(RouteCollection $collection, DOMElement $node, $path)
+    protected function parseRoute(RouteCollection $collection, \DOMElement $node, $path)
     {
         if ('' === $id = $node->getAttribute('id')) {
-            throw new InvalidArgumentException(sprintf('The <route> element in file "%s" must have an "id" attribute.', $path));
+            throw new \InvalidArgumentException(sprintf('The <route> element in file "%s" must have an "id" attribute.', $path));
         }
 
         $schemes = preg_split('/[\s,\|]++/', $node->getAttribute('schemes'), -1, PREG_SPLIT_NO_EMPTY);
@@ -123,11 +117,11 @@ class XmlFileLoader extends FileLoader
         list($defaults, $requirements, $options, $condition, $paths) = $this->parseConfigs($node, $path);
 
         if (!$paths && '' === $node->getAttribute('path')) {
-            throw new InvalidArgumentException(sprintf('The <route> element in file "%s" must have a "path" attribute or <path> child nodes.', $path));
+            throw new \InvalidArgumentException(sprintf('The <route> element in file "%s" must have a "path" attribute or <path> child nodes.', $path));
         }
 
         if ($paths && '' !== $node->getAttribute('path')) {
-            throw new InvalidArgumentException(sprintf('The <route> element in file "%s" must not have both a "path" attribute and <path> child nodes.', $path));
+            throw new \InvalidArgumentException(sprintf('The <route> element in file "%s" must not have both a "path" attribute and <path> child nodes.', $path));
         }
 
         if (!$paths) {
@@ -147,16 +141,16 @@ class XmlFileLoader extends FileLoader
      * Parses an import and adds the routes in the resource to the RouteCollection.
      *
      * @param RouteCollection $collection RouteCollection instance
-     * @param DOMElement     $node       Element to parse that represents a Route
+     * @param \DOMElement     $node       Element to parse that represents a Route
      * @param string          $path       Full path of the XML file being processed
      * @param string          $file       Loaded file name
      *
-     * @throws InvalidArgumentException When the XML is invalid
+     * @throws \InvalidArgumentException When the XML is invalid
      */
-    protected function parseImport(RouteCollection $collection, DOMElement $node, $path, $file)
+    protected function parseImport(RouteCollection $collection, \DOMElement $node, $path, $file)
     {
         if ('' === $resource = $node->getAttribute('resource')) {
-            throw new InvalidArgumentException(sprintf('The <import> element in file "%s" must have a "resource" attribute.', $path));
+            throw new \InvalidArgumentException(sprintf('The <import> element in file "%s" must have a "resource" attribute.', $path));
         }
 
         $type = $node->getAttribute('type');
@@ -169,14 +163,14 @@ class XmlFileLoader extends FileLoader
         list($defaults, $requirements, $options, $condition, /* $paths */, $prefixes) = $this->parseConfigs($node, $path);
 
         if ('' !== $prefix && $prefixes) {
-            throw new InvalidArgumentException(sprintf('The <route> element in file "%s" must not have both a "prefix" attribute and <prefix> child nodes.', $path));
+            throw new \InvalidArgumentException(sprintf('The <route> element in file "%s" must not have both a "prefix" attribute and <prefix> child nodes.', $path));
         }
 
-        $this->setCurrentDir(dirname($path));
+        $this->setCurrentDir(\dirname($path));
 
         $imported = $this->import($resource, ('' !== $type ? $type : null), false, $file);
 
-        if (!is_array($imported)) {
+        if (!\is_array($imported)) {
             $imported = [$imported];
         }
 
@@ -207,7 +201,7 @@ class XmlFileLoader extends FileLoader
                             $subCollection->add($name.'.'.$locale, $localizedRoute);
                         }
                     } elseif (!isset($prefixes[$locale])) {
-                        throw new InvalidArgumentException(sprintf('Route "%s" with locale "%s" is missing a corresponding prefix when imported in "%s".', $name, $locale, $path));
+                        throw new \InvalidArgumentException(sprintf('Route "%s" with locale "%s" is missing a corresponding prefix when imported in "%s".', $name, $locale, $path));
                     } else {
                         $route->setPath($prefixes[$locale].(!$trailingSlashOnRoot && '/' === $route->getPath() ? '' : $route->getPath()));
                         $subCollection->add($name, $route);
@@ -244,9 +238,9 @@ class XmlFileLoader extends FileLoader
      *
      * @param string $file An XML file path
      *
-     * @return DOMDocument
+     * @return \DOMDocument
      *
-     * @throws InvalidArgumentException When loading of XML file fails because of syntax errors
+     * @throws \InvalidArgumentException When loading of XML file fails because of syntax errors
      *                                   or when the XML structure is not as expected by the scheme -
      *                                   see validate()
      */
@@ -258,14 +252,14 @@ class XmlFileLoader extends FileLoader
     /**
      * Parses the config elements (default, requirement, option).
      *
-     * @param DOMElement $node Element to parse that contains the configs
+     * @param \DOMElement $node Element to parse that contains the configs
      * @param string      $path Full path of the XML file being processed
      *
      * @return array An array with the defaults as first item, requirements as second and options as third
      *
-     * @throws InvalidArgumentException When the XML is invalid
+     * @throws \InvalidArgumentException When the XML is invalid
      */
-    private function parseConfigs(DOMElement $node, $path)
+    private function parseConfigs(\DOMElement $node, $path)
     {
         $defaults = [];
         $requirements = [];
@@ -274,7 +268,7 @@ class XmlFileLoader extends FileLoader
         $prefixes = [];
         $paths = [];
 
-        /** @var DOMElement $n */
+        /** @var \DOMElement $n */
         foreach ($node->getElementsByTagNameNS(self::NAMESPACE_URI, '*') as $n) {
             if ($node !== $n->parentNode) {
                 continue;
@@ -305,7 +299,7 @@ class XmlFileLoader extends FileLoader
                     $condition = trim($n->textContent);
                     break;
                 default:
-                    throw new InvalidArgumentException(sprintf('Unknown tag "%s" used in file "%s". Expected "default", "requirement", "option" or "condition".', $n->localName, $path));
+                    throw new \InvalidArgumentException(sprintf('Unknown tag "%s" used in file "%s". Expected "default", "requirement", "option" or "condition".', $n->localName, $path));
             }
         }
 
@@ -313,7 +307,7 @@ class XmlFileLoader extends FileLoader
             if (isset($defaults['_controller'])) {
                 $name = $node->hasAttribute('id') ? sprintf('"%s"', $node->getAttribute('id')) : sprintf('the "%s" tag', $node->tagName);
 
-                throw new InvalidArgumentException(sprintf('The routing file "%s" must not specify both the "controller" attribute and the defaults key "_controller" for %s.', $path, $name));
+                throw new \InvalidArgumentException(sprintf('The routing file "%s" must not specify both the "controller" attribute and the defaults key "_controller" for %s.', $path, $name));
             }
 
             $defaults['_controller'] = $controller;
@@ -325,12 +319,12 @@ class XmlFileLoader extends FileLoader
     /**
      * Parses the "default" elements.
      *
-     * @param DOMElement $element The "default" element to parse
+     * @param \DOMElement $element The "default" element to parse
      * @param string      $path    Full path of the XML file being processed
      *
      * @return array|bool|float|int|string|null The parsed value of the "default" element
      */
-    private function parseDefaultsConfig(DOMElement $element, $path)
+    private function parseDefaultsConfig(\DOMElement $element, $path)
     {
         if ($this->isElementValueNull($element)) {
             return;
@@ -340,7 +334,7 @@ class XmlFileLoader extends FileLoader
         // only be a single element inside a default element. So this element
         // (if one was found) can safely be returned.
         foreach ($element->childNodes as $child) {
-            if (!$child instanceof DOMElement) {
+            if (!$child instanceof \DOMElement) {
                 continue;
             }
 
@@ -360,14 +354,14 @@ class XmlFileLoader extends FileLoader
     /**
      * Recursively parses the value of a "default" element.
      *
-     * @param DOMElement $node The node value
+     * @param \DOMElement $node The node value
      * @param string      $path Full path of the XML file being processed
      *
      * @return array|bool|float|int|string The parsed value
      *
-     * @throws InvalidArgumentException when the XML is invalid
+     * @throws \InvalidArgumentException when the XML is invalid
      */
-    private function parseDefaultNode(DOMElement $node, $path)
+    private function parseDefaultNode(\DOMElement $node, $path)
     {
         if ($this->isElementValueNull($node)) {
             return;
@@ -386,7 +380,7 @@ class XmlFileLoader extends FileLoader
                 $list = [];
 
                 foreach ($node->childNodes as $element) {
-                    if (!$element instanceof DOMElement) {
+                    if (!$element instanceof \DOMElement) {
                         continue;
                     }
 
@@ -402,7 +396,7 @@ class XmlFileLoader extends FileLoader
                 $map = [];
 
                 foreach ($node->childNodes as $element) {
-                    if (!$element instanceof DOMElement) {
+                    if (!$element instanceof \DOMElement) {
                         continue;
                     }
 
@@ -415,11 +409,11 @@ class XmlFileLoader extends FileLoader
 
                 return $map;
             default:
-                throw new InvalidArgumentException(sprintf('Unknown tag "%s" used in file "%s". Expected "bool", "int", "float", "string", "list", or "map".', $node->localName, $path));
+                throw new \InvalidArgumentException(sprintf('Unknown tag "%s" used in file "%s". Expected "bool", "int", "float", "string", "list", or "map".', $node->localName, $path));
         }
     }
 
-    private function isElementValueNull(DOMElement $element)
+    private function isElementValueNull(\DOMElement $element)
     {
         $namespaceUri = 'http://www.w3.org/2001/XMLSchema-instance';
 

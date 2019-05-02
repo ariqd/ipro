@@ -11,12 +11,6 @@
 
 namespace Symfony\Component\HttpFoundation;
 
-use function array_key_exists;
-use DateTime;
-use DateTimeZone;
-use function in_array;
-use InvalidArgumentException;
-
 /**
  * ResponseHeaderBag is a container for Response HTTP headers.
  *
@@ -128,7 +122,7 @@ class ResponseHeaderBag extends HeaderBag
         parent::set($key, $values, $replace);
 
         // ensure the cache-control header has sensible defaults
-        if (in_array($uniqueKey, ['cache-control', 'etag', 'last-modified', 'expires'], true)) {
+        if (\in_array($uniqueKey, ['cache-control', 'etag', 'last-modified', 'expires'], true)) {
             $computed = $this->computeCacheControlValue();
             $this->headers['cache-control'] = [$computed];
             $this->headerNames['cache-control'] = 'Cache-Control';
@@ -166,7 +160,7 @@ class ResponseHeaderBag extends HeaderBag
      */
     public function hasCacheControlDirective($key)
     {
-        return array_key_exists($key, $this->computedCacheControl);
+        return \array_key_exists($key, $this->computedCacheControl);
     }
 
     /**
@@ -174,7 +168,7 @@ class ResponseHeaderBag extends HeaderBag
      */
     public function getCacheControlDirective($key)
     {
-        return array_key_exists($key, $this->computedCacheControl) ? $this->computedCacheControl[$key] : null;
+        return \array_key_exists($key, $this->computedCacheControl) ? $this->computedCacheControl[$key] : null;
     }
 
     public function setCookie(Cookie $cookie)
@@ -218,12 +212,12 @@ class ResponseHeaderBag extends HeaderBag
      *
      * @return Cookie[]
      *
-     * @throws InvalidArgumentException When the $format is invalid
+     * @throws \InvalidArgumentException When the $format is invalid
      */
     public function getCookies($format = self::COOKIES_FLAT)
     {
-        if (!in_array($format, [self::COOKIES_FLAT, self::COOKIES_ARRAY])) {
-            throw new InvalidArgumentException(sprintf('Format "%s" invalid (%s).', $format, implode(', ', [self::COOKIES_FLAT, self::COOKIES_ARRAY])));
+        if (!\in_array($format, [self::COOKIES_FLAT, self::COOKIES_ARRAY])) {
+            throw new \InvalidArgumentException(sprintf('Format "%s" invalid (%s).', $format, implode(', ', [self::COOKIES_FLAT, self::COOKIES_ARRAY])));
         }
 
         if (self::COOKIES_ARRAY === $format) {
@@ -298,8 +292,8 @@ class ResponseHeaderBag extends HeaderBag
 
     private function initDate()
     {
-        $now = DateTime::createFromFormat('U', time());
-        $now->setTimezone(new DateTimeZone('UTC'));
+        $now = \DateTime::createFromFormat('U', time());
+        $now->setTimezone(new \DateTimeZone('UTC'));
         $this->set('Date', $now->format('D, d M Y H:i:s').' GMT');
     }
 }

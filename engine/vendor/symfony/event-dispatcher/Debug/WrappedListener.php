@@ -11,12 +11,6 @@
 
 namespace Symfony\Component\EventDispatcher\Debug;
 
-use Closure;
-use function get_class;
-use function is_array;
-use function is_object;
-use function is_string;
-use ReflectionFunction;
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
@@ -46,11 +40,11 @@ class WrappedListener
         $this->called = false;
         $this->stoppedPropagation = false;
 
-        if (is_array($listener)) {
-            $this->name = is_object($listener[0]) ? get_class($listener[0]) : $listener[0];
+        if (\is_array($listener)) {
+            $this->name = \is_object($listener[0]) ? \get_class($listener[0]) : $listener[0];
             $this->pretty = $this->name.'::'.$listener[1];
-        } elseif ($listener instanceof Closure) {
-            $r = new ReflectionFunction($listener);
+        } elseif ($listener instanceof \Closure) {
+            $r = new \ReflectionFunction($listener);
             if (false !== strpos($r->name, '{closure}')) {
                 $this->pretty = $this->name = 'closure';
             } elseif ($class = $r->getClosureScopeClass()) {
@@ -59,10 +53,10 @@ class WrappedListener
             } else {
                 $this->pretty = $this->name = $r->name;
             }
-        } elseif (is_string($listener)) {
+        } elseif (\is_string($listener)) {
             $this->pretty = $this->name = $listener;
         } else {
-            $this->name = get_class($listener);
+            $this->name = \get_class($listener);
             $this->pretty = $this->name.'::__invoke';
         }
 

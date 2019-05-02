@@ -11,13 +11,6 @@
 
 namespace Symfony\Component\Translation\Command;
 
-use function count;
-use DOMDocument;
-use FilesystemIterator;
-use function in_array;
-use RecursiveDirectoryIterator;
-use RecursiveIteratorIterator;
-use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -91,7 +84,7 @@ EOF
         $this->format = $input->getOption('format');
         $this->displayCorrectFiles = $output->isVerbose();
 
-        if (0 === count($filenames)) {
+        if (0 === \count($filenames)) {
             if (!$stdin = $this->getStdin()) {
                 throw new RuntimeException('Please provide a filename or pipe file content to STDIN.');
             }
@@ -124,7 +117,7 @@ EOF
 
         $internal = libxml_use_internal_errors(true);
 
-        $document = new DOMDocument();
+        $document = new \DOMDocument();
         $document->loadXML($content);
 
         if (null !== $targetLanguage = $this->getTargetLanguageFromFile($document)) {
@@ -153,7 +146,7 @@ EOF
         libxml_clear_errors();
         libxml_use_internal_errors($internal);
 
-        return ['file' => $file, 'valid' => 0 === count($errors), 'messages' => $errors];
+        return ['file' => $file, 'valid' => 0 === \count($errors), 'messages' => $errors];
     }
 
     private function display(SymfonyStyle $io, array $files)
@@ -170,7 +163,7 @@ EOF
 
     private function displayTxt(SymfonyStyle $io, array $filesInfo)
     {
-        $countFiles = count($filesInfo);
+        $countFiles = \count($filesInfo);
         $erroredFiles = 0;
 
         foreach ($filesInfo as $info) {
@@ -214,13 +207,13 @@ EOF
     private function getFiles($fileOrDirectory)
     {
         if (is_file($fileOrDirectory)) {
-            yield new SplFileInfo($fileOrDirectory);
+            yield new \SplFileInfo($fileOrDirectory);
 
             return;
         }
 
         foreach ($this->getDirectoryIterator($fileOrDirectory) as $file) {
-            if (!in_array($file->getExtension(), ['xlf', 'xliff'])) {
+            if (!\in_array($file->getExtension(), ['xlf', 'xliff'])) {
                 continue;
             }
 
@@ -245,9 +238,9 @@ EOF
     private function getDirectoryIterator($directory)
     {
         $default = function ($directory) {
-            return new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($directory, FilesystemIterator::SKIP_DOTS | FilesystemIterator::FOLLOW_SYMLINKS),
-                RecursiveIteratorIterator::LEAVES_ONLY
+            return new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS),
+                \RecursiveIteratorIterator::LEAVES_ONLY
             );
         };
 
@@ -271,7 +264,7 @@ EOF
         return $default($fileOrDirectory);
     }
 
-    private function getTargetLanguageFromFile(DOMDocument $xliffContents): ?string
+    private function getTargetLanguageFromFile(\DOMDocument $xliffContents): ?string
     {
         foreach ($xliffContents->getElementsByTagName('file')[0]->attributes ?? [] as $attribute) {
             if ('target-language' === $attribute->nodeName) {

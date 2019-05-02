@@ -15,7 +15,6 @@
 
 namespace Symfony\Component\HttpKernel\Tests\HttpCache;
 
-use DateTime;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpCache\ResponseCacheStrategy;
@@ -82,7 +81,7 @@ class ResponseCacheStrategyTest extends TestCase
         $cacheStrategy = new ResponseCacheStrategy();
 
         $embeddedResponse = new Response();
-        $embeddedResponse->setLastModified(new DateTime());
+        $embeddedResponse->setLastModified(new \DateTime());
         $cacheStrategy->add($embeddedResponse);
 
         $masterResponse = new Response();
@@ -100,7 +99,7 @@ class ResponseCacheStrategyTest extends TestCase
 
         // This master response uses the "validation" model
         $masterResponse = new Response();
-        $masterResponse->setLastModified(new DateTime());
+        $masterResponse->setLastModified(new \DateTime());
         $masterResponse->setEtag('foo');
 
         // Embedded response uses "expiry" model
@@ -122,7 +121,7 @@ class ResponseCacheStrategyTest extends TestCase
         $cacheStrategy = new ResponseCacheStrategy();
 
         $masterResponse = new Response();
-        $masterResponse->setLastModified(new DateTime());
+        $masterResponse->setLastModified(new \DateTime());
         $cacheStrategy->update($masterResponse);
 
         $this->assertTrue($masterResponse->isValidateable());
@@ -227,7 +226,7 @@ class ResponseCacheStrategyTest extends TestCase
         $masterResponse = new Response();
         $masterResponse->setSharedMaxAge(3600);
         $masterResponse->setEtag('foo');
-        $masterResponse->setLastModified(new DateTime());
+        $masterResponse->setLastModified(new \DateTime());
 
         $embeddedResponse = new Response();
         $embeddedResponse->setSharedMaxAge(60);

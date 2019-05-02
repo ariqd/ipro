@@ -11,8 +11,6 @@
 
 namespace Symfony\Component\HttpKernel\Fragment;
 
-use Closure;
-use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,7 +78,7 @@ class InlineFragmentRenderer extends RoutableFragmentRenderer
         $level = ob_get_level();
         try {
             return SubRequestHandler::handle($this->kernel, $subRequest, HttpKernelInterface::SUB_REQUEST, false);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // we dispatch the exception event to trigger the logging
             // the response that comes back is ignored
             if (isset($options['ignore_errors']) && $options['ignore_errors'] && $this->dispatcher) {
@@ -123,7 +121,7 @@ class InlineFragmentRenderer extends RoutableFragmentRenderer
         static $setSession;
 
         if (null === $setSession) {
-            $setSession = Closure::bind(function ($subRequest, $request) { $subRequest->session = $request->session; }, null, Request::class);
+            $setSession = \Closure::bind(function ($subRequest, $request) { $subRequest->session = $request->session; }, null, Request::class);
         }
         $setSession($subRequest, $request);
 

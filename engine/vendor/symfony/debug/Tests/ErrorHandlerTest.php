@@ -11,10 +11,6 @@
 
 namespace Symfony\Component\Debug\Tests;
 
-use Error;
-use ErrorException;
-use Exception;
-use function func_get_args;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 use Psr\Log\NullLogger;
@@ -52,7 +48,7 @@ class ErrorHandlerTest extends TestCase
                 $h = set_error_handler('var_dump');
                 restore_error_handler();
                 $this->assertSame([$newHandler, 'handleError'], $h);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
             }
 
             restore_error_handler();
@@ -61,7 +57,7 @@ class ErrorHandlerTest extends TestCase
             if (isset($e)) {
                 throw $e;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
         }
 
         restore_error_handler();
@@ -88,7 +84,7 @@ class ErrorHandlerTest extends TestCase
                 'line' => __LINE__ - 5,
             ];
             $this->assertSame($expected, error_get_last());
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             restore_error_handler();
             restore_exception_handler();
 
@@ -103,7 +99,7 @@ class ErrorHandlerTest extends TestCase
         try {
             self::triggerNotice($this);
             $this->fail('ErrorException expected');
-        } catch (ErrorException $exception) {
+        } catch (\ErrorException $exception) {
             // if an exception is thrown, the test passed
             $this->assertEquals(E_NOTICE, $exception->getSeverity());
             $this->assertEquals(__FILE__, $exception->getFile());
@@ -199,7 +195,7 @@ class ErrorHandlerTest extends TestCase
             $handler->throwAt(3, true);
             try {
                 $handler->handleError(4, 'foo', 'foo.php', 12, []);
-            } catch (ErrorException $e) {
+            } catch (\ErrorException $e) {
                 $this->assertSame('Parse Error: foo', $e->getMessage());
                 $this->assertSame(4, $e->getSeverity());
                 $this->assertSame('foo.php', $e->getFile());
@@ -230,7 +226,7 @@ class ErrorHandlerTest extends TestCase
                 $this->assertEquals('User Deprecated: foo', $message);
                 $this->assertArrayHasKey('exception', $context);
                 $exception = $context['exception'];
-                $this->assertInstanceOf(ErrorException::class, $exception);
+                $this->assertInstanceOf(\ErrorException::class, $exception);
                 $this->assertSame('User Deprecated: foo', $exception->getMessage());
                 $this->assertSame(E_USER_DEPRECATED, $exception->getSeverity());
             };
@@ -278,7 +274,7 @@ class ErrorHandlerTest extends TestCase
 
             restore_error_handler();
             restore_exception_handler();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             restore_error_handler();
             restore_exception_handler();
 
@@ -293,12 +289,12 @@ class ErrorHandlerTest extends TestCase
             $handler->throwAt(0, true);
 
             $e = null;
-            $x = new Exception('Foo');
+            $x = new \Exception('Foo');
 
             try {
                 $f = new Fixtures\ToStringThrower($x);
                 $f .= ''; // Trigger $f->__toString()
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
             }
 
             $this->assertSame($x, $e);
@@ -314,7 +310,7 @@ class ErrorHandlerTest extends TestCase
             $this->assertEquals(LogLevel::INFO, $level);
             $this->assertArrayHasKey('exception', $context);
             $exception = $context['exception'];
-            $this->assertInstanceOf(ErrorException::class, $exception);
+            $this->assertInstanceOf(\ErrorException::class, $exception);
             $this->assertSame('User Deprecated: Foo deprecation', $exception->getMessage());
         };
 
@@ -337,14 +333,14 @@ class ErrorHandlerTest extends TestCase
         try {
             $handler = ErrorHandler::register();
 
-            $exception = new Exception('foo');
+            $exception = new \Exception('foo');
 
             $logger = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
 
             $logArgCheck = function ($level, $message, $context) {
                 $this->assertSame('Uncaught Exception: foo', $message);
                 $this->assertArrayHasKey('exception', $context);
-                $this->assertInstanceOf(Exception::class, $context['exception']);
+                $this->assertInstanceOf(\Exception::class, $context['exception']);
             };
 
             $logger
@@ -358,7 +354,7 @@ class ErrorHandlerTest extends TestCase
             try {
                 $handler->handleException($exception);
                 $this->fail('Exception expected');
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->assertSame($exception, $e);
             }
 
@@ -408,7 +404,7 @@ class ErrorHandlerTest extends TestCase
         $this->assertSame('Deprecated: Foo message', $log[1]);
         $this->assertArrayHasKey('exception', $log[2]);
         $exception = $log[2]['exception'];
-        $this->assertInstanceOf(ErrorException::class, $exception);
+        $this->assertInstanceOf(\ErrorException::class, $exception);
         $this->assertSame('Deprecated: Foo message', $exception->getMessage());
         $this->assertSame(__FILE__, $exception->getFile());
         $this->assertSame(123, $exception->getLine());
@@ -429,7 +425,7 @@ class ErrorHandlerTest extends TestCase
         $bootLogger = new BufferingLogger();
         $handler = new ErrorHandler($bootLogger);
 
-        $exception = new Exception('Foo message');
+        $exception = new \Exception('Foo message');
 
         $mockLogger = $this->getMockBuilder('Psr\Log\LoggerInterface')->getMock();
         $mockLogger->expects($this->once())
@@ -460,7 +456,7 @@ class ErrorHandlerTest extends TestCase
             $logArgCheck = function ($level, $message, $context) {
                 $this->assertEquals('Fatal Parse Error: foo', $message);
                 $this->assertArrayHasKey('exception', $context);
-                $this->assertInstanceOf(Exception::class, $context['exception']);
+                $this->assertInstanceOf(\Exception::class, $context['exception']);
             };
 
             $logger
@@ -475,7 +471,7 @@ class ErrorHandlerTest extends TestCase
 
             restore_error_handler();
             restore_exception_handler();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             restore_error_handler();
             restore_exception_handler();
 
@@ -485,11 +481,11 @@ class ErrorHandlerTest extends TestCase
 
     public function testHandleErrorException()
     {
-        $exception = new Error("Class 'IReallyReallyDoNotExistAnywhereInTheRepositoryISwear' not found");
+        $exception = new \Error("Class 'IReallyReallyDoNotExistAnywhereInTheRepositoryISwear' not found");
 
         $handler = new ErrorHandler();
         $handler->setExceptionHandler(function () use (&$args) {
-            $args = func_get_args();
+            $args = \func_get_args();
         });
 
         $handler->handleException($exception);
@@ -499,7 +495,7 @@ class ErrorHandlerTest extends TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      */
     public function testCustomExceptionHandler()
     {
@@ -508,7 +504,7 @@ class ErrorHandlerTest extends TestCase
             $handler->handleException($e);
         });
 
-        $handler->handleException(new Exception());
+        $handler->handleException(new \Exception());
     }
 
     /**

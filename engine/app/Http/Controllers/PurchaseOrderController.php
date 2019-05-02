@@ -63,14 +63,24 @@ class PurchaseOrderController extends Controller
         $purchase = Purchase::create($purchase);
         for($i = 0 ; $i < $count ; $i++){
             $itemdetail = Item::find($request->$item[$i]);
-            $purchase_detail = [
-                "item_id" => $request->$item[$i],
-                "qty" => $request->qty[$i],
-                "purchase_price" => $itemdetail->purchase_price,
-                "total_price" => $request->qty[$i]*$itemdetail->purchase_price,
-                "purchase_id" => $purchase->id,
-                "sales_id" => $request->sales[$i]
-            ];
+            if(!empty($request->sales[$i])){
+                $purchase_detail = [
+                    "item_id" => $request->$item[$i],
+                    "qty" => $request->qty[$i],
+                    "purchase_price" => $itemdetail->purchase_price,
+                    "total_price" => $request->qty[$i]*$itemdetail->purchase_price,
+                    "purchase_id" => $purchase->id,
+                    "sales_id" => $request->sales[$i]
+                ];
+            }else{
+                $purchase_detail = [
+                    "item_id" => $request->$item[$i],
+                    "qty" => $request->qty[$i],
+                    "purchase_price" => $itemdetail->purchase_price,
+                    "total_price" => $request->qty[$i]*$itemdetail->purchase_price,
+                    "purchase_id" => $purchase->id
+                ];
+            }
             Purchase_Detail::create($purchase_detail);
         }
         $counter->counter +=1;
@@ -104,6 +114,9 @@ class PurchaseOrderController extends Controller
                     $value->qty_approval = $request->$stringqty;
                 }
                 $value->approval_finance = 1;
+                $value->save();
+            }else{
+                $value->approval_finance = 0;
                 $value->save();
             }
         }

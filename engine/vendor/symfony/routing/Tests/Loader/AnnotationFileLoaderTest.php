@@ -11,7 +11,6 @@
 
 namespace Symfony\Component\Routing\Tests\Loader;
 
-use InvalidArgumentException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Loader\AnnotationFileLoader;
@@ -44,7 +43,7 @@ class AnnotationFileLoaderTest extends AbstractAnnotationLoaderTest
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage Did you forgot to add the "<?php" start tag at the beginning of the file?
      */
     public function testLoadFileWithoutStartTag()

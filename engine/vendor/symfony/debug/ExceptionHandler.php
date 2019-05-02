@@ -11,12 +11,6 @@
 
 namespace Symfony\Component\Debug;
 
-use function count;
-use Exception;
-use function is_array;
-use function is_int;
-use function is_string;
-use function strlen;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\Debug\Exception\OutOfMemoryException;
 use Symfony\Component\HttpKernel\Debug\FileLinkFormatter;
@@ -63,7 +57,7 @@ class ExceptionHandler
         $handler = new static($debug, $charset, $fileLinkFormat);
 
         $prev = set_exception_handler([$handler, 'handle']);
-        if (is_array($prev) && $prev[0] instanceof ErrorHandler) {
+        if (\is_array($prev) && $prev[0] instanceof ErrorHandler) {
             restore_exception_handler();
             $prev[0]->setExceptionHandler([$handler, 'handle']);
         }
@@ -109,7 +103,7 @@ class ExceptionHandler
      * The latter takes precedence and any output from the former is cancelled,
      * if and only if nothing bad happens in this handling path.
      */
-    public function handle(Exception $exception)
+    public function handle(\Exception $exception)
     {
         if (null === $this->handler || $exception instanceof OutOfMemoryException) {
             $this->sendPhpResponse($exception);
@@ -150,7 +144,7 @@ class ExceptionHandler
         try {
             ($this->handler)($exception);
             $this->caughtLength = $caughtLength;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             if (!$caughtLength) {
                 // All handlers failed. Let PHP handle that now.
                 throw $exception;
@@ -164,7 +158,7 @@ class ExceptionHandler
      * This method uses plain PHP functions like header() and echo to output
      * the response.
      *
-     * @param Exception|FlattenException $exception An \Exception or FlattenException instance
+     * @param \Exception|FlattenException $exception An \Exception or FlattenException instance
      */
     public function sendPhpResponse($exception)
     {
@@ -186,7 +180,7 @@ class ExceptionHandler
     /**
      * Gets the full HTML content associated with the given exception.
      *
-     * @param Exception|FlattenException $exception An \Exception or FlattenException instance
+     * @param \Exception|FlattenException $exception An \Exception or FlattenException instance
      *
      * @return string The HTML content as a string
      */
@@ -224,7 +218,7 @@ EOF;
 
         $content = '';
         try {
-            $count = count($exception->getAllPrevious());
+            $count = \count($exception->getAllPrevious());
             $total = $count + 1;
             foreach ($exception->toArray() as $position => $e) {
                 $ind = $count - $position + 1;
@@ -256,7 +250,7 @@ EOF
 
                 $content .= "</tbody>\n</table>\n</div>\n";
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // something nasty happened and we cannot throw an exception anymore
             if ($this->debug) {
                 $e = FlattenException::create($e);
@@ -382,13 +376,13 @@ EOF;
             return sprintf('<span class="block trace-file-path">in <span title="%s%3$s"><strong>%s</strong>%s</span></span>', $this->escapeHtml($path), $file, 0 < $line ? ' line '.$line : '');
         }
 
-        if (is_string($fmt)) {
-            $i = strpos($f = $fmt, '&', max(strrpos($f, '%f'), strrpos($f, '%l'))) ?: strlen($f);
+        if (\is_string($fmt)) {
+            $i = strpos($f = $fmt, '&', max(strrpos($f, '%f'), strrpos($f, '%l'))) ?: \strlen($f);
             $fmt = [substr($f, 0, $i)] + preg_split('/&([^>]++)>/', substr($f, $i), -1, PREG_SPLIT_DELIM_CAPTURE);
 
             for ($i = 1; isset($fmt[$i]); ++$i) {
                 if (0 === strpos($path, $k = $fmt[$i++])) {
-                    $path = substr_replace($path, $fmt[$i], 0, strlen($k));
+                    $path = substr_replace($path, $fmt[$i], 0, \strlen($k));
                     break;
                 }
             }
@@ -397,7 +391,7 @@ EOF;
         } else {
             try {
                 $link = $fmt->format($path, $line);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 return sprintf('<span class="block trace-file-path">in <span title="%s%3$s"><strong>%s</strong>%s</span></span>', $this->escapeHtml($path), $file, 0 < $line ? ' line '.$line : '');
             }
         }
@@ -419,7 +413,7 @@ EOF;
             if ('object' === $item[0]) {
                 $formattedValue = sprintf('<em>object</em>(%s)', $this->formatClass($item[1]));
             } elseif ('array' === $item[0]) {
-                $formattedValue = sprintf('<em>array</em>(%s)', is_array($item[1]) ? $this->formatArgs($item[1]) : $item[1]);
+                $formattedValue = sprintf('<em>array</em>(%s)', \is_array($item[1]) ? $this->formatArgs($item[1]) : $item[1]);
             } elseif ('null' === $item[0]) {
                 $formattedValue = '<em>null</em>';
             } elseif ('boolean' === $item[0]) {
@@ -430,7 +424,7 @@ EOF;
                 $formattedValue = str_replace("\n", '', $this->escapeHtml(var_export($item[1], true)));
             }
 
-            $result[] = is_int($key) ? $formattedValue : sprintf("'%s' => %s", $this->escapeHtml($key), $formattedValue);
+            $result[] = \is_int($key) ? $formattedValue : sprintf("'%s' => %s", $this->escapeHtml($key), $formattedValue);
         }
 
         return implode(', ', $result);

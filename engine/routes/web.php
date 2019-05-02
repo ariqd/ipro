@@ -21,9 +21,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('sales-orders', 'SalesOrder\SalesOrderController');
     Route::get('sales-orders/create/search-stocks', 'SalesOrder\SalesOrderSearchController@searchStocks');
     Route::get('sales-orders/search/{id}', "SalesOrder\SalesOrderSearchController@searchdetailSO");
-    Route::get('sales-orders/create/customer', 'SalesOrder\SalesOrderCustomerController@createCustomer');
-    Route::post('sales-orders/create/customer', 'SalesOrder\SalesOrderCustomerController@insertCustomer');
-    Route::get('sales-orders/create/customer/{id}', 'SalesOrder\SalesOrderCustomerController@getCustomer');
+    Route::get('sales-orders/create/customer', 'SalesOrder\SalesOrderCustomerController@create');
+    Route::post('sales-orders/create/customer', 'SalesOrder\SalesOrderCustomerController@insert');
+    Route::get('sales-orders/create/customer/{id}', 'SalesOrder\SalesOrderCustomerController@index');
     Route::get('sales-orders/check/approve', 'SalesOrder\SalesOrderApproveController@index');
     Route::get('sales-orders/{id}/payment', 'SalesOrder\SalesOrderApproveController@getPaymentForm');
     Route::post('sales-orders/{id}/payment', 'SalesOrder\SalesOrderApproveController@postPaymentForm');

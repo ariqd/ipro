@@ -19,6 +19,11 @@ class Sale extends Model
         'note'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
     public function customer()
     {
         return $this->hasOne('App\Customer', 'id', 'customer_id');

@@ -12,9 +12,6 @@
 namespace Symfony\Component\Routing\Tests\Generator;
 
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Routing\Exception\InvalidParameterException;
-use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
-use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RequestContext;
@@ -80,7 +77,7 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException \Symfony\Component\Routing\Exception\InvalidParameterException
      */
     public function testRelativeUrlWithNullParameterButNotOptional()
     {
@@ -165,8 +162,84 @@ class UrlGeneratorTest extends TestCase
         $this->assertSame('/app.php/de', $url);
     }
 
+    public function testGenerateWithDefaultLocale()
+    {
+        $routes = new RouteCollection();
+
+        $route = new Route('');
+
+        $name = 'test';
+
+        foreach (['hr' => '/foo', 'en' => '/bar'] as $locale => $path) {
+            $localizedRoute = clone $route;
+            $localizedRoute->setDefault('_locale', $locale);
+            $localizedRoute->setDefault('_canonical_route', $name);
+            $localizedRoute->setPath($path);
+            $routes->add($name.'.'.$locale, $localizedRoute);
+        }
+
+        $generator = $this->getGenerator($routes, [], null, 'hr');
+
+        $this->assertSame(
+            'http://localhost/app.php/foo',
+            $generator->generate($name, [], UrlGeneratorInterface::ABSOLUTE_URL)
+        );
+    }
+
+    public function testGenerateWithOverriddenParameterLocale()
+    {
+        $routes = new RouteCollection();
+
+        $route = new Route('');
+
+        $name = 'test';
+
+        foreach (['hr' => '/foo', 'en' => '/bar'] as $locale => $path) {
+            $localizedRoute = clone $route;
+            $localizedRoute->setDefault('_locale', $locale);
+            $localizedRoute->setDefault('_canonical_route', $name);
+            $localizedRoute->setPath($path);
+            $routes->add($name.'.'.$locale, $localizedRoute);
+        }
+
+        $generator = $this->getGenerator($routes, [], null, 'hr');
+
+        $this->assertSame(
+            'http://localhost/app.php/bar',
+            $generator->generate($name, ['_locale' => 'en'], UrlGeneratorInterface::ABSOLUTE_URL)
+        );
+    }
+
+    public function testGenerateWithOverriddenParameterLocaleFromRequestContext()
+    {
+        $routes = new RouteCollection();
+
+        $route = new Route('');
+
+        $name = 'test';
+
+        foreach (['hr' => '/foo', 'en' => '/bar'] as $locale => $path) {
+            $localizedRoute = clone $route;
+            $localizedRoute->setDefault('_locale', $locale);
+            $localizedRoute->setDefault('_canonical_route', $name);
+            $localizedRoute->setPath($path);
+            $routes->add($name.'.'.$locale, $localizedRoute);
+        }
+
+        $generator = $this->getGenerator($routes, [], null, 'hr');
+
+        $context = new RequestContext('/app.php');
+        $context->setParameter('_locale', 'en');
+        $generator->setContext($context);
+
+        $this->assertSame(
+            'http://localhost/app.php/bar',
+            $generator->generate($name, [], UrlGeneratorInterface::ABSOLUTE_URL)
+        );
+    }
+
     /**
-     * @expectedException RouteNotFoundException
+     * @expectedException \Symfony\Component\Routing\Exception\RouteNotFoundException
      */
     public function testGenerateWithoutRoutes()
     {
@@ -175,7 +248,30 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException MissingMandatoryParametersException
+     * @expectedException \Symfony\Component\Routing\Exception\RouteNotFoundException
+     */
+    public function testGenerateWithInvalidLocale()
+    {
+        $routes = new RouteCollection();
+
+        $route = new Route('');
+
+        $name = 'test';
+
+        foreach (['hr' => '/foo', 'en' => '/bar'] as $locale => $path) {
+            $localizedRoute = clone $route;
+            $localizedRoute->setDefault('_locale', $locale);
+            $localizedRoute->setDefault('_canonical_route', $name);
+            $localizedRoute->setPath($path);
+            $routes->add($name.'.'.$locale, $localizedRoute);
+        }
+
+        $generator = $this->getGenerator($routes, [], null, 'fr');
+        $generator->generate($name);
+    }
+
+    /**
+     * @expectedException \Symfony\Component\Routing\Exception\MissingMandatoryParametersException
      */
     public function testGenerateForRouteWithoutMandatoryParameter()
     {
@@ -184,7 +280,7 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException \Symfony\Component\Routing\Exception\InvalidParameterException
      */
     public function testGenerateForRouteWithInvalidOptionalParameter()
     {
@@ -193,7 +289,7 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException \Symfony\Component\Routing\Exception\InvalidParameterException
      */
     public function testGenerateForRouteWithInvalidParameter()
     {
@@ -229,7 +325,7 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException \Symfony\Component\Routing\Exception\InvalidParameterException
      */
     public function testGenerateForRouteWithInvalidMandatoryParameter()
     {
@@ -238,7 +334,7 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException \Symfony\Component\Routing\Exception\InvalidParameterException
      */
     public function testGenerateForRouteWithInvalidUtf8Parameter()
     {
@@ -247,7 +343,7 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException \Symfony\Component\Routing\Exception\InvalidParameterException
      */
     public function testRequiredParamAndEmptyPassed()
     {
@@ -401,7 +497,7 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException \Symfony\Component\Routing\Exception\InvalidParameterException
      */
     public function testDefaultRequirementOfVariableDisallowsSlash()
     {
@@ -410,7 +506,7 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException \Symfony\Component\Routing\Exception\InvalidParameterException
      */
     public function testDefaultRequirementOfVariableDisallowsNextSeparator()
     {
@@ -440,7 +536,7 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException \Symfony\Component\Routing\Exception\InvalidParameterException
      */
     public function testUrlWithInvalidParameterInHost()
     {
@@ -449,7 +545,7 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException \Symfony\Component\Routing\Exception\InvalidParameterException
      */
     public function testUrlWithInvalidParameterInHostWhenParamHasADefaultValue()
     {
@@ -458,7 +554,7 @@ class UrlGeneratorTest extends TestCase
     }
 
     /**
-     * @expectedException InvalidParameterException
+     * @expectedException \Symfony\Component\Routing\Exception\InvalidParameterException
      */
     public function testUrlWithInvalidParameterEqualsDefaultValueInHost()
     {
@@ -723,7 +819,7 @@ class UrlGeneratorTest extends TestCase
         yield ['/app.php/bar/a/b/bam/c/d/e', '/bar/{foo}/bam/{baz}', '(?<!^).+'];
     }
 
-    protected function getGenerator(RouteCollection $routes, array $parameters = [], $logger = null)
+    protected function getGenerator(RouteCollection $routes, array $parameters = [], $logger = null, string $defaultLocale = null)
     {
         $context = new RequestContext('/app.php');
         foreach ($parameters as $key => $value) {
@@ -731,7 +827,7 @@ class UrlGeneratorTest extends TestCase
             $context->$method($value);
         }
 
-        return new UrlGenerator($routes, $context, $logger);
+        return new UrlGenerator($routes, $context, $logger, $defaultLocale);
     }
 
     protected function getRoutes($name, Route $route)

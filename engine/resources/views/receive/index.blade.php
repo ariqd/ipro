@@ -43,7 +43,6 @@
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right">
 
-                                    @if(Gate::allows('isAdmin'))
                                     <a href="{{ url('goods-receive/'.$key->id) }}"
                                     class="dropdown-item">
                                     <i class="fa fa-eye"></i> Detail</a>
@@ -52,7 +51,6 @@
                                       {!! csrf_field() !!}
                                       {!! method_field('delete') !!}
                                   </form>
-                                  @endif
                               </div>
                               </
                           </tr>

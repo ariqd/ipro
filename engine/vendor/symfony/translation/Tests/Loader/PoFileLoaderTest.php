@@ -13,7 +13,6 @@ namespace Symfony\Component\Translation\Tests\Loader;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Resource\FileResource;
-use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use Symfony\Component\Translation\Loader\PoFileLoader;
 
 class PoFileLoaderTest extends TestCase
@@ -52,7 +51,7 @@ class PoFileLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException NotFoundResourceException
+     * @expectedException \Symfony\Component\Translation\Exception\NotFoundResourceException
      */
     public function testLoadNonExistingResource()
     {

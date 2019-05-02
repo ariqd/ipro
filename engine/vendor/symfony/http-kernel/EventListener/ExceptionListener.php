@@ -11,11 +11,7 @@
 
 namespace Symfony\Component\HttpKernel\EventListener;
 
-use Error;
-use Exception;
-use function func_num_args;
 use Psr\Log\LoggerInterface;
-use ReflectionProperty;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\Debug\ExceptionHandler;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -74,11 +70,11 @@ class ExceptionListener implements EventSubscriberInterface
         }
         $exception = $event->getException();
         $request = $this->duplicateRequest($exception, $event->getRequest());
-        $eventDispatcher = func_num_args() > 2 ? func_get_arg(2) : null;
+        $eventDispatcher = \func_num_args() > 2 ? func_get_arg(2) : null;
 
         try {
             $response = $event->getKernel()->handle($request, HttpKernelInterface::SUB_REQUEST, false);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $f = FlattenException::create($e);
 
             $this->logException($e, sprintf('Exception thrown when handling an exception (%s: %s at %s line %s)', $f->getClass(), $f->getMessage(), $e->getFile(), $e->getLine()));
@@ -90,7 +86,7 @@ class ExceptionListener implements EventSubscriberInterface
                 }
             } while ($prev = $wrapper->getPrevious());
 
-            $prev = new ReflectionProperty($wrapper instanceof Exception ? Exception::class : Error::class, 'previous');
+            $prev = new \ReflectionProperty($wrapper instanceof \Exception ? \Exception::class : \Error::class, 'previous');
             $prev->setAccessible(true);
             $prev->setValue($wrapper, $exception);
 
@@ -126,10 +122,10 @@ class ExceptionListener implements EventSubscriberInterface
     /**
      * Logs an exception.
      *
-     * @param Exception $exception The \Exception instance
+     * @param \Exception $exception The \Exception instance
      * @param string     $message   The error message to log
      */
-    protected function logException(Exception $exception, $message)
+    protected function logException(\Exception $exception, $message)
     {
         if (null !== $this->logger) {
             if (!$exception instanceof HttpExceptionInterface || $exception->getStatusCode() >= 500) {
@@ -143,12 +139,12 @@ class ExceptionListener implements EventSubscriberInterface
     /**
      * Clones the request for the exception.
      *
-     * @param Exception $exception The thrown exception
+     * @param \Exception $exception The thrown exception
      * @param Request    $request   The original request
      *
      * @return Request The cloned request
      */
-    protected function duplicateRequest(Exception $exception, Request $request)
+    protected function duplicateRequest(\Exception $exception, Request $request)
     {
         $attributes = [
             'exception' => $exception = FlattenException::create($exception),

@@ -116,7 +116,7 @@
         cell6.innerHTML = value.item.purchase_price;
         cell7.innerHTML = value.total;
         cell8.innerHTML = response.header.no_so;
-        cell9.innerHTML = '<button onclick=voidItem("item-'+count+'") class="btn btn-dark" type="button"/>';
+        cell9.innerHTML = '<a style="cursor:pointer" onclick=voidItem("item-'+count+'") class=""> <i class="fa fa-trash"></i> </a>';
 
         var container = document.getElementById("input-body");
         var input = document.createElement("input");
@@ -194,7 +194,7 @@
                         cell6.innerHTML = response.item.purchase_price;
                         cell7.innerHTML = $("#qty").val()*response.item.purchase_price;
                         cell8.innerHTML = "";
-                        cell9.innerHTML = '<button onclick=voidItem("item-'+count+'") class="btn btn-dark" type="button"/>';
+                        cell9.innerHTML = '<a style="cursor:pointer" onclick=voidItem("item-'+count+'") class=""> <i class="fa fa-trash"></i> </a>';
 
                         var container = document.getElementById("input-body");
                         var input = document.createElement("input");

@@ -291,12 +291,14 @@ input:checked + .slider:before {
             </tr>
           </thead>
           <tbody>
-           {{ $flag = 0 }} 
+           @php 
+           $flag = 0
+           @endphp
             <form method="post" action="{{ url("sales-orders/$sale->id/delivery-orders") }}">
               @foreach($sale->details as $details)
               <tr>
                 <td>
-                  {{ $details->id }}
+                  {{ $loop->iteration }}
                 </td>
                 <td>
                   {{ $details->stock->item->name }}

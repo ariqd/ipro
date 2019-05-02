@@ -11,18 +11,18 @@
 
 namespace Symfony\Component\Routing\Matcher\Dumper;
 
-use function count;
-use function in_array;
-use function strlen;
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\NoConfigurationException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface;
+use Symfony\Component\Routing\RequestContext;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
  *
  * @internal
+ *
+ * @property RequestContext $context
  */
 trait PhpMatcherTrait
 {
@@ -44,7 +44,7 @@ trait PhpMatcherTrait
         if (!$this instanceof RedirectableUrlMatcherInterface) {
             throw new ResourceNotFoundException();
         }
-        if (!in_array($this->context->getMethod(), ['HEAD', 'GET'], true)) {
+        if (!\in_array($this->context->getMethod(), ['HEAD', 'GET'], true)) {
             // no-op
         } elseif ($allowSchemes) {
             redirect_scheme:
@@ -92,13 +92,6 @@ trait PhpMatcherTrait
                 continue;
             }
 
-            if ('/' !== $pathinfo && $hasTrailingSlash === ($trimmedPathinfo === $pathinfo)) {
-                if ($supportsRedirections && (!$requiredMethods || isset($requiredMethods['GET']))) {
-                    return $allow = $allowSchemes = [];
-                }
-                continue;
-            }
-
             if ($requiredHost) {
                 if ('#' !== $requiredHost[0] ? $requiredHost !== $host : !preg_match($requiredHost, $host, $hostMatches)) {
                     continue;
@@ -109,6 +102,13 @@ trait PhpMatcherTrait
                 }
             }
 
+            if ('/' !== $pathinfo && $hasTrailingSlash === ($trimmedPathinfo === $pathinfo)) {
+                if ($supportsRedirections && (!$requiredMethods || isset($requiredMethods['GET']))) {
+                    return $allow = $allowSchemes = [];
+                }
+                continue;
+            }
+
             $hasRequiredScheme = !$requiredSchemes || isset($requiredSchemes[$context->getScheme()]);
             if ($requiredMethods && !isset($requiredMethods[$canonicalMethod]) && !isset($requiredMethods[$requestMethod])) {
                 if ($hasRequiredScheme) {
@@ -116,6 +116,7 @@ trait PhpMatcherTrait
                 }
                 continue;
             }
+
             if (!$hasRequiredScheme) {
                 $allowSchemes += $requiredSchemes;
                 continue;
@@ -135,7 +136,7 @@ trait PhpMatcherTrait
 
                     $hasTrailingVar = $trimmedPathinfo !== $pathinfo && $hasTrailingVar;
 
-                    if ($hasTrailingVar && ($hasTrailingSlash || '/' !== substr($matches[count($vars)], -1)) && preg_match($regex, $this->matchHost ? $host.'.'.$trimmedPathinfo : $trimmedPathinfo, $n) && $m === (int) $n['MARK']) {
+                    if ($hasTrailingVar && ($hasTrailingSlash || (null === $n = $matches[\count($vars)] ?? null) || '/' !== ($n[-1] ?? '/')) && preg_match($regex, $this->matchHost ? $host.'.'.$trimmedPathinfo : $trimmedPathinfo, $n) && $m === (int) $n['MARK']) {
                         if ($hasTrailingSlash) {
                             $matches = $n;
                         } else {
@@ -171,8 +172,8 @@ trait PhpMatcherTrait
                     return $ret;
                 }
 
-                $regex = substr_replace($regex, 'F', $m - $offset, 1 + strlen($m));
-                $offset += strlen($m);
+                $regex = substr_replace($regex, 'F', $m - $offset, 1 + \strlen($m));
+                $offset += \strlen($m);
             }
         }
 

@@ -12,7 +12,6 @@
 namespace Symfony\Component\Console\Tests\Tester;
 
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\HelperSet;
@@ -140,7 +139,7 @@ class CommandTesterTest extends TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage Aborted.
      */
     public function testCommandWithWrongInputsNumber()
@@ -167,7 +166,7 @@ class CommandTesterTest extends TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage Aborted.
      */
     public function testCommandWithQuestionsButNoInputs()

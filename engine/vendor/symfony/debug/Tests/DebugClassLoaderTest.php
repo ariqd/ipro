@@ -11,12 +11,7 @@
 
 namespace Symfony\Component\Debug\Tests;
 
-use const DIRECTORY_SEPARATOR;
-use Exception;
-use function is_array;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
-use RuntimeException;
 use Symfony\Component\Debug\DebugClassLoader;
 
 class DebugClassLoaderTest extends TestCase
@@ -49,8 +44,8 @@ class DebugClassLoaderTest extends TestCase
 
         $functions = spl_autoload_functions();
         foreach ($functions as $function) {
-            if (is_array($function) && $function[0] instanceof DebugClassLoader) {
-                $reflClass = new ReflectionClass($function[0]);
+            if (\is_array($function) && $function[0] instanceof DebugClassLoader) {
+                $reflClass = new \ReflectionClass($function[0]);
                 $reflProp = $reflClass->getProperty('classLoader');
                 $reflProp->setAccessible(true);
 
@@ -64,7 +59,7 @@ class DebugClassLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException Exception
+     * @expectedException \Exception
      * @expectedExceptionMessage boo
      */
     public function testThrowingClass()
@@ -72,7 +67,7 @@ class DebugClassLoaderTest extends TestCase
         try {
             class_exists(__NAMESPACE__.'\Fixtures\Throwing');
             $this->fail('Exception expected');
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->assertSame('boo', $e->getMessage());
         }
 
@@ -81,7 +76,7 @@ class DebugClassLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testNameCaseMismatch()
     {
@@ -89,7 +84,7 @@ class DebugClassLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage Case mismatch between class and real file names
      */
     public function testFileCaseMismatch()
@@ -102,7 +97,7 @@ class DebugClassLoaderTest extends TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testPsr4CaseMismatch()
     {
@@ -336,7 +331,7 @@ class ClassLoader
 
     public function findFile($class)
     {
-        $fixtureDir = __DIR__. DIRECTORY_SEPARATOR.'Fixtures'. DIRECTORY_SEPARATOR;
+        $fixtureDir = __DIR__.\DIRECTORY_SEPARATOR.'Fixtures'.\DIRECTORY_SEPARATOR;
 
         if (__NAMESPACE__.'\TestingUnsilencing' === $class) {
             eval('-- parse error --');
@@ -345,7 +340,7 @@ class ClassLoader
         } elseif (__NAMESPACE__.'\TestingCaseMismatch' === $class) {
             eval('namespace '.__NAMESPACE__.'; class TestingCaseMisMatch {}');
         } elseif (__NAMESPACE__.'\Fixtures\Psr4CaseMismatch' === $class) {
-            return $fixtureDir.'psr4'. DIRECTORY_SEPARATOR.'Psr4CaseMismatch.php';
+            return $fixtureDir.'psr4'.\DIRECTORY_SEPARATOR.'Psr4CaseMismatch.php';
         } elseif (__NAMESPACE__.'\Fixtures\NotPSR0' === $class) {
             return $fixtureDir.'reallyNotPsr0.php';
         } elseif (__NAMESPACE__.'\Fixtures\NotPSR0bis' === $class) {

@@ -11,11 +11,6 @@
 
 namespace Symfony\Component\HttpKernel\EventListener;
 
-use function defined;
-use Exception;
-use function is_array;
-use function is_int;
-use const PHP_SAPI;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\Console\Event\ConsoleEvent;
@@ -59,7 +54,7 @@ class DebugHandlersListener implements EventSubscriberInterface
         $this->exceptionHandler = $exceptionHandler;
         $this->logger = $logger;
         $this->levels = null === $levels ? E_ALL : $levels;
-        $this->throwAt = is_int($throwAt) ? $throwAt : (null === $throwAt ? null : ($throwAt ? E_ALL : null));
+        $this->throwAt = \is_int($throwAt) ? $throwAt : (null === $throwAt ? null : ($throwAt ? E_ALL : null));
         $this->scream = $scream;
         $this->fileLinkFormat = $fileLinkFormat;
         $this->scope = $scope;
@@ -76,14 +71,14 @@ class DebugHandlersListener implements EventSubscriberInterface
         $this->firstCall = $this->hasTerminatedWithException = false;
 
         $handler = set_exception_handler('var_dump');
-        $handler = is_array($handler) ? $handler[0] : null;
+        $handler = \is_array($handler) ? $handler[0] : null;
         restore_exception_handler();
 
         if ($this->logger || null !== $this->throwAt) {
             if ($handler instanceof ErrorHandler) {
                 if ($this->logger) {
                     $handler->setDefaultLogger($this->logger, $this->levels);
-                    if (is_array($this->levels)) {
+                    if (\is_array($this->levels)) {
                         $levels = 0;
                         foreach ($this->levels as $type => $log) {
                             $levels |= $type;
@@ -111,7 +106,7 @@ class DebugHandlersListener implements EventSubscriberInterface
                 if (method_exists($kernel = $event->getKernel(), 'terminateWithException')) {
                     $request = $event->getRequest();
                     $hasRun = &$this->hasTerminatedWithException;
-                    $this->exceptionHandler = static function (Exception $e) use ($kernel, $request, &$hasRun) {
+                    $this->exceptionHandler = static function (\Exception $e) use ($kernel, $request, &$hasRun) {
                         if ($hasRun) {
                             throw $e;
                         }
@@ -132,7 +127,7 @@ class DebugHandlersListener implements EventSubscriberInterface
         if ($this->exceptionHandler) {
             if ($handler instanceof ErrorHandler) {
                 $h = $handler->setExceptionHandler('var_dump');
-                if (is_array($h) && $h[0] instanceof ExceptionHandler) {
+                if (\is_array($h) && $h[0] instanceof ExceptionHandler) {
                     $handler->setExceptionHandler($h);
                     $handler = $h[0];
                 } else {
@@ -153,7 +148,7 @@ class DebugHandlersListener implements EventSubscriberInterface
     {
         $events = [KernelEvents::REQUEST => ['configure', 2048]];
 
-        if ('cli' === PHP_SAPI && defined('Symfony\Component\Console\ConsoleEvents::COMMAND')) {
+        if ('cli' === \PHP_SAPI && \defined('Symfony\Component\Console\ConsoleEvents::COMMAND')) {
             $events[ConsoleEvents::COMMAND] = ['configure', 2048];
         }
 
