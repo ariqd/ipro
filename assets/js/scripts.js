@@ -98,7 +98,7 @@ var items_count = 0;
             '                       class="col-sm-4 col-form-label text-right">Price</label>' +
             '                   <div class="col-sm-8">' +
             '                   <span class="select">' +
-            '                       <input type="number" class="form-control item-price-' + code + '" id="item-price-' + code + '"' +
+            '                       <input type="text" readonly class="form-control item-price-' + code + '" id="item-price-' + code + '"' +
             '                              value="' + price + '" name="item[' + items_count + '][price]">' +
             '                   </span>' +
             '                   </div>' +
