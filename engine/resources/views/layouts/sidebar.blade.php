@@ -77,8 +77,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#"
-                               class="nav-link {{ request()->is('pos/report*') ? 'active' : '' }}">
+                            <a href="{{ url('vendors') }}"
+                               class="nav-link {{ request()->is('vendors*') ? 'active' : '' }}">
                                 <i class="fa fa-truck"></i> Vendors
                             </a>
                         </li>

@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('brands', 'BrandController');
     Route::resource('categories', 'CategoryController');
     Route::resource('goods-receive', 'ReceiveController');
-
+    Route::resource('vendors', 'VendorController');
 
     //additional
     Route::get('sales-orders/{id}/delivery-orders', 'SalesOrder\DeliveryOrderController@getForm');
