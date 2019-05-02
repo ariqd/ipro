@@ -13,7 +13,7 @@ class SalesOrderPrintController extends Controller
     public function makeQuotation($id)
     {
 //        // Fetch sales order from database
-//        $data = Sale::find($id)->get()->toArray();
+       // $data = Sale::find($id);
 ////        dd($data);
 //
 //        // Send data to the view using loadView function of PDF facade
@@ -27,6 +27,27 @@ class SalesOrderPrintController extends Controller
 //        return $pdf->stream();
         $data = Sale::find($id);
         $pdf = PDF::loadView('print.kwitansi', ['sale' => $data]);
+        return $pdf->download('invoice.pdf');
+    }
+
+
+    public function makeInvoice($id)
+    {
+//        // Fetch sales order from database
+       // $data = Sale::find($id);
+////        dd($data);
+//
+//        // Send data to the view using loadView function of PDF facade
+//        $pdf = PDF::loadView('print.kwitansi', compact('data'));
+//
+//        // Finally, download the file using download function
+//        return $pdf->download('sales-order_quotation_' . date('Y-m-d') . '.pdf');
+
+//        $pdf = App::make('dompdf.wrapper');
+//        $pdf->loadHTML('<h1>Test</h1>');
+//        return $pdf->stream();
+        $data = Sale::find($id);
+        $pdf = PDF::loadView('print.invoice', ['sale' => $data]);
         return $pdf->download('invoice.pdf');
     }
 }
