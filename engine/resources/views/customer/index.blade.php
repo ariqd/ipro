@@ -4,7 +4,6 @@
 
 @section('content')
     @include('layouts.ajax')
-    {{--<div class="container">--}}
     <div class="row">
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
@@ -56,5 +55,4 @@
             </table>
         </div>
     </div>
-    {{--</div>--}}
 @endsection

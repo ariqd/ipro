@@ -7,9 +7,8 @@
 @push("css")
     <style type="text/css">
         table {
-            border-collapse: collapse;
             padding: 0 !important;
-            border: none;
+            border: 1px solid #000;
         }
 
         body {
