@@ -10,6 +10,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Delivery_Order;
 use App\Delivery_Order_Detail;
+use App\Sale_Detail;
+use App\Stock;
 
 class DeliveryOrderController extends Controller
 {
@@ -46,6 +48,13 @@ class DeliveryOrderController extends Controller
                 "do_id"=>$do->id,
                 "sales_order_detail_id"=>$i,
             ]);
+
+              //minus
+              $sales = Sale_Detail::find($i);
+              $stock = Stock::find($sales->stock_id);
+
+              $stock->quantity -= $sales->qty;
+              $stock->save();
           }
 
       }

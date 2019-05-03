@@ -8,6 +8,7 @@ use App\Receive;
 use App\Receive_Detail;
 use App\Purchase;
 use App\Purchase_Detail;
+use App\Stock;
 
 class ReceiveController extends Controller
 {
@@ -58,6 +59,12 @@ class ReceiveController extends Controller
             $purchasedetails = Purchase_Detail::find($request->purchasedetailid[$i]);
             $purchasedetails->qty = $request->qtyget[$i];
             $purchasedetails->save();
+
+            //plus
+            $stock = Stock::where("item_id","=",$purchasedetails->item_id)->first();
+            $stock->qty += $request->qtyget[$i];
+            $stock->save();
+
             $price = $purchasedetails->total_price / $purchasedetails->qty;
             $data["total_price"]=$price * $request->qtyget[$i];
             
