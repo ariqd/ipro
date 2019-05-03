@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 02, 2019 at 11:34 AM
+-- Generation Time: May 03, 2019 at 05:44 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -110,10 +110,10 @@ CREATE TABLE `counters` (
 --
 
 INSERT INTO `counters` (`id`, `name`, `counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'PO', 12, NULL, '2019-05-02 09:10:51', NULL),
-(2, 'SO', 8, NULL, '2019-05-02 07:55:39', NULL),
-(3, 'QO', 6, NULL, '2019-05-02 05:23:55', NULL),
-(4, 'DO', 9, NULL, '2019-05-02 09:31:43', NULL);
+(1, 'PO', 1, NULL, '2019-05-02 09:10:51', NULL),
+(2, 'SO', 1, NULL, '2019-05-03 03:33:53', NULL),
+(3, 'QO', 1, NULL, '2019-05-03 03:33:46', NULL),
+(4, 'DO', 1, NULL, '2019-05-03 03:38:58', NULL);
 
 -- --------------------------------------------------------
 
@@ -158,15 +158,6 @@ CREATE TABLE `delivery_orders` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `delivery_orders`
---
-
-INSERT INTO `delivery_orders` (`id`, `nomor_surat`, `sales_order_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'DO1904300100006', 1, '2019-04-30 01:07:02', '2019-04-30 01:07:02', NULL),
-(2, 'DO1905020100007', 7, '2019-05-02 09:31:22', '2019-05-02 09:31:22', NULL),
-(3, 'DO1905020100008', 7, '2019-05-02 09:31:43', '2019-05-02 09:31:43', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -181,17 +172,6 @@ CREATE TABLE `delivery_order_details` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `delivery_order_details`
---
-
-INSERT INTO `delivery_order_details` (`id`, `do_id`, `sales_order_detail_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1, '2019-04-30 01:07:02', '2019-04-30 01:07:02', NULL),
-(2, 1, 2, '2019-04-30 01:07:02', '2019-04-30 01:07:02', NULL),
-(3, 1, 3, '2019-04-30 01:07:02', '2019-04-30 01:07:02', NULL),
-(4, 2, 10, '2019-05-02 09:31:22', '2019-05-02 09:31:22', NULL),
-(5, 3, 11, '2019-05-02 09:31:43', '2019-05-02 09:31:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -310,22 +290,6 @@ CREATE TABLE `purchases` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `purchases`
---
-
-INSERT INTO `purchases` (`id`, `purchase_number`, `approval_status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'PO1904180100001', 1, '2019-04-22 07:48:13', '2019-04-22 00:47:42', NULL),
-(2, 'PO1904180100002', 1, '2019-04-22 08:31:57', '2019-04-22 01:31:57', NULL),
-(3, 'PO1904180100003', 0, '2019-04-18 00:20:38', '2019-04-18 00:20:38', NULL),
-(4, 'PO1904180100004', 0, '2019-04-18 00:23:52', '2019-04-18 00:23:52', NULL),
-(6, 'PO1904220000005', 1, '2019-04-22 08:40:06', '2019-04-22 01:40:06', NULL),
-(7, 'PO1904240100006', 0, '2019-04-23 21:20:26', '2019-04-23 21:20:26', NULL),
-(9, 'PO1904260100007', 1, '2019-04-26 03:38:18', '2019-04-25 20:38:18', NULL),
-(13, 'PO1905020100009', 1, '2019-05-02 08:51:00', '2019-05-02 08:51:00', NULL),
-(14, 'PO1905020100010', 0, '2019-05-02 09:10:28', '2019-05-02 09:10:28', NULL),
-(15, 'PO1905020100011', 0, '2019-05-02 09:10:51', '2019-05-02 09:10:51', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -348,59 +312,6 @@ CREATE TABLE `purchase_details` (
   `sales_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `purchase_details`
---
-
-INSERT INTO `purchase_details` (`id`, `item_id`, `total_price`, `qty`, `purchase_price`, `created_at`, `updated_at`, `deleted_at`, `purchase_id`, `approval_finance`, `qty_approval`, `status`, `sales_id`) VALUES
-(1, 1, 30000, 2, 15000, '2019-04-22 07:46:30', '2019-04-22 00:46:30', NULL, 1, 1, 4, 0, 0),
-(2, 1, 30000, 2, 15000, '2019-04-22 07:46:31', '2019-04-22 00:46:31', NULL, 1, 1, 4, 0, 0),
-(3, 1, 30000, 2, 15000, '2019-04-18 00:15:24', '2019-04-18 00:15:24', NULL, 1, 0, 0, 0, 0),
-(4, 1, 60000, 4, 15000, '2019-04-22 07:46:31', '2019-04-22 00:46:31', NULL, 1, 1, 4, 0, 0),
-(5, 1, 60000, 4, 15000, '2019-04-22 07:46:31', '2019-04-22 00:46:31', NULL, 1, 1, 4, 0, 0),
-(6, 1, 30000, 2, 15000, '2019-04-22 08:31:55', '2019-04-22 01:31:55', NULL, 2, 1, 2, 0, 0),
-(7, 1, 30000, 2, 15000, '2019-04-22 08:31:56', '2019-04-22 01:31:56', NULL, 2, 1, 2, 0, 0),
-(8, 1, 30000, 2, 15000, '2019-04-22 08:31:56', '2019-04-22 01:31:56', NULL, 2, 1, 2, 0, 0),
-(9, 1, 60000, 4, 15000, '2019-04-22 08:31:57', '2019-04-22 01:31:57', NULL, 2, 1, 4, 0, 0),
-(10, 1, 60000, 4, 15000, '2019-04-22 08:31:57', '2019-04-22 01:31:57', NULL, 2, 1, 4, 0, 0),
-(11, 1, 30000, 2, 15000, '2019-04-18 00:20:38', '2019-04-18 00:20:38', NULL, 3, 0, 0, 0, 0),
-(12, 1, 30000, 2, 15000, '2019-04-18 00:20:38', '2019-04-18 00:20:38', NULL, 3, 0, 0, 0, 0),
-(13, 1, 30000, 2, 15000, '2019-04-18 00:20:38', '2019-04-18 00:20:38', NULL, 3, 0, 0, 0, 0),
-(14, 1, 30000, 2, 15000, '2019-04-18 00:23:52', '2019-04-18 00:23:52', NULL, 4, 0, 0, 0, 0),
-(15, 1, 30000, 2, 15000, '2019-04-18 00:23:52', '2019-04-18 00:23:52', NULL, 4, 0, 0, 0, 0),
-(16, 1, 30000, 2, 15000, '2019-04-18 00:23:52', '2019-04-18 00:23:52', NULL, 4, 0, 0, 0, 0),
-(17, 1, 30000, 2, 15000, '2019-04-22 08:40:06', '2019-04-22 01:40:06', NULL, 6, 1, 2, 0, 0),
-(18, 1, 30000, 2, 15000, '2019-04-22 01:38:55', '2019-04-22 01:38:55', NULL, 6, NULL, NULL, 0, 0),
-(19, 1, 30000, 2, 15000, '2019-04-22 08:40:06', '2019-04-22 01:40:06', NULL, 6, 1, 2, 0, 0),
-(20, 1, 150000, 10, 15000, '2019-04-22 01:38:56', '2019-04-22 01:38:56', NULL, 6, NULL, NULL, 0, 0),
-(21, 1, 30000, 2, 15000, '2019-04-23 21:20:26', '2019-04-23 21:20:26', NULL, 7, NULL, NULL, 0, 0),
-(22, 1, 30000, 2, 15000, '2019-04-23 21:20:26', '2019-04-23 21:20:26', NULL, 7, NULL, NULL, 0, 0),
-(23, 1, 30000, 2, 15000, '2019-04-23 21:20:26', '2019-04-23 21:20:26', NULL, 7, NULL, NULL, 0, 0),
-(24, 1, 45000, 3, 15000, '2019-04-23 21:20:26', '2019-04-23 21:20:26', NULL, 7, NULL, NULL, 0, 0),
-(25, 1, 30000, 2, 15000, '2019-04-26 03:38:18', '2019-04-25 20:38:18', NULL, 9, 1, 2, NULL, 1),
-(26, 1, 30000, 2, 15000, '2019-04-26 03:38:18', '2019-04-25 20:38:18', NULL, 9, 1, 2, NULL, 1),
-(27, 1, 30000, 2, 15000, '2019-04-26 03:38:18', '2019-04-25 20:38:18', NULL, 9, 1, 2, NULL, 1),
-(28, 1, 30000, 2, 15000, '2019-04-26 03:38:18', '2019-04-25 20:38:18', NULL, 9, 1, 2, NULL, 2),
-(29, 1, 30000, 2, 15000, '2019-04-26 03:38:18', '2019-04-25 20:38:18', NULL, 9, 1, 2, NULL, 2),
-(30, 1, 30000, 2, 15000, '2019-04-26 03:38:18', '2019-04-25 20:38:18', NULL, 9, 1, 2, NULL, 2),
-(31, 2, 7250000, 29, 250000, '2019-05-02 08:13:00', '2019-05-02 08:13:00', NULL, 10, NULL, NULL, NULL, 7),
-(32, 1, 735000, 49, 15000, '2019-05-02 08:13:00', '2019-05-02 08:13:00', NULL, 10, NULL, NULL, NULL, 7),
-(33, 1, 15000, 1, 15000, '2019-05-02 08:13:00', '2019-05-02 08:13:00', NULL, 10, NULL, NULL, NULL, 4),
-(34, 1, 15000, 1, 15000, '2019-05-02 08:13:00', '2019-05-02 08:13:00', NULL, 10, NULL, NULL, NULL, 3),
-(35, 1, 15000, 1, 15000, '2019-05-02 08:13:00', '2019-05-02 08:13:00', NULL, 10, NULL, NULL, NULL, 5),
-(43, 2, 7250000, 29, 250000, '2019-05-02 09:12:11', '2019-05-02 08:50:59', NULL, 13, 1, 20, NULL, 7),
-(44, 1, 735000, 49, 15000, '2019-05-02 09:12:13', '2019-05-02 08:50:59', NULL, 13, 1, 10, NULL, 7),
-(45, 1, 15000, 1, 15000, '2019-05-02 09:12:21', '2019-05-02 08:50:59', NULL, 13, 0, NULL, NULL, 4),
-(46, 1, 30000, 2, 15000, '2019-05-02 09:12:24', '2019-05-02 08:50:59', NULL, 13, 0, NULL, NULL, 3),
-(47, 1, 30000, 2, 15000, '2019-05-02 09:12:26', '2019-05-02 08:50:59', NULL, 13, 0, NULL, NULL, 5),
-(48, 1, 30000, 2, 15000, '2019-05-02 08:51:00', '2019-05-02 08:51:00', NULL, 13, 1, 2, NULL, NULL),
-(49, 2, 1000000, 4, 250000, '2019-05-02 08:51:00', '2019-05-02 08:51:00', NULL, 13, 1, 4, NULL, NULL),
-(50, 2, 7250000, 29, 250000, '2019-05-02 09:10:28', '2019-05-02 09:10:28', NULL, 14, NULL, NULL, NULL, 7),
-(51, 1, 735000, 49, 15000, '2019-05-02 09:10:29', '2019-05-02 09:10:29', NULL, 14, NULL, NULL, NULL, 7),
-(52, 2, 7250000, 29, 250000, '2019-05-02 09:10:51', '2019-05-02 09:10:51', NULL, 15, NULL, NULL, NULL, 7),
-(53, 1, 735000, 49, 15000, '2019-05-02 09:10:51', '2019-05-02 09:10:51', NULL, 15, NULL, NULL, NULL, 7),
-(54, 2, 500000, 2, 250000, '2019-05-02 09:10:51', '2019-05-02 09:10:51', NULL, 15, NULL, NULL, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -415,17 +326,6 @@ CREATE TABLE `receives` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `receives`
---
-
-INSERT INTO `receives` (`id`, `purchase_id`, `receipt`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 9, 123456, '2019-04-28 21:19:15', '2019-04-28 21:19:15', NULL),
-(2, 13, 10101010, '2019-05-02 09:23:32', '2019-05-02 09:23:32', NULL),
-(3, 13, 10101010, '2019-05-02 09:24:16', '2019-05-02 09:24:16', NULL),
-(4, 13, 10101010, '2019-05-02 09:27:02', '2019-05-02 09:27:02', NULL),
-(5, 13, 10101010, '2019-05-02 09:27:12', '2019-05-02 09:27:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -443,22 +343,6 @@ CREATE TABLE `receive_details` (
   `receive_id` int(11) DEFAULT NULL,
   `purchase_detail_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `receive_details`
---
-
-INSERT INTO `receive_details` (`id`, `qty_get`, `total_price`, `created_at`, `updated_at`, `deleted_at`, `receive_id`, `purchase_detail_id`) VALUES
-(13, 2, 0, '2019-04-28 20:52:19', '2019-04-28 20:52:19', NULL, 1, 25),
-(14, 2, 0, '2019-04-28 20:52:19', '2019-04-28 20:52:19', NULL, 1, 26),
-(15, 2, 0, '2019-04-28 20:52:19', '2019-04-28 20:52:19', NULL, 1, 27),
-(16, 2, 0, '2019-04-28 20:52:19', '2019-04-28 20:52:19', NULL, 1, 28),
-(17, 2, 0, '2019-04-28 20:52:19', '2019-04-28 20:52:19', NULL, 1, 29),
-(18, 2, 0, '2019-04-28 20:52:20', '2019-04-28 20:52:20', NULL, 1, 30),
-(19, 29, 7250000, '2019-05-02 09:27:12', '2019-05-02 09:27:12', NULL, 5, 43),
-(20, 49, 735000, '2019-05-02 09:27:12', '2019-05-02 09:27:12', NULL, 5, 44),
-(21, 2, 30000, '2019-05-02 09:27:12', '2019-05-02 09:27:12', NULL, 5, 48),
-(22, 4, 1000000, '2019-05-02 09:27:13', '2019-05-02 09:27:13', NULL, 5, 49);
 
 -- --------------------------------------------------------
 
@@ -485,19 +369,6 @@ CREATE TABLE `sales_orders` (
   `no_order` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `sales_orders`
---
-
-INSERT INTO `sales_orders` (`id`, `customer_id`, `user_id`, `quotation_id`, `project`, `send_address`, `send_date`, `send_pic_phone`, `payment_method`, `note`, `created_at`, `updated_at`, `deleted_at`, `no_so`, `notes`, `no_order`) VALUES
-(1, 1, 1, '000001', 'Bikin Lantai Rumah', 'Jalan Project Rumahnya', '2019-04-15', '0101010101', 'Cash', 'Jalan Project', '2019-04-15 01:00:40', '2019-04-23 01:04:02', NULL, 'SO1904230000003', NULL, NULL),
-(2, 1, 1, '000001', 'Bikin Lantai Rumah', 'Jalan Project Rumahnya', '2019-04-15', '0101010101', 'Cash', 'Jalan Project', '2019-04-15 01:00:40', '2019-04-23 01:04:02', NULL, 'SO1904230000004', NULL, NULL),
-(3, 1, 3, 'QO1905020100001', 'Bikin Atap Rumah', 'Jalan Projectnya', '2019-05-02', '1234', 'Cash', 'Jalan Jalan', '2019-05-01 21:07:56', '2019-05-02 07:41:52', NULL, 'SO1905020000006', 'anjing', NULL),
-(4, 1, 3, 'QO1905020100002', 'Bikin Kamar', 'Jalan Kamar', '2019-05-02', '1234567', 'Cash', 'Ingin Kaya', '2019-05-01 21:12:37', '2019-05-01 21:16:41', NULL, 'SO1905020100004', '1234', NULL),
-(5, 1, 3, 'QO1905020100003', 'Project abcd', 'Abcd', '2019-05-02', '12345678', 'Cash', 'aku ingin kaya', '2019-05-01 21:34:08', '2019-05-02 04:36:39', NULL, 'SO1905020000005', 'dibayar tunai', NULL),
-(6, 2, 3, 'QO1905020100004', 'Project Membuat Sesuatu Apapun', 'Jl. Kenangan', '2019-05-02', '089878767656', 'CBD', 'yo', '2019-05-02 05:22:40', '2019-05-02 05:22:40', NULL, NULL, NULL, NULL),
-(7, 2, 3, 'QO1905020100005', 'Project Membuat Sesuatu Apapun', 'Jl. Kenangan', '2019-05-02', '089878767656', 'CBD', 'yo', '2019-05-02 05:23:55', '2019-05-02 07:55:39', NULL, 'SO1905020000007', 'goblok udah sia', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -517,23 +388,6 @@ CREATE TABLE `sales_order_details` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `sales_order_details`
---
-
-INSERT INTO `sales_order_details` (`id`, `sales_order_id`, `stock_id`, `qty`, `price`, `total`, `discount`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1, 2, 15000, 30000, 0, 1, '2019-04-15 01:00:40', '2019-04-30 01:07:02', NULL),
-(2, 1, 1, 2, 15000, 30000, 0, 1, '2019-04-15 01:00:40', '2019-04-30 01:07:02', NULL),
-(3, 1, 1, 2, 15000, 30000, 0, 1, '2019-04-15 01:00:40', '2019-04-30 01:07:02', NULL),
-(4, 2, 1, 2, 15000, 30000, 0, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL),
-(5, 2, 1, 2, 15000, 30000, 0, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL),
-(6, 2, 1, 2, 15000, 30000, 0, 0, '2019-04-15 01:00:40', '2019-04-15 01:00:40', NULL),
-(7, 3, 1, 1, 15000, 15000, 0, 0, '2019-05-01 21:07:56', '2019-05-01 21:07:56', NULL),
-(8, 4, 1, 1, 15000, 15000, 0, 0, '2019-05-01 21:12:38', '2019-05-01 21:12:38', NULL),
-(9, 5, 1, 1, 15000, 15000, 0, 0, '2019-05-01 21:34:09', '2019-05-01 21:34:09', NULL),
-(10, 7, 2, 29, 250000, 7250000, 0, 1, '2019-05-02 05:23:55', '2019-05-02 09:31:22', NULL),
-(11, 7, 1, 49, 15000, 735000, 0, 1, '2019-05-02 05:23:56', '2019-05-02 09:31:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -556,7 +410,7 @@ CREATE TABLE `stocks` (
 --
 
 INSERT INTO `stocks` (`id`, `item_id`, `branch_id`, `quantity`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1, 50, '2019-04-15 00:59:34', '2019-04-15 00:59:34', NULL),
+(1, 1, 1, 30, '2019-04-15 00:59:34', '2019-05-03 03:38:58', NULL),
 (2, 2, 1, 30, '2019-05-02 05:17:20', '2019-05-02 05:17:20', NULL);
 
 -- --------------------------------------------------------
@@ -588,7 +442,7 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `role`, `branch_id`, `sa
 (1, 'admin', 'admin', 'admin@secret.com', 'admin', 1, NULL, NULL, '$2y$10$cdLsZb5WpnNiXYoFJX/GDOHv3JR6hb6jLOf32rkScJO2bnjT3Y7MK', 'LlByX8FQbHwfS6LlLr7odLdR1JHyPuSEx3ORbAzSjZVOffKzcm674WAxzVK3', '2019-04-14 22:33:27', '2019-04-14 22:33:27'),
 (2, 'Finance', 'finance', 'finance@ipro.com', 'finance', NULL, NULL, NULL, '$2y$10$JDMsqnwNiB.IVPnj3efrcOd.Hmw2ofnqMm2doheBErfEtDdfjCra.', 'Bl4Rmk5XByAbiBXC3SpUnFaww5rwxHm1R2xvmcS3SdePIVn83LpTlSpoa7Te', '2019-04-21 22:36:50', '2019-04-21 22:36:50'),
 (3, 'Sales Bandung', 'Salesbandung', 'sales@bandung.com', 'sales', 1, NULL, NULL, '$2y$10$7P9QRO0rTrwfstxqS7mOVOSDTAIBlTzov0LGsLp2UL606WbUg.20K', '000xj9RJ8DRepRWQ0czxB4rgq7ZrtNUOnseNTEbjT7jz5GQIMKVv7V8gfiW3', '2019-05-01 20:34:06', '2019-05-01 21:31:51'),
-(4, 'Erlin', 'Erlin', 'Erlin@ipro.com', 'finance', 1, NULL, NULL, '$2y$10$kmtOvJGdaDxmswy1GfrVvu60seKcJvvfypA.j4lVAVHooDNm9BT3.', NULL, '2019-05-02 09:19:22', '2019-05-02 09:19:22');
+(4, 'Erlin', 'Erlin', 'Erlin@ipro.com', 'finance', 1, NULL, NULL, '$2y$10$kmtOvJGdaDxmswy1GfrVvu60seKcJvvfypA.j4lVAVHooDNm9BT3.', 'doOrTkkrgI71BBrBxnsTaLjxNbtOuWKWolvMB0xlHZVAbHSm3ZhSeBVWkeI4', '2019-05-02 09:19:22', '2019-05-02 09:19:22');
 
 --
 -- Indexes for dumped tables
@@ -749,13 +603,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `delivery_orders`
 --
 ALTER TABLE `delivery_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `delivery_order_details`
 --
 ALTER TABLE `delivery_order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `holds`
@@ -779,37 +633,37 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `purchases`
 --
 ALTER TABLE `purchases`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `purchase_details`
 --
 ALTER TABLE `purchase_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `receives`
 --
 ALTER TABLE `receives`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `receive_details`
 --
 ALTER TABLE `receive_details`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sales_orders`
 --
 ALTER TABLE `sales_orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `sales_order_details`
 --
 ALTER TABLE `sales_order_details`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `stocks`
