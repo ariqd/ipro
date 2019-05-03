@@ -259,7 +259,7 @@
                     <a href="#" class="btn btn-info form-control"> Print Quotation</a>
                 </div>
                 <div class="col-lg-6">
-                    <a href="#" class="btn btn-success form-control"> Print Invoice</a>
+                    <a href="{{ url("sales-orders/$sale->id/pdf/invoice") }}" class="btn btn-success form-control"> Print Invoice</a>
                 </div>
                 @if($flag != count($sale->details))
                 <div class="col-lg-12 mt-2">

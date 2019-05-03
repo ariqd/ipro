@@ -47,7 +47,13 @@ class SalesOrderPrintController extends Controller
 //        $pdf->loadHTML('<h1>Test</h1>');
 //        return $pdf->stream();
         $data = Sale::find($id);
-        $pdf = PDF::loadView('print.invoice', ['sale' => $data]);
+        $data["user"] = $data->user;
+        $data["detail"] = $data->details;
+        foreach ($data["detail"] as $key) {
+            $key["stock"]= $key->stock;
+            $key["stock"]["item"]= $key["stock"]->item;
+        }
+        $pdf = PDF::loadView('print.sales-order', ['sale' => $data]);
         return $pdf->download('invoice.pdf');
     }
 }
