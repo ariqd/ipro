@@ -31,7 +31,7 @@ class SalesOrderPrintController extends Controller
     }
 
 
-    public function makeInvoice($id)
+    public function makeInvoice($id, Request $request)
     {
 //        // Fetch sales order from database
        // $data = Sale::find($id);
@@ -49,6 +49,11 @@ class SalesOrderPrintController extends Controller
         $data = Sale::find($id);
         $data["user"] = $data->user;
         $data["detail"] = $data->details;
+        if($request->has("markup")){
+            $data["markup"] = 0;
+        }else{
+            $data["markup"] = 1;
+        }
         foreach ($data["detail"] as $key) {
             $key["stock"]= $key->stock;
             $key["stock"]["item"]= $key["stock"]->item;

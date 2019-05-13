@@ -38,6 +38,7 @@ class SalesOrderApproveController extends Controller
         $sale = Sale::find($id);
         $sale->no_so = $nopo;
         $sale->notes = $request->notes;
+        $sale->ongkir = $request->ongkir;
         $sale->save();
 
         $counter->counter += 1;

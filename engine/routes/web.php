@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('sales-orders/{id}/payment', 'SalesOrder\SalesOrderApproveController@getPaymentForm');
     Route::post('sales-orders/{id}/payment', 'SalesOrder\SalesOrderApproveController@postPaymentForm');
     Route::get('sales-orders/{id}/pdf/quotation', 'SalesOrder\SalesOrderPrintController@makeQuotation');
-    Route::get('sales-orders/{id}/pdf/invoice', 'SalesOrder\SalesOrderPrintController@makeInvoice');
+    Route::post('sales-orders/{id}/pdf/invoice', 'SalesOrder\SalesOrderPrintController@makeInvoice');
 
     Route::get('categories/search/{id}', 'CategoryController@search');
 

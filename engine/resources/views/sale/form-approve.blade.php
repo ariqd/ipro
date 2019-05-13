@@ -234,6 +234,10 @@
                         <label for="note">Notes Payment</label>
                         <input type="text" name="notes" id="note" class="form-control">
                     </div>
+                     <div class="form-group">
+                        <label for="ongkir">Ongkos Kirim</label>
+                        <input type="number" name="ongkir" id="ongkir" class="form-control">
+                    </div>
                     <input type="submit" class="btn btn-success form-control" value="Approve Sales Order">
                 </form>
             </div>

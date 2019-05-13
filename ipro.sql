@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2019 at 05:44 AM
+-- Generation Time: May 13, 2019 at 06:27 AM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -111,8 +111,8 @@ CREATE TABLE `counters` (
 
 INSERT INTO `counters` (`id`, `name`, `counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
 (1, 'PO', 1, NULL, '2019-05-02 09:10:51', NULL),
-(2, 'SO', 1, NULL, '2019-05-03 03:33:53', NULL),
-(3, 'QO', 1, NULL, '2019-05-03 03:33:46', NULL),
+(2, 'SO', 2, NULL, '2019-05-13 04:12:40', NULL),
+(3, 'QO', 3, NULL, '2019-05-13 03:39:48', NULL),
 (4, 'DO', 1, NULL, '2019-05-03 03:38:58', NULL);
 
 -- --------------------------------------------------------
@@ -366,8 +366,17 @@ CREATE TABLE `sales_orders` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `no_so` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `notes` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `no_order` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `no_order` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ongkir` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sales_orders`
+--
+
+INSERT INTO `sales_orders` (`id`, `customer_id`, `user_id`, `quotation_id`, `project`, `send_address`, `send_date`, `send_pic_phone`, `payment_method`, `note`, `created_at`, `updated_at`, `deleted_at`, `no_so`, `notes`, `no_order`, `ongkir`) VALUES
+(1, 2, 1, 'QO1905130100001', 'aaa', 'aaa', '2019-05-13', '123123', 'CBD', 'aaa', '2019-05-13 03:36:06', '2019-05-13 04:12:40', NULL, 'SO1905130100001', '1234', NULL, 10000),
+(2, 2, 1, 'QO1905130100002', 'bbb', 'bbb', '2019-05-13', '1234', 'CBD', 'bbbbb', '2019-05-13 03:39:48', '2019-05-13 03:39:48', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -388,6 +397,15 @@ CREATE TABLE `sales_order_details` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `sales_order_details`
+--
+
+INSERT INTO `sales_order_details` (`id`, `sales_order_id`, `stock_id`, `qty`, `price`, `total`, `discount`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 1, 2, 2, 250000, 250000, 50, 0, '2019-05-13 03:36:06', '2019-05-13 03:36:06', NULL),
+(2, 1, 1, 1, 15000, 13500, 10, 0, '2019-05-13 03:36:06', '2019-05-13 03:36:06', NULL),
+(3, 2, 2, 2, 250000, 450000, 10, 0, '2019-05-13 03:39:48', '2019-05-13 03:39:48', NULL);
 
 -- --------------------------------------------------------
 
@@ -603,13 +621,13 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `delivery_orders`
 --
 ALTER TABLE `delivery_orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `delivery_order_details`
 --
 ALTER TABLE `delivery_order_details`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `holds`
@@ -657,13 +675,13 @@ ALTER TABLE `receive_details`
 -- AUTO_INCREMENT for table `sales_orders`
 --
 ALTER TABLE `sales_orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sales_order_details`
 --
 ALTER TABLE `sales_order_details`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `stocks`
