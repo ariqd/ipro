@@ -97,9 +97,9 @@ table thead tr.warning th {
 @section("content")
 <div class="row">
     <div class="col-xs-6">
-        <img src="logo.png" alt="" width="200">
+        <img src="{!! asset('assets/img/logo.png') !!}" alt="" width="200">
         <div class="address">
-            Jln. Jendral Sudirman No. 672 B Bandung. Telp. 022 2057 33 22
+            Jl. Jendral Sudirman No. 672 B Bandung. Telp. 022-20573322
         </div>
         <table class="table table-borderless">
             <tr>
@@ -267,7 +267,7 @@ table thead tr.warning th {
     </div>
 </div>
 
-<div class="row">
+<div class="row" style="margin-top: 100px">
     <div class="col-xs-4">
         <div class="text-center">
             <p>Mengetahui,</p>
