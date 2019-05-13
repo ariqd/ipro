@@ -193,8 +193,7 @@ input:checked + .slider:before {
     </div>
     <div class="col-lg-6">
       @if(Gate::allows('isFinance'))
-      @if($key->approval_finance == 0)
-      @elseif($key->approval_finance == null)
+      @if($header->approval_status == 0)
       <input type="submit" class="form-control btn btn-success" value="Create Purchase Order">
       @endif
       @endif
