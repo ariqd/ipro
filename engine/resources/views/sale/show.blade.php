@@ -273,7 +273,8 @@
                             <input type="submit" name="" class="btn btn-success btn-block" value="Print Invoice">
                         </div>
                         <div class="form-group col-1">
-                            <input type="checkbox" name="markup" class="form-control">                        
+                            <input type="checkbox" name="markup" class="form-control"> 
+                            PPN                    
                         </div>
                     </div>
                 </form>
