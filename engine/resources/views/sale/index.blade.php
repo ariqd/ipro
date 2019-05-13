@@ -72,7 +72,7 @@
                                 @if(Gate::allows("isAdmin"))
                                     @if($sale->no_so == null)
                                         <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
-                                           class="btn btn-warning btn-sm"> <i class="fa fa-check"></i> Approve Request
+                                           class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve Request
                                         </a>
                                     @endif
                                     <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm">
@@ -82,7 +82,7 @@
                                 @elseif(Gate::allows("isFinance"))
                                     @if($sale->no_so == null)
                                         <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
-                                           class="btn btn-warning btn-sm"> <i class="fa fa-check"></i> Approve Request
+                                           class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve Request
                                         </a>
                                     @else
                                         <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm">
