@@ -8,6 +8,7 @@ use App\Item;
 use App\Branch;
 use function foo\func;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
 
 class StockController extends Controller
@@ -16,20 +17,10 @@ class StockController extends Controller
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index(Request $request)
     {
-//        $d['brands'] = Stock::leftjoin('items','items.id','stocks.item_id')->leftjoin('brands','brands.id','items.brand_id')->distinct('brands.name')->pluck('brands.name');
-//        $d['branches'] = Stock::leftjoin("branches","branches.id","stocks.branch_id")->distinct('branch_id')->pluck('branch_id');
-//
-//        $d['stocks'] = Stock::select("stocks.*","items.name as itemname","items.code","brands.name as brandname","categories.name as categoryname","branches.name as branchname")
-//        ->leftjoin("items","items.id","stocks.item_id")
-//        ->leftjoin("brands","brands.id","items.brand_id")
-//        ->leftjoin("categories","categories.id","items.category_id")
-//        ->leftjoin('branches','branches.id','stocks.branch_id')
-//        ->get();
-
         $d['brands'] = Brand::all();
         $d['branches'] = Branch::all();
 
@@ -42,7 +33,6 @@ class StockController extends Controller
 
             $query = new Stock;
             if (!empty($brands)) {
-//                $query = Stock::whereIn('brand_id', [$brands]);
                 $query = Stock::whereHas('item', function ($q) use ($brands) {
                     $q->whereHas('brands', function($x) use ($brands) {
                         $x->whereIn('brand_id', [$brands]);
@@ -57,8 +47,7 @@ class StockController extends Controller
             $d['stocks'] = $query->get();
 
             $d['filtered'] = TRUE;
-            dd($d['stocks']);
-
+//            dd($d['stocks']);
         }
 
         return view('stock.index', $d);
@@ -67,7 +56,7 @@ class StockController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -79,8 +68,8 @@ class StockController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -91,12 +80,7 @@ class StockController extends Controller
             'item_id' => 'required|numeric',
             'branch_id' => 'required|numeric',
             'quantity' => 'required|numeric',
-//            'weight' => 'required|numeric',
-//            'area' => 'required|numeric',
-//            'width' => 'required|numeric',
-//            'height' => 'required|numeric',
-//            'length' => 'required|numeric',
-//            'price' => 'required|numeric',
+            'price_branch' => 'required|numeric'
         ]);
 
         if ($validate->fails()) {
@@ -111,17 +95,10 @@ class StockController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show($id)
     {
-//      $d['stock'] = Stock::select("stocks.*","items.name as itemname","items.code","brands.name as brandname","categories.name as categoryname","branches.name as branchname")
-//      ->leftjoin("items","items.id","stocks.item_id")
-//      ->leftjoin("brands","brands.id","items.brand_id")
-//      ->leftjoin("categories","categories.id","items.category_id")
-//      ->leftjoin('branches','branches.id','stocks.branch_id')
-//      ->where("stocks.id",$id)
-//      ->first();
         $d['stock'] = Stock::find($id);
         return view('stock.show', $d);
     }
@@ -130,7 +107,7 @@ class StockController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -144,9 +121,9 @@ class StockController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -157,12 +134,13 @@ class StockController extends Controller
             'item_id' => 'required|numeric',
             'branch_id' => 'required|numeric',
             'quantity' => 'required|numeric',
-            'weight' => 'required|numeric',
-            'area' => 'required|numeric',
-            'width' => 'required|numeric',
-            'height' => 'required|numeric',
-            'length' => 'required|numeric',
-            'price' => 'required|numeric',
+            'price_branch' => 'required|numeric',
+//            'weight' => 'required|numeric',
+//            'area' => 'required|numeric',
+//            'width' => 'required|numeric',
+//            'height' => 'required|numeric',
+//            'length' => 'required|numeric',
+//            'price' => 'required|numeric',
         ]);
 
         if ($validate->fails()) {
@@ -182,7 +160,7 @@ class StockController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

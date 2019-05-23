@@ -19,7 +19,7 @@ class SalesOrderSearchController extends Controller
                 $query->where('category_id', '=', $category_id);
             })->tap(function ($query) {
                 Auth::user()->role == 'admin' ?: $query->where('branch_id', '=', Auth::user()->branch_id);
-            });
+            })->with('branch');
 
         return response()->json($stocks->get(), 200);
     }

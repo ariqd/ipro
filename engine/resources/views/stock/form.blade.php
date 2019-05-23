@@ -10,7 +10,7 @@
     <div class="modal-body">
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="item" class="form-control-label">Item</label>
+                <label for="item" class="form-control-label">Pilih Item</label>
                 <select class="item form-control" name="item_id" id="item">
                     <option></option>
                     @foreach($items as $item)
@@ -20,7 +20,7 @@
                     @endforeach
                 </select>
                 <a href="{{ url('items') }}" class="btn btn-secondary btn-block btn-sm my-3"><i class="fa fa-plus"></i>
-                    View Items</a>
+                    Lihat Item</a>
             </div>
         </div>
         <div class="form-group row">
@@ -33,7 +33,7 @@
                     @endforeach
                 </select>
                 <a href="{{ url('branches') }}" class="btn btn-secondary btn-block btn-sm my-3"><i
-                            class="fa fa-plus"></i> View Branches</a>
+                            class="fa fa-plus"></i> Lihat Cabang</a>
             </div>
         </div>
         <div class="form-group">
@@ -46,10 +46,26 @@
                 </div>
             </div>
         </div>
+        <div class="form-group">
+            <label for="price_branch" class="form-control-label">Harga Cabang</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Rp</span>
+                </div>
+                <input type="number" id="price_branch" class="form-control" name="price_branch"
+                       value="{{ @$isEdit ? $stock->price_branch : '' }}" aria-describedby="price_branchHelpBlock">
+                @if(@$isEdit)
+                    <br>
+                    <small id="price_branchHelpBlock" class="form-text text-muted">
+                        Harga Beli: <b>Rp {{ number_format($stock->item->purchase_price) }}</b>
+                    </small>
+                @endif
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal"> Batal</button>
-        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>
+        <button type="button" class="btn btn-link" data-dismiss="modal"> Batal</button>
+        <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>
             {{ @$isEdit ? 'Edit' : 'Tambah' }}
         </button>
     </div>
@@ -57,13 +73,13 @@
 
 <script type="text/javascript">
     $(".item").select2({
-        placeholder: "Choose Items",
+        placeholder: "Pilih Item",
         allowClear: true,
         dropdownParent: $("#modalForm")
     });
 
     $(".branch").select2({
-        placeholder: "Choose Branch",
+        placeholder: "Pilih Cabang",
         allowClear: true,
         dropdownParent: $("#modalForm")
     });

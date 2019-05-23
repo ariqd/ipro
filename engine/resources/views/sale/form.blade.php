@@ -54,15 +54,15 @@
 
             $(".customer").select2({
                 selectOnClose: true,
-                placeholder: "Choose Customer"
+                placeholder: "Pilih Customer"
             });
             $("#brands").select2({
                 selectOnClose: true,
-                placeholder: "Choose Brand"
+                placeholder: "Pilih Brand"
             });
             $("#categories").select2({
                 selectOnClose: true,
-                placeholder: 'Choose a brand first'
+                placeholder: 'Pilih brand terlebih dahulu'
             });
 
             $("#brands").change(function () {
@@ -100,22 +100,23 @@
                     beforeSend: function () {
                         $('.loading').show();
                         $("#items").html("");
-                        // $('#search').val("");
                     },
                     success: function (response) {
                         $('.loading').hide();
-                        // console.log(response);
+                        console.dir(response);
                         if (response.length > 0) {
                             $.each(response, function (index, value) {
                                 var btn;
                                 if (parseInt(value.quantity) > 0) {
                                     if (parseInt(value.item.purchase_price) > 0) {
                                         btn = '<button type="button" class="btn btn-outline-dark addProduct-' + value.id + '  " ' +
-                                            'onclick="addProduct(' + value.id + ')" title="Add to Cart" ' +
-                                            'data-name="' + value.item.name + '"' +
+                                            'onclick="addProduct(' + value.id + ')" title="Add to Cart"' +
+                                            ' data-name="' + value.item.name + '"' +
                                             ' data-code="' + value.id + '"' +
                                             ' data-quantity="' + value.quantity + '"' +
                                             ' data-price="' + value.item.purchase_price + '"' +
+                                            ' data-price-branch="' + value.price_branch + '"' +
+                                            ' data-branch="' + value.branch.name + '"' +
                                             '>' +
                                             '<i class="fa fa-cart-plus"></i>' +
                                             '</button>';
@@ -130,9 +131,10 @@
                                     '<div class="card-body item">' +
                                     '<div class="d-flex justify-content-between align-items-center">' +
                                     '<div>' +
-                                    '<h5>' + value.item.name + ' (' + value.id + ') ' + '</h5>' +
+                                    '<h5>' + value.item.name + ' (' + value.branch.name + ') ' + '</h5>' +
                                     '<p class="m-0">Quantity: ' + value.quantity + '</p>' +
-                                    '<p class="m-0">Rp ' + value.item.purchase_price + '</p>' +
+                                    '<p class="m-0">Harga Pusat: Rp ' + value.item.purchase_price + '</p>' +
+                                    '<p class="m-0">Harga Cabang: Rp ' + value.price_branch + '</p>' +
                                     '</div>' +
                                     '<div>' +
                                     btn +
@@ -148,7 +150,7 @@
                                 '<div class="card-body item">' +
                                 '<div class="d-flex justify-content-between align-items-center">' +
                                 '<div>' +
-                                '<h5> No item found</h5>' +
+                                '<h5>No item found</h5>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -217,7 +219,7 @@
                             <small>
                                 <a href="{{ url('sales-orders') }}" class="text-dark">Sales Orders</a> /
                             </small>
-                            <b>{{ @$isEdit ? 'Edit' : 'Create' }} Quotation</b>
+                            <b>{{ @$isEdit ? 'Edit' : 'Buat' }} Quotation</b>
                         </h2>
                     </div>
                     <div>
@@ -243,7 +245,7 @@
                         <a href="#modalForm" data-toggle="modal"
                            data-href="{{ url('sales-orders/create/customer') }}"
                            class="btn btn-outline-dark btn-sm">
-                            <i class="fa fa-plus"></i> New Customer</a>
+                            <i class="fa fa-plus"></i> Buat Customer</a>
                     @endif
                 </div>
             </div>
@@ -267,7 +269,7 @@
                            aria-controls="collapse-example" id="heading-example"
                            class="d-flex justify-content-between align-items-center collapsed">
                             <div>
-                                Customer Data
+                                Detail Customer
                             </div>
                             <div>
                                 <i class="fa fa-chevron-down"></i>
@@ -323,16 +325,17 @@
                         @if(@$isEdit && !empty($sale->details))
                             <div class="row">
                                 <div class="col-12">
-                                    <h5><b>Current Items</b></h5>
+                                    <h5><b>Item Saat Ini</b></h5>
                                     <div class="table-responsive">
                                         <table class="table table-bordered">
                                             <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Name</th>
+                                                <th>Nama</th>
                                                 <th>Qty</th>
-                                                <th>Price</th>
-                                                <th>Discount</th>
+                                                <th>Harga Beli</th>
+                                                <th>Harga Jual</th>
+                                                <th>Diskon</th>
                                                 <th>Total</th>
                                             </tr>
                                             </thead>
@@ -372,7 +375,7 @@
                         @endif
                         <div class="row">
                             <div class="col-12">
-                                <h5><b>Add Items</b></h5>
+                                <h5><b>Tambah Item</b></h5>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
@@ -386,7 +389,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="categories">Category</label>
+                                    <label for="categories">Kategori</label>
                                     <select autocomplete="off" name="category" id="categories"
                                             class="form-control categories w-100">
                                         <option value="" selected disabled></option>
@@ -430,6 +433,13 @@
                                 <label for="project">Project</label>
                                 <input type="text" class="form-control" id="project"
                                        name="project" value="{{ @$isEdit ? $sale->project : '' }}">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="pic">Person in Charge (PIC)</label>
+                                <input type="text" class="form-control" id="pic"
+                                       name="pic" value="{{ @$isEdit ? $sale->pic : '' }}">
                             </div>
                         </div>
                         <div class="form-row">
