@@ -62,7 +62,7 @@ class ReceiveController extends Controller
 
             //plus
             $stock = Stock::where("item_id","=",$purchasedetails->item_id)->first();
-            $stock->qty += $request->qtyget[$i];
+            $stock->quantity += $request->qtyget[$i];
             $stock->save();
 
             $price = $purchasedetails->total_price / $purchasedetails->qty;
