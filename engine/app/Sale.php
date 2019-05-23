@@ -18,7 +18,8 @@ class Sale extends Model
         'payment_method',
         'note',
         'ongkir',
-        'grandtotal'
+        'pic',
+        'grand_total'
     ];
 
     public function user()

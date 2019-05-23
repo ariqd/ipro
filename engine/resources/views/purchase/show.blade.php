@@ -161,7 +161,7 @@ input:checked + .slider:before {
                 <td>{{ $key->item->name }}</td>
                 <td>{{ $key->item->weight }}</td>
                 <td>{{ $key->qty }}</td>
-                @if(Gate::allows('isFinance'))
+                @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                 @if($key->approval_finance > 1)
                 <td><input type="number" min="1" max="{{ $key->qty }}" value="{{ $key->qty }}" name="{{ "qty-".$key->id }}" class="form-control"></td>
                 @else
@@ -172,7 +172,7 @@ input:checked + .slider:before {
                 @endif
                 <td>{{ $key->purchase_price }}</td>
                 <td>{{ $key->total_price }}</td>
-                @if(Gate::allows('isFinance'))
+                @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                 <td><label class="switch">
                   <input  @if($key->approval_finance == 0)  @else checked="" @endif type="checkbox" name="{{"approve-".$key->id }}">
                   <span class="slider"></span>

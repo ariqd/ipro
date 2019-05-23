@@ -188,57 +188,57 @@
         </div>
     </div>
 
-@if($sale->markup == 1)
-<div class="row">
-	<div class="col-xs-12">
-		<table class="table table-bordered">
-			<thead>
-				<tr class="warning">
-					<th>BANYAK</th>
-					<th>NAMA BARANG</th>
-					<th>BERAT/PCS</th>
-					<th>BERAT (KG)</th>
-					<th>HARGA/UNIT</th>
-					<th>JUMLAH</th>
-				</tr>
-			</thead>
-			<tbody>
-				@php
-				$total =0;
-				$diskon =0;
-				@endphp
-				@foreach($sale->detail as $key)
-				<tr>
-					@php
-					$price = $key->stock->item->purchase_price;
-					$pricediskon = $key->stock->item->purchase_price - ($key->stock->item->purchase_price * $key->discount/100);
-					$priceppn = $pricediskon + $pricediskon*0.1;
-					@endphp
-					<td>{{ $key->qty }}</td>
-					<td>{{ $key->stock->item->name }}</td>
-					<td>{{ $key->stock->item->weight }}</td>
-					<td>{{ $key->qty*$key->stock->item->weight  }}</td>
-					<td>Rp. {{ number_format($priceppn) }}</td>
-					<td>Rp. {{ number_format($priceppn*$key->qty) }}</td>
-					@php
-					$total += $priceppn*$key->qty;
-					@endphp
-				</tr>
-				@endforeach
-			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="3">
-						<div class="text-right"><b>JUMLAH</b></div>
-					</td>
-					<td>Rp. {{ number_format($total) }}</td>
-					<td></td>
-					<td></td>
-				</tr>
-			</tfoot>
-		</table>
-	</div>
-</div>
+    @if($sale->markup == 1)
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr class="warning">
+                        <th>BANYAK</th>
+                        <th>NAMA BARANG</th>
+                        <th>BERAT/PCS</th>
+                        <th>BERAT (KG)</th>
+                        <th>HARGA/UNIT</th>
+                        <th>JUMLAH</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @php
+                        $total =0;
+                        $diskon =0;
+                    @endphp
+                    @foreach($sale->detail as $key)
+                        <tr>
+                            @php
+                                $price = $key->stock->item->purchase_price;
+                                $pricediskon = $key->stock->item->purchase_price - ($key->stock->item->purchase_price * $key->discount/100);
+                                $priceppn = $pricediskon + $pricediskon*0.1;
+                            @endphp
+                            <td>{{ $key->qty }}</td>
+                            <td>{{ $key->stock->item->name }}</td>
+                            <td>{{ $key->stock->item->weight }}</td>
+                            <td>{{ $key->qty*$key->stock->item->weight  }}</td>
+                            <td>Rp. {{ number_format($priceppn) }}</td>
+                            <td>Rp. {{ number_format($priceppn*$key->qty) }}</td>
+                            @php
+                                $total += $priceppn*$key->qty;
+                            @endphp
+                        </tr>
+                    @endforeach
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="3">
+                            <div class="text-right"><b>JUMLAH</b></div>
+                        </td>
+                        <td>Rp. {{ number_format($total) }}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-xs-6">
@@ -264,8 +264,53 @@
                 </table>
             </div>
         </div>
-
-
+        {{--    @else--}}
+        {{--        <div class="row">--}}
+        {{--            <div class="col-xs-12">--}}
+        {{--                <table class="table table-bordered">--}}
+        {{--                    <thead>--}}
+        {{--                    <tr class="warning">--}}
+        {{--                        <th>BANYAK</th>--}}
+        {{--                        <th>NAMA BARANG</th>--}}
+        {{--                        <th>BERAT/PCS</th>--}}
+        {{--                        <th>BERAT (KG)</th>--}}
+        {{--                        <th>HARGA/UNIT</th>--}}
+        {{--                        <th>JUMLAH</th>--}}
+        {{--                    </tr>--}}
+        {{--                    </thead>--}}
+        {{--                    <tbody>--}}
+        {{--                    @php--}}
+        {{--                        $total =0;--}}
+        {{--                        $diskon =0;--}}
+        {{--                    @endphp--}}
+        {{--                    @foreach($sale->detail as $key)--}}
+        {{--                        <tr>--}}
+        {{--                            <td>{{ $key->qty }}</td>--}}
+        {{--                            <td>{{ $key->stock->item->name }}</td>--}}
+        {{--                            <td>{{ $key->stock->item->weight }}</td>--}}
+        {{--                            <td>{{ $key->qty*$key->stock->item->weight  }}</td>--}}
+        {{--                            <td>{{ $key->stock->item->purchase_price }}</td>--}}
+        {{--                            <td>{{ $key->stock->item->purchase_price*$key->qty }}</td>--}}
+        {{--                            @php--}}
+        {{--                                $total += $key->stock->item->purchase_price*$key->qty;--}}
+        {{--                                $diskon += $key->discount/100 * ($key->stock->item->purchase_price*$key->qty);--}}
+        {{--                            @endphp--}}
+        {{--                        </tr>--}}
+        {{--                    @endforeach--}}
+        {{--                    </tbody>--}}
+        {{--                    <tfoot>--}}
+        {{--                    <tr>--}}
+        {{--                        <td colspan="3">--}}
+        {{--                            <div class="text-right"><b>JUMLAH</b></div>--}}
+        {{--                        </td>--}}
+        {{--                        <td></td>--}}
+        {{--                        <td></td>--}}
+        {{--                        <td></td>--}}
+        {{--                    </tr>--}}
+        {{--                    </tfoot>--}}
+        {{--                </table>--}}
+        {{--            </div>--}}
+        {{--        </div>--}}
     @else
         <div class="row">
             <div class="col-xs-12">
@@ -291,8 +336,8 @@
                             <td>{{ $key->stock->item->name }}</td>
                             <td>{{ $key->stock->item->weight }}</td>
                             <td>{{ $key->qty*$key->stock->item->weight  }}</td>
-                            <td>{{ $key->stock->item->purchase_price }}</td>
-                            <td>{{ $key->stock->item->purchase_price*$key->qty }}</td>
+                            <td>Rp. {{ number_format($key->stock->item->purchase_price) }}</td>
+                            <td>Rp. {{ number_format($key->stock->item->purchase_price*$key->qty) }}</td>
                             @php
                                 $total += $key->stock->item->purchase_price*$key->qty;
                                 $diskon += $key->discount/100 * ($key->stock->item->purchase_price*$key->qty);
@@ -305,7 +350,7 @@
                         <td colspan="3">
                             <div class="text-right"><b>JUMLAH</b></div>
                         </td>
-                        <td></td>
+                        <td> Rp. {{ number_format($total -$diskon) }}</td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -313,53 +358,6 @@
                 </table>
             </div>
         </div>
-@else
-<div class="row">
-	<div class="col-xs-12">
-		<table class="table table-bordered">
-			<thead>
-				<tr class="warning">
-					<th>BANYAK</th>
-					<th>NAMA BARANG</th>
-					<th>BERAT/PCS</th>
-					<th>BERAT (KG)</th>
-					<th>HARGA/UNIT</th>
-					<th>JUMLAH</th>
-				</tr>
-			</thead>
-			<tbody>
-				@php
-				$total =0;
-				$diskon =0;
-				@endphp
-				@foreach($sale->detail as $key)
-				<tr>
-					<td>{{ $key->qty }}</td>
-					<td>{{ $key->stock->item->name }}</td>
-					<td>{{ $key->stock->item->weight }}</td>
-					<td>{{ $key->qty*$key->stock->item->weight  }}</td>
-					<td>Rp. {{ number_format($key->stock->item->purchase_price) }}</td>
-					<td>Rp. {{ number_format($key->stock->item->purchase_price*$key->qty) }}</td>
-					@php
-					$total += $key->stock->item->purchase_price*$key->qty;
-					$diskon += $key->discount/100 * ($key->stock->item->purchase_price*$key->qty);
-					@endphp
-				</tr>
-				@endforeach
-			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="3">
-						<div class="text-right"><b>JUMLAH</b></div>
-					</td>
-					<td> Rp. {{ number_format($total -$diskon) }}</td>
-					<td></td>
-					<td></td>
-				</tr>
-			</tfoot>
-		</table>
-	</div>
-</div>
 
         <div class="row">
             <div class="col-xs-6">
@@ -388,7 +386,8 @@
                     </tr>
                     <tr>
                         <td colspan="2"><b>GRAND TOTAL</b></td>
-                        <td>: Rp. {{ number_format(($total + $sale->ongkir - $diskon) + (($total -$diskon)*0.1)) }}</td>
+                        <td>:
+                            Rp. {{ number_format(($total + $sale->ongkir - $diskon) + (($total -$diskon)*0.1)) }}</td>
                     </tr>
                 </table>
             </div>

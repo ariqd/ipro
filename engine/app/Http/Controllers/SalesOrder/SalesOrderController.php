@@ -39,7 +39,6 @@ class SalesOrderController extends Controller
     {
         $input = $request->all();
         unset($input['_token']);
-//        dd($input);
 
         $input['user_id'] = Auth::id();
         $sales_order_details = $input['item'];
@@ -50,6 +49,8 @@ class SalesOrderController extends Controller
         $branch = Branch::find($branch_id);
         $no_po = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         $input["quotation_id"] = $no_po;
+//                dd($input);
+
         $sales_order = Sale::create($input);
         $counter->counter += 1;
         $counter->save();
