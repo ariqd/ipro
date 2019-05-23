@@ -10,7 +10,7 @@
     <div class="modal-body">
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="name" class="form-control-label">Name</label>
+                <label for="name" class="form-control-label">Nama</label>
                 <input id="name" class="form-control" name="name" type="text"
                        value="{{ @$isEdit ? $user->name : '' }}">
             </div>
@@ -34,7 +34,7 @@
                 <label for="password" class="col-form-label text-md-right">{{ __('Password') }}</label>
                 <input id="password" type="password"
                        class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password">
-                <small class="form-text text-muted">Leave empty if unchanged</small>
+                <small class="form-text text-muted">Tinggalkan Kosong Jika Tidak Mau Diisi</small>
 
                 @if ($errors->has('password'))
                     <span class="invalid-feedback" role="alert">
@@ -45,27 +45,27 @@
                 <div class="form-check mt-2">
                     <input class="form-check-input" onclick="myFunction()" type="checkbox" value="" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">
-                        Show Password
+                        Lihat Password
                     </label>
                 </div>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="role" class="form-control-label">Role</label>
+                <label for="role" class="form-control-label">Jabatan</label>
                 <select class="custom-select" id="role" name="role">
-                    <option selected disabled>Select user role</option>
+                    <option selected disabled>Pilih Jabatan User</option>
                     @foreach($types as $key => $type)
                         <option value="{{ $key }}" {{ @$isEdit && $key == $user->role ? 'selected' : '' }}>{{ $type }}</option>
                     @endforeach
                 </select>
             </div>
         </div>
-        <div class="form-group row {{ @!$isEdit || @$user->role == 'admin' ? 'd-none' : ''  }}" id="branch">
+        <div class="form-group row {{ @!$isEdit || @$user->role == 'admin' || @$user->role == 'finance' ? 'd-none' : ''  }}" id="branch">
             <div class="col-lg-12">
                 <label for="branch_id" class="form-control-label">Cabang</label>
                 <select class="custom-select" id="branch_id" name="branch_id">
-                    <option selected disabled>Select branch</option>
+                    <option selected disabled>Pilih Cabang</option>
                     @foreach($branches as $key => $branch)
                         <option value="{{ $branch->id }}"
                                 {{ @$isEdit && $branch->id == @$user->branch->id ? 'selected' : '' }}>

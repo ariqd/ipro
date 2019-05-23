@@ -41,7 +41,7 @@
                 <td>{{ $stock->weight }} Kg</td>
             </tr>
             <tr>
-                <td><b>Area</b></td>
+                <td><b>Kebutuhan per Meter Persegi</b></td>
                 <td>{{ $stock->area }} m2</td>
             </tr>
             <tr>

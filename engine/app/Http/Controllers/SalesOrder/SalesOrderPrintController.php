@@ -49,6 +49,7 @@ class SalesOrderPrintController extends Controller
         $data = Sale::find($id);
         $data["user"] = $data->user;
         $data["detail"] = $data->details;
+        // $this->angkaTerbilang();
         if($request->has("markup")){
             $data["markup"] = 0;
         }else{

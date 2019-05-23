@@ -119,7 +119,7 @@
     <div class="col-xs-12" style="font-size: 11px">
         <div class="col-xs-6" style="font-size: 11px">
             <br>
-            <strong>email : <b class="text-danger"><u>marketing.ipro@indoteknikpratama.co.id</u></strong></b>
+            <strong>email : <b class="text-danger"><u>indoteknikpratamapro@gmail.com</u></strong></b>
         </div>
     </div>
     <div class="col-xs-12" style="margin-top: 1%">

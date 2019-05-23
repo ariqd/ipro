@@ -308,7 +308,7 @@
         </div>
         <div class="form-group col-lg-3">
             Quantity
-            <input type="number" class="form-control" step="1" id="qty">
+            <input type="number" min="1" class="form-control" step="1" id="qty">
         </div>
     </div>
     <div class="col-lg-12">

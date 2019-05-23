@@ -7,6 +7,8 @@
 @endif
 
 @section('content')
+@include('layouts.feedback')
+
 <div class="row">
     <div class="col-lg-12">
         <div class="d-flex justify-content-between">
@@ -233,12 +235,8 @@
                     <div class="form-group">
                         <label for="note">Notes Payment</label>
                         <input type="text" name="notes" id="note" class="form-control">
-                    </div>
-                     <div class="form-group">
-                        <label for="ongkir">Ongkos Kirim</label>
-                        <input type="number" name="ongkir" id="ongkir" class="form-control">
-                    </div>
-                    <input type="submit" class="btn btn-success form-control" value="Approve Sales Order">
+                    </div>                
+                    <input type="submit" class="btn btn-success form-control" value="Setujui SO dan Print Kwitansi">
                 </form>
             </div>
         </div>

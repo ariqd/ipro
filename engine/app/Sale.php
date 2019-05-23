@@ -16,7 +16,9 @@ class Sale extends Model
         'send_date',
         'send_pic_phone',
         'payment_method',
-        'note'
+        'note',
+        'ongkir',
+        'grandtotal'
     ];
 
     public function user()

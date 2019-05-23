@@ -204,6 +204,8 @@ $('.count').text(items_count + " barang dalam keranjang");
     countTotal();
 }
 
+
+var varGrand = 0;
 /**
  * Count grand total based on subtotals
  */
@@ -231,12 +233,21 @@ $('.count').text(items_count + " barang dalam keranjang");
         }
     } else {
         var grand_total = grand_subtotal - discount - down_payment;
-
+        this.varGrand = grand_total;
         $("#subtotal").val(grand_subtotal);
         $("#grand-total-span").html("Rp " + number_format(grand_subtotal) + ",-");
+        $("#grand-total-span-input").val(grand_subtotal);
         $("#grand-total-input").val(grand_total);
+
     }
 }
+
+
+// $("#ongkir").change(function(){
+//     alert(parseInt(varGrand));
+//     alert( parseInt($("#ongkir").val()));
+//     $("#grand-total-ongkir").val(parseInt(varGrand) + parseInt($("#ongkir").val()));
+// })
 
 function print(name) {
     printJS(name);

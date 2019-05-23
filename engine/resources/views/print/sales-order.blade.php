@@ -218,8 +218,8 @@ table thead tr.warning th {
 					<td>{{ $key->stock->item->name }}</td>
 					<td>{{ $key->stock->item->weight }}</td>
 					<td>{{ $key->qty*$key->stock->item->weight  }}</td>
-					<td>{{ $priceppn }}</td>
-					<td>{{ $priceppn*$key->qty }}</td>
+					<td>Rp. {{ number_format($priceppn) }}</td>
+					<td>Rp. {{ number_format($priceppn*$key->qty) }}</td>
 					@php
 					$total += $priceppn*$key->qty;
 					@endphp
@@ -231,7 +231,7 @@ table thead tr.warning th {
 					<td colspan="3">
 						<div class="text-right"><b>JUMLAH</b></div>
 					</td>
-					<td></td>
+					<td>Rp. {{ number_format($total) }}</td>
 					<td></td>
 					<td></td>
 				</tr>
@@ -291,8 +291,8 @@ table thead tr.warning th {
 					<td>{{ $key->stock->item->name }}</td>
 					<td>{{ $key->stock->item->weight }}</td>
 					<td>{{ $key->qty*$key->stock->item->weight  }}</td>
-					<td>{{ $key->stock->item->purchase_price }}</td>
-					<td>{{ $key->stock->item->purchase_price*$key->qty }}</td>
+					<td>Rp. {{ number_format($key->stock->item->purchase_price) }}</td>
+					<td>Rp. {{ number_format($key->stock->item->purchase_price*$key->qty) }}</td>
 					@php
 					$total += $key->stock->item->purchase_price*$key->qty;
 					$diskon += $key->discount/100 * ($key->stock->item->purchase_price*$key->qty);
@@ -305,7 +305,7 @@ table thead tr.warning th {
 					<td colspan="3">
 						<div class="text-right"><b>JUMLAH</b></div>
 					</td>
-					<td></td>
+					<td> Rp. {{ number_format($total -$diskon) }}</td>
 					<td></td>
 					<td></td>
 				</tr>

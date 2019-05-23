@@ -1,6 +1,6 @@
 @if(@session('info'))
     <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <strong><i class="fa fa-info-circle"></i> Success!</strong> {{ @session('info') }}
+        <strong><i class="fa fa-info-circle"></i> Success!</strong> {!! @session('info') !!}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
