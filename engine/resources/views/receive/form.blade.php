@@ -136,7 +136,7 @@
         input.setAttribute('value', receiptnumber);
         input.setAttribute('class', "receipt");
         container.appendChild(input);
-    })
+    });
 
     $("#purchaseid").change(function(){
         $(".purchaseid").remove();
@@ -203,7 +203,7 @@
 
     <div class="col-lg-12">
         <div class="col-lg-12 text-right">
-            <h2>Total : <span id="grandtotal">Rp. 0,-</span><h2>
+            <h2>Total : <span id="grandtotal">Rp. 0,-</span></h2>
             </div>
             <h4>Cart</h4>
             <div class="card">

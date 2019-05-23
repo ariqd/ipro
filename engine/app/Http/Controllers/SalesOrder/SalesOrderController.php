@@ -39,10 +39,12 @@ class SalesOrderController extends Controller
     {
         $input = $request->all();
         unset($input['_token']);
+//        dd($input);
 
         $input['user_id'] = Auth::id();
         $sales_order_details = $input['item'];
         unset($input['item']);
+
         $counter = Counter::where("name", "=", "QO")->first();
         $branch_id = Auth::user()->branch_id;
         $branch = Branch::find($branch_id);

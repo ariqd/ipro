@@ -52,40 +52,17 @@
                 });
         });
 
-        $(".customer").select2({
-            selectOnClose: true,
-            placeholder: "Choose Customer"
-        });
-        $("#brands").select2({
-            selectOnClose: true,
-            placeholder: "Choose Brand"
-        });
-        $("#categories").select2({
-            selectOnClose: true,
-            placeholder: 'Choose a brand first'
-        });
-
-        $("#brands").change(function () {
-            var id = $("#brands").val();
+            $(".customer").select2({
+                selectOnClose: true,
+                placeholder: "Pilih Customer"
+            });
+            $("#brands").select2({
+                selectOnClose: true,
+                placeholder: "Pilih Brand"
+            });
             $("#categories").select2({
                 selectOnClose: true,
-                placeholder: 'Choose Category',
-                ajax: {
-                    url: "{!! url("categories/search") !!}/" + id,
-                    dataType: 'json',
-                    delay: 600,
-                    processResults: function (data) {
-                        return {
-                            results: $.map(data, function (item) {
-                                return {
-                                    text: item.name,
-                                    id: item.id
-                                }
-                            })
-                        };
-                    },
-                    cache: true
-                }
+                placeholder: 'Pilih brand terlebih dahulu'
             });
         });
 
@@ -100,25 +77,26 @@
                 beforeSend: function () {
                     $('.loading').show();
                     $("#items").html("");
-                        // $('#search').val("");
                     },
                     success: function (response) {
                         $('.loading').hide();
-                        // console.log(response);
+                        console.dir(response);
                         if (response.length > 0) {
                             $.each(response, function (index, value) {
                                 var btn;
                                 if (parseInt(value.quantity) > 0) {
                                     if (parseInt(value.item.purchase_price) > 0) {
                                         btn = '<button type="button" class="btn btn-outline-dark addProduct-' + value.id + '  " ' +
-                                        'onclick="addProduct(' + value.id + ')" title="Add to Cart" ' +
-                                        'data-name="' + value.item.name + '"' +
-                                        ' data-code="' + value.id + '"' +
-                                        ' data-quantity="' + value.quantity + '"' +
-                                        ' data-price="' + value.item.purchase_price + '"' +
-                                        '>' +
-                                        '<i class="fa fa-cart-plus"></i>' +
-                                        '</button>';
+                                            'onclick="addProduct(' + value.id + ')" title="Add to Cart"' +
+                                            ' data-name="' + value.item.name + '"' +
+                                            ' data-code="' + value.id + '"' +
+                                            ' data-quantity="' + value.quantity + '"' +
+                                            ' data-price="' + value.item.purchase_price + '"' +
+                                            ' data-price-branch="' + value.price_branch + '"' +
+                                            ' data-branch="' + value.branch.name + '"' +
+                                            '>' +
+                                            '<i class="fa fa-cart-plus"></i>' +
+                                            '</button>';
                                     } else {
                                         btn = '';
                                     }
@@ -130,9 +108,10 @@
                                     '<div class="card-body item">' +
                                     '<div class="d-flex justify-content-between align-items-center">' +
                                     '<div>' +
-                                    '<h5>' + value.item.name + ' (' + value.id + ') ' + '</h5>' +
+                                    '<h5>' + value.item.name + ' (' + value.branch.name + ') ' + '</h5>' +
                                     '<p class="m-0">Quantity: ' + value.quantity + '</p>' +
-                                    '<p class="m-0">Rp ' + value.item.purchase_price + '</p>' +
+                                    '<p class="m-0">Harga Pusat: Rp ' + value.item.purchase_price + '</p>' +
+                                    '<p class="m-0">Harga Cabang: Rp ' + value.price_branch + '</p>' +
                                     '</div>' +
                                     '<div>' +
                                     btn +
@@ -148,7 +127,7 @@
                                 '<div class="card-body item">' +
                                 '<div class="d-flex justify-content-between align-items-center">' +
                                 '<div>' +
-                                '<h5> No item found</h5>' +
+                                '<h5>No item found</h5>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
@@ -205,27 +184,28 @@
 @endpush
 
 @section('content')
-@include("layouts.ajax")
-<form action="{{ @$edit ? url('sales-orders/'.$sales->id) : url('sales-orders') }}" method="post">
-    @csrf
-    {{ @$edit ? method_field('PUT') : '' }}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h2>
-                        <small>
-                            <a href="{{ url('sales-orders') }}" class="text-dark">Sales Orders</a> /
-                        </small>
-                        <b>{{ @$isEdit ? 'Edit' : 'Create' }} Quotation</b>
-                    </h2>
-                </div>
-                <div>
-                    <div class="form-group row">
-                        <label for="quotation_id" class="col-5 col-form-label text-right">Quotation ID</label>
-                        <div class="col-7">
-                            <input type="text" class="form-control" id="quotation_id" name="quotation_id"
-                            value="{{ @$isEdit ? $sale->quotation_id : $no_qo }}" required>
+    @include("layouts.ajax")
+    <form action="{{ @$edit ? url('sales-orders/'.$sales->id) : url('sales-orders') }}" method="post">
+        @csrf
+        {{ @$edit ? method_field('PUT') : '' }}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h2>
+                            <small>
+                                <a href="{{ url('sales-orders') }}" class="text-dark">Sales Orders</a> /
+                            </small>
+                            <b>{{ @$isEdit ? 'Edit' : 'Buat' }} Quotation</b>
+                        </h2>
+                    </div>
+                    <div>
+                        <div class="form-group row">
+                            <label for="quotation_id" class="col-5 col-form-label text-right">Quotation ID</label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="quotation_id" name="quotation_id"
+                                       value="{{ @$isEdit ? $sale->quotation_id : $no_qo }}" required>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -246,20 +226,14 @@
                 <i class="fa fa-plus"></i> New Customer</a>
                 @endif
             </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group">
-                        <select class="form-control customer mb-0" id="customer_select" name="customer_id" required
-                        style="width: 100%">
-                        <option></option>
-                        @foreach($customers as $customer)
-                        <option value="{{ $customer->id }}" {{ @$isEdit && $customer->id == $sale->customer->id ? 'selected' : '' }}>
-                            {{ $customer->project_owner }}
-                        </option>
-                        @endforeach
-                    </select>
+            <div class="col-6">
+                <div class="float-right">
+                    @if(Gate::allows('isAdmin')||Gate::allows('isSales'))
+                        <a href="#modalForm" data-toggle="modal"
+                           data-href="{{ url('sales-orders/create/customer') }}"
+                           class="btn btn-outline-dark btn-sm">
+                            <i class="fa fa-plus"></i> Buat Customer</a>
+                    @endif
                 </div>
             </div>
             <h5 class="card-header bg-secondary">
@@ -282,116 +256,137 @@
                         <input type="text" class="form-control" id="register_id" disabled
                         name="register_id" value="{{ @$isEdit ? $sale->customer->id : '' }}">
                     </div>
-                    <div class="form-group col-lg-5">
-                        <label for="name">Pemilik Project</label>
-                        <input type="text" class="form-control" id="name" disabled
-                        name="name" value="{{ @$isEdit ? $sale->customer->project_owner : '' }}">
-                    </div>
-                    <div class="form-group col-lg-5">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" disabled name="email"
-                        value="{{ @$isEdit ? $sale->customer->email : '' }}">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-lg-6">
-                        <label for="address">Alamat</label>
-                        <input type="text" class="form-control" id="address" disabled name="address"
-                        value="{{ @$isEdit ? $sale->customer->address : '' }}">
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <label for="phone">Telp</label>
-                        <input type="text" class="form-control" id="phone" disabled name="phone"
-                        value="{{ @$isEdit ? $sale->customer->phone : '' }}">
-                    </div>
-                    <div class="form-group col-lg-3">
-                        <label for="fax">Fax</label>
-                        <input type="text" class="form-control" id="fax" disabled name="fax"
-                        value="{{ @$isEdit ? $sale->customer->fax : '' }}">
+                    <h5 class="card-header bg-secondary">
+                        <a data-toggle="collapse" href="#collapse-example" aria-expanded="true"
+                           aria-controls="collapse-example" id="heading-example"
+                           class="d-flex justify-content-between align-items-center collapsed">
+                            <div>
+                                Detail Customer
+                            </div>
+                            <div>
+                                <i class="fa fa-chevron-down"></i>
+                            </div>
+                        </a>
+                    </h5>
+                    <div class="collapse" id="collapse-example" style="background: #F5F5F5;">
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-lg-2">
+                                    <label for="register_id">Register ID</label>
+                                    <input type="text" class="form-control" id="register_id" disabled
+                                           name="register_id" value="{{ @$isEdit ? $sale->customer->id : '' }}">
+                                </div>
+                                <div class="form-group col-lg-5">
+                                    <label for="name">Pemilik Project</label>
+                                    <input type="text" class="form-control" id="name" disabled
+                                           name="name" value="{{ @$isEdit ? $sale->customer->project_owner : '' }}">
+                                </div>
+                                <div class="form-group col-lg-5">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" disabled name="email"
+                                           value="{{ @$isEdit ? $sale->customer->email : '' }}">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-lg-6">
+                                    <label for="address">Alamat</label>
+                                    <input type="text" class="form-control" id="address" disabled name="address"
+                                           value="{{ @$isEdit ? $sale->customer->address : '' }}">
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <label for="phone">Telp</label>
+                                    <input type="text" class="form-control" id="phone" disabled name="phone"
+                                           value="{{ @$isEdit ? $sale->customer->phone : '' }}">
+                                </div>
+                                <div class="form-group col-lg-3">
+                                    <label for="fax">Fax</label>
+                                    <input type="text" class="form-control" id="fax" disabled name="fax"
+                                           value="{{ @$isEdit ? $sale->customer->fax : '' }}">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-</div>
-<div class="row">
-    <div class="col-lg-12">
-        <h4><b>Items</b></h4>
-        <div class="card">
-            <div class="card-body">
-                @if(@$isEdit && !empty($sale->details))
-                <div class="row">
-                    <div class="col-12">
-                        <h5><b>Current Items</b></h5>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Name</th>
-                                        <th>Qty</th>
-                                        <th>Price</th>
-                                        <th>Discount</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($sale->details as $details)
-                                    <tr>
-                                        <td>
-                                            {{ $details->id }}
-                                        </td>
-                                        <td>
-                                            {{ $details->stock->item->name }}
-                                        </td>
-                                        <td>
-                                            {{ $details->qty }}
-                                        </td>
-                                        <td>
-                                            Rp{{number_format($details->price) }},00
-                                        </td>
-                                        <td>
-                                            {{ $details->discount }}%
-                                        </td>
-                                        <td>
-                                            Rp{{number_format($details->total)}},00
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="6" class="text-center">No items yet</td>
-                                    </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                        <hr>
-                    </div>
-                </div>
-                @endif
-                <div class="row">
-                    <div class="col-12">
-                        <h5><b>Add Items</b></h5>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label for="brands">Brand</label>
-                            <select class="form-control brand" id="brands" name="brand"
-                            style="width: 100%">
-                            <option></option>
-                            @foreach($brands as $brand)
-                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="categories">Category</label>
-                        <select autocomplete="off" name="category" id="categories"
-                        class="form-control categories w-100">
-                        <option value="" selected disabled></option>
-                    </select>
-                </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <h4><b>Items</b></h4>
+                <div class="card">
+                    <div class="card-body">
+                        @if(@$isEdit && !empty($sale->details))
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5><b>Item Saat Ini</b></h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Nama</th>
+                                                <th>Qty</th>
+                                                <th>Harga Beli</th>
+                                                <th>Harga Jual</th>
+                                                <th>Diskon</th>
+                                                <th>Total</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @forelse($sale->details as $details)
+                                                <tr>
+                                                    <td>
+                                                        {{ $details->id }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $details->stock->item->name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $details->qty }}
+                                                    </td>
+                                                    <td>
+                                                        Rp{{number_format($details->price) }},00
+                                                    </td>
+                                                    <td>
+                                                        {{ $details->discount }}%
+                                                    </td>
+                                                    <td>
+                                                        Rp{{number_format($details->total)}},00
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="6" class="text-center">No items yet</td>
+                                                </tr>
+                                            @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        @endif
+                        <div class="row">
+                            <div class="col-12">
+                                <h5><b>Tambah Item</b></h5>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label for="brands">Brand</label>
+                                    <select class="form-control brand" id="brands" name="brand"
+                                            style="width: 100%">
+                                        <option></option>
+                                        @foreach($brands as $brand)
+                                            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="categories">Kategori</label>
+                                    <select autocomplete="off" name="category" id="categories"
+                                            class="form-control categories w-100">
+                                        <option value="" selected disabled></option>
+                                    </select>
+                                </div>
 
                 <div class="card mb-0" id="itemsList">
                     <div class="card-body p-0" id="items">
@@ -408,6 +403,19 @@
                             <div id="items2-text" class="count text-secondary">
                                 Belum ada barang dipilih
                             </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="pic">Person in Charge (PIC)</label>
+                                <input type="text" class="form-control" id="pic"
+                                       name="pic" value="{{ @$isEdit ? $sale->pic : '' }}">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-lg-4">
+                                <label for="send_address">Alamat Kirim</label>
+                                <input type="text" class="form-control" id="send_address" name="send_address"
+                                       value="{{ @$isEdit ? $sale->send_address : '' }}">
                             <div>
                                 <b>Total:</b> <span id="grand-total-span">Rp 0</span>
                             </div>

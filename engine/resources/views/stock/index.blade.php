@@ -60,6 +60,7 @@
             countStock();
             countWeight();
             countPrice();
+            countPriceBranch();
 
             function countStock() {
                 var sum = 0;
@@ -74,11 +75,11 @@
                 $('.weight').each(function () {
                     sum += parseFloat($(this).text());
                 });
-                var text = sum + ' kg';
+                var text = sum + ' Kg';
                 if (sum > 1000) {
                     sum = sum / 1000;
                     var weight = Number(sum).toFixed(2);
-                    text = weight + ' ton';
+                    text = weight + ' Ton';
                 }
                 $('.total_weight').text(text);
             }
@@ -91,10 +92,19 @@
                 $('.total_price').text(addCommas(sum));
             }
 
+            function countPriceBranch() {
+                var sum = 0;
+                $('.price_branch').each(function () {
+                    sum += parseFloat($(this).text());
+                });
+                $('.total_price_branch').text(addCommas(sum));
+            }
+
             $('#myInput').on('keyup', function () {
                 table.search(this.value).draw();
 
                 countPrice();
+                countPriceBranch();
                 countWeight();
                 countStock();
             });
@@ -247,12 +257,13 @@
                         <tr>
                             <th>No.</th>
                             <th>Item</th>
-                            <th>Branch</th>
-                            <th class="stok">Stock (per Batang)</th>
-                            <th class="stok">Booking Stock</th>
-                            <th class="berat">Weight (kg)</th>
-                            <th class="harga">Price/unit</th>
+                            <th>Cabang</th>
+                            <th class="stok">Stok (per Batang)</th>
+                            <th class="berat">Berat (kg)</th>
+                            <th class="harga">Harga Pusat</th>
+                            <th class="harga_cabang">Harga Cabang</th>
                             <th></th>
+                            <th class="d-none"></th>
                             <th class="d-none"></th>
                         </tr>
                         </thead>
@@ -260,19 +271,19 @@
                         @foreach($stocks as $stock)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $stock->item->category->brand->name .' '. $stock->item->category->name .' '. $stock->item->name }}</td>
-                                <td class="cabang">{{ $stock->branch->name }}</td>
+                                <td>{{ $stock->item->category->brand->name .' - '. $stock->item->category->name .' - '. $stock->item->name }}</td>
+                                <td class="cabang">{{ ucfirst($stock->branch->name) }}</td>
                                 <td class="stock stok">
                                     {{ $stock->quantity }}
                                 </td>
-                                <td class="booking">
-                                    10
-                                </td>
-                                <td class="berat weight">
+                                <td class="weight berat">
                                     {{ $stock->item->weight }}
                                 </td>
                                 <td class="harga">
                                     Rp {{ number_format($stock->item->purchase_price) }}
+                                </td>
+                                <td class="harga_cabang">
+                                    Rp {{ number_format($stock->price_branch) }}
                                 </td>
                                 <td>
                                     <div class="btn-group">
@@ -317,6 +328,9 @@
                                 <td class="price d-none">
                                     {{ $stock->item->purchase_price }}
                                 </td>
+                                <td class="price_branch d-none">
+                                    {{ $stock->price_branch }}
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -332,14 +346,17 @@
                             <td class="stok">
                                 <span class="total_stock"></span> pcs
                             </td>
-                            <td></td>
                             <td>
                                 <span class="total_weight"></span>
                             </td>
                             <td class="border-right harga">
                                 Rp <span class="total_price"></span>
                             </td>
+                            <td class="border-right harga_cabang">
+                                Rp <span class="total_price_branch"></span>
+                            </td>
                             <td></td>
+                            <td class="d-none"></td>
                             <td class="d-none"></td>
                         </tr>
                         </tfoot>
