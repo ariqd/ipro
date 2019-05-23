@@ -248,7 +248,6 @@ function countTotal() {
         $("#grand-total-span").html("Rp " + number_format(grand_subtotal) + ",-");
         $("#grand-total-span-input").val(grand_subtotal);
         $("#grand-total-input").val(grand_total);
-
     }
 }
 
