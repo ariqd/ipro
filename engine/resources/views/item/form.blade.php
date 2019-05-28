@@ -58,7 +58,7 @@
         <div class="form-group">
             <label for="kebutuhan per meter persegi" class="form-control-label">Kebutuhan per Meter Persegi (m2)</label>
             <div class="input-group">
-                <input autocomplete="off" id="kebutuhan per meter persegi" class="form-control" name="kebutuhan per meter persegi"
+                <input autocomplete="off" id="kebutuhan per meter persegi" class="form-control" name="area"
                 value="{{ @$isEdit ? $item->area : '' }}">
                 <div class="input-group-append">
                     <span class="input-group-text">m<sup>2</sup></span>
