@@ -2,6 +2,42 @@
 
 @section('title', 'Customer Master Data')
 
+@push('css')
+    <link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet"/>
+    <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet"/>
+@endpush
+
+@push('js')
+    <script src="{{ asset('assets/plugins/DataTables/datatables.min.js') }}"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/features/scrollResize/dataTables.scrollResize.min.js"></script>
+@endpush
+
+@push('script')
+    <script>
+        $(document).ready(function () {
+            $('.data-table').DataTable();
+
+            $('.btnDelete').on('click', function (e) {
+                e.preventDefault();
+                var parent = $(this).parent();
+
+                swal({
+                    title: "Apa anda yakin?",
+                    text: "Data akan terhapus secara permanen!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (willDelete) {
+                        if (willDelete) {
+                            parent.find('.formDelete').submit();
+                        }
+                    });
+            });
+        });
+    </script>
+@endpush
+
 @section('content')
     @include('layouts.ajax')
     <div class="row">
@@ -27,32 +63,40 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="table table-light table-bordered">
-                <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Project Owner</th>
-                    <th>KTP</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Fax</th>
-                    <th>Address</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($customers as $customer)
+            <div class="table-responsive">
+                <table class="table table-light table-bordered data-table">
+                    <thead>
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $customer->project_owner }}</td>
-                        <td>{{ $customer->no_ktp }}</td>
-                        <td>{{ $customer->phone }}</td>
-                        <td>{{ $customer->email }}</td>
-                        <td>{{ $customer->fax }}</td>
-                        <td>{{ $customer->address }}</td>
+                        <th>No</th>
+                        <th>Project Owner</th>
+                        <th>KTP</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Fax</th>
+                        <th>Address</th>
+                        <th></th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    @foreach($customers as $customer)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $customer->project_owner }}</td>
+                            <td>{{ $customer->no_ktp }}</td>
+                            <td>{{ $customer->phone }}</td>
+                            <td>{{ $customer->email }}</td>
+                            <td>{{ $customer->fax }}</td>
+                            <td>{{ $customer->address }}</td>
+                            <td>
+                                <div class="d-flex">
+                                    <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 @endsection

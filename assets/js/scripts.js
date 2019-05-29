@@ -181,7 +181,6 @@ function removeProduct(product_code) {
  * @param product_code Product Code Part
  */
 function countSubtotal(product_code) {
-    // var actual_price = parseFloat($('#price-' + product_code).text().replace('Harga Jual: Rp ', '') || 0);
     var actual_price = $('#item-price-branch-' + product_code).val();
     var qty = parseFloat($("#item-qty-" + product_code).val()) || 0;
     var discount = parseFloat($("#item-disc-" + product_code).val() || 0);

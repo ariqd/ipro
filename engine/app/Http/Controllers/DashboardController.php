@@ -4,41 +4,43 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sale;
+use Illuminate\Http\Response;
+
 class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
-        $revenue=0;
-        $ton=0;
-        $salefinish=0;
-        $saleunfinish=0;
-        $totalsale=0;
+        $revenue = 0;
+        $ton = 0;
+        $salefinish = 0;
+        $saleunfinish = 0;
+        $totalsale = 0;
         $sale = Sale::all();
         $salebydayf = array();
         $salebydayu = array();
         $countday = array();
         //init
-        for ($i=1; $i <= date("t") ; $i++) { 
+        for ($i = 1; $i <= date("t"); $i++) {
             $countday[$i] = $i;
             $salebydayf[$i] = 0;
             $salebydayu[$i] = 0;
         }
 
         foreach ($sale as $key) {
-            $day = date("d", strtotime($key->created_at));
+            $day = date("j", strtotime($key->created_at));
             $flag = 0;
-            if($key->no_so != null){
+            if ($key->no_so != null) {
                 $salefinish++;
                 $salebydayf[$day]++;
                 $flag = 1;
                 $revenue += $key->grand_total + $key->ongkir;
 
-            }else{
+            } else {
                 $saleunfinish++;
                 $salebydayu[$day]++;
                 $flag = 0;
@@ -48,7 +50,7 @@ class DashboardController extends Controller
             foreach ($key["detail"] as $value) {
                 $value["stock"] = $value->stock;
                 $value["stock"]["item"] = $value["stock"]->item;
-                if($flag == 1){
+                if ($flag == 1) {
                     $ton += $value["stock"]["item"]->weight;
                 }
 
@@ -58,7 +60,7 @@ class DashboardController extends Controller
         $totalsale = count($sale);
         // dd($d);
         $graph["revenue"] = $revenue;
-        $graph["ton"] = $ton/1000;
+        $graph["ton"] = $ton / 1000;
         $graph["salefinish"] = $salefinish;
         $graph["saleunfinish"] = $saleunfinish;
         $graph["totalsale"] = $totalsale;
@@ -71,7 +73,7 @@ class DashboardController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -81,8 +83,8 @@ class DashboardController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -92,8 +94,8 @@ class DashboardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function show($id)
     {
@@ -103,8 +105,8 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function edit($id)
     {
@@ -114,9 +116,9 @@ class DashboardController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -126,8 +128,8 @@ class DashboardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function destroy($id)
     {

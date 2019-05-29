@@ -41,7 +41,7 @@
     </div>
     <div class="row">
         <div class="col-12">
-            <table class="table table-light table-bordered">
+            <table class="table table-light table-bordered data-table">
                 <thead>
                 <tr>
                     <th>No</th>
@@ -64,7 +64,7 @@
                         <td>{{ $vendor->pic_name }}</td>
                         <td>
                             <a href="#modalForm" data-href="{{ url('vendors/'.$vendor->id.'/edit') }}"
-                               data-toggle="modal" class="btn btn-secondary">Edit</a>
+                               data-toggle="modal" class="btn btn-secondary btn-sm">Edit</a>
                         </td>
                     </tr>
                 @endforeach

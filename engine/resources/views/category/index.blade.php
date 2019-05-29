@@ -48,7 +48,7 @@
                                 <td>
                                     <a href="#modalForm" data-toggle="modal"
                                        data-href="{{ url('categories/'.$category->id.'/edit') }}"
-                                       class="btn btn-outline-dark btn-sm">Edit</a>
+                                       class="btn btn-secondary btn-sm">Edit</a>
                                 </td>
                             </tr>
                         @endforeach

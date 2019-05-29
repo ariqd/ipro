@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+
 //use Validator;
 
 class CustomerController extends Controller
@@ -13,16 +15,14 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
-    {   
-        $data;
-        if(Auth::user()->role="admin"){
-            $data['customers'] = Customer::all();
-        }
-        else{
-            $data['customers'] = Customer::where("user_id","=",Auth::user()->id)->get();
+    {
+        $data['customers'] = Customer::all();
+
+        if (Auth::user()->role != "admin") {
+            $data['customers'] = Customer::where("user_id", Auth::id())->get();
         }
 
         return view('customer.index', $data);
@@ -31,7 +31,7 @@ class CustomerController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -41,21 +41,14 @@ class CustomerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
         $input = $request->all();
         unset($input['_token']);
 
-//     $validate = Validator::make($input, [
-//         'project_owner' => 'required',
-//         'no_ktp' => 'required|unique:customers',
-//         'email' => 'required|unique:users',
-//         'password' => 'required',
-//         'user_type' => 'required'
-//    ]);
         $validate = Validator::make($input, [
             'project_owner' => 'required',
             'no_ktp' => 'required|unique:customers',
@@ -68,7 +61,6 @@ class CustomerController extends Controller
         if ($validate->fails()) { // if validation fails
             return redirect('customers')->with('error', 'Your data is not complete.')->withErrors($validate->errors())->withInput($input);
         } else {
-//            dd($input);
             $input['user_id'] = Auth::id();
             Customer::create($input);
 
@@ -79,8 +71,8 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Customer  $customer
-     * @return \Illuminate\Http\Response
+     * @param Customer $customer
+     * @return Response
      */
     public function show(Customer $customer)
     {
@@ -90,8 +82,8 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Customer  $customer
-     * @return \Illuminate\Http\Response
+     * @param Customer $customer
+     * @return Response
      */
     public function edit(Customer $customer)
     {
@@ -101,9 +93,9 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Customer  $customer
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Customer $customer
+     * @return Response
      */
     public function update(Request $request, Customer $customer)
     {
@@ -113,8 +105,8 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Customer  $customer
-     * @return \Illuminate\Http\Response
+     * @param Customer $customer
+     * @return Response
      */
     public function destroy(Customer $customer)
     {

@@ -38,10 +38,10 @@
         $(document).ready(function () {
             function addCommas(nStr) {
                 nStr += '';
-                x = nStr.split('.');
-                x1 = x[0];
-                x2 = x.length > 1 ? '.' + x[1] : '';
-                var rgx = /(\d+)(\d{3})/;
+                let x = nStr.split('.');
+                let x1 = x[0];
+                let x2 = x.length > 1 ? '.' + x[1] : '';
+                let rgx = /(\d+)(\d{3})/;
                 while (rgx.test(x1)) {
                     x1 = x1.replace(rgx, '$1' + ',' + '$2');
                 }
@@ -119,7 +119,8 @@
                                 <td>{{ $item->category->name }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>
-                                    <a  href="#modalForm" data-toggle="modal" data-href="items/{{ $item->id }}/edit" class="btn btn-secondary">Edit</a>
+                                    <a href="#modalForm" data-toggle="modal" data-href="items/{{ $item->id }}/edit"
+                                       class="btn btn-secondary btn-sm">Edit</a>
                                 </td>
                             </tr>
                         @endforeach

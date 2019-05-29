@@ -7,27 +7,27 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a href="{{ url('dashboard') }}"
-                   class="nav-link {{ (request()->is('dashboard*')) ? 'active' : '' }}">
-                    <i class="fa fa-dashboard"></i> Dashboard
-                </a>
-            </li>
+{{--            <li class="nav-item">--}}
+{{--                <a href="{{ url('pos') }}" class="nav-link {{ (request()->is('pos*')) ? 'active' : '' }}">--}}
+{{--                    <i class="fa fa-money"></i> Point of Sales--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
-            <li class="nav-item">
-                <a href="{{ url('pos') }}" class="nav-link {{ (request()->is('pos*')) ? 'active' : '' }}">
-                    <i class="fa fa-money"></i> Point of Sales
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="{{ url('catalogues') }}"
-                   class="nav-link {{ (request()->is('catalogues*')) ? 'active' : '' }}">
-                    <i class="fa fa-th-large"></i> Catalogue
-                </a>
-            </li>
+{{--            <li class="nav-item">--}}
+{{--                <a href="{{ url('catalogues') }}"--}}
+{{--                   class="nav-link {{ (request()->is('catalogues*')) ? 'active' : '' }}">--}}
+{{--                    <i class="fa fa-th-large"></i> Catalogue--}}
+{{--                </a>--}}
+{{--            </li>--}}
 
             @if(Gate::allows('isAdmin'))
+                <li class="nav-item">
+                    <a href="{{ url('dashboard') }}"
+                       class="nav-link {{ (request()->is('dashboard*')) ? 'active' : '' }}">
+                        <i class="fa fa-dashboard"></i> Dashboard
+                    </a>
+                </li>
+
                 <li class="nav-item nav-dropdown">
                     <a href="#" class="nav-link nav-dropdown-toggle">
                         <i class="fa fa-asterisk"></i> Master Data <i class="fa fa-caret-left"></i>
@@ -106,12 +106,13 @@
                 </a>
             </li>
 
-                <li class="nav-item">
-                    <a href="{{ url('sales-orders') }}"
-                       class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
-                        <i class="fa fa-arrow-down"></i> Sales Order
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="{{ url('sales-orders') }}"
+                   class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
+                    <i class="fa fa-arrow-down"></i> Sales Order
+                </a>
+            </li>
+
             @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                 <li class="nav-item">
                     <a href="{{ url('finances') }}"
