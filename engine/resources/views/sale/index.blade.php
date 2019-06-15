@@ -12,7 +12,9 @@
     <script src="https://cdn.datatables.net/plug-ins/1.10.19/features/scrollResize/dataTables.scrollResize.min.js"></script>
 
     <script type="text/javascript">
-        $('.data-table').DataTable();
+        $('.data-table').DataTable({
+            "order": [[0, "desc"]]
+        });
     </script>
 @endpush
 
@@ -45,6 +47,7 @@
     @endif
     <div class="row">
         <div class="col-lg-12">
+            <h4 class="text-danger"><b>Not Approved</b></h4>
             <div class="table-responsive">
                 <table class="table data-table table-light">
                     <thead>
@@ -58,13 +61,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($sales as $sale)
+                    @foreach($not_approved as $sale)
                         <tr>
                             <td>{{ $sale->created_at }}</td>
                             <td>{{ $sale->quotation_id }}</td>
-                            <td>{{ $sale->no_so}} @if($sale->no_so != null)<span
-                                        class="badge badge-success">Approved</span>@else<span
-                                        class="badge badge-danger">Not Approved</span>@endif</td>
+                            <td>
+                                <span class="badge badge-danger">Not Approved</span>
+                            </td>
                             <td>{{ $sale->customer->project_owner }}</td>
                             <td>{{ $sale->user->branch->name }}</td>
 
@@ -72,7 +75,8 @@
                                 @if(Gate::allows("isAdmin"))
                                     @if($sale->no_so == null)
                                         <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
-                                           class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve Request
+                                           class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve
+                                            Request
                                         </a>
                                     @endif
                                     <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm">
@@ -82,7 +86,66 @@
                                 @elseif(Gate::allows("isFinance"))
                                     @if($sale->no_so == null)
                                         <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
-                                           class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve Request
+                                           class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve
+                                            Request
+                                        </a>
+                                    @else
+                                        <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm">
+                                            Show </a>
+                                    @endif
+                                @elseif(Gate::allows("isSales"))
+                                    <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm">
+                                        Show </a>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-lg-12">
+            <h4 class="text text-success"><b>Approved</b></h4>
+            <div class="table-responsive">
+                <table class="table data-table table-light">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>No. Quotation</th>
+                        <th>No. SO</th>
+                        <th>Customer</th>
+                        <th>Cabang</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($approved as $sale)
+                        <tr>
+                            <td>{{ $sale->created_at }}</td>
+                            <td>{{ $sale->quotation_id }}</td>
+                            <td>{{ $sale->no_so }} <span class="badge badge-success">Approved</span></td>
+                            <td>{{ $sale->customer->project_owner }}</td>
+                            <td>{{ $sale->user->branch->name }}</td>
+
+                            <td>
+                                @if(Gate::allows("isAdmin"))
+                                    @if($sale->no_so == null)
+                                        <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
+                                           class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve
+                                            Request
+                                        </a>
+                                    @endif
+                                    <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm">
+                                        Show </a>
+                                    <a href="{{ url('sales-orders/'.$sale->id.'/edit') }}"
+                                       class="btn btn-secondary btn-sm"> Edit </a>
+                                @elseif(Gate::allows("isFinance"))
+                                    @if($sale->no_so == null)
+                                        <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
+                                           class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve
+                                            Request
                                         </a>
                                     @else
                                         <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm">

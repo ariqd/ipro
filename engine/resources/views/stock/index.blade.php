@@ -256,7 +256,7 @@
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Item</th>
+                            <th>Brand - Category - Item</th>
                             <th>Cabang</th>
                             <th class="stok">Stok (per Batang)</th>
                             <th class="berat">Berat (kg)</th>

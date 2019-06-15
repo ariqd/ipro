@@ -69,7 +69,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ ucfirst($user->role) }}</td>
                                 <td>
-                                    {{ $user->role != 'admin' ? @$user->branch->name : '-' }}
+                                    {{ $user->role != 'admin' ? @$user->branch->name : 'Pusat' }}
                                 </td>
                                 {{--<td>{{ $user->branch }}</td>--}}
                                 {{--<td>Bandung</td>--}}

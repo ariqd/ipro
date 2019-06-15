@@ -20,6 +20,11 @@
         .card-header .collapsed .fa {
             transform: rotate(90deg);
         }
+
+        #items2 {
+            max-height: 300px;
+            overflow-y: scroll;
+        }
     </style>
 @endpush
 

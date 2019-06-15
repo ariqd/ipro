@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Brand;
-use App\Stock;
-use App\Item;
 use App\Branch;
-use function foo\func;
+use App\Brand;
+use App\Item;
+use App\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -86,8 +85,21 @@ class StockController extends Controller
         if ($validate->fails()) {
             return redirect('stocks')->withErrors($validate)->withInput($input);
         } else {
+            $check_stock = Stock::where([
+                'item_id' => $input['item_id'],
+                'branch_id' => $input['branch_id']
+            ])->first();
+
+            if (!empty($check_stock))
+                return redirect()->back()->with('error', $check_stock->item->name . ' cabang ' . $check_stock->branch->name . ' sudah pernah dibuat');
+
+            $item = Item::find($input['item_id']);
+            if ($input['price_branch'] < $item->purchase_price)
+                return redirect()->back()->with('error', 'Harga cabang tidak bisa kurang dari harga pusat!');
+
             $stock = Stock::create($input);
-            return redirect('stocks')->with('info', $stock->name . ' berhasil ditambahkan!');
+
+            return redirect('stocks')->with('info', $stock->item->name . ' berhasil ditambahkan!');
         }
     }
 

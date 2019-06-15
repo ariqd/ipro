@@ -74,6 +74,7 @@
                         <th>Email</th>
                         <th>Fax</th>
                         <th>Address</th>
+                        <th>City</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -87,6 +88,7 @@
                             <td>{{ $customer->email }}</td>
                             <td>{{ $customer->fax }}</td>
                             <td>{{ $customer->address }}</td>
+                            <td>{{ $customer->user->branch->name }}</td>
                             <td>
                                 <div class="d-flex">
                                     <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-secondary btn-sm">Edit</a>

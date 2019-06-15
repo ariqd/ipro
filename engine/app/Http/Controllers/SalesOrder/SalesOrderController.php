@@ -2,24 +2,29 @@
 
 namespace App\Http\Controllers\SalesOrder;
 
-use App\Brand;
 use App\Branch;
+use App\Brand;
+use App\Counter;
 use App\Customer;
-use App\Category;
+use App\Http\Controllers\Controller;
 use App\Sale;
 use App\Sale_Detail;
-use App\Stock;
-use App\Counter;
-use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 
 class SalesOrderController extends Controller
 {
     public function index()
     {
-        $d['sales'] = Sale::all();
+        if (Gate::allows('isAdmin')) {
+            $sales = Sale::all();
+        } else {
+            $sales = Sale::where('user_id', auth()->id());
+        }
+
+        $d['approved'] = $sales->where('no_so', '!=', null);
+        $d['not_approved'] = $sales->where('no_so', '=', null);
 
         return view('sale.index', $d);
     }
