@@ -207,6 +207,22 @@
                     }
                 })
             });
+
+            $("input[type='text'], textarea").on("keyup", function () {
+                if ($(this).val() !== "" && $("textarea").val() !== "" && $("input[name='category']").is(":checked") === true) {
+                    $("input[type='submit']").removeAttr("disabled");
+                } else {
+                    $("input[type='submit']").attr("disabled", "disabled");
+                }
+            });
+
+            $("input[name='payment_method']").on("change", function () {
+                if ($(this).val() !== "" && $("textarea").val() !== "" && $("input[name='payment_method']").is(":checked") === true) {
+                    $("input[type='submit']").removeAttr("disabled");
+                } else {
+                    $("input[type='submit']").attr("disabled", "disabled");
+                }
+            });
         });
     </script>
 @endpush
@@ -436,14 +452,14 @@
                         <div class="form-row">
                             <div class="form-group col-12">
                                 <label for="project">Project</label>
-                                <input type="text" class="form-control" id="project"
+                                <input type="text" class="form-control" id="project" required
                                        name="project" value="{{ @$isEdit ? $sale->project : '' }}">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-12">
                                 <label for="pic">Person in Charge (PIC)</label>
-                                <input type="text" class="form-control" id="pic"
+                                <input type="text" class="form-control" id="pic" required
                                        name="pic" value="{{ @$isEdit ? $sale->pic : '' }}">
                             </div>
                         </div>
@@ -451,22 +467,22 @@
                             <div class="form-group col-lg-4">
                                 <label for="send_address">Alamat Kirim</label>
                                 <input type="text" class="form-control" id="send_address" name="send_address"
-                                       value="{{ @$isEdit ? $sale->send_address : '' }}">
+                                       value="{{ @$isEdit ? $sale->send_address : '' }}" required>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="send_date">Tanggal Kirim</label>
                                 <input type="date" class="form-control" id="send_date" name="send_date"
-                                       min="{{ date('Y-m-d') }}"
+                                       min="{{ date('Y-m-d') }}" required
                                        value="{{ @$isEdit ? $sale->send_date : date('Y-m-d') }}">
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="telp_pic">No. Telp PIC</label>
                                 <input type="text" class="form-control" id="telp_pic" name="send_pic_phone"
-                                       value="{{ @$isEdit ? $sale->send_pic_phone : '' }}">
+                                       value="{{ @$isEdit ? $sale->send_pic_phone : '' }}" required>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="ongkir">Ongkos Kirim</label>
-                                <input type="number" name="ongkir" id="ongkir" class="form-control">
+                                <input type="number" name="ongkir" id="ongkir" class="form-control" required>
                             </div>
                             <div class="form-group col-lg-4">
                                 <label for="grand-total-span-input">Total Barang</label>
@@ -477,7 +493,7 @@
                         <div class="form-row">
                             <div class="form-group col-8">
                                 <label for="note">Catatan</label>
-                                <textarea name="note" id="note" class="form-control"
+                                <textarea name="note" id="note" class="form-control" required
                                           rows="5">{{ @$isEdit ? $sale->note : '' }}</textarea>
                             </div>
                             <div class="form-group col-4">
@@ -488,7 +504,7 @@
                                     <label class="custom-control-label" for="payment_method_cbd">Cash Before Delivery
                                         (CBD)</label>
                                 </div>
-                                @if(Gate::allows("isAdmin")||Gate::allows("isFinance"))
+                                @if(Gate::allows("isAdmin") || Gate::allows("isFinance"))
                                     <div class="custom-control custom-radio mt-2">
                                         <input type="radio" id="payment_method_cod" name="payment_method"
                                                class="custom-control-input" value="COD">
@@ -510,7 +526,7 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <button type="submit" class="btn btn-success float-right">
+                <button type="submit" class="btn btn-success float-right" id="btnPay" disabled>
                     <i class="fa fa-check"></i> {{ @$isEdit ? 'Edit' : 'Create' }} Quotation Order
                 </button>
             </div>

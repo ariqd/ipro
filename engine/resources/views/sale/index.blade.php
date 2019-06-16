@@ -70,7 +70,6 @@
                             </td>
                             <td>{{ $sale->customer->project_owner }}</td>
                             <td>{{ $sale->user->branch->name }}</td>
-
                             <td>
                                 @if(Gate::allows("isAdmin"))
                                     @if($sale->no_so == null)
@@ -128,7 +127,6 @@
                             <td>{{ $sale->no_so }} <span class="badge badge-success">Approved</span></td>
                             <td>{{ $sale->customer->project_owner }}</td>
                             <td>{{ $sale->user->branch->name }}</td>
-
                             <td>
                                 @if(Gate::allows("isAdmin"))
                                     @if($sale->no_so == null)
