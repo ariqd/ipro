@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Sale;
 class HomeController extends Controller
 {
     /**
@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $sale = Sale::whereNull("no_so")->get();
+        $d["unfinished"] = count($sale);
+        return view('home', $d);
     }
 }

@@ -35,33 +35,38 @@
 				<select name="year">
 					<option value="2019" selected="">2019</option>
 				</select>
+				<select name="branch">
+					@foreach($branches as $branch)
+					<option value="{{ $branch->id }}">{{ $branch->name }}</option>
+					@endforeach
+				</select>
 				<input type="submit" name="" value="Filter!">
 			</form>
 		</div>
 	</div>
 	<div class="col-lg-3">
-		<div class="card p-3 bg-dark">
+		<div class="card p-3 @if($revenue<=700000000) bg-danger @else bg-success  @endif">
 			<h2 class="font-weight-bold">Rp {{ number_format($revenue) }}</h2>
 			<span>Dari {{ $salefinish }} penjualan bulan ini</span>
 		</div>
 	</div>
 
 	<div class="col-lg-3">
-		<div class="card p-3 bg-info">
+		<div class="card p-3 @if($ton<=50) bg-danger @else bg-success  @endif">
 			<h2 class="font-weight-bold">{{ $ton }}</h2>
 			<span>Ton terjual</span>
 		</div>
 	</div>
 
 	<div class="col-lg-3">
-		<div class="card p-3 bg-success">
-			<h2 class="font-weight-bold">{{ $totalsale }}</h2>
+		<div class="card p-3 @if($salefinish == 0) bg-warning @else bg-success  @endif">
+			<h2 class="font-weight-bold">{{ $salefinish }}</h2>
 			<span>Sales order selesai</span>
 		</div>
 	</div>
 
 	<div class="col-lg-3">
-		<div class="card p-3 bg-danger">
+		<div class="card p-3 @if($saleunfinish>0) bg-warning @else bg-success  @endif">
 			<h2 class="font-weight-bold">{{ $saleunfinish }}</h2>
 			<span>Sales order belum selesai</span>
 		</div>
@@ -77,6 +82,17 @@
 						<canvas id="myChart" width="400"></canvas>
 					{{--                            </div>--}}
 				{{--                        </div>--}}
+			</div>
+		</div>
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-body p-0">
+					{{--                        <div class="row">--}}
+						{{--                            <div class="col-lg-12">--}}
+							<canvas id="pie" width="400"></canvas>
+						{{--                            </div>--}}
+					{{--                        </div>--}}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -140,11 +156,31 @@
 			}
 		}
 	};
+	var bar ={
+		type: 'bar',
+		data: {!! $bar !!},
+		options : {
+			scales: {
+				xAxes: [{
+					barPercentage: 0.5,
+					barThickness: 6,
+					maxBarThickness: 8,
+					minBarLength: 2,
+					gridLines: {
+						offsetGridLines: true
+					}
+				}]
+			}
+		}
+	};
+
 
 	window.onload = function () {
 		var ctx = document.getElementById('myChart').getContext('2d');
 		window.myLine = new Chart(ctx, config);
-	};
 
+		var ctpie = document.getElementById('pie').getContext('2d');
+		var pieChart = new Chart(ctpie, bar);
+	}
 </script>
 @endpush

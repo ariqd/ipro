@@ -27,6 +27,11 @@ class Sale extends Model
         return $this->belongsTo('App\User');
     }
 
+     public function scopeBranch($query, $branch_id)
+    {
+        return $query->leftjoin("user", "user.id", "sale.user_id")->where("user.branch_id",$branch_id);
+    }
+
     public function customer()
     {
         return $this->hasOne('App\Customer', 'id', 'customer_id');

@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Sale;
+use App\Branch;
 use Illuminate\Http\Response;
-
+use DB;
 class DashboardController extends Controller
 {
     /**
@@ -15,6 +16,13 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
+        // SELECT users.branch_id, count(sales_orders.id) FROM `sales_orders` join users on sales_orders.user_id = users.id GROUP BY users.branch_id 
+        $branches = Branch::all();
+        $datapenjualankota = Sale::select(DB::raw('count(sales_orders.id) as y, branches.name as x'))
+        ->join("users","users.id","=","sales_orders.user_id")
+        ->join("branches","branches.id","=","users.branch_id")
+        ->groupby("branches.name")->get();
+
         $revenue = 0;
         $ton = 0;
         $salefinish = 0;
@@ -31,8 +39,9 @@ class DashboardController extends Controller
 
         $dateString = $year."-".$month."-"."01";
         $namemonth = date("F",strtotime($dateString));
-
         $sale = Sale::wheremonth('created_at', $month)->whereyear('created_at', $year)->get();
+        // $salecity = Sale::leftjoin("user", "user.id", "sale.user_id")->where("user.branch_id",$branch_id)wheremonth('created_at', $month)->whereyear('created_at', $year)->get();
+
         $salebydayf = array();
         $salebydayu = array();
         $countday = array();
@@ -71,6 +80,7 @@ class DashboardController extends Controller
 
         $totalsale = count($sale);
         // dd($d);
+        $graph["branches"] = $branches;
         $graph["monthname"] = $namemonth;
         $graph["month"] = $month;
         $graph["year"] = $year;
@@ -82,6 +92,7 @@ class DashboardController extends Controller
         $graph["countday"] = $countday;
         $graph["salebydayf"] = $salebydayf;
         $graph["salebydayu"] = $salebydayu;
+        $graph["bar"] = $datapenjualankota;
         return view('dashboard.index', $graph);
     }
 
