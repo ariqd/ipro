@@ -13,19 +13,31 @@ class DashboardController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $revenue = 0;
         $ton = 0;
         $salefinish = 0;
         $saleunfinish = 0;
         $totalsale = 0;
-        $sale = Sale::all();
+        $month = date("m");
+        $year = date("Y");
+        if($request->has("month")){
+            $month = $request->month;
+        }
+        if($request->has("year")){
+            $year = $request->year;
+        }
+
+        $dateString = $year."-".$month."-"."01";
+        $namemonth = date("F",strtotime($dateString));
+
+        $sale = Sale::wheremonth('created_at', $month)->whereyear('created_at', $year)->get();
         $salebydayf = array();
         $salebydayu = array();
         $countday = array();
         //init
-        for ($i = 1; $i <= date("t"); $i++) {
+        for ($i = 1; $i <= date("t", strtotime($dateString)); $i++) {
             $countday[$i] = $i;
             $salebydayf[$i] = 0;
             $salebydayu[$i] = 0;
@@ -59,6 +71,9 @@ class DashboardController extends Controller
 
         $totalsale = count($sale);
         // dd($d);
+        $graph["monthname"] = $namemonth;
+        $graph["month"] = $month;
+        $graph["year"] = $year;
         $graph["revenue"] = $revenue;
         $graph["ton"] = $ton / 1000;
         $graph["salefinish"] = $salefinish;
