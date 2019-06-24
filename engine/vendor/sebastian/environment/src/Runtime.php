@@ -9,25 +9,6 @@
  */
 namespace SebastianBergmann\Environment;
 
-use function array_map;
-use function array_merge;
-use function defined;
-use function escapeshellarg;
-use function explode;
-use function extension_loaded;
-use function getenv;
-use function ini_get;
-use function is_readable;
-use function parse_ini_file;
-use const PHP_BINARY;
-use const PHP_BINDIR;
-use function php_ini_loaded_file;
-use function php_ini_scanned_files;
-use const PHP_SAPI;
-use const PHP_VERSION;
-use function phpversion;
-use function sprintf;
-
 /**
  * Utility class for HHVM/PHP environment handling.
  */
@@ -52,19 +33,19 @@ final class Runtime
      */
     public function discardsComments(): bool
     {
-        if (!extension_loaded('Zend OPcache')) {
+        if (!\extension_loaded('Zend OPcache')) {
             return false;
         }
 
-        if (ini_get('opcache.save_comments') !== '0') {
+        if (\ini_get('opcache.save_comments') !== '0') {
             return false;
         }
 
-        if (PHP_SAPI === 'cli' && ini_get('opcache.enable_cli') === '1') {
+        if (\PHP_SAPI === 'cli' && \ini_get('opcache.enable_cli') === '1') {
             return true;
         }
 
-        if (PHP_SAPI !== 'cli' && ini_get('opcache.enable') === '1') {
+        if (\PHP_SAPI !== 'cli' && \ini_get('opcache.enable') === '1') {
             return true;
         }
 
@@ -80,30 +61,30 @@ final class Runtime
         // HHVM
         if (self::$binary === null && $this->isHHVM()) {
             // @codeCoverageIgnoreStart
-            if ((self::$binary = getenv('PHP_BINARY')) === false) {
-                self::$binary = PHP_BINARY;
+            if ((self::$binary = \getenv('PHP_BINARY')) === false) {
+                self::$binary = \PHP_BINARY;
             }
 
-            self::$binary = escapeshellarg(self::$binary) . ' --php' .
+            self::$binary = \escapeshellarg(self::$binary) . ' --php' .
                 ' -d hhvm.php7.all=1';
             // @codeCoverageIgnoreEnd
         }
 
-        if (self::$binary === null && PHP_BINARY !== '') {
-            self::$binary = escapeshellarg(PHP_BINARY);
+        if (self::$binary === null && \PHP_BINARY !== '') {
+            self::$binary = \escapeshellarg(\PHP_BINARY);
         }
 
         if (self::$binary === null) {
             // @codeCoverageIgnoreStart
             $possibleBinaryLocations = [
-                PHP_BINDIR . '/php',
-                PHP_BINDIR . '/php-cli.exe',
-                PHP_BINDIR . '/php.exe',
+                \PHP_BINDIR . '/php',
+                \PHP_BINDIR . '/php-cli.exe',
+                \PHP_BINDIR . '/php.exe',
             ];
 
             foreach ($possibleBinaryLocations as $binary) {
-                if (is_readable($binary)) {
-                    self::$binary = escapeshellarg($binary);
+                if (\is_readable($binary)) {
+                    self::$binary = \escapeshellarg($binary);
 
                     break;
                 }
@@ -132,18 +113,18 @@ final class Runtime
         }
 
         if ($this->hasXdebug()) {
-            return sprintf(
+            return \sprintf(
                 '%s with Xdebug %s',
                 $this->getNameWithVersion(),
-                phpversion('xdebug')
+                \phpversion('xdebug')
             );
         }
 
         if ($this->hasPCOV()) {
-            return sprintf(
+            return \sprintf(
                 '%s with PCOV %s',
                 $this->getNameWithVersion(),
-                phpversion('pcov')
+                \phpversion('pcov')
             );
         }
     }
@@ -184,7 +165,7 @@ final class Runtime
             // @codeCoverageIgnoreEnd
         }
 
-        return PHP_VERSION;
+        return \PHP_VERSION;
     }
 
     /**
@@ -192,7 +173,7 @@ final class Runtime
      */
     public function hasXdebug(): bool
     {
-        return ($this->isPHP() || $this->isHHVM()) && extension_loaded('xdebug');
+        return ($this->isPHP() || $this->isHHVM()) && \extension_loaded('xdebug');
     }
 
     /**
@@ -200,7 +181,7 @@ final class Runtime
      */
     public function isHHVM(): bool
     {
-        return defined('HHVM_VERSION');
+        return \defined('HHVM_VERSION');
     }
 
     /**
@@ -216,14 +197,12 @@ final class Runtime
      */
     public function isPHPDBG(): bool
     {
-        return PHP_SAPI === 'phpdbg' && !$this->isHHVM();
+        return \PHP_SAPI === 'phpdbg' && !$this->isHHVM();
     }
 
     /**
      * Returns true when the runtime used is PHP with the PHPDBG SAPI
      * and the phpdbg_*_oplog() functions are available (PHP >= 7.0).
-     *
-     * @codeCoverageIgnore
      */
     public function hasPHPDBGCodeCoverage(): bool
     {
@@ -235,7 +214,7 @@ final class Runtime
      */
     public function hasPCOV(): bool
     {
-        return $this->isPHP() && extension_loaded('pcov') && ini_get('pcov.enabled');
+        return $this->isPHP() && \extension_loaded('pcov') && \ini_get('pcov.enabled');
     }
 
     /**
@@ -255,28 +234,28 @@ final class Runtime
         $diff  = [];
         $files = [];
 
-        if ($file = php_ini_loaded_file()) {
+        if ($file = \php_ini_loaded_file()) {
             $files[] = $file;
         }
 
-        if ($scanned = php_ini_scanned_files()) {
-            $files = array_merge(
+        if ($scanned = \php_ini_scanned_files()) {
+            $files = \array_merge(
                 $files,
-                array_map(
+                \array_map(
                     'trim',
-                    explode(",\n", $scanned)
+                    \explode(",\n", $scanned)
                 )
             );
         }
 
         foreach ($files as $ini) {
-            $config = parse_ini_file($ini, true);
+            $config = \parse_ini_file($ini, true);
 
             foreach ($values as $value) {
-                $set = ini_get($value);
+                $set = \ini_get($value);
 
                 if (isset($config[$value]) && $set != $config[$value]) {
-                    $diff[] = sprintf('%s=%s', $value, $set);
+                    $diff[] = \sprintf('%s=%s', $value, $set);
                 }
             }
         }

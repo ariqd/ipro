@@ -9,12 +9,8 @@
  */
 namespace PHPUnit\Util;
 
-use function class_exists;
 use Composer\Autoload\ClassLoader;
 use DeepCopy\DeepCopy;
-use function defined;
-use const DIRECTORY_SEPARATOR;
-use function dirname;
 use Doctrine\Instantiator\Instantiator;
 use PharIo\Manifest\Manifest;
 use PharIo\Version\Version as PharIoVersion;
@@ -39,8 +35,6 @@ use SebastianBergmann\RecursionContext\Context;
 use SebastianBergmann\ResourceOperations\ResourceOperations;
 use SebastianBergmann\Timer\Timer;
 use SebastianBergmann\Version;
-use function strpos;
-use function sys_get_temp_dir;
 use Text_Template;
 use TheSeer\Tokenizer\Tokenizer;
 use Webmozart\Assert\Assert;
@@ -156,14 +150,14 @@ final class Blacklist
 
     public function isBlacklisted(string $file): bool
     {
-        if (defined('PHPUNIT_TESTSUITE')) {
+        if (\defined('PHPUNIT_TESTSUITE')) {
             return false;
         }
 
         $this->initialize();
 
         foreach (self::$directories as $directory) {
-            if (strpos($file, $directory) === 0) {
+            if (\strpos($file, $directory) === 0) {
                 return true;
             }
         }
@@ -177,7 +171,7 @@ final class Blacklist
             self::$directories = [];
 
             foreach (self::$blacklistedClassNames as $className => $parent) {
-                if (!class_exists($className)) {
+                if (!\class_exists($className)) {
                     continue;
                 }
 
@@ -185,17 +179,17 @@ final class Blacklist
                 $directory = $reflector->getFileName();
 
                 for ($i = 0; $i < $parent; $i++) {
-                    $directory = dirname($directory);
+                    $directory = \dirname($directory);
                 }
 
                 self::$directories[] = $directory;
             }
 
             // Hide process isolation workaround on Windows.
-            if (DIRECTORY_SEPARATOR === '\\') {
+            if (\DIRECTORY_SEPARATOR === '\\') {
                 // tempnam() prefix is limited to first 3 chars.
                 // @see https://php.net/manual/en/function.tempnam.php
-                self::$directories[] = sys_get_temp_dir() . '\\PHP';
+                self::$directories[] = \sys_get_temp_dir() . '\\PHP';
             }
         }
     }

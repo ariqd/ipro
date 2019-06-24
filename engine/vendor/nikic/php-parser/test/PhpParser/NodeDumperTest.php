@@ -2,11 +2,7 @@
 
 namespace PhpParser;
 
-use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
-use stdClass;
-
-class NodeDumperTest extends TestCase
+class NodeDumperTest extends \PHPUnit\Framework\TestCase
 {
     private function canonicalize($string) {
         return str_replace("\r\n", "\n", $string);
@@ -57,6 +53,7 @@ class NodeDumperTest extends TestCase
                 value: Foo
             )
             byRef: false
+            unpack: false
         )
     )
 )'
@@ -101,9 +98,9 @@ OUT;
     }
 
     public function testError() {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('Can only dump nodes and arrays.');
         $dumper = new NodeDumper;
-        $dumper->dump(new stdClass);
+        $dumper->dump(new \stdClass);
     }
 }

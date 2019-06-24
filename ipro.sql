@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2019 at 06:27 AM
+-- Generation Time: Jun 24, 2019 at 06:24 PM
 -- Server version: 10.1.32-MariaDB
 -- PHP Version: 7.2.5
 
@@ -38,13 +38,6 @@ CREATE TABLE `branches` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `branches`
---
-
-INSERT INTO `branches` (`id`, `name`, `city`, `address`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Bandung', NULL, NULL, '2019-04-15 00:46:36', '2019-04-15 00:46:36', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -58,14 +51,6 @@ CREATE TABLE `brands` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `brands`
---
-
-INSERT INTO `brands` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Conwood', '2019-04-15 00:38:17', '2019-04-15 00:38:17', NULL),
-(2, 'Shera', '2019-05-02 05:14:36', '2019-05-02 05:14:36', NULL);
 
 -- --------------------------------------------------------
 
@@ -82,14 +67,6 @@ CREATE TABLE `categories` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `categories`
---
-
-INSERT INTO `categories` (`id`, `brand_id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 'Kayu', '2019-04-15 00:38:27', '2019-04-15 00:38:27', NULL),
-(2, 2, 'Flooring', '2019-05-02 05:15:00', '2019-05-02 05:15:00', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -104,16 +81,6 @@ CREATE TABLE `counters` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `counters`
---
-
-INSERT INTO `counters` (`id`, `name`, `counter`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'PO', 1, NULL, '2019-05-02 09:10:51', NULL),
-(2, 'SO', 2, NULL, '2019-05-13 04:12:40', NULL),
-(3, 'QO', 3, NULL, '2019-05-13 03:39:48', NULL),
-(4, 'DO', 1, NULL, '2019-05-03 03:38:58', NULL);
 
 -- --------------------------------------------------------
 
@@ -134,14 +101,6 @@ CREATE TABLE `customers` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `customers`
---
-
-INSERT INTO `customers` (`id`, `user_id`, `no_ktp`, `project_owner`, `address`, `phone`, `fax`, `email`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1234567891012131, 'Asep Jeck Sadikin', 'Jalan Kemayu Oke Oce', '08987654321', '0101010101', 'ujeck.sadik@asep.com', '2019-04-15 00:37:50', '2019-04-15 00:37:50', NULL),
-(2, 3, 1234567890101112, 'Mamang Andi', 'Jalan ABC', '012345678', '01010101', 'Mamang@andi.me', '2019-05-02 04:53:12', '2019-05-02 04:53:12', NULL);
 
 -- --------------------------------------------------------
 
@@ -212,14 +171,6 @@ CREATE TABLE `items` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `items`
---
-
-INSERT INTO `items` (`id`, `category_id`, `code`, `name`, `purchase_price`, `weight`, `area`, `width`, `height`, `length`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, '4.5\"', 'Kayu Flooring', 15000, 1, 40, 30, 40, 1.3, '2019-04-15 00:39:30', '2019-04-15 00:39:30', NULL),
-(2, 2, 'SDC04', 'Shera Deck 4\"', 250000, 2, 2, 2, 2, 2, '2019-05-02 05:16:56', '2019-05-02 05:16:56', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -231,37 +182,6 @@ CREATE TABLE `migrations` (
   `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(12, '2014_10_12_000000_create_users_table', 1),
-(13, '2014_10_12_100000_create_password_resets_table', 1),
-(14, '2019_02_22_081433_create_brands_table', 1),
-(15, '2019_02_22_082116_create_categories_table', 1),
-(16, '2019_02_22_082331_create_stocks_table', 1),
-(17, '2019_02_22_082522_create_items_table', 1),
-(18, '2019_02_22_083022_create_branches_table', 1),
-(19, '2019_02_22_083308_create_sales_orders_table', 1),
-(20, '2019_02_22_083338_create_sales_order_details_table', 1),
-(21, '2019_02_22_085547_create_customers_table', 1),
-(22, '2019_02_26_141821_create_holds_table', 1),
-(23, '2019_04_16_052454_add_no_order_to_sales_orders', 2),
-(24, '2019_04_16_052558_remove_price_from_stocks', 2),
-(25, '2019_04_16_052759_remove_price_from_stocks', 3),
-(26, '2019_04_16_070223_create_counters_table', 4),
-(27, '2019_04_18_065514_add_purchase_id_to_purchase_details', 5),
-(28, '2019_04_22_044422_add_sales_id_to_purchase', 6),
-(29, '2019_04_22_064525_add_approval_finance_to_purchase_details', 7),
-(30, '2019_04_22_064917_add_qty_approval_to_purchase_details', 8),
-(31, '2019_04_23_075841_add_notes_to_sales_orders', 9),
-(32, '2019_04_24_053539_create_receives_table', 10),
-(33, '2019_04_24_054812_add_status_to_purchase_details', 10),
-(34, '2019_04_25_085750_add_sales_id_to_purchase_details', 11),
-(35, '2019_04_25_085959_drop_sales_id_from_purchases', 11),
-(36, '2019_04_26_091247_add_purchase_detail_id_to_receives', 12);
 
 -- --------------------------------------------------------
 
@@ -356,11 +276,13 @@ CREATE TABLE `sales_orders` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `quotation_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `project` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pic` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `send_address` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `send_date` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `send_pic_phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `payment_method` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `note` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `grand_total` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -369,14 +291,6 @@ CREATE TABLE `sales_orders` (
   `no_order` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `ongkir` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `sales_orders`
---
-
-INSERT INTO `sales_orders` (`id`, `customer_id`, `user_id`, `quotation_id`, `project`, `send_address`, `send_date`, `send_pic_phone`, `payment_method`, `note`, `created_at`, `updated_at`, `deleted_at`, `no_so`, `notes`, `no_order`, `ongkir`) VALUES
-(1, 2, 1, 'QO1905130100001', 'aaa', 'aaa', '2019-05-13', '123123', 'CBD', 'aaa', '2019-05-13 03:36:06', '2019-05-13 04:12:40', NULL, 'SO1905130100001', '1234', NULL, 10000),
-(2, 2, 1, 'QO1905130100002', 'bbb', 'bbb', '2019-05-13', '1234', 'CBD', 'bbbbb', '2019-05-13 03:39:48', '2019-05-13 03:39:48', NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -398,15 +312,6 @@ CREATE TABLE `sales_order_details` (
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `sales_order_details`
---
-
-INSERT INTO `sales_order_details` (`id`, `sales_order_id`, `stock_id`, `qty`, `price`, `total`, `discount`, `status`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 2, 2, 250000, 250000, 50, 0, '2019-05-13 03:36:06', '2019-05-13 03:36:06', NULL),
-(2, 1, 1, 1, 15000, 13500, 10, 0, '2019-05-13 03:36:06', '2019-05-13 03:36:06', NULL),
-(3, 2, 2, 2, 250000, 450000, 10, 0, '2019-05-13 03:39:48', '2019-05-13 03:39:48', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -418,18 +323,11 @@ CREATE TABLE `stocks` (
   `item_id` int(10) UNSIGNED NOT NULL,
   `branch_id` int(10) UNSIGNED NOT NULL,
   `quantity` int(11) NOT NULL,
+  `price_branch` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `stocks`
---
-
-INSERT INTO `stocks` (`id`, `item_id`, `branch_id`, `quantity`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 1, 1, 30, '2019-04-15 00:59:34', '2019-05-03 03:38:58', NULL),
-(2, 2, 1, 30, '2019-05-02 05:17:20', '2019-05-02 05:17:20', NULL);
 
 -- --------------------------------------------------------
 
@@ -452,15 +350,26 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `users`
+-- Table structure for table `vendors`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `email`, `role`, `branch_id`, `saldo`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', 'admin@secret.com', 'admin', 1, NULL, NULL, '$2y$10$cdLsZb5WpnNiXYoFJX/GDOHv3JR6hb6jLOf32rkScJO2bnjT3Y7MK', 'LlByX8FQbHwfS6LlLr7odLdR1JHyPuSEx3ORbAzSjZVOffKzcm674WAxzVK3', '2019-04-14 22:33:27', '2019-04-14 22:33:27'),
-(2, 'Finance', 'finance', 'finance@ipro.com', 'finance', NULL, NULL, NULL, '$2y$10$JDMsqnwNiB.IVPnj3efrcOd.Hmw2ofnqMm2doheBErfEtDdfjCra.', 'Bl4Rmk5XByAbiBXC3SpUnFaww5rwxHm1R2xvmcS3SdePIVn83LpTlSpoa7Te', '2019-04-21 22:36:50', '2019-04-21 22:36:50'),
-(3, 'Sales Bandung', 'Salesbandung', 'sales@bandung.com', 'sales', 1, NULL, NULL, '$2y$10$7P9QRO0rTrwfstxqS7mOVOSDTAIBlTzov0LGsLp2UL606WbUg.20K', '000xj9RJ8DRepRWQ0czxB4rgq7ZrtNUOnseNTEbjT7jz5GQIMKVv7V8gfiW3', '2019-05-01 20:34:06', '2019-05-01 21:31:51'),
-(4, 'Erlin', 'Erlin', 'Erlin@ipro.com', 'finance', 1, NULL, NULL, '$2y$10$kmtOvJGdaDxmswy1GfrVvu60seKcJvvfypA.j4lVAVHooDNm9BT3.', 'doOrTkkrgI71BBrBxnsTaLjxNbtOuWKWolvMB0xlHZVAbHSm3ZhSeBVWkeI4', '2019-05-02 09:19:22', '2019-05-02 09:19:22');
+CREATE TABLE `vendors` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pic_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pic_phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pic_email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -584,6 +493,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_username_unique` (`username`);
 
 --
+-- Indexes for table `vendors`
+--
+ALTER TABLE `vendors`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -591,31 +506,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `counters`
 --
 ALTER TABLE `counters`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `delivery_orders`
@@ -639,13 +554,13 @@ ALTER TABLE `holds`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `purchases`
@@ -675,25 +590,31 @@ ALTER TABLE `receive_details`
 -- AUTO_INCREMENT for table `sales_orders`
 --
 ALTER TABLE `sales_orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sales_order_details`
 --
 ALTER TABLE `sales_order_details`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `vendors`
+--
+ALTER TABLE `vendors`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

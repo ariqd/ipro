@@ -2,7 +2,6 @@
 
 namespace PhpParser;
 
-use Exception;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Stmt;
 
@@ -101,7 +100,7 @@ class CodeParsingTest extends CodeTestAbstract
                     $startFilePos < 0 || $endFilePos < 0 ||
                     $startTokenPos < 0 || $endTokenPos < 0
                 ) {
-                    throw new Exception('Missing location information on ' . $node->getType());
+                    throw new \Exception('Missing location information on ' . $node->getType());
                 }
 
                 if ($endLine < $startLine ||
@@ -110,7 +109,7 @@ class CodeParsingTest extends CodeTestAbstract
                 ) {
                     // Nops and error can have inverted order, if they are empty
                     if (!$node instanceof Stmt\Nop && !$node instanceof Expr\Error) {
-                        throw new Exception('End < start on ' . $node->getType());
+                        throw new \Exception('End < start on ' . $node->getType());
                     }
                 }
             }

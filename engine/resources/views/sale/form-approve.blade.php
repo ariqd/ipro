@@ -221,6 +221,22 @@
                         </tr>
                         @endforeach
                     </tbody>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Ongkir</td>
+                        <td>Rp {{number_format($sale->ongkir)}},00</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Grand Total</td>
+                        <td>Rp {{number_format($sale->grand_total + $sale->ongkir)}},00</td>
+                    </tr>
                 </table>
             </div>
         </div>

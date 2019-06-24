@@ -2,9 +2,7 @@
 
 namespace PhpParser;
 
-use PHPUnit\Framework\TestCase;
-
-abstract class CodeTestAbstract extends TestCase
+abstract class CodeTestAbstract extends \PHPUnit\Framework\TestCase
 {
     protected function getTests($directory, $fileExtension, $chunksPerTest = 2) {
         $parser = new CodeTestParser;

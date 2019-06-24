@@ -2,10 +2,6 @@
 
 namespace PhpParser;
 
-use function assert;
-use function count;
-use Exception;
-use function get_class;
 use PhpParser\Internal\DiffElem;
 use PhpParser\Internal\PrintableNewAnonClassNode;
 use PhpParser\Internal\TokenStream;
@@ -15,21 +11,6 @@ use PhpParser\Node\Expr\BinaryOp;
 use PhpParser\Node\Expr\Cast;
 use PhpParser\Node\Scalar;
 use PhpParser\Node\Stmt;
-use function str_repeat;
-use function strlen;
-use const T_AS;
-use const T_BREAK;
-use const T_CLASS;
-use const T_CONST;
-use const T_CONTINUE;
-use const T_DOUBLE_ARROW;
-use const T_EXTENDS;
-use const T_FUNCTION;
-use const T_NAMESPACE;
-use const T_RETURN;
-use const T_VARIABLE;
-use const T_WHITESPACE;
-use const T_YIELD;
 
 abstract class PrettyPrinterAbstract
 {
@@ -139,7 +120,7 @@ abstract class PrettyPrinterAbstract
      */
     protected $removalMap;
     /**
-     * @var mixed[] Map from "{$node->getType()}->{$subNode}" to [$find, $extraLeft, $extraRight].
+     * @var mixed[] Map from "{$node->getType()}->{$subNode}" to [$find, $beforeToken, $extraLeft, $extraRight].
      *              $find is an optional token after which the insertion occurs. $extraLeft/Right
      *              are optionally added before/after the main insertions.
      */
@@ -149,6 +130,7 @@ abstract class PrettyPrinterAbstract
      *               between elements of this list subnode.
      */
     protected $listInsertionMap;
+    protected $emptyListInsertionMap;
     /** @var int[] Map from "{$node->getType()}->{$subNode}" to token before which the modifiers
      *             should be reprinted. */
     protected $modifierChangeMap;
@@ -185,7 +167,7 @@ abstract class PrettyPrinterAbstract
      */
     protected function setIndentLevel(int $level) {
         $this->indentLevel = $level;
-        $this->nl = "\n" . str_repeat(' ', $level);
+        $this->nl = "\n" . \str_repeat(' ', $level);
     }
 
     /**
@@ -377,7 +359,7 @@ abstract class PrettyPrinterAbstract
      * @return string The pretty printed node
      */
     protected function pPrec(Node $node, int $parentPrecedence, int $parentAssociativity, int $childPosition) : string {
-        $class = get_class($node);
+        $class = \get_class($node);
         if (isset($this->precedenceMap[$class])) {
             $childPrecedence = $this->precedenceMap[$class][0];
             if ($childPrecedence > $parentPrecedence
@@ -498,6 +480,7 @@ abstract class PrettyPrinterAbstract
         $this->initializeRemovalMap();
         $this->initializeInsertionMap();
         $this->initializeListInsertionMap();
+        $this->initializeEmptyListInsertionMap();
         $this->initializeModifierChangeMap();
 
         $this->resetState();
@@ -506,7 +489,7 @@ abstract class PrettyPrinterAbstract
         $this->preprocessNodes($stmts);
 
         $pos = 0;
-        $result = $this->pArray($stmts, $origStmts, $pos, 0, 'stmts', null, "\n");
+        $result = $this->pArray($stmts, $origStmts, $pos, 0, 'File', 'stmts', null);
         if (null !== $result) {
             $result .= $this->origTokens->getTokenCode($pos, count($origTokens), 0);
         } else {
@@ -544,12 +527,12 @@ abstract class PrettyPrinterAbstract
             return $this->pFallback($node);
         }
 
-        $class = get_class($node);
-        assert($class === get_class($origNode));
+        $class = \get_class($node);
+        \assert($class === \get_class($origNode));
 
         $startPos = $origNode->getStartTokenPos();
         $endPos = $origNode->getEndTokenPos();
-        assert($startPos >= 0 && $endPos >= 0);
+        \assert($startPos >= 0 && $endPos >= 0);
 
         $fallbackNode = $node;
         if ($node instanceof Expr\New_ && $node->class instanceof Stmt\Class_) {
@@ -587,9 +570,8 @@ abstract class PrettyPrinterAbstract
                 if (is_array($subNode) && is_array($origSubNode)) {
                     // Array subnode changed, we might be able to reconstruct it
                     $listResult = $this->pArray(
-                        $subNode, $origSubNode, $pos, $indentAdjustment, $subNodeName,
-                        $fixupInfo[$subNodeName] ?? null,
-                        $this->listInsertionMap[$type . '->' . $subNodeName] ?? null
+                        $subNode, $origSubNode, $pos, $indentAdjustment, $type, $subNodeName,
+                        $fixupInfo[$subNodeName] ?? null
                     );
                     if (null === $listResult) {
                         return $this->pFallback($fallbackNode);
@@ -623,7 +605,7 @@ abstract class PrettyPrinterAbstract
             if ($origSubNode !== null) {
                 $subStartPos = $origSubNode->getStartTokenPos();
                 $subEndPos = $origSubNode->getEndTokenPos();
-                assert($subStartPos >= 0 && $subEndPos >= 0);
+                \assert($subStartPos >= 0 && $subEndPos >= 0);
             } else {
                 if ($subNode === null) {
                     // Both null, nothing to do
@@ -708,17 +690,20 @@ abstract class PrettyPrinterAbstract
      * @param array       $origNodes        Original nodes
      * @param int         $pos              Current token position (updated by reference)
      * @param int         $indentAdjustment Adjustment for indentation
+     * @param string      $parentNodeType   Type of the containing node.
      * @param string      $subNodeName      Name of array subnode.
      * @param null|int    $fixup            Fixup information for array item nodes
-     * @param null|string $insertStr        Separator string to use for insertions
      *
      * @return null|string Result of pretty print or null if cannot preserve formatting
      */
     protected function pArray(
         array $nodes, array $origNodes, int &$pos, int $indentAdjustment,
-        string $subNodeName, $fixup, $insertStr
+        string $parentNodeType, string $subNodeName, $fixup
     ) {
         $diff = $this->nodeListDiffer->diffWithReplacements($origNodes, $nodes);
+
+        $mapKey = $parentNodeType . '->' . $subNodeName;
+        $insertStr = $this->listInsertionMap[$mapKey] ?? null;
 
         $beforeFirstKeepOrReplace = true;
         $delayedAdd = [];
@@ -730,10 +715,10 @@ abstract class PrettyPrinterAbstract
             $insertNewline = true;
         }
 
-        if ($subNodeName === 'stmts' && count($origNodes) === 1 && count($nodes) !== 1) {
+        if ($subNodeName === 'stmts' && \count($origNodes) === 1 && \count($nodes) !== 1) {
             $startPos = $origNodes[0]->getStartTokenPos();
             $endPos = $origNodes[0]->getEndTokenPos();
-            assert($startPos >= 0 && $endPos >= 0);
+            \assert($startPos >= 0 && $endPos >= 0);
             if (!$this->origTokens->haveBraces($startPos, $endPos)) {
                 // This was a single statement without braces, but either additional statements
                 // have been added, or the single statement has been removed. This requires the
@@ -769,7 +754,7 @@ abstract class PrettyPrinterAbstract
 
                 $itemStartPos = $origArrItem->getStartTokenPos();
                 $itemEndPos = $origArrItem->getEndTokenPos();
-                assert($itemStartPos >= 0 && $itemEndPos >= 0);
+                \assert($itemStartPos >= 0 && $itemEndPos >= 0);
 
                 if ($itemEndPos < $itemStartPos) {
                     // End can be before start for Nop nodes, because offsets refer to non-whitespace
@@ -785,7 +770,7 @@ abstract class PrettyPrinterAbstract
                 $comments = $arrItem->getComments();
                 $origComments = $origArrItem->getComments();
                 $commentStartPos = $origComments ? $origComments[0]->getTokenPos() : $itemStartPos;
-                assert($commentStartPos >= 0);
+                \assert($commentStartPos >= 0);
 
                 $commentsChanged = $comments !== $origComments;
                 if ($commentsChanged) {
@@ -872,12 +857,12 @@ abstract class PrettyPrinterAbstract
                 }
 
                 $itemEndPos = $origArrItem->getEndTokenPos();
-                assert($itemEndPos >= 0);
+                \assert($itemEndPos >= 0);
 
                 $pos = $itemEndPos + 1;
                 continue;
             } else {
-                throw new Exception("Shouldn't happen");
+                throw new \Exception("Shouldn't happen");
             }
 
             if (null !== $fixup && $arrItem->getAttribute('origNode') !== $origArrItem) {
@@ -892,8 +877,27 @@ abstract class PrettyPrinterAbstract
         }
 
         if (!empty($delayedAdd)) {
-            // TODO Handle insertion into empty list
-            return null;
+            if (!isset($this->emptyListInsertionMap[$mapKey])) {
+                return null;
+            }
+
+            list($findToken, $extraLeft, $extraRight) = $this->emptyListInsertionMap[$mapKey];
+            if (null !== $findToken) {
+                $insertPos = $this->origTokens->findRight($pos, $findToken) + 1;
+                $result .= $this->origTokens->getTokenCode($pos, $insertPos, $indentAdjustment);
+                $pos = $insertPos;
+            }
+
+            $first = true;
+            $result .= $extraLeft;
+            foreach ($delayedAdd as $delayedAddNode) {
+                if (!$first) {
+                    $result .= $insertStr;
+                }
+                $result .= $this->p($delayedAddNode, true);
+                $first = false;
+            }
+            $result .= $extraRight;
         }
 
         return $result;
@@ -955,7 +959,7 @@ abstract class PrettyPrinterAbstract
                 }
                 break;
             default:
-                throw new Exception('Cannot happen');
+                throw new \Exception('Cannot happen');
         }
 
         // Nothing special to do
@@ -982,7 +986,7 @@ abstract class PrettyPrinterAbstract
         }
 
         if (!$this->labelCharMap[$append[0]]
-                || !$this->labelCharMap[$str[strlen($str) - 1]]) {
+                || !$this->labelCharMap[$str[\strlen($str) - 1]]) {
             $str .= $append;
         } else {
             $str .= " " . $append;
@@ -1052,7 +1056,7 @@ abstract class PrettyPrinterAbstract
      * @return bool Whether multiline formatting is used
      */
     protected function isMultiline(array $nodes) : bool {
-        if (count($nodes) < 2) {
+        if (\count($nodes) < 2) {
             return false;
         }
 
@@ -1205,15 +1209,16 @@ abstract class PrettyPrinterAbstract
     protected function initializeRemovalMap() {
         if ($this->removalMap) return;
 
-        $stripBoth = ['left' => T_WHITESPACE, 'right' => T_WHITESPACE];
-        $stripLeft = ['left' => T_WHITESPACE];
-        $stripRight = ['right' => T_WHITESPACE];
-        $stripDoubleArrow = ['right' => T_DOUBLE_ARROW];
+        $stripBoth = ['left' => \T_WHITESPACE, 'right' => \T_WHITESPACE];
+        $stripLeft = ['left' => \T_WHITESPACE];
+        $stripRight = ['right' => \T_WHITESPACE];
+        $stripDoubleArrow = ['right' => \T_DOUBLE_ARROW];
         $stripColon = ['left' => ':'];
         $stripEquals = ['left' => '='];
         $this->removalMap = [
             'Expr_ArrayDimFetch->dim' => $stripBoth,
             'Expr_ArrayItem->key' => $stripDoubleArrow,
+            'Expr_ArrowFunction->returnType' => $stripColon,
             'Expr_Closure->returnType' => $stripColon,
             'Expr_Exit->expr' => $stripBoth,
             'Expr_Ternary->if' => $stripBoth,
@@ -1223,8 +1228,8 @@ abstract class PrettyPrinterAbstract
             'Param->default' => $stripEquals,
             'Stmt_Break->num' => $stripBoth,
             'Stmt_ClassMethod->returnType' => $stripColon,
-            'Stmt_Class->extends' => ['left' => T_EXTENDS],
-            'Expr_PrintableNewAnonClass->extends' => ['left' => T_EXTENDS],
+            'Stmt_Class->extends' => ['left' => \T_EXTENDS],
+            'Expr_PrintableNewAnonClass->extends' => ['left' => \T_EXTENDS],
             'Stmt_Continue->num' => $stripBoth,
             'Stmt_Foreach->keyVar' => $stripDoubleArrow,
             'Stmt_Function->returnType' => $stripColon,
@@ -1247,27 +1252,29 @@ abstract class PrettyPrinterAbstract
         if ($this->insertionMap) return;
 
         // TODO: "yield" where both key and value are inserted doesn't work
+        // [$find, $beforeToken, $extraLeft, $extraRight]
         $this->insertionMap = [
             'Expr_ArrayDimFetch->dim' => ['[', false, null, null],
             'Expr_ArrayItem->key' => [null, false, null, ' => '],
+            'Expr_ArrowFunction->returnType' => [')', false, ' : ', null],
             'Expr_Closure->returnType' => [')', false, ' : ', null],
             'Expr_Ternary->if' => ['?', false, ' ', ' '],
-            'Expr_Yield->key' => [T_YIELD, false, null, ' => '],
-            'Expr_Yield->value' => [T_YIELD, false, ' ', null],
+            'Expr_Yield->key' => [\T_YIELD, false, null, ' => '],
+            'Expr_Yield->value' => [\T_YIELD, false, ' ', null],
             'Param->type' => [null, false, null, ' '],
             'Param->default' => [null, false, ' = ', null],
-            'Stmt_Break->num' => [T_BREAK, false, ' ', null],
+            'Stmt_Break->num' => [\T_BREAK, false, ' ', null],
             'Stmt_ClassMethod->returnType' => [')', false, ' : ', null],
             'Stmt_Class->extends' => [null, false, ' extends ', null],
             'Expr_PrintableNewAnonClass->extends' => [null, ' extends ', null],
-            'Stmt_Continue->num' => [T_CONTINUE, false, ' ', null],
-            'Stmt_Foreach->keyVar' => [T_AS, false, null, ' => '],
+            'Stmt_Continue->num' => [\T_CONTINUE, false, ' ', null],
+            'Stmt_Foreach->keyVar' => [\T_AS, false, null, ' => '],
             'Stmt_Function->returnType' => [')', false, ' : ', null],
             'Stmt_If->else' => [null, false, ' ', null],
-            'Stmt_Namespace->name' => [T_NAMESPACE, false, ' ', null],
-            'Stmt_Property->type' => [T_VARIABLE, true, null, ' '],
+            'Stmt_Namespace->name' => [\T_NAMESPACE, false, ' ', null],
+            'Stmt_Property->type' => [\T_VARIABLE, true, null, ' '],
             'Stmt_PropertyProperty->default' => [null, false, ' = ', null],
-            'Stmt_Return->expr' => [T_RETURN, false, ' ', null],
+            'Stmt_Return->expr' => [\T_RETURN, false, ' ', null],
             'Stmt_StaticVar->default' => [null, false, ' = ', null],
             //'Stmt_TraitUseAdaptation_Alias->newName' => [T_AS, false, ' ', null], // TODO
             'Stmt_TryCatch->finally' => [null, false, ' ', null],
@@ -1293,6 +1300,7 @@ abstract class PrettyPrinterAbstract
 
             // comma-separated lists
             'Expr_Array->items' => ', ',
+            'Expr_ArrowFunction->params' => ', ',
             'Expr_Closure->params' => ', ',
             'Expr_Closure->uses' => ', ',
             'Expr_FuncCall->args' => ', ',
@@ -1346,6 +1354,59 @@ abstract class PrettyPrinterAbstract
             'Stmt_TraitUse->adaptations' => "\n",
             'Stmt_TryCatch->stmts' => "\n",
             'Stmt_While->stmts' => "\n",
+
+            // dummy for top-level context
+            'File->stmts' => "\n",
+        ];
+    }
+
+    protected function initializeEmptyListInsertionMap() {
+        if ($this->emptyListInsertionMap) return;
+
+        // TODO Insertion into empty statement lists.
+
+        // [$find, $extraLeft, $extraRight]
+        $this->emptyListInsertionMap = [
+            'Expr_ArrowFunction->params' => ['(', '', ''],
+            'Expr_Closure->uses' => [')', ' use(', ')'],
+            'Expr_Closure->params' => ['(', '', ''],
+            'Expr_FuncCall->args' => ['(', '', ''],
+            'Expr_MethodCall->args' => ['(', '', ''],
+            'Expr_New->args' => ['(', '', ''],
+            'Expr_PrintableNewAnonClass->args' => ['(', '', ''],
+            'Expr_PrintableNewAnonClass->implements' => [null, ' implements ', ''],
+            'Expr_StaticCall->args' => ['(', '', ''],
+            'Stmt_Class->implements' => [null, ' implements ', ''],
+            'Stmt_ClassMethod->params' => ['(', '', ''],
+            'Stmt_Interface->extends' => [null, ' extends ', ''],
+            'Stmt_Function->params' => ['(', '', ''],
+
+            /* These cannot be empty to start with:
+             * Expr_Isset->vars
+             * Stmt_Catch->types
+             * Stmt_Const->consts
+             * Stmt_ClassConst->consts
+             * Stmt_Declare->declares
+             * Stmt_Echo->exprs
+             * Stmt_Global->vars
+             * Stmt_GroupUse->uses
+             * Stmt_Property->props
+             * Stmt_StaticVar->vars
+             * Stmt_TraitUse->traits
+             * Stmt_TraitUseAdaptation_Precedence->insteadof
+             * Stmt_Unset->vars
+             * Stmt_Use->uses
+             */
+
+            /* TODO
+             * Stmt_If->elseifs
+             * Stmt_TryCatch->catches
+             * Expr_Array->items
+             * Expr_List->items
+             * Stmt_For->init
+             * Stmt_For->cond
+             * Stmt_For->loop
+             */
         ];
     }
 
@@ -1353,10 +1414,10 @@ abstract class PrettyPrinterAbstract
         if ($this->modifierChangeMap) return;
 
         $this->modifierChangeMap = [
-            'Stmt_ClassConst->flags' => T_CONST,
-            'Stmt_ClassMethod->flags' => T_FUNCTION,
-            'Stmt_Class->flags' => T_CLASS,
-            'Stmt_Property->flags' => T_VARIABLE,
+            'Stmt_ClassConst->flags' => \T_CONST,
+            'Stmt_ClassMethod->flags' => \T_FUNCTION,
+            'Stmt_Class->flags' => \T_CLASS,
+            'Stmt_Property->flags' => \T_VARIABLE,
             //'Stmt_TraitUseAdaptation_Alias->newModifier' => 0, // TODO
         ];
 

@@ -131,14 +131,14 @@
                         @else
                         <span class="badge badge-danger">Not Approved</span>
                         <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
-                           class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve Request
-                       </a>
-                       @endif
-                       {{--                            {!! $sale->no_so != null ? $sale->no_so : '<p></p>' !!}--}}
-                   </div>
-               </div>
+                         class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve Request
+                     </a>
+                     @endif
+                     {{--                            {!! $sale->no_so != null ? $sale->no_so : '<p></p>' !!}--}}
+                 </div>
+             </div>
 
-               <div class="row mt-3">
+             <div class="row mt-3">
                 <div class="col-4">
                     <b>
                         Project
@@ -242,17 +242,33 @@
                                 {{ $details->qty }}
                             </td>
                             <td>
-                                Rp{{number_format($details->price) }},00
+                                Rp {{number_format($details->price) }},00
                             </td>
                             <td>
                                 {{ $details->discount}}%
                             </td>
                             <td>
-                                Rp{{number_format($details->total)}},00
+                                Rp {{number_format($details->total)}},00
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Ongkir</td>
+                        <td>Rp {{number_format($sale->ongkir)}},00</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Grand Total</td>
+                        <td>Rp {{number_format($sale->grand_total + $sale->ongkir)}},00</td>
+                    </tr>
                 </table>
             </div>
         </div>
@@ -283,10 +299,10 @@
             @if($flag != count($sale->details))
             <div class="col-lg-12 mt-2">
                 <a href="{{ url("sales-orders/$sale->id/delivery-orders") }}"
-                   class="btn btn-secondary btn-block"> Buat Surat Jalan</a>
-               </div>
-               @endif
-           </div>
-       </div>
-   </div>
-   @endsection
+                 class="btn btn-secondary btn-block"> Buat Surat Jalan</a>
+             </div>
+             @endif
+         </div>
+     </div>
+ </div>
+ @endsection

@@ -2,10 +2,7 @@
 
 namespace PhpParser;
 
-use PHPUnit\Framework\TestCase;
-use RuntimeException;
-
-class JsonDecoderTest extends TestCase
+class JsonDecoderTest extends \PHPUnit\Framework\TestCase
 {
     public function testRoundTrip() {
         $code = <<<'PHP'
@@ -29,7 +26,7 @@ PHP;
     /** @dataProvider provideTestDecodingError */
     public function testDecodingError($json, $expectedMessage) {
         $jsonDecoder = new JsonDecoder();
-        $this->expectException(RuntimeException::class);
+        $this->expectException(\RuntimeException::class);
         $this->expectExceptionMessage($expectedMessage);
         $jsonDecoder->decode($json);
     }
