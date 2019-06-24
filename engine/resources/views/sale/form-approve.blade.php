@@ -249,8 +249,8 @@
                 <form action="{{ url("sales-orders/$sale->id/payment") }}" method="post">
                     @csrf
                     <div class="form-group">
-                        <label for="note">Notes Payment</label>
-                        <input type="text" name="notes" id="note" class="form-control">
+                        <label for="note">Notes Payment (Optional)</label>
+                        <input type="text" name="notes" id="note" class="form-control" value=" ">
                     </div>                
                     <input type="submit" class="btn btn-success form-control" value="Setujui SO dan Print Kwitansi">
                 </form>
