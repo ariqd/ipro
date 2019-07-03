@@ -13,20 +13,20 @@
     <div class="col-lg-12">
         <div class="d-flex justify-content-between">
             <div>
-              @if($sale->no_so == null)
-              <h2><b>Quotation Order #{{ $sale->quotation_id }}</b></h2>
-              @else
-              <h2><b>Sales Order #{{ $sale->no_so }}</b></h2>
-              @endif
-          </div>
-          <div>
-            <a href="{{ url('sales-orders/check/approve') }}" class="btn btn-light">
-                <i class="fa fa-times"></i> Back
-            </a>
+                @if($sale->no_so == null)
+                <h2><b>Quotation Order #{{ $sale->quotation_id }}</b></h2>
+                @else
+                <h2><b>Sales Order #{{ $sale->no_so }}</b></h2>
+                @endif
+            </div>
+            <div>
+                <a href="{{ url('sales-orders/check/approve') }}" class="btn btn-light">
+                    <i class="fa fa-times"></i> Back
+                </a>
+            </div>
         </div>
+        <hr>
     </div>
-    <hr>
-</div>
 </div>
 <div class="row">
     <div class="col-lg-6">
@@ -233,9 +233,13 @@
                 <form action="{{ url("sales-orders/$sale->id/payment") }}" method="post">
                     @csrf
                     <div class="form-group">
+                        <label for="note">Tanggal Bayar</label>
+                        <input type="date" name="tgl_pembayaran" class="form-control">
+                    </div>
+                    <div class="form-group">
                         <label for="note">Notes Payment</label>
                         <input type="text" name="notes" id="note" class="form-control">
-                    </div>                
+                    </div>
                     <input type="submit" class="btn btn-success form-control" value="Setujui SO dan Print Kwitansi">
                 </form>
             </div>

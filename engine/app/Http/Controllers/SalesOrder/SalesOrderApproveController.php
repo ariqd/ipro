@@ -41,6 +41,7 @@ class SalesOrderApproveController extends Controller
 
         $sale->no_so = $nopo;
         $sale->notes = $request->notes;
+        $sale->tgl_pembayaran = $request->tgl_pembayaran;
         $sale->save();
 
         $counter->counter += 1;

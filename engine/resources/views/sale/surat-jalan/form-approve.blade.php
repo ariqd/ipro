@@ -5,80 +5,81 @@
 
 @push("css")
 <style>
-.loading {
-  background: lightgrey;
-  padding: 15px;
-  position: fixed;
-  border-radius: 4px;
-  left: 50%;
-  top: 50%;
-  text-align: center;
-  margin: -40px 0 0 -50px;
-  z-index: 2000;
-  display: none;
-}
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
+  .loading {
+    background: lightgrey;
+    padding: 15px;
+    position: fixed;
+    border-radius: 4px;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    margin: -40px 0 0 -50px;
+    z-index: 2000;
+    display: none;
+  }
 
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
+  /* The switch - the box around the slider */
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
 
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
 
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
 
-input:checked + .slider {
-  background-color: #2196F3;
-}
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
 
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
+  input:checked+.slider {
+    background-color: #2196F3;
+  }
 
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
+  input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
 
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
+  input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
 
-.slider.round:before {
-  border-radius: 50%;
-} 
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+
+  .slider.round:before {
+    border-radius: 50%;
+  }
 </style>
 @endpush
 
@@ -174,14 +175,14 @@ input:checked + .slider:before {
         </div>
 
         {{--                <div class="row mt-3">--}}
-          {{--                    <div class="col-4">--}}
-            {{--                        <b>--}}
-              {{--                            Email--}}
-            {{--                        </b>--}}
-          {{--                    </div>--}}
-          {{--                    <div class="col-8">--}}
-            {{--                        {{ $sale->customer->email }}--}}
-          {{--                    </div>--}}
+        {{--                    <div class="col-4">--}}
+        {{--                        <b>--}}
+        {{--                            Email--}}
+        {{--                        </b>--}}
+        {{--                    </div>--}}
+        {{--                    <div class="col-8">--}}
+        {{--                        {{ $sale->customer->email }}--}}
+        {{--                    </div>--}}
         {{--                </div>--}}
 
       </div>
@@ -283,17 +284,18 @@ input:checked + .slider:before {
             <tr>
               <th>No</th>
               <th>Name</th>
-              <th>Qty</th>
+              <th>Qty Pesan</th>
+              <th>Qty Belum Kirim</th>
               <th>Price</th>
               <th>Discount</th>
               <th>Total</th>
-              <th>Kirim</th>
+              <th>Jumlah Kirim</th>
             </tr>
           </thead>
           <tbody>
-           @php 
-           $flag = 0
-           @endphp
+            @php
+            $flag = 0
+            @endphp
             <form method="post" action="{{ url("sales-orders/$sale->id/delivery-orders") }}">
               @foreach($sale->details as $details)
               <tr>
@@ -307,6 +309,9 @@ input:checked + .slider:before {
                   {{ $details->qty }}
                 </td>
                 <td>
+                  {{ $details->qty - $details->qty_kirim }}
+                </td>
+                <td>
                   Rp{{number_format($details->price) }},00
                 </td>
                 <td>
@@ -315,13 +320,13 @@ input:checked + .slider:before {
                 <td>
                   Rp{{number_format($details->total)}},00
                 </td>
-                <td><label class="switch">
-                  <input type="checkbox" name="{{"approve-".$details->id }}" @if($details->status==1) checked="on" disabled="" {{ $flag++ }} @endif>
-                  <span class="slider"></span>
-                </label>
-              </td>
-            </tr>
-            @endforeach
+                <td>
+                  <input autocomplete="off" type="number" min="1" max="{{ $details->qty - $details->qty_kirim }}" name="qty_kirim[]" value="0">
+                  <input type="hidden" name="do[]" value="{{$details->id}}">
+                </td>
+
+              </tr>
+              @endforeach
           </tbody>
         </table>
       </div>
@@ -339,8 +344,8 @@ input:checked + .slider:before {
     <input type="submit" class="form-control btn btn-success" value="Create Delivery Order">
     @endif
     @csrf
-  </form>
-</div>
+    </form>
+  </div>
 </div>
 
 @endsection
