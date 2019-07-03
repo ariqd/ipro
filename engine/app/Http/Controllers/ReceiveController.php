@@ -10,6 +10,7 @@ use App\Purchase;
 use App\Purchase_Detail;
 use App\Stock;
 use Illuminate\Http\Response;
+use PDF;
 
 class ReceiveController extends Controller
 {
@@ -130,5 +131,10 @@ class ReceiveController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function printMemoPengambilanProduk()
+    {
+        return view("print.memo");
     }
 }
