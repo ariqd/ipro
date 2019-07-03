@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Sale;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class DashboardController extends Controller
@@ -39,7 +39,6 @@ class DashboardController extends Controller
                 $salebydayf[$day]++;
                 $flag = 1;
                 $revenue += $key->grand_total + $key->ongkir;
-
             } else {
                 $saleunfinish++;
                 $salebydayu[$day]++;

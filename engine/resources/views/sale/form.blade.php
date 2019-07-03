@@ -395,6 +395,13 @@
                                         <option value="" selected disabled></option>
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="branches">Cabang</label>
+                                    <select autocomplete="off" name="category" id="branches"
+                                            class="form-control branches w-100">
+                                        <option value="" selected disabled>-- Pilih cabang --</option>
+                                    </select>
+                                </div>
 
                                 <div class="card mb-0" id="itemsList">
                                     <div class="card-body p-0" id="items">

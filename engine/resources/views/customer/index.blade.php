@@ -70,6 +70,7 @@
                         <th>No</th>
                         <th>Project Owner</th>
                         <th>KTP</th>
+                        <th>NPWP</th>
                         <th>Phone</th>
                         <th>Email</th>
                         <th>Fax</th>
@@ -83,13 +84,22 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $customer->project_owner }}</td>
                             <td>{{ $customer->no_ktp }}</td>
+                            <td>{{ $customer->npwp }}</td>
                             <td>{{ $customer->phone }}</td>
                             <td>{{ $customer->email }}</td>
                             <td>{{ $customer->fax }}</td>
                             <td>{{ $customer->address }}</td>
                             <td>
                                 <div class="d-flex">
-                                    <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-secondary btn-sm">Edit</a>
+                                    <a href="#modalForm" data-toggle="modal"
+                                       data-href="{{ route('customers.edit', $customer) }}"
+                                       class="btn btn-secondary btn-sm">Edit</a>
+                                    <a href="#" class="btn btn-sm btn-danger ml-1 btnDelete">Delete</a>
+                                    <form action="{{ route('customers.destroy', $customer) }}"
+                                          method="post" class="formDelete d-none">
+                                        {!! csrf_field() !!}
+                                        {!! method_field('delete') !!}
+                                    </form>
                                 </div>
                             </td>
                         </tr>

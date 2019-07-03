@@ -22,13 +22,19 @@
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="phone" class="form-control-label">Phone</label>
+                <label for="npwp" class="form-control-label">NPWP</label>
+                <input id="npwp" class="form-control" name="npwp" value="{{ @$isEdit ? $customer->npwp : '' }}">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="phone" class="form-control-label">No. Telepon</label>
                 <input id="phone" class="form-control" name="phone" value="{{ @$isEdit ? $customer->phone : '' }}">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="address" class="form-control-label">Address</label>
+                <label for="address" class="form-control-label">Alamat</label>
                 <textarea name="address" id="address" class="form-control"></textarea>
                 {{--<input id="phone" class="form-control" name="phone" value="{{ @$isEdit ? $customer->phone : '' }}">--}}
             </div>
@@ -42,14 +48,15 @@
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="email" class="form-control-label">Email</label>
-                <input id="email" type="email" class="form-control" name="email" value="{{ @$isEdit ? $customer->email : '' }}">
+                <input id="email" type="email" class="form-control" name="email"
+                       value="{{ @$isEdit ? $customer->email : '' }}">
             </div>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal"> Cancel</button>
         <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>
-            Submit
+            Simpan
         </button>
     </div>
 </form>

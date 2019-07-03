@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Customer;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -87,7 +88,7 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        return view('customer.form', compact('customer'));
     }
 
     /**
@@ -99,7 +100,9 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        //
+        $customer->update($request->all());
+
+        return redirect()->back()->with('info', 'Edit sukses!');
     }
 
     /**
@@ -107,9 +110,12 @@ class CustomerController extends Controller
      *
      * @param Customer $customer
      * @return Response
+     * @throws Exception
      */
     public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+
+        return redirect()->back()->with('info', 'Hapus sukses!');
     }
 }

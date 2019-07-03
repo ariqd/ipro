@@ -27,7 +27,7 @@
 
         <div class="col-lg-3">
             <div class="card p-3 bg-success">
-                <h2 class="font-weight-bold">{{ $totalsale }}</h2>
+                <h2 class="font-weight-bold">{{ $salefinish}}</h2>
                 <span>Sales order selesai</span>
             </div>
         </div>
