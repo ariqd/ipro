@@ -34,6 +34,8 @@
             height: 100%;
         }
     </style>
+
+    @stack("css")
 </head>
 <body>
     <div id="app" class="d-flex align-items-center">

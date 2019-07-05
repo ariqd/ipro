@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers\SalesOrder;
 
-use App\Brand;
 use App\Branch;
+use App\Brand;
+use App\Counter;
 use App\Customer;
-use App\Category;
+use App\Http\Controllers\Controller;
 use App\Sale;
 use App\Sale_Detail;
-use App\Stock;
-use App\Counter;
-use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
 
 class SalesOrderController extends Controller
 {
@@ -31,6 +28,7 @@ class SalesOrderController extends Controller
         $d['no_qo'] = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         $d['customers'] = Customer::all();
         $d['brands'] = Brand::all();
+        $d['branches'] = Branch::all();
 
         return view('sale.form', $d);
     }

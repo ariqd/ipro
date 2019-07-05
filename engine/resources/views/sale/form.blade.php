@@ -27,6 +27,8 @@
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script>
         $(document).ready(function () {
+            let items_count = 0;
+
             $("#customer_select").change(function () {
                 var id = $(this).val();
                 $.ajax({
@@ -45,7 +47,6 @@
                         } else {
                             alert('Cannot find info');
                         }
-
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                     }
@@ -90,6 +91,7 @@
             });
 
             function searchProduct() {
+                items_count = 0;
                 var id = $('#categories').val();
                 $.ajax({
                     url: '{{ url('sales-orders/create/search-stocks') }}',
@@ -127,7 +129,7 @@
                                     btn = '';
                                 }
                                 $("#items").append(
-                                    '<div class="card mb-0">' +
+                                    '<div class="card mb-0 item-card item-branch-' + value.branch.id + ' d-none">' +
                                     '<div class="card-body item">' +
                                     '<div class="d-flex justify-content-between align-items-center">' +
                                     '<div>' +
@@ -143,6 +145,7 @@
                                     '</div>' +
                                     '</div>'
                                 );
+                                items_count++;
                             });
                         } else {
                             $("#items").append(
@@ -169,38 +172,15 @@
                 searchProduct();
             });
 
-            $(".category").change(function () {
-                $('#modal').modal('show');
-                $.ajax({
-                    url: '{{ url("stocks/getdatabycategory/") }}' + '/' + $(".category").val(),
-                    method: "get",
-                    success: function (response) {
-                        $('.item-temp').remove();
-                        $.each(response["data"], function (i, item) {
-                            console.dir(item);
-                            var table = document.getElementById("table-pick-item-body");
-
-                            var row = table.insertRow();
-                            row.setAttribute('id', 'row');
-                            row.setAttribute('class', 'item-temp');
-                            var cell0 = row.insertCell(0);
-                            var cell1 = row.insertCell(1);
-                            var cell2 = row.insertCell(2);
-                            var cell3 = row.insertCell(3);
-                            var cell4 = row.insertCell(4);
-                            var cell5 = row.insertCell(5);
-
-                            cell0.innerHTML = item.catname;
-                            cell1.innerHTML = item.code;
-                            cell2.innerHTML = item.itemname;
-                            cell3.innerHTML = item.stock;
-                            cell4.innerHTML = item.weight;
-                            cell5.innerHTML = item.purchase_price;
-                        });
-                    },
-                    error: function (xhr, statusCode, error) {
-                    }
-                })
+            $('#branches').change(function () {
+                let branch_id = $(this).val();
+                $('.item-card').addClass('d-none');
+                if (items_count <= 0) {
+                    alert('Pilih brand dan kategori lebih dulu!');
+                    $(this).prop('selectedIndex', 0);
+                } else {
+                    $('.item-branch-' + branch_id).removeClass('d-none');
+                }
             });
         });
     </script>
@@ -397,9 +377,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="branches">Cabang</label>
-                                    <select autocomplete="off" name="category" id="branches"
+                                    <select autocomplete="off" name="branches" id="branches"
                                             class="form-control branches w-100">
                                         <option value="" selected disabled>-- Pilih cabang --</option>
+                                        @foreach($branches as $branch)
+                                            <option value="{{ $branch->id }}">{{ $branch->name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
 
