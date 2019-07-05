@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Vendor;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class VendorController extends Controller
@@ -27,6 +26,15 @@ class VendorController extends Controller
         unset($input['_token']);
 
         $input['user_id'] = Auth::id();
+//        dd($input);
+
+        if ($request->has('image')) {
+            $file = $input['image'];
+            $file3 = $input['name'] . "foto-" . date("dmyhis") . "." . $file->getClientOriginalExtension();
+            $file->move(public_path('../../assets/img/uploads/vendors'), $file3);
+            $input["image"] = $file3;
+        }
+
         $vendor = Vendor::create($input);
 
         return redirect('vendors')->with('info', 'Vendor ' . $vendor->name . ' Created!');
@@ -44,6 +52,13 @@ class VendorController extends Controller
     {
         $input = $request->all();
         unset($input['_token']);
+
+        if ($request->has('image')) {
+            $file = $input['image'];
+            $file3 = $input['name'] . "foto-" . date("dmyhis") . "." . $file->getClientOriginalExtension();
+            $file->move(public_path('../../assets/img/uploads/vendors'), $file3);
+            $input["image"] = $file3;
+        }
 
         Vendor::find($id)->update($input);
 

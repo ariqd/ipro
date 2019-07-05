@@ -1,4 +1,5 @@
-<form action="{{ @$isEdit ? url('vendors/'.$vendor->id) : url('vendors') }}" method="post">
+<form action="{{ @$isEdit ? url('vendors/'.$vendor->id) : url('vendors') }}" method="post"
+      enctype="multipart/form-data">
     @csrf
     {{ @$isEdit ? method_field('PUT') : '' }}
     <div class="modal-header">
@@ -8,6 +9,17 @@
         </button>
     </div>
     <div class="modal-body">
+        <div class="form-group row">
+            <div class="col-lg-12">
+                @if(@$isEdit)
+                    <img src="{{ asset('assets/img/uploads/vendors/'.$vendor->image) }}" class="img-responsive"
+                         alt="{{ $vendor->name }}">
+                    <br>
+                @endif
+                <label for="name" class="form-control-label">{{ @$isEdit ? 'Ganti' : '' }} Gambar</label>
+                <input type="file" name="image" class="form-control" {{ @$isEdit ? '' : 'required' }}>
+            </div>
+        </div>
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="name" class="form-control-label">Nama</label>
@@ -25,7 +37,8 @@
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="address" class="form-control-label">Address</label>
-                <textarea name="address" id="address" class="form-control" rows="5" required>{{ @$isEdit ? $vendor->address : '' }}</textarea>
+                <textarea name="address" id="address" class="form-control" rows="5"
+                          required>{{ @$isEdit ? $vendor->address : '' }}</textarea>
             </div>
         </div>
         <div class="form-group row">
