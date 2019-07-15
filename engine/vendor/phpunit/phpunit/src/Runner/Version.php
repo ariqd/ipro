@@ -9,12 +9,7 @@
  */
 namespace PHPUnit\Runner;
 
-use function array_slice;
-use function dirname;
-use function explode;
-use function implode;
 use SebastianBergmann\Version as VersionId;
-use function strpos;
 
 /**
  * This class defines the current version of PHPUnit.
@@ -35,7 +30,7 @@ class Version
         }
 
         if (self::$version === null) {
-            $version       = new VersionId('7.5.9', dirname(__DIR__, 2));
+            $version       = new VersionId('7.5.13', \dirname(__DIR__, 2));
             self::$version = $version->getVersion();
         }
 
@@ -44,13 +39,13 @@ class Version
 
     public static function series(): string
     {
-        if (strpos(self::id(), '-')) {
-            $version = explode('-', self::id())[0];
+        if (\strpos(self::id(), '-')) {
+            $version = \explode('-', self::id())[0];
         } else {
             $version = self::id();
         }
 
-        return implode('.', array_slice(explode('.', $version), 0, 2));
+        return \implode('.', \array_slice(\explode('.', $version), 0, 2));
     }
 
     public static function getVersionString(): string
@@ -60,7 +55,7 @@ class Version
 
     public static function getReleaseChannel(): string
     {
-        if (strpos(self::$pharVersion, '-') !== false) {
+        if (\strpos(self::$pharVersion, '-') !== false) {
             return '-nightly';
         }
 

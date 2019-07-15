@@ -2,12 +2,10 @@
 
 namespace PhpParser;
 
-use LogicException;
 use PhpParser\Node\Expr;
 use PhpParser\Node\Scalar\String_;
-use PHPUnit\Framework\TestCase;
 
-class NodeTraverserTest extends TestCase
+class NodeTraverserTest extends \PHPUnit\Framework\TestCase
 {
     public function testNonModifying() {
         $str1Node = new String_('Foo');
@@ -118,7 +116,7 @@ class NodeTraverserTest extends TestCase
     }
 
     public function testInvalidDeepArray() {
-        $this->expectException(LogicException::class);
+        $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('Invalid node structure: Contains nested arrays');
         $strNode = new String_('Foo');
         $stmts = [[[$strNode]]];
@@ -289,7 +287,7 @@ class NodeTraverserTest extends TestCase
      * @dataProvider provideTestInvalidReturn
      */
     public function testInvalidReturn($visitor, $message) {
-        $this->expectException(LogicException::class);
+        $this->expectException(\LogicException::class);
         $this->expectExceptionMessage($message);
 
         $stmts = [new Node\Stmt\Expression(new Node\Scalar\LNumber(42))];

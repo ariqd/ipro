@@ -3,14 +3,11 @@
 namespace PhpParser;
 
 use PhpParser\Node\Expr;
-use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Scalar;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt;
-use PHPUnit\Framework\TestCase;
-use RangeException;
 
-abstract class ParserTest extends TestCase
+abstract class ParserTest extends \PHPUnit\Framework\TestCase
 {
     /** @returns Parser */
     abstract protected function getParser(Lexer $lexer);
@@ -94,9 +91,9 @@ EOC;
             'endTokenPos' => 19,
         ], $echo->getAttributes());
 
-        /** @var Variable $var */
+        /** @var \PhpParser\Node\Expr\Variable $var */
         $var = $echo->exprs[0];
-        $this->assertInstanceOf(Variable::class, $var);
+        $this->assertInstanceOf(Expr\Variable::class, $var);
         $this->assertEquals([
             'startLine' => 6,
             'endLine' => 6,
@@ -106,7 +103,7 @@ EOC;
     }
 
     public function testInvalidToken() {
-        $this->expectException(RangeException::class);
+        $this->expectException(\RangeException::class);
         $this->expectExceptionMessage('The lexer returned an invalid token (id=999, value=foobar)');
         $lexer = new InvalidTokenLexer;
         $parser = $this->getParser($lexer);

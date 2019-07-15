@@ -2,15 +2,12 @@
 
 namespace PhpParser\Lexer;
 
-use function count;
-use function is_array;
-use function is_string;
-use const PHP_VERSION;
 use PhpParser\Error;
 use PhpParser\ErrorHandler;
 use PhpParser\Lexer;
-use PhpParser\Parser;
-use function strlen;
+use PhpParser\Lexer\TokenEmulator\CoaleseEqualTokenEmulator;
+use PhpParser\Lexer\TokenEmulator\FnTokenEmulator;
+use PhpParser\Lexer\TokenEmulator\TokenEmulatorInterface;
 
 class Emulative extends Lexer
 {
@@ -23,12 +20,11 @@ class Emulative extends Lexer
 (?<indentation>\h*)\2(?![a-zA-Z_\x80-\xff])(?<separator>(?:;?[\r\n])?)/x
 REGEX;
 
-    const T_COALESCE_EQUAL = 1007;
-
-    /**
-     * @var mixed[] Patches used to reverse changes introduced in the code
-     */
+    /** @var mixed[] Patches used to reverse changes introduced in the code */
     private $patches = [];
+
+    /** @var TokenEmulatorInterface[] */
+    private $tokenEmulators = [];
 
     /**
      * @param mixed[] $options
@@ -37,8 +33,14 @@ REGEX;
     {
         parent::__construct($options);
 
+        // prepare token emulators
+        $this->tokenEmulators[] = new FnTokenEmulator();
+        $this->tokenEmulators[] = new CoaleseEqualTokenEmulator();
+
         // add emulated tokens here
-        $this->tokenMap[self::T_COALESCE_EQUAL] = Parser\Tokens::T_COALESCE_EQUAL;
+        foreach ($this->tokenEmulators as $emulativeToken) {
+            $this->tokenMap[$emulativeToken->getTokenId()] = $emulativeToken->getParserTokenId();
+        }
     }
 
     public function startLexing(string $code, ErrorHandler $errorHandler = null) {
@@ -56,8 +58,13 @@ REGEX;
         $preparedCode = $this->processHeredocNowdoc($code);
         parent::startLexing($preparedCode, $collector);
 
-        // 2. emulation of ??= token
-        $this->processCoaleseEqual($code);
+        // add token emulation
+        foreach ($this->tokenEmulators as $emulativeToken) {
+            if ($emulativeToken->isEmulationNeeded($code)) {
+                $this->tokens = $emulativeToken->emulate($code, $this->tokens);
+            }
+        }
+
         $this->fixupTokens();
 
         $errors = $collector->getErrors();
@@ -69,45 +76,10 @@ REGEX;
         }
     }
 
-    private function isCoalesceEqualEmulationNeeded(string $code): bool
-    {
-        // skip version where this works without emulation
-        if (version_compare(PHP_VERSION, self::PHP_7_4, '>=')) {
-            return false;
-        }
-
-        return strpos($code, '??=') !== false;
-    }
-
-    private function processCoaleseEqual(string $code)
-    {
-        if ($this->isCoalesceEqualEmulationNeeded($code) === false) {
-            return;
-        }
-
-        // We need to manually iterate and manage a count because we'll change
-        // the tokens array on the way
-        $line = 1;
-        for ($i = 0, $c = count($this->tokens); $i < $c; ++$i) {
-            if (isset($this->tokens[$i + 1])) {
-                if ($this->tokens[$i][0] === T_COALESCE && $this->tokens[$i + 1] === '=') {
-                    array_splice($this->tokens, $i, 2, [
-                        [self::T_COALESCE_EQUAL, '??=', $line]
-                    ]);
-                    $c--;
-                    continue;
-                }
-            }
-            if (is_array($this->tokens[$i])) {
-                $line += substr_count($this->tokens[$i][1], "\n");
-            }
-        }
-    }
-
     private function isHeredocNowdocEmulationNeeded(string $code): bool
     {
         // skip version where this works without emulation
-        if (version_compare(PHP_VERSION, self::PHP_7_3, '>=')) {
+        if (version_compare(\PHP_VERSION, self::PHP_7_3, '>=')) {
             return false;
         }
 
@@ -161,20 +133,18 @@ REGEX;
 
     private function isEmulationNeeded(string $code): bool
     {
-        if ($this->isHeredocNowdocEmulationNeeded($code)) {
-            return true;
+        foreach ($this->tokenEmulators as $emulativeToken) {
+            if ($emulativeToken->isEmulationNeeded($code)) {
+                return true;
+            }
         }
 
-        if ($this->isCoalesceEqualEmulationNeeded($code)) {
-            return true;
-        }
-
-        return false;
+        return $this->isHeredocNowdocEmulationNeeded($code);
     }
 
     private function fixupTokens()
     {
-        if (count($this->patches) === 0) {
+        if (\count($this->patches) === 0) {
             return;
         }
 
@@ -185,18 +155,18 @@ REGEX;
 
         // We use a manual loop over the tokens, because we modify the array on the fly
         $pos = 0;
-        for ($i = 0, $c = count($this->tokens); $i < $c; $i++) {
+        for ($i = 0, $c = \count($this->tokens); $i < $c; $i++) {
             $token = $this->tokens[$i];
-            if (is_string($token)) {
+            if (\is_string($token)) {
                 // We assume that patches don't apply to string tokens
-                $pos += strlen($token);
+                $pos += \strlen($token);
                 continue;
             }
 
-            $len = strlen($token[1]);
+            $len = \strlen($token[1]);
             $posDelta = 0;
             while ($patchPos >= $pos && $patchPos < $pos + $len) {
-                $patchTextLen = strlen($patchText);
+                $patchTextLen = \strlen($patchText);
                 if ($patchType === 'remove') {
                     if ($patchPos === $pos && $patchTextLen === $len) {
                         // Remove token entirely
@@ -222,7 +192,7 @@ REGEX;
 
                 // Fetch the next patch
                 $patchIdx++;
-                if ($patchIdx >= count($this->patches)) {
+                if ($patchIdx >= \count($this->patches)) {
                     // No more patches, we're done
                     return;
                 }

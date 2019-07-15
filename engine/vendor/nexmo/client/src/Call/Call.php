@@ -8,8 +8,6 @@
 
 namespace Nexmo\Call;
 
-use InvalidArgumentException;
-use JsonSerializable;
 use Nexmo\Client\ClientAwareInterface;
 use Nexmo\Client\ClientAwareTrait;
 use Nexmo\Conversations\Conversation;
@@ -20,21 +18,20 @@ use Nexmo\Entity\JsonUnserializableInterface;
 use Nexmo\Entity\NoRequestResponseTrait;
 use Psr\Http\Message\ResponseInterface;
 use Nexmo\Client\Exception;
-use RuntimeException;
 use Zend\Diactoros\Request;
 
 /**
  * Class Call
  *
- * @property Stream $stream
- * @property Talk $talk
- * @property Dtmf $dtmf
+ * @property \Nexmo\Call\Stream $stream
+ * @property \Nexmo\Call\Talk   $talk
+ * @property \Nexmo\Call\Dtmf   $dtmf
  *
- * @method Stream stream()
- * @method Talk   talk()
- * @method Dtmf   dtmf()
+ * @method \Nexmo\Call\Stream stream()
+ * @method \Nexmo\Call\Talk   talk()
+ * @method \Nexmo\Call\Dtmf   dtmf()
  */
-class Call implements EntityInterface, JsonSerializable, JsonUnserializableInterface, ClientAwareInterface
+class Call implements EntityInterface, \JsonSerializable, JsonUnserializableInterface, ClientAwareInterface
 {
     use NoRequestResponseTrait;
     use JsonSerializableTrait;
@@ -181,7 +178,7 @@ class Call implements EntityInterface, JsonSerializable, JsonUnserializableInter
         }
 
         if(is_null($url)){
-            throw new InvalidArgumentException('must provide `Nexmo\Call\Webhook` object, or a type and url: missing url' );
+            throw new \InvalidArgumentException('must provide `Nexmo\Call\Webhook` object, or a type and url: missing url' );
         }
 
         $this->webhooks[$type] = new Webhook($type, $url, $method);
@@ -253,7 +250,7 @@ class Call implements EntityInterface, JsonSerializable, JsonUnserializableInter
             case 'dtmf':
                 return $this->lazySubresource(ucfirst($name));
             default:
-                throw new RuntimeException('property does not exist: ' . $name);
+                throw new \RuntimeException('property does not exist: ' . $name);
         }
     }
 
@@ -266,7 +263,7 @@ class Call implements EntityInterface, JsonSerializable, JsonUnserializableInter
                 $entity = $this->lazySubresource(ucfirst($name));
                 return call_user_func_array($entity, $arguments);
             default:
-                throw new RuntimeException('method does not exist: ' . $name);
+                throw new \RuntimeException('method does not exist: ' . $name);
         }
     }
 

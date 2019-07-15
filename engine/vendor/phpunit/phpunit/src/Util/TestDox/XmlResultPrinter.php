@@ -9,11 +9,8 @@
  */
 namespace PHPUnit\Util\TestDox;
 
-use function array_filter;
 use DOMDocument;
 use DOMElement;
-use function get_class;
-use function implode;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\Test;
@@ -23,8 +20,6 @@ use PHPUnit\Framework\TestSuite;
 use PHPUnit\Framework\Warning;
 use PHPUnit\Util\Printer;
 use ReflectionClass;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
-use Throwable;
 
 class XmlResultPrinter extends Printer implements TestListener
 {
@@ -44,7 +39,7 @@ class XmlResultPrinter extends Printer implements TestListener
     private $prettifier;
 
     /**
-     * @var null|Throwable
+     * @var null|\Throwable
      */
     private $exception;
 
@@ -79,7 +74,7 @@ class XmlResultPrinter extends Printer implements TestListener
     /**
      * An error occurred.
      */
-    public function addError(Test $test, Throwable $t, float $time): void
+    public function addError(Test $test, \Throwable $t, float $time): void
     {
         $this->exception = $t;
     }
@@ -102,21 +97,21 @@ class XmlResultPrinter extends Printer implements TestListener
     /**
      * Incomplete test.
      */
-    public function addIncompleteTest(Test $test, Throwable $t, float $time): void
+    public function addIncompleteTest(Test $test, \Throwable $t, float $time): void
     {
     }
 
     /**
      * Risky test.
      */
-    public function addRiskyTest(Test $test, Throwable $t, float $time): void
+    public function addRiskyTest(Test $test, \Throwable $t, float $time): void
     {
     }
 
     /**
      * Skipped test.
      */
-    public function addSkippedTest(Test $test, Throwable $t, float $time): void
+    public function addSkippedTest(Test $test, \Throwable $t, float $time): void
     {
     }
 
@@ -145,7 +140,7 @@ class XmlResultPrinter extends Printer implements TestListener
     /**
      * A test ended.
      *
-     * @throws InvalidArgumentException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function endTest(Test $test, float $time): void
     {
@@ -155,7 +150,7 @@ class XmlResultPrinter extends Printer implements TestListener
 
         /* @var TestCase $test */
 
-        $groups = array_filter(
+        $groups = \array_filter(
             $test->getGroups(),
             function ($group) {
                 return !($group === 'small' || $group === 'medium' || $group === 'large');
@@ -164,16 +159,16 @@ class XmlResultPrinter extends Printer implements TestListener
 
         $node = $this->document->createElement('test');
 
-        $node->setAttribute('className', get_class($test));
+        $node->setAttribute('className', \get_class($test));
         $node->setAttribute('methodName', $test->getName());
-        $node->setAttribute('prettifiedClassName', $this->prettifier->prettifyTestClass(get_class($test)));
+        $node->setAttribute('prettifiedClassName', $this->prettifier->prettifyTestClass(\get_class($test)));
         $node->setAttribute('prettifiedMethodName', $this->prettifier->prettifyTestCase($test));
         $node->setAttribute('status', $test->getStatus());
         $node->setAttribute('time', $time);
         $node->setAttribute('size', $test->getSize());
-        $node->setAttribute('groups', implode(',', $groups));
+        $node->setAttribute('groups', \implode(',', $groups));
 
-        $inlineAnnotations = \PHPUnit\Util\Test::getInlineAnnotations(get_class($test), $test->getName());
+        $inlineAnnotations = \PHPUnit\Util\Test::getInlineAnnotations(\get_class($test), $test->getName());
 
         if (isset($inlineAnnotations['given'], $inlineAnnotations['when'], $inlineAnnotations['then'])) {
             $node->setAttribute('given', $inlineAnnotations['given']['value']);
