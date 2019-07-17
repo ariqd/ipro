@@ -32,31 +32,31 @@ class DeliveryOrderController extends Controller
         $counter = Counter::where("name", "=", "DO")->first();
         $branch_id = Auth::user()->branch_id;
         $branch = Branch::find($branch_id);
-        $nodo = "DO".date("ymd").str_pad($branch_id, 2, 0, STR_PAD_LEFT).str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
+        $nodo = "DO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         $do = Delivery_Order::create([
-            "nomor_surat"=>$nodo,
-            "sales_order_id"=>$id,
+            "nomor_surat" => $nodo,
+            "sales_order_id" => $id,
         ]);
         $countdata = count($request->do);
-        for ($i=0; $i <$countdata ; $i++) {
+        for ($i = 0; $i < $countdata; $i++) {
             $id = $request->do[$i];
             $qty_kirim = $request->qty_kirim[$i];
             Delivery_Order_Detail::create([
-                "do_id"=>$do->id,
-                "sales_order_detail_id"=>$id,
-                "qty_kirim"=>$qty_kirim
+                "do_id" => $do->id,
+                "sales_order_detail_id" => $id,
+                "qty_kirim" => $qty_kirim
             ]);
 
             //
             $detail = Sale_Detail::find($id);
             $detail->qty_kirim += $qty_kirim;
             $detail->save();
-            
+
             //minus
             $stock = Stock::find($detail->stock_id);
             $stock->quantity -= $qty_kirim;
+            // $stock->pesenan -= $qty_kirim;
             $stock->save();
-            
         }
         //     $query = Sale::find($id);
         //     $detail = $query->details()->get();
@@ -81,7 +81,7 @@ class DeliveryOrderController extends Controller
         //       }
         //   }
 
-        $counter->counter +=1;
+        $counter->counter += 1;
         $counter->save();
 
         return redirect("sales-orders")->with("info", "Delivery Order Dibuat dengan Nomor $nodo");

@@ -47,7 +47,7 @@ class SalesOrderController extends Controller
         $branch = Branch::find($branch_id);
         $no_po = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         $input["quotation_id"] = $no_po;
-//                dd($input);
+        //                dd($input);
 
         $sales_order = Sale::create($input);
         $counter->counter += 1;
@@ -56,10 +56,12 @@ class SalesOrderController extends Controller
         foreach ($sales_order_details as $sales_order_detail) {
             $sales_order_detail['sales_order_id'] = $sales_order->id;
             Sale_Detail::create($sales_order_detail);
+            $stock = Stock::find($sales_order_detail->stock_id);
+            // $stock->pesenan += $sales_order_detail->quantity;
+            $stock->save();
         }
 
         return redirect('sales-orders')->with('info', 'Sales Order Created');
-
     }
 
     public function show($id)
