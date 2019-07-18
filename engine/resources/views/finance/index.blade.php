@@ -28,7 +28,7 @@
         <h4>Komisi Sales | Periode 15 Juli 2019 - 15 Agustus 2019</h4>
     </div>
     <div class="col-12">
-        <table class="table table-light data-table">
+        <table class="table table-light data-table table-hover">
             <thead>
                 <tr>
                     <th>Nama</th>
@@ -41,19 +41,31 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($sales as $person)
+                @foreach ($sales as $user)
                 <tr>
-                    <td>{{ $person->name }}</td>
-                    <td>{{ $person->branch->name }}</td>
-                    <td>2%</td>
-                    <td>Rp 23.000.000</td>
-                    <td>Rp 123.000.000</td>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->branch->name }}</td>
+                    <td>{{ @$user->commision->percentage ?? '-' }}</td>
+                    <td>{{ @$user->commision->today_commision ?? '-' }}</td>
+                    <td>{{ @$user->commision->total_commision ?? '-' }}</td>
                     <td>
-                        <span class="badge badge-danger">Belum Achieve</span>
+                        @if (empty($user->commision))
+                        <span class="badge badge-warning">Komisi periode ini belum diatur</span>
+                        @else
+                        <span class="badge badge-">Belum Achieve</span>
+                        @endif
                     </td>
                     <td>
+                        @if (empty($user->commision))
+                        <small class="text-danger">
+                            <a href="{{ route("finances.komisi.set", $user) }}" class="btn btn-dark btn-sm">
+                                <i class="fa fa-plus"></i> Set Komisi
+                            </a>
+                        </small>
+                        @else
                         <a href="#" class="btn btn-secondary btn-sm">Detail Komisi</a>
                         <a href="#" class="btn btn-success btn-sm">Print Laporan Komisi</a>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

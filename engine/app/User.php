@@ -33,6 +33,11 @@ class User extends Authenticatable
         return $this->belongsTo('App\Branch');
     }
 
+    public function commision() 
+    {
+        return $this->hasOne('App\Commision');
+    }
+
     public function isAdmin()
     {
         return $this->role == 'admin';
