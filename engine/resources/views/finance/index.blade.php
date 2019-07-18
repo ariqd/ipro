@@ -65,8 +65,8 @@
                             </a>
                         </small>
                         @else
-                        <a href="#" class="btn btn-secondary btn-sm my-1">Detail Komisi</a>
-                        <a href="#" class="btn btn-success btn-sm my-1">Print Laporan Komisi</a>
+                        <a href="#" class="btn btn-secondary btn-sm">Detail Komisi</a>
+                        <a href="{{ route("finances.komisi.print", $user) }}" class="btn btn-success btn-sm">Print Laporan Komisi</a>
                         @endif
                     </td>
                 </tr>
