@@ -51,14 +51,14 @@
                     <td>{{ 'Rp ' . number_format(@$user->commision->total_commision) ?? '-' }}</td>
                     <td>{{ 'Rp ' . number_format(@$user->commision->achievement) ?? '-' }}</td>
                     <td>
-                        @if (empty($user->commision))
+                        @if (empty($user->commision->percentage))
                         <span class="badge badge-warning">Komisi periode ini belum diatur</span>
                         @else
                         <span class="badge badge-danger">Belum Achieve</span>
                         @endif
                     </td>
                     <td>
-                        @if (empty($user->commision))
+                        @if (empty($user->commision->percentage))
                         <small class="text-danger">
                             <a href="{{ route("finances.komisi.set", $user) }}" class="btn btn-dark btn-sm">
                                 <i class="fa fa-plus"></i> Set Komisi
