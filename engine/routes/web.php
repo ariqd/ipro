@@ -53,5 +53,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('sales-orders/{id}/delivery-orders', 'SalesOrder\DeliveryOrderController@getForm');
     Route::post('sales-orders/{id}/delivery-orders', 'SalesOrder\DeliveryOrderController@store');
     Route::get('print/memo', 'ReceiveController@printMemoPengambilanProduk');
+    Route::get('print/memo', 'ReceiveController@printMemoPengambilanProduk');
 
 });

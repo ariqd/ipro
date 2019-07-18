@@ -55,31 +55,9 @@ class DeliveryOrderController extends Controller
             //minus
             $stock = Stock::find($detail->stock_id);
             $stock->quantity -= $qty_kirim;
-            // $stock->pesenan -= $qty_kirim;
+            $stock->pesenan -= $qty_kirim;
             $stock->save();
         }
-        //     $query = Sale::find($id);
-        //     $detail = $query->details()->get();
-        //     foreach ($detail as  $value) {
-        //       $i = $value->id;
-        //       $stringapprove = "approve-$i";
-        //       if($request->has("approve-$i")){
-        //           $value->status = 1;
-        //           $value->save();
-        //           Delivery_Order_Detail::create([
-        //             "do_id"=>$do->id,
-        //             "sales_order_detail_id"=>$i,
-        //             // "qty_kirim"=>$
-        //         ]);
-
-        //           //minus
-        //           $sales = Sale_Detail::find($i);
-        //           $stock = Stock::find($sales->stock_id);
-
-        //           $stock->quantity -= $sales->qty;
-        //           $stock->save();
-        //       }
-        //   }
 
         $counter->counter += 1;
         $counter->save();
