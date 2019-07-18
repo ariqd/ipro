@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class FinanceController extends Controller
 {
@@ -13,8 +14,11 @@ class FinanceController extends Controller
      */
     public function index()
     {
-        return view('finance.index');
+        $d['sales'] = User::sales()->get();
+        // dd($d['sales']->isSales);
+        // dd($d);
 
+        return view('finance.index', $d);
     }
 
     /**

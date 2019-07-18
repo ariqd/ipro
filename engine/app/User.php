@@ -37,4 +37,9 @@ class User extends Authenticatable
     {
         return $this->role == 'admin';
     }
+
+    public function scopeSales($query)
+    {
+        return $query->where('role', 'sales');
+    }
 }
