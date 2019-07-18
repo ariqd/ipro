@@ -45,7 +45,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="table table-responsive">
-                    <table class="table bg-light table-bordered data-table">
+                    <table class="table bg-light table-hover data-table">
                         <thead>
                         <tr>
                             <th>No</th>
@@ -71,15 +71,10 @@
                                 <td>
                                     {{ $user->role != 'admin' ? @$user->branch->name : '-' }}
                                 </td>
-                                {{--<td>{{ $user->branch }}</td>--}}
-                                {{--<td>Bandung</td>--}}
                                 <td>
                                     <a href="#modalForm" data-toggle="modal"
                                        data-href="{{ url('accounts/'.$user->id.'/edit') }}"
                                        class="btn btn-secondary btn-sm">Edit</a>
-                                    {{--<a href="#modalForm" data-toggle="modal"--}}
-                                       {{--data-href="#"--}}
-                                       {{--class="btn btn-outline-dark btn-sm">Change Password</a>--}}
                                 </td>
                             </tr>
                         @endforeach
