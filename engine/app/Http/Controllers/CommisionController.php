@@ -29,7 +29,8 @@ class CommisionController extends Controller
 
     public function printKomisi($user)
     {
-        $pdf = PDF::loadView('print.commision');
-        return $pdf->download("komisi.pdf");
+        // $pdf = PDF::loadView('print.commision');
+        // return $pdf->download("komisi.pdf");
+        return view("print.commision");
     }
 }
