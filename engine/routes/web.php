@@ -58,4 +58,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('finances/komisi/{user}/set', 'CommisionController@setKomisi')->name('finances.komisi.set');
     Route::post('finances/komisi/{user}/set', 'CommisionController@storeKomisi')->name('finances.komisi.store');
     Route::get('finances/komisi/{user}/print', 'CommisionController@printKomisi')->name('finances.komisi.print');
+
+    Route::get('settings', 'SettingsController@index');
 });

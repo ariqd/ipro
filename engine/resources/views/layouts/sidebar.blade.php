@@ -108,6 +108,12 @@
                     <i class="fa fa-credit-card"></i> Deposits
                 </a>
             </li>
+
+            <li class="nav-item">
+                    <a href="{{ url('settings') }}" class="nav-link {{ (request()->is('settings*')) ? 'active' : '' }}">
+                        <i class="fa fa-cog"></i> Settings
+                    </a>
+                </li>
         </ul>
     </nav>
 </div>
