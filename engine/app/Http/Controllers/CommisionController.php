@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Commision;
+use PDF;
 
 class CommisionController extends Controller
 {
@@ -14,7 +15,7 @@ class CommisionController extends Controller
         return view('finance.commission.form', compact('user'));
     }
 
-    public function storeKomisi(Request $request, User $user) 
+    public function storeKomisi(Request $request, User $user)
     {
         $input = $request->all();
 
@@ -24,7 +25,11 @@ class CommisionController extends Controller
         Commision::create($input);
 
         return redirect('finances')->withInfo('Komisi berhasil di set untuk ' . $user->name);
+    }
 
-        // dd($input['achievement']);
+    public function printKomisi($user)
+    {
+        $pdf = PDF::loadView('print.commision');
+        return $pdf->download("komisi.pdf");
     }
 }

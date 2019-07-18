@@ -61,13 +61,22 @@
             countWeight();
             countPrice();
             countPriceBranch();
+            countHold();
 
             function countStock() {
                 var sum = 0;
-                $('.stock').each(function () {
+                $('.stok').each(function () {
                     sum += parseInt($(this).text());
                 });
                 $('.total_stock').text(sum);
+            }
+
+            function countHold() {
+                var sum = 0;
+                $('.hold').each(function () {
+                    sum += parseInt($(this).text());
+                });
+                $('.total_holds').text(sum);
             }
 
             function countWeight() {
@@ -107,6 +116,7 @@
                 countPriceBranch();
                 countWeight();
                 countStock();
+                countHold();
             });
 
             $('.btnDelete').on('click', function (e) {
@@ -258,7 +268,8 @@
                             <th>No.</th>
                             <th>Item</th>
                             <th>Cabang</th>
-                            <th class="stok">Stok (per Batang)</th>
+                            <th class="stock">Stok (per Batang)</th>
+                            <th class="holds">Stok (Hold per Batang)</th>
                             <th class="berat">Berat (kg)</th>
                             <th class="harga">Harga Pusat</th>
                             <th class="harga_cabang">Harga Cabang</th>
@@ -273,8 +284,11 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $stock->item->category->brand->name .' - '. $stock->item->category->name .' - '. $stock->item->name }}</td>
                                 <td class="cabang">{{ ucfirst($stock->branch->name) }}</td>
-                                <td class="stock stok">
-                                    {{ $stock->quantity }}
+                                <td class="stok">
+                                    {{ $stock->quantity - $stock->hold }}
+                                </td>
+                                <td class="hold">
+                                    {{ $stock->hold }}
                                 </td>
                                 <td class="weight berat">
                                     {{ $stock->item->weight }}
@@ -343,8 +357,11 @@
                                         <b>Total:</b>
                                     </span>
                             </td>
-                            <td class="stok">
+                            <td class="stock">
                                 <span class="total_stock"></span> pcs
+                            </td>
+                            <td class="holds">
+                                <span class="total_holds"></span> pcs
                             </td>
                             <td>
                                 <span class="total_weight"></span>
