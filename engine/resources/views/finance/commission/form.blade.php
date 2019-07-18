@@ -4,13 +4,15 @@
 
 @push("js")
 <script src="{{ asset('assets/js/scripts.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.5.0/cleave.js"
+    integrity="sha256-cKDTH0H5beL+NbNqIPKJ9F4o19obOcC07Gd+KLaKbAU=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
-            $(".customer").select2({
-                selectOnClose: true,
-                placeholder: "Pilih Customer"
-            });
+        var cleave = new Cleave('.cleave', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
         });
+    });
 </script>
 @endpush
 
@@ -48,7 +50,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Rp</span>
                             </div>
-                            <input type="text" name="achievement" id="achievement" class="form-control">
+                            <input type="text" name="achievement" id="achievement" class="form-control cleave">
                         </div>
                     </div>
 

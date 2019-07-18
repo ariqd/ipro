@@ -34,7 +34,8 @@
                     <th>Nama</th>
                     <th>Cabang</th>
                     <th>Persentase</th>
-                    <th>Komisi</th>
+                    <th>Komisi Hari Ini</th>
+                    <th>Total Komisi</th>
                     <th>Achievement</th>
                     <th>Status</th>
                     <th>Action</th>
@@ -45,14 +46,15 @@
                 <tr>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->branch->name }}</td>
-                    <td>{{ @$user->commision->percentage ?? '-' }}</td>
-                    <td>{{ @$user->commision->today_commision ?? '-' }}</td>
-                    <td>{{ @$user->commision->total_commision ?? '-' }}</td>
+                    <td>{{ @$user->commision->percentage . '%' ?? '-' }}</td>
+                    <td>{{ 'Rp ' . number_format(@$user->commision->today_commision) ?? '-' }}</td>
+                    <td>{{ 'Rp ' . number_format(@$user->commision->total_commision) ?? '-' }}</td>
+                    <td>{{ 'Rp ' . number_format(@$user->commision->achievement) ?? '-' }}</td>
                     <td>
                         @if (empty($user->commision))
                         <span class="badge badge-warning">Komisi periode ini belum diatur</span>
                         @else
-                        <span class="badge badge-">Belum Achieve</span>
+                        <span class="badge badge-danger">Belum Achieve</span>
                         @endif
                     </td>
                     <td>
