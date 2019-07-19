@@ -25,6 +25,7 @@
         <hr>
     </div>
 </div>
+@if (auth()->user()->role == 'finance')
 @if (empty($sale->no_so))
 <div class="row">
     <div class="col-12">
@@ -59,6 +60,7 @@
         </div>
     </div>
 </div>
+@endif
 @endif
 <div class="row">
     <div class="col-lg-6">

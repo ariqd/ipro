@@ -18,8 +18,8 @@
 
 @section('content')
 <div class="row">
-    <div class="col-lg-9">
-        <h2 class="font-weight-bold">Finances - Detail Komisi</h2>
+    <div class="col-9">
+        <h2 class="font-weight-bold">Finances - Detail Komisi {{ $user->name }} ({{ $user->branch->name }})</h2>
     </div>
     <div class="col-3">
         <a href="{{ url('finances') }}" class="btn btn-secondary float-right"><i class="fa fa-times"></i> Kembali</a>
@@ -28,44 +28,70 @@
 
 <div class="row">
     <div class="col-12">
-        <h4>Komisi {{ $user->name }} ({{ $user->branch->name }}) | Periode 15 Juli - 14 Agustus</h4>
+        <h4>Periode 15 Juli - 14 Agustus</h4>
     </div>
     <div class="col-12">
-        <table class="table table-light table-borderless border">
-            <tr>
-                <td class="text-secondary w-25">Nama Sales:</td>
-                <td>{{ $user->name }}</td>
-            </tr>
-            <tr>
-                <td class="text-secondary">Cabang:</td>
-                <td>{{ $user->branch->name }}</td>
-            </tr>
-            <tr>
-                <td class="text-secondary">Persentase Komisi:</td>
-                <td>{{ $user->commission->percentage }} %</td>
-            </tr>
-            <tr>
-                <td class="text-secondary">Komisi Hari Ini:</td>
-                <td>Rp {{ number_format($user->commission->today_commission) ?? '0' }}</td>
-            </tr>
-            <tr>
-                <td class="text-secondary">Total Komisi:</td>
-                <td>Rp {{ number_format($user->commission->total_commission) ?? '0' }}</td>
-            </tr>
-            <tr>
-                <td class="text-secondary">Achievement:</td>
-                <td>Rp {{ number_format($user->commission->achievement) ?? '0' }}</td>
-            </tr>
-            <tr>
-                <td class="text-secondary">Status:</td>
-                <td>
-                    @if (empty($user->commission->percentage))
-                    <span class="badge badge-warning">Komisi periode ini belum diatur</span>
-                    @else
-                    <span class="badge badge-danger">Belum Achieve</span>
-                    @endif
-                </td>
-            </tr>
+        <table class="table table-light table-bordered">
+            <thead class="text-center">
+                <tr>
+                    <th>No. SO</th>
+                    <th>Tanggal</th>
+                    <th>Total</th>
+                    <th>Persentase</th>
+                    <th>Komisi</th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                @foreach ($sales_orders as $sales_order)
+                <tr>
+                    <td>{{ $sales_order->no_so }}</td>
+                    <td>{{ $sales_order->created_at }}</td>
+                    <td>
+                        <span class="float-right">Rp {{ number_format($sales_order->grand_total) }}</span>
+                    </td>
+                    <td>
+                        {{ $user->commission->percentage }} %
+                    </td>
+                    <td>
+                        <span class="float-right">Rp {{ number_format($sales_order->total_komisi) }}</span>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="4">
+                        <span class="float-right">Total Komisi : </span>
+                    </th>
+                    <th>
+                        <span class="float-right">
+                            Rp {{ number_format($total) }}
+                        </span>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="4">
+                        <span class="float-right">Achievement : </span>
+                    </th>
+                    <th>
+                        <span class="float-right">
+                            Rp {{ number_format($user->commission->achievement) }}
+                        </span>
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="4">
+                        <span class="float-right">Status : </span>
+                    </th>
+                    <th class="text-center">
+                        @if ($total < $user->commission->achievement)
+                            <span class="badge badge-danger">Belum Achieve</span>
+                            @else
+                            <span class="badge badge-success">Achieved</span>
+                            @endif
+                    </th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>

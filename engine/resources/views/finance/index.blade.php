@@ -33,7 +33,6 @@
                 <tr>
                     <th>Nama</th>
                     <th>Persentase</th>
-                    <th>Komisi Hari Ini</th>
                     <th>Total Komisi</th>
                     <th>Achievement</th>
                     <th>Status</th>
@@ -45,15 +44,18 @@
                 <tr>
                     <td>{{ $user->name }} ({{ $user->branch->name }})</td>
                     <td>{{ @$user->commission->percentage ?? '0' }} %</td>
-                    <td>Rp {{ number_format(@$user->commission->today_commission) ?? '-' }}</td>
                     <td>Rp {{ number_format(@$user->commission->total_commission) ?? '-' }}</td>
                     <td>Rp {{ number_format(@$user->commission->achievement) ?? '-' }}</td>
                     <td>
                         @if (empty($user->commission->percentage))
                         <span class="badge badge-warning">Komisi periode ini belum diatur</span>
                         @else
-                        <span class="badge badge-danger">Belum Achieve</span>
-                        @endif
+                        @if ($user->commission->total_commission < $user->commission->achievement)
+                            <span class="badge badge-danger">Belum Achieve</span>
+                            @else
+                            <span class="badge badge-success">Achieved</span>
+                            @endif
+                            @endif
                     </td>
                     <td>
                         @if (empty($user->commission->percentage))
@@ -63,7 +65,8 @@
                             </a>
                         </small>
                         @else
-                        <a href="{{ route('finances.komisi.show', $user) }}" class="btn btn-secondary btn-sm">Detail Komisi</a>
+                        <a href="{{ route('finances.komisi.show', $user) }}" class="btn btn-secondary btn-sm">Detail
+                            Komisi</a>
                         <a href="{{ route("finances.komisi.print", $user) }}" class="btn btn-success btn-sm my-1">
                             Print Laporan Komisi</a>
                         @endif
