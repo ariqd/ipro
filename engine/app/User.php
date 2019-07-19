@@ -33,12 +33,12 @@ class User extends Authenticatable
         return $this->belongsTo('App\Branch');
     }
 
-    public function commision() 
+    public function commission()
     {
-        return $this->hasOne('App\Commision');
+        return $this->hasOne('App\Commission');
     }
 
-    public function isAdmin()
+    public static function isAdmin()
     {
         return $this->role == 'admin';
     }
@@ -46,5 +46,13 @@ class User extends Authenticatable
     public function scopeSales($query)
     {
         return $query->where('role', 'sales');
+    }
+
+    public function checkIfAdmin()
+    {
+        if ($this->role == 'admin')
+            return true;
+
+        return false;
     }
 }

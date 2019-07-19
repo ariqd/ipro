@@ -17,17 +17,49 @@
                 @endif
             </div>
             <div>
-                {{--                    <a href="{{ url('sales-orders/'.$sale->id.'/edit') }}" class="btn btn-secondary mr-3">--}}
-                    {{--                        Edit--}}
-                {{--                    </a>--}}
                 <a href="{{ url('sales-orders') }}" class="btn btn-light">
-                    <i class="fa fa-times"></i> Back
+                    <i class="fa fa-arrow-left"></i> Kembali ke daftar SO
                 </a>
             </div>
         </div>
         <hr>
     </div>
 </div>
+@if (empty($sale->no_so))
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ url("sales-orders/$sale->id/payment") }}" method="post">
+                    @csrf
+                    <div class="form-group">
+                        <label for="note">Tanggal Bayar</label>
+                        <input type="date" name="tgl_pembayaran" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="note">Notes Payment</label>
+                        <input type="text" name="notes" id="note" class="form-control">
+                    </div>
+                    <input type="submit" class="btn btn-success form-control" value="Setujui SO dan Print Kwitansi">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@else
+<div class="alert alert-success" role="alert">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="font-weight-bold">
+            <i class="fa fa-exclamation-circle"></i> Sales Order ini telah disetujui.
+        </div>
+        <div>
+            <a href='{{ url("sales-orders/$sale->id/approve/print") }}' class='btn btn-light btn-sm float-right'
+                target="_blank"><i class="fa fa-print"></i> Print Kwitansi
+            </a>
+        </div>
+    </div>
+</div>
+@endif
 <div class="row">
     <div class="col-lg-6">
         <h4>Detail Customer</h4>
@@ -101,20 +133,20 @@
                 </div>
 
                 {{--                <div class="row mt-3">--}}
-                    {{--                    <div class="col-4">--}}
-                        {{--                        <b>--}}
-                            {{--                            Email--}}
-                        {{--                        </b>--}}
-                    {{--                    </div>--}}
-                    {{--                    <div class="col-8">--}}
-                        {{--                        {{ $sale->customer->email }}--}}
-                    {{--                    </div>--}}
+                {{--                    <div class="col-4">--}}
+                {{--                        <b>--}}
+                {{--                            Email--}}
+                {{--                        </b>--}}
+                {{--                    </div>--}}
+                {{--                    <div class="col-8">--}}
+                {{--                        {{ $sale->customer->email }}--}}
+                {{--                    </div>--}}
                 {{--                </div>--}}
 
             </div>
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-lg-6">
         <h4>Detail Sales Order</h4>
         <div class="card">
             <div class="card-body">
@@ -127,86 +159,87 @@
                     <div class="col-8">
                         @if($sale->no_so != null)
                         {{ $sale->no_so }}
-                        <span class="badge badge-success">Approved</span>
+                        <span class="badge badge-success">Disetujui</span>
                         @else
-                        <span class="badge badge-danger">Not Approved</span>
+                        <span class="badge badge-danger">Belum disetujui oleh finance</span>
+                        @if (auth()->user()->role == 'admin' || auth()->user()->role == 'finance')
                         <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
-                           class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve Request
-                       </a>
-                       @endif
-                       {{--                            {!! $sale->no_so != null ? $sale->no_so : '<p></p>' !!}--}}
-                   </div>
-               </div>
+                            class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve Request
+                        </a>
+                        @endif
+                        @endif
+                    </div>
+                </div>
 
-               <div class="row mt-3">
-                <div class="col-4">
-                    <b>
-                        Project
-                    </b>
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <b>
+                            Project
+                        </b>
+                    </div>
+                    <div class="col-8">
+                        {{ $sale->project }}
+                    </div>
                 </div>
-                <div class="col-8">
-                    {{ $sale->project }}
+
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <b>
+                            Send Address
+                        </b>
+                    </div>
+                    <div class="col-8">
+                        {{ $sale->send_address }}
+                    </div>
                 </div>
+
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <b>
+                            Send Date
+                        </b>
+                    </div>
+                    <div class="col-8">
+                        {{ date("d-m-Y",strtotime($sale->send_date)) }}
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <b>
+                            PIC Phone
+                        </b>
+                    </div>
+                    <div class="col-8">
+                        {{ $sale->send_pic_phone }}
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <b>
+                            Payment Method
+                        </b>
+                    </div>
+                    <div class="col-8">
+                        {{ $sale->payment_method }}
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <b>
+                            Notes
+                        </b>
+                    </div>
+                    <div class="col-8">
+                        {{ $sale->note }}
+                    </div>
+                </div>
+
             </div>
-
-            <div class="row mt-3">
-                <div class="col-4">
-                    <b>
-                        Send Address
-                    </b>
-                </div>
-                <div class="col-8">
-                    {{ $sale->send_address }}
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-4">
-                    <b>
-                        Send Date
-                    </b>
-                </div>
-                <div class="col-8">
-                    {{ date("d-m-Y",strtotime($sale->send_date)) }}
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-4">
-                    <b>
-                        PIC Phone
-                    </b>
-                </div>
-                <div class="col-8">
-                    {{ $sale->send_pic_phone }}
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-4">
-                    <b>
-                        Payment Method
-                    </b>
-                </div>
-                <div class="col-8">
-                    {{ $sale->payment_method }}
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-4">
-                    <b>
-                        Notes
-                    </b>
-                </div>
-                <div class="col-8">
-                    {{ $sale->note }}
-                </div>
-            </div>
-
         </div>
     </div>
-</div>
 </div>
 
 <div class="row">
@@ -263,30 +296,29 @@
     <div class="col-lg-12">
         <div class="row">
             <div class="col-lg-6">
-                <a href="#" class="btn btn-dark btn-block"> Print Quotation</a>
+                <a href="#" class="btn btn-dark btn-block my-2"> Print Quotation</a>
             </div>
             <div class="col-lg-6">
-                <form action = "{{ url("sales-orders/$sale->id/pdf/invoice") }}" method="post">
+                <form action="{{ url("sales-orders/$sale->id/pdf/invoice") }}" method="post">
                     @csrf
                     <div class="row">
                         <div class="form-group col-11">
-                            <input type="submit" name="" class="btn btn-success btn-block" value="Print Invoice">
+                            <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print Invoice">
                         </div>
                         <div class="form-group col-1">
-                            <input type="checkbox" name="markup" class="form-control"> 
-                            PPN                    
+                            <input type="checkbox" name="markup" class="form-control">
+                            PPN
                         </div>
                     </div>
                 </form>
-
             </div>
             @if($flag != count($sale->details))
-            <div class="col-lg-12 mt-2">
-                <a href="{{ url("sales-orders/$sale->id/delivery-orders") }}"
-                   class="btn btn-secondary btn-block"> Buat Surat Jalan</a>
-               </div>
-               @endif
-           </div>
-       </div>
-   </div>
-   @endsection
+            <div class="col-lg-12">
+                <a href="{{ url("sales-orders/$sale->id/delivery-orders") }}" class="btn btn-secondary btn-block"> Buat
+                    Surat Jalan</a>
+            </div>
+            @endif
+        </div>
+    </div>
+</div>
+@endsection

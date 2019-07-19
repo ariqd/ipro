@@ -11,12 +11,20 @@ use App\Sale;
 use App\Sale_Detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\User;
+use App\Stock;
 
 class SalesOrderController extends Controller
 {
     public function index()
     {
-        $d['sales'] = Sale::all();
+        if (Auth::user()->rolw == 'admin')
+            $d['sales'] = Sale::orderBy('created_at', 'desc')->get();
+        else
+            $d['sales'] = Sale::mySales()->orderBy('created_at', 'desc')->get();
+
+        if (Auth::user()->role == 'finance')
+            return redirect('sales-orders/check/approve');
 
         return view('sale.index', $d);
     }
@@ -47,7 +55,6 @@ class SalesOrderController extends Controller
         $branch = Branch::find($branch_id);
         $no_po = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         $input["quotation_id"] = $no_po;
-        //                dd($input);
 
         $sales_order = Sale::create($input);
         $counter->counter += 1;
@@ -56,8 +63,8 @@ class SalesOrderController extends Controller
         foreach ($sales_order_details as $sales_order_detail) {
             $sales_order_detail['sales_order_id'] = $sales_order->id;
             Sale_Detail::create($sales_order_detail);
-            $stock = Stock::find($sales_order_detail->stock_id);
-            $stock->pesenan += $sales_order_detail->quantity;
+            $stock = Stock::find($sales_order_detail['stock_id']);
+            $stock->quantity += $sales_order_detail['qty'];
             $stock->save();
         }
 

@@ -25,14 +25,13 @@
 
 <div class="row">
     <div class="col-12">
-        <h4>Komisi Sales | Periode 15 Juli 2019 - 15 Agustus 2019</h4>
+        <h4>Komisi Sales | Periode 15 Juli - 14 Agustus</h4>
     </div>
     <div class="col-12">
         <table class="table table-light data-table table-hover">
             <thead>
                 <tr>
                     <th>Nama</th>
-                    <th>Cabang</th>
                     <th>Persentase</th>
                     <th>Komisi Hari Ini</th>
                     <th>Total Komisi</th>
@@ -44,29 +43,29 @@
             <tbody>
                 @foreach ($sales as $user)
                 <tr>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->branch->name }}</td>
-                    <td>{{ @$user->commision->percentage . '%' ?? '-' }}</td>
-                    <td>{{ 'Rp ' . number_format(@$user->commision->today_commision) ?? '-' }}</td>
-                    <td>{{ 'Rp ' . number_format(@$user->commision->total_commision) ?? '-' }}</td>
-                    <td>{{ 'Rp ' . number_format(@$user->commision->achievement) ?? '-' }}</td>
+                    <td>{{ $user->name }} ({{ $user->branch->name }})</td>
+                    <td>{{ @$user->commission->percentage ?? '0' }} %</td>
+                    <td>Rp {{ number_format(@$user->commission->today_commission) ?? '-' }}</td>
+                    <td>Rp {{ number_format(@$user->commission->total_commission) ?? '-' }}</td>
+                    <td>Rp {{ number_format(@$user->commission->achievement) ?? '-' }}</td>
                     <td>
-                        @if (empty($user->commision->percentage))
+                        @if (empty($user->commission->percentage))
                         <span class="badge badge-warning">Komisi periode ini belum diatur</span>
                         @else
                         <span class="badge badge-danger">Belum Achieve</span>
                         @endif
                     </td>
                     <td>
-                        @if (empty($user->commision->percentage))
+                        @if (empty($user->commission->percentage))
                         <small class="text-danger">
-                            <a href="{{ route("finances.komisi.set", $user) }}" class="btn btn-dark btn-sm">
+                            <a href="{{ route("finances.komisi.set", $user) }}" class="btn btn-dark btn-sm my-1">
                                 <i class="fa fa-plus"></i> Set Komisi
                             </a>
                         </small>
                         @else
-                        <a href="#" class="btn btn-secondary btn-sm">Detail Komisi</a>
-                        <a href="{{ route("finances.komisi.print", $user) }}" class="btn btn-success btn-sm">Print Laporan Komisi</a>
+                        <a href="{{ route('finances.komisi.show', $user) }}" class="btn btn-secondary btn-sm">Detail Komisi</a>
+                        <a href="{{ route("finances.komisi.print", $user) }}" class="btn btn-success btn-sm my-1">
+                            Print Laporan Komisi</a>
                         @endif
                     </td>
                 </tr>

@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
-use App\Commision;
+use App\Commission;
 use PDF;
 
-class CommisionController extends Controller
+class CommissionController extends Controller
 {
     public function setKomisi(User $user)
     {
@@ -22,15 +22,20 @@ class CommisionController extends Controller
         $input['achievement'] =  str_replace(',', '', $input['achievement']);
         $input['user_id'] = $user->id;
 
-        Commision::create($input);
+        Commission::create($input);
 
         return redirect('finances')->withInfo('Komisi berhasil di set untuk ' . $user->name);
     }
 
     public function printKomisi($user)
     {
-        // $pdf = PDF::loadView('print.commision');
+        // $pdf = PDF::loadView('print.commission');
         // return $pdf->download("komisi.pdf");
-        return view("print.commision");
+        return view("print.commission");
+    }
+
+    public function show(User $user) 
+    {
+        return view('finance.commission.show', compact('user'));
     }
 }

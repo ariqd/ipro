@@ -8,12 +8,12 @@
 
 @section('content')
 @include('layouts.feedback')
-
 <div class="row">
     <div class="col-lg-12">
         <div class="d-flex justify-content-between">
             <div>
                 @if($sale->no_so == null)
+                <h4>Approval</h4>
                 <h2><b>Quotation Order #{{ $sale->quotation_id }}</b></h2>
                 @else
                 <h2><b>Sales Order #{{ $sale->no_so }}</b></h2>
@@ -28,6 +28,41 @@
         <hr>
     </div>
 </div>
+@if (empty($sale->no_so))
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form action="{{ url("sales-orders/$sale->id/payment") }}" method="post">
+                    @csrf
+                    <div class="form-group">
+                        <label for="note">Tanggal Bayar</label>
+                        <input type="date" name="tgl_pembayaran" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="note">Notes Payment</label>
+                        <input type="text" name="notes" id="note" class="form-control">
+                    </div>
+                    <input type="submit" class="btn btn-success form-control" value="Setujui SO dan Print Kwitansi">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@else
+<div class="alert alert-success" role="alert">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="font-weight-bold">
+            <i class="fa fa-exclamation-circle"></i> Sales Order ini telah disetujui.
+        </div>
+        <div>
+            <a href='approve/print' class='btn btn-light btn-sm float-right' target="_blank"><i class="fa fa-print"></i> 
+                Print Kwitansi
+            </a>
+        </div>
+    </div>
+</div>
+@endif
 <div class="row">
     <div class="col-lg-6">
         <h4>Detail Customer</h4>
@@ -222,26 +257,6 @@
                         @endforeach
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <form action="{{ url("sales-orders/$sale->id/payment") }}" method="post">
-                    @csrf
-                    <div class="form-group">
-                        <label for="note">Tanggal Bayar</label>
-                        <input type="date" name="tgl_pembayaran" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="note">Notes Payment</label>
-                        <input type="text" name="notes" id="note" class="form-control">
-                    </div>
-                    <input type="submit" class="btn btn-success form-control" value="Setujui SO dan Print Kwitansi">
-                </form>
             </div>
         </div>
     </div>

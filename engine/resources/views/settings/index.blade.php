@@ -9,24 +9,23 @@
     </div>
     <div class="col-12">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
                     aria-selected="true">Summary</a>
-            </li>
+            </li> --}}
             @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
             <li class="nav-item">
-                <a class="nav-link" id="periode-tab" data-toggle="tab" href="#periode" role="tab"
+                <a class="nav-link active" id="periode-tab" data-toggle="tab" href="#periode" role="tab"
                     aria-controls="periode" aria-selected="false">Periode Finance</a>
             </li>
             @endif
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Summary</div>
+            {{-- <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Summary</div> --}}
             @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
-            <div class="tab-pane fade" id="periode" role="tabpanel" aria-labelledby="periode-tab">
+            <div class="tab-pane fade show active" id="periode" role="tabpanel" aria-labelledby="periode-tab">
                 <form action="" method="post">
                     @csrf
-
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group row">
@@ -51,11 +50,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
                     <button type="submit" class="btn btn-success">Simpan</button>
                 </form>
             </div>

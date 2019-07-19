@@ -15,9 +15,7 @@ class SalesOrderApproveController extends Controller
 {
     public function index()
     {
-        $d['sales'] = Sale::all();
-       // $d['sales'] = Sale::whereNull("no_so")->get();
-        // $d['sales'] = Sale::notApproved()->get();
+        $d['sales'] = Sale::orderBy('created_at', 'desc')->get();
 
         return view('sale.index', $d);
     }
@@ -46,7 +44,7 @@ class SalesOrderApproveController extends Controller
 
         $counter->counter += 1;
         $counter->save();
-        return redirect()->back()->with("info", "SO berhasil disetujui, <a href='approve/print' class='btn btn-danger'>Print Kwitansi</a>");
+        return redirect()->back()->with("info", "SO berhasil disetujui, <a href='approve/print' class='btn btn-light'>Print Kwitansi</a>");
     }
 
     public function makeKwitansi($id)

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Sale extends Model
 {
@@ -40,5 +41,10 @@ class Sale extends Model
     public function scopeNotApproved()
     {
         return $this->whereNull("no_so");
+    }
+
+    public function scopeMySales($query) 
+    {
+        return $query->where('user_id', Auth::id());
     }
 }

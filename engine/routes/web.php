@@ -55,9 +55,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('print/memo', 'ReceiveController@printMemoPengambilanProduk');
     Route::get('print/memo', 'ReceiveController@printMemoPengambilanProduk');
 
-    Route::get('finances/komisi/{user}/set', 'CommisionController@setKomisi')->name('finances.komisi.set');
-    Route::post('finances/komisi/{user}/set', 'CommisionController@storeKomisi')->name('finances.komisi.store');
-    Route::get('finances/komisi/{user}/print', 'CommisionController@printKomisi')->name('finances.komisi.print');
+    Route::get('finances/komisi/{user}/set', 'CommissionController@setKomisi')->name('finances.komisi.set');
+    Route::post('finances/komisi/{user}/set', 'CommissionController@storeKomisi')->name('finances.komisi.store');
+    Route::get('finances/komisi/{user}/print', 'CommissionController@printKomisi')->name('finances.komisi.print');
+    Route::get('finances/komisi/{user}', 'CommissionController@show')->name('finances.komisi.show');
 
     Route::get('settings', 'SettingsController@index');
 });
