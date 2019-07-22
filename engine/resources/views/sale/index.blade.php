@@ -53,7 +53,7 @@
                 <tbody>
                     @foreach($sales as $sale)
                     <tr>
-                        <td>{{ $sale->created_at }}</td>
+                        <td>{{ $sale->created_at->format('l, d F Y H:i') }}</td>
                         <td>{{ $sale->quotation_id }}</td>
                         <td>
                             {{ $sale->no_so}}

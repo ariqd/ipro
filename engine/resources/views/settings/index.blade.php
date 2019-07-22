@@ -24,33 +24,40 @@
             {{-- <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">Summary</div> --}}
             @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
             <div class="tab-pane fade show active" id="periode" role="tabpanel" aria-labelledby="periode-tab">
-                <form action="" method="post">
+                <form action="{{ route('settings.update') }}" method="post">
                     @csrf
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group row">
-                                <label for="finance-period-start" class="col-sm-3 font-weight-bold col-form-label">
-                                    Awal Periode :
+                                <label for="finance-period-start" class="col-sm-4 font-weight-bold col-form-label">
+                                    Tanggal Awal Periode:
                                 </label>
                                 <div class="col-sm-8">
-                                    <input type="date" class="form-control" id="finance-period-start"
+                                    <input type="number" class="form-control" id="finance-period-start"
+                                        name="finance-period-start"
                                         value="{{ $settings['finance-period-start']->value }}">
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-6">
                             <div class="form-group row">
-                                <label for="finance-period-end" class="col-sm-3 font-weight-bold col-form-label">
-                                    Akhir Periode :
+                                <label for="finance-period-end" class="col-sm-4 font-weight-bold col-form-label">
+                                    Tanggal Akhir Periode:
                                 </label>
                                 <div class="col-sm-8">
-                                    <input type="date" class="form-control" id="finance-period-end"
-                                        value="{{ $settings['finance-period-end']->value }}">
+                                    <input type="number" class="form-control" id="finance-period-end"
+                                        name="finance-period-end" value="{{ $settings['finance-period-end']->value }}">
                                 </div>
                             </div>
+                            <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>
+                                Simpan
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <h4>Periode saat ini:</h4>
+                            {{ $settings['finance-period-start']->value . ' ' . $today->format('F Y') }}
+                            -
+                            {{ $settings['finance-period-end']->value . ' ' . $today->addMonth()->format('F Y') }}
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success">Simpan</button>
                 </form>
             </div>
             @endif
