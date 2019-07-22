@@ -18,7 +18,7 @@
             </div>
             <div>
                 <a href="{{ url('sales-orders') }}" class="btn btn-light">
-                    <i class="fa fa-arrow-left"></i> Kembali ke daftar SO
+                    <i class="fa fa-arrow-left"></i> Daftar SO
                 </a>
             </div>
         </div>

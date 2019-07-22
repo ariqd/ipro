@@ -42,9 +42,6 @@ class CommissionController extends Controller
         $settings = Setting::where(['name' => 'finance-period-start'])
             ->orWhere(['name' => 'finance-period-end'])->get()->keyBy('name');
 
-        // $from = date('2019-07-15');
-        // $to = date('2019-08-14');
-
         // Tanggal periode awal
         $from = Carbon::create(date('Y'), date('m'), $settings['finance-period-start']->value, 00, 00, 00);
 
@@ -57,6 +54,7 @@ class CommissionController extends Controller
             ['no_so', '!=', ''],
         ])
             ->whereBetween('created_at', [$from, $to])
+            ->orderBy('created_at', 'desc')
             ->get();
 
         // Count commission
@@ -70,11 +68,11 @@ class CommissionController extends Controller
         }
 
         // Update total commission
-        if ($user->commission->total_commission != $total) {
-            $commission = Commission::where('user_id', $user->id)->first();
-            $commission->total_commission = $total;
-            $commission->save();
-        }
+        // if ($user->commission->total_commission != $total) {
+        //     $commission = Commission::where('user_id', $user->id)->first();
+        //     $commission->total_commission = $total;
+        //     $commission->save();
+        // }
 
         return view('finance.commission.show', compact('user', 'total', 'sales_orders', 'from', 'to'));
     }

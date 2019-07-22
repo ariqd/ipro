@@ -17,9 +17,11 @@ class FinanceController extends Controller
     public function index()
     {
         $d['sales'] = User::sales()->get();
-        $d['settings'] = Setting::where(['name' => 'finance-period-start'])
+        $settings = Setting::where(['name' => 'finance-period-start'])
             ->orWhere(['name' => 'finance-period-end'])->get()->keyBy('name');
-        $d['today'] = Carbon::today();
+
+        $d['from'] = Carbon::create(date('Y'), date('m'), $settings['finance-period-start']->value, 00, 00, 00);
+        $d['to'] = Carbon::create(date('Y'), date('m') + 1, $settings['finance-period-end']->value, 00, 00, 00);
 
         return view('finance.index', $d);
     }

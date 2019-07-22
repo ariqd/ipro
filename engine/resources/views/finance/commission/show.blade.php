@@ -37,21 +37,23 @@
                     <th>No. SO</th>
                     <th>Tanggal</th>
                     <th>Total</th>
-                    <th>Persentase</th>
-                    <th>Komisi</th>
+                    {{-- <th>Persentase</th> --}}
+                    <th>Komisi ({{ $user->commission->percentage }}%)</th>
                 </tr>
             </thead>
             <tbody class="text-center">
                 @foreach ($sales_orders as $sales_order)
                 <tr>
-                    <td>{{ $sales_order->no_so }}</td>
-                    <td>{{ $sales_order->created_at->toDayDateTimeString() }}</td>
+                    <td>
+                        <a class="text-success" href="{{ url("sales-orders/$sales_order->id") }}">{{ $sales_order->no_so }}</a>
+                    </td>
+                    <td>{{ $sales_order->created_at->formatLocalized('%A, %d %B %Y %H:%I:%S') }}</td>
                     <td>
                         <span class="float-right">Rp {{ number_format($sales_order->grand_total) }}</span>
                     </td>
-                    <td>
+                    {{-- <td>
                         {{ $user->commission->percentage }} %
-                    </td>
+                    </td> --}}
                     <td>
                         <span class="float-right">Rp {{ number_format($sales_order->total_komisi) }}</span>
                     </td>
@@ -60,7 +62,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="4">
+                    <th colspan="3">
                         <span class="float-right">Total Komisi : </span>
                     </th>
                     <th>
@@ -70,7 +72,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="4">
+                    <th colspan="3">
                         <span class="float-right">Achievement : </span>
                     </th>
                     <th>
@@ -80,7 +82,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="4">
+                    <th colspan="3">
                         <span class="float-right">Status : </span>
                     </th>
                     <th class="text-center">
