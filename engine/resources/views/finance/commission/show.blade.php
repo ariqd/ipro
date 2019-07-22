@@ -28,7 +28,7 @@
 
 <div class="row">
     <div class="col-12">
-        <h4>Periode 15 Juli - 14 Agustus</h4>
+        <h4>Periode {{ $from->format('d F') }} - {{ $to->format('d F') }}</h4>
     </div>
     <div class="col-12">
         <table class="table table-light table-bordered">
@@ -45,7 +45,7 @@
                 @foreach ($sales_orders as $sales_order)
                 <tr>
                     <td>{{ $sales_order->no_so }}</td>
-                    <td>{{ $sales_order->created_at }}</td>
+                    <td>{{ $sales_order->created_at->toDayDateTimeString() }}</td>
                     <td>
                         <span class="float-right">Rp {{ number_format($sales_order->grand_total) }}</span>
                     </td>

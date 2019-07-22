@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use App\Commission;
 
 class SalesOrderApproveController extends Controller
 {
@@ -44,6 +45,11 @@ class SalesOrderApproveController extends Controller
 
         $counter->counter += 1;
         $counter->save();
+
+        $commission = Commission::where('user_id', $sale->user->id)->first();
+        $commission->total_commission += $sale->grand_total * $commission->percentage / 100;
+        $commission->save();
+
         return redirect()->back()->with("info", "SO berhasil disetujui, <a href='approve/print' class='btn btn-light'>Print Kwitansi</a>");
     }
 
@@ -58,7 +64,7 @@ class SalesOrderApproveController extends Controller
         $data["nominal"] = $sale->grandtotal;
         $data["QO"] = $sale->quotation_id;
         $data["SO"] = $sale->no_so;
-        $pdf = PDF::loadView('print.kwitansi',$data);
+        $pdf = PDF::loadView('print.kwitansi', $data);
         return $pdf->stream('invoice.pdf');
     }
 }

@@ -38,8 +38,9 @@
 
 <div class="row">
     <div class="col-lg-12">
+        @include('layouts.feedback')
         <div class="table-responsive">
-            <table class="table data-table table-light">
+            <table class="table data-table table-light table-hover">
                 <thead>
                     <tr>
                         <th>Date</th>
@@ -69,9 +70,8 @@
                             @if(Gate::allows("isAdmin"))
                             @if($sale->no_so == null)
                             <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
-                                class="btn btn-warning btn-sm my-1 text-dark"> <i class="fa fa-check"></i>
-                                Approve
-                                Request
+                                class="btn btn-warning btn-sm my-1 text-dark">
+                                <i class="fa fa-check"></i> Approve Request
                             </a>
                             @endif
                             <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm" my-1>

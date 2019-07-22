@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Sale;
+use App\Setting;
 use App\Commission;
 use PDF;
-use App\Sale;
+use Carbon\Carbon;
 
 class CommissionController extends Controller
 {
@@ -37,8 +39,17 @@ class CommissionController extends Controller
 
     public function show(User $user)
     {
-        $from = date('2019-07-15');
-        $to = date('2019-08-14');
+        $settings = Setting::where(['name' => 'finance-period-start'])
+            ->orWhere(['name' => 'finance-period-end'])->get()->keyBy('name');
+
+        // $from = date('2019-07-15');
+        // $to = date('2019-08-14');
+
+        // Tanggal periode awal
+        $from = Carbon::create(date('Y'), date('m'), $settings['finance-period-start']->value, 00, 00, 00);
+
+        // Tanggal akhir periode ( + 1 bulan)
+        $to = Carbon::create(date('Y'), date('m') + 1, $settings['finance-period-end']->value, 00, 00, 00);
 
         // Get SO based on period
         $sales_orders = Sale::where([
@@ -65,7 +76,7 @@ class CommissionController extends Controller
             $commission->save();
         }
 
-        return view('finance.commission.show', compact('user', 'total', 'sales_orders'));
+        return view('finance.commission.show', compact('user', 'total', 'sales_orders', 'from', 'to'));
     }
 
     // public function count() 

@@ -25,7 +25,11 @@
 
 <div class="row">
     <div class="col-12">
-        <h4>Komisi Sales | Periode 15 Juli - 14 Agustus</h4>
+        <h4>Komisi Sales | Periode
+            {{ $settings['finance-period-start']->value . ' ' . $today->format('F Y') }}
+            -
+            {{ $settings['finance-period-end']->value . ' ' . $today->addMonth()->format('F Y') }}
+        </h4>
     </div>
     <div class="col-12">
         <table class="table table-light data-table table-hover">

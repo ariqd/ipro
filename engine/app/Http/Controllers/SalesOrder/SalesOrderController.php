@@ -18,7 +18,7 @@ class SalesOrderController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->rolw == 'admin')
+        if (Auth::user()->role == 'admin')
             $d['sales'] = Sale::orderBy('created_at', 'desc')->get();
         else
             $d['sales'] = Sale::mySales()->orderBy('created_at', 'desc')->get();

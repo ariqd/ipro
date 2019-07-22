@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Setting;
+use Carbon\Carbon;
 
 class FinanceController extends Controller
 {
@@ -15,8 +17,9 @@ class FinanceController extends Controller
     public function index()
     {
         $d['sales'] = User::sales()->get();
-        // dd($d['sales']->isSales);
-        // dd($d);
+        $d['settings'] = Setting::where(['name' => 'finance-period-start'])
+            ->orWhere(['name' => 'finance-period-end'])->get()->keyBy('name');
+        $d['today'] = Carbon::today();
 
         return view('finance.index', $d);
     }
