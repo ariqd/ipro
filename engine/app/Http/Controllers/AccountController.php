@@ -31,7 +31,11 @@ class AccountController extends Controller
             'admin' => 'Admin',
 //            'manager' => 'Manajer Cabang',
             'sales' => 'Sales Cabang',
+            'sales_silang' => 'Sales Silang',
+            'sales_freelance' => 'Sales Freelance',
             'finance' => 'Finance',
+            'head_sales' => 'Head Sales',
+            'admin_sales' => 'Admin Sales',
         ];
 
         $d['branches'] = Branch::all();

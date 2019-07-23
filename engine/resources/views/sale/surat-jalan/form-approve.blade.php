@@ -275,6 +275,18 @@
 </div>
 
 <div class="row">
+    <div class="col-md-6">
+        <label>
+            Dikirim dengan Mobil
+        </label>
+        <input class="form-control" name="mobil" placeholder="Contoh: Tata">
+    </div>
+    <div class="col-md-6">
+        <label>
+            Dikirim dengan Plat
+        </label>
+        <input class="form-control" name="plat" placeholder="Contoh: D 8078 F">
+    </div>
     <div class="col-12">
         <h4>Detail Barang</h4>
         <div class="card">
@@ -285,7 +297,7 @@
                             <th>No</th>
                             <th>Name</th>
                             <th>Qty Pesan</th>
-                            <th>Qty Belum Kirim</th>
+                            <th>Qty Kirim</th>
                             <th>Price</th>
                             <th>Discount</th>
                             <th>Total</th>
@@ -308,8 +320,8 @@
                                 <td>
                                     {{ $details->qty }}
                                 </td>
-                                <td>
-                                    {{ $details->qty - $details->qty_kirim }}
+                                <td @if>
+                                    {{  $details->qty_kirim }}
                                 </td>
                                 <td>
                                     Rp{{number_format($details->price) }},00
