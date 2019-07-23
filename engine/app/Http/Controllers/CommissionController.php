@@ -10,6 +10,7 @@ use App\Setting;
 use App\Commission;
 use PDF;
 use Carbon\Carbon;
+use App\Sale_Detail;
 
 class CommissionController extends Controller
 {
@@ -48,33 +49,42 @@ class CommissionController extends Controller
         // Tanggal akhir periode ( + 1 bulan)
         $to = Carbon::create(date('Y'), date('m') + 1, $settings['finance-period-end']->value, 00, 00, 00);
 
-        // Get SO based on period
-        $sales_orders = Sale::where([
-            ['user_id', '=', $user->id],
-            ['no_so', '!=', ''],
-        ])
-            ->whereBetween('created_at', [$from, $to])
-            ->orderBy('created_at', 'desc')
+        $sales_orders = Sale_Detail::join('sales_orders', 'sales_orders.id', '=', 'sales_order_details.sales_order_id')
+            ->where([
+                ['sales_orders.user_id', '=', $user->id],
+                ['sales_orders.no_so', '!=', ''],
+            ])
+            ->whereBetween('sales_orders.created_at', [$from, $to])
+            ->orderBy('sales_orders.created_at', 'desc')
             ->get();
 
         // Count commission
-        $new_sales_orders = $sales_orders->map(function ($value, $key) use ($user) {
-            $value['total_komisi'] = $value['grand_total'] * ($user->commission->percentage / 100);
+        $sales_orders = $sales_orders->map(function ($value, $key) use ($user) {
+            if ($value->stock->item->category->brand->id == 0) {
+                $value['persen'] = '0,5 %';
+                $value['komisi'] = $value->total * 0.005;
+            } else {
+                $value['persen'] = $user->commission->percentage . ' %';
+                $value['komisi'] = $value->total * ($user->commission->percentage / 100);
+            }
+            $value['buat_sales'] = $value['komisi'] * 0.9;
+            $value['buat_admin'] = $value['komisi'] * 0.1;
+
             return $value;
         });
-        $total = 0;
-        foreach ($new_sales_orders as $finance) {
-            $total += $finance['total_komisi'];
+
+        $data['total'] = 0;
+        $data['total_komisi'] = 0;
+        $data['total_buat_sales'] = 0;
+        $data['total_buat_admin'] = 0;
+        foreach ($sales_orders as $sales_order) {
+            $data['total'] += $sales_order->total;
+            $data['total_komisi'] += $sales_order->komisi;
+            $data['total_buat_sales'] += $sales_order->buat_sales;
+            $data['total_buat_admin'] += $sales_order->buat_admin;
         }
 
-        // Update total commission
-        // if ($user->commission->total_commission != $total) {
-        //     $commission = Commission::where('user_id', $user->id)->first();
-        //     $commission->total_commission = $total;
-        //     $commission->save();
-        // }
-
-        return view('finance.commission.show', compact('user', 'total', 'sales_orders', 'from', 'to'));
+        return view('finance.commission.show', compact('user', 'sales_orders', 'from', 'to', 'data'));
     }
 
     // public function count() 

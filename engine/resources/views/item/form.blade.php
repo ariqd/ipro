@@ -8,31 +8,30 @@
         </button>
     </div>
     <div class="modal-body">
-        <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="category" class="form-control-label">Kategori</label>
-                <select class="category form-control w-100" name="category_id" id="category">
-                    <option></option>
-                    @foreach($categories as $category)
-                    <option value="{{ $category->id }}" {{ @$isEdit && $category->id == $item->category_id ? 'selected' : '' }}>
-                        {{ $category->brand->name . ' - ' . $category->name }}
-                    </option>
-                    @endforeach
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="category" class="form-control-label">Kategori</label>
+            <select class="category form-control" name="category_id" id="category">
+                <option></option>
+                @foreach($categories as $category)
+                <option value="{{ $category->id }}"
+                    {{ @$isEdit && $category->id == $item->category_id ? 'selected' : '' }}>
+                    {{ $category->brand->name . ' - ' . $category->name }}
+                </option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="code" class="form-control-label">Kode Produk</label>
                 <input autocomplete="off" id="code" class="form-control" name="code"
-                value="{{ @$isEdit ? $item->code : '' }}">
+                    value="{{ @$isEdit ? $item->code : '' }}">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="name" class="form-control-label">Nama Produk</label>
                 <input autocomplete="off" id="name" class="form-control" name="name"
-                value="{{ @$isEdit ? $item->name : '' }}">
+                    value="{{ @$isEdit ? $item->name : '' }}">
             </div>
         </div>
         <div class="form-group">
@@ -42,14 +41,14 @@
                     <span class="input-group-text">Rp</span>
                 </div>
                 <input autocomplete="off" id="purchase_price" class="form-control" name="purchase_price"
-                value="{{ @$isEdit ? $item->purchase_price : '' }}">
+                    value="{{ @$isEdit ? $item->purchase_price : '' }}">
             </div>
         </div>
         <div class="form-group">
             <label for="weight" class="form-control-label">Berat</label>
             <div class="input-group">
                 <input autocomplete="off" id="weight" class="form-control" name="weight"
-                value="{{ @$isEdit ? $item->weight : '' }}">
+                    value="{{ @$isEdit ? $item->weight : '' }}">
                 <div class="input-group-append">
                     <span class="input-group-text">Kg</span>
                 </div>
@@ -59,7 +58,7 @@
             <label for="kebutuhan per meter persegi" class="form-control-label">Kebutuhan per Meter Persegi (m2)</label>
             <div class="input-group">
                 <input autocomplete="off" id="kebutuhan per meter persegi" class="form-control" name="area"
-                value="{{ @$isEdit ? $item->area : '' }}">
+                    value="{{ @$isEdit ? $item->area : '' }}">
                 <div class="input-group-append">
                     <span class="input-group-text">m<sup>2</sup></span>
                 </div>
@@ -69,7 +68,7 @@
             <label for="width" class="form-control-label">Lebar (mm)</label>
             <div class="input-group">
                 <input autocomplete="off" id="width" class="form-control" name="width"
-                value="{{ @$isEdit ? $item->width : '' }}">
+                    value="{{ @$isEdit ? $item->width : '' }}">
                 <div class="input-group-append">
                     <span class="input-group-text">mm</span>
                 </div>
@@ -79,7 +78,7 @@
             <label for="length" class="form-control-label">Panjang (mm)</label>
             <div class="input-group">
                 <input autocomplete="off" id="length" class="form-control" name="length"
-                value="{{ @$isEdit ? $item->length : '' }}">
+                    value="{{ @$isEdit ? $item->length : '' }}">
                 <div class="input-group-append">
                     <span class="input-group-text">mm</span>
                 </div>
@@ -89,7 +88,7 @@
             <label for="height" class="form-control-label">Tebal(mm)</label>
             <div class="input-group">
                 <input autocomplete="off" id="height" class="form-control" name="height"
-                value="{{ @$isEdit ? $item->height : '' }}">
+                    value="{{ @$isEdit ? $item->height : '' }}">
                 <div class="input-group-append">
                     <span class="input-group-text">mm</span>
                 </div>

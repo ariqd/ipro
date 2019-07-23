@@ -239,6 +239,17 @@
                     </div>
                 </div>
 
+                <div class="row mt-3">
+                        <div class="col-4">
+                            <b>
+                                Ongkos Kirim
+                            </b>
+                        </div>
+                        <div class="col-8">
+                            Rp {{ number_format($sale->ongkir) }}
+                        </div>
+                    </div>
+
             </div>
         </div>
     </div>
@@ -253,10 +264,10 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Nama</th>
                             <th>Qty</th>
-                            <th>Price</th>
-                            <th>Discount</th>
+                            <th>Harga</th>
+                            <th>Diskon</th>
                             <th>Total</th>
                         </tr>
                     </thead>
@@ -265,13 +276,19 @@
                         $flag = 0;
                         @endphp
                         @foreach($sale->details as $details)
-                        @if($details->status==1) @php $flag++ @endphp @endif
+                        @if($details->status == 1) @php $flag++ @endphp @endif
                         <tr>
                             <td>
                                 {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{ $details->stock->item->name }}
+                                {{ $details->stock->item->category->brand->name }}
+                                ->
+                                {{ $details->stock->item->category->name }}
+                                ->
+                                <b>
+                                    {{ $details->stock->item->name }}
+                                </b>
                             </td>
                             <td>
                                 {{ $details->qty }}

@@ -11,12 +11,13 @@
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="item" class="form-control-label">Pilih Item</label>
-                <select class="item form-control" name="item_id" id="item">
+                <br>
+                <select class="item form-control" name="item_id" id="item" style="width: 100%">
                     <option></option>
                     @foreach($items as $item)
-                        <option value="{{ $item->id }}" {{ @$isEdit && $item->id == $stock->item->id ? 'selected' : '' }}> {{ $item->name }}
-                            ({{ $item->code }})
-                        </option>
+                    <option value="{{ $item->id }}" {{ @$isEdit && $item->id == $stock->item->id ? 'selected' : '' }}>
+                        {{ $item->name }} ({{ $item->code }}) - Rp {{ number_format($item->purchase_price) }}
+                    </option>
                     @endforeach
                 </select>
                 <a href="{{ url('items') }}" class="btn btn-secondary btn-block btn-sm my-3"><i class="fa fa-plus"></i>
@@ -26,21 +27,24 @@
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="branch" class="form-control-label">Cabang</label>
-                <select class="branch form-control" name="branch_id" id="branch">
+                <br>
+                <select class="branch form-control" name="branch_id" id="branch" style="width: 100%">
                     <option></option>
                     @foreach($branches as $branch)
-                        <option value="{{ $branch->id }}" {{  @$isEdit && $branch->id == $stock->branch->id ? 'selected' : '' }}> {{ $branch->name }} </option>
+                    <option value="{{ $branch->id }}"
+                        {{  @$isEdit && $branch->id == $stock->branch->id ? 'selected' : '' }}> {{ $branch->name }}
+                    </option>
                     @endforeach
                 </select>
                 <a href="{{ url('branches') }}" class="btn btn-secondary btn-block btn-sm my-3"><i
-                            class="fa fa-plus"></i> Lihat Cabang</a>
+                        class="fa fa-plus"></i> Lihat Cabang</a>
             </div>
         </div>
         <div class="form-group">
             <label for="quantity" class="form-control-label">Quantity (per batang)</label>
             <div class="input-group">
                 <input type="number" id="quantity" class="form-control" name="quantity"
-                       value="{{ @$isEdit ? $stock->quantity : '' }}">
+                    value="{{ @$isEdit ? $stock->quantity : '' }}">
                 <div class="input-group-append">
                     <span class="input-group-text">pcs</span>
                 </div>
@@ -53,14 +57,13 @@
                     <span class="input-group-text">Rp</span>
                 </div>
                 <input type="number" id="price_branch" class="form-control" name="price_branch"
-                       value="{{ @$isEdit ? $stock->price_branch : '' }}" aria-describedby="price_branchHelpBlock">
-                @if(@$isEdit)
-                    <br>
-                    <small id="price_branchHelpBlock" class="form-text text-muted">
-                        Harga Beli: <b>Rp {{ number_format($stock->item->purchase_price) }}</b>
-                    </small>
-                @endif
+                    value="{{ @$isEdit ? $stock->price_branch : '' }}" aria-describedby="price_branchHelpBlock">
             </div>
+            @if(@$isEdit)
+            <small id="price_branchHelpBlock" class="form-text text-muted">
+                Harga Beli: <b>Rp {{ number_format($stock->item->purchase_price) }}</b>
+            </small>
+            @endif
         </div>
     </div>
     <div class="modal-footer">
