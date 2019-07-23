@@ -33,10 +33,12 @@ class SalesOrderController extends Controller
     {
         $counter = Counter::where("name", "=", "QO")->first();
         $branch_id = Auth::user()->branch_id;
+        // $sales = User::where("role","like","%sales%")->get();
         $d['no_qo'] = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         $d['customers'] = Customer::all();
         $d['brands'] = Brand::all();
         $d['branches'] = Branch::all();
+        // $d['branches'] = Branch::all();
 
         return view('sale.form', $d);
     }

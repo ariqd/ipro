@@ -12,6 +12,7 @@ use App\Delivery_Order;
 use App\Delivery_Order_Detail;
 use App\Sale_Detail;
 use App\Stock;
+use PDF;
 
 class DeliveryOrderController extends Controller
 {
@@ -64,7 +65,21 @@ class DeliveryOrderController extends Controller
 
         return redirect("sales-orders")->with("info", "Delivery Order Dibuat dengan Nomor $nodo");
     }
+
+    function print($id, Request $request)
+    {
+        $datasales = Sale::find($id);
+        $dataDO = Delivery_Order::where("sales_order_id", "=", $id)->get();
+        $lineDO = Delivery_Order_Detail::where("do_id", "=", $data->id)->get();
+        return view("print.surat-jalan", [
+            "head" => $datasales,
+            "DOHead" => $dataDO,
+            "line" => $lineDO
+        ]);
+    }
 }
+
+
 
     // public function postPaymentForm($id, Request $request)
     // {

@@ -58,6 +58,12 @@
                 selectOnClose: true,
                 placeholder: "Pilih Customer"
             });
+            @if(Auth::User()->role == "admin")
+            $(".sales").select2({
+                selectOnClose: true,
+                placeholder: "Pilih Sales"
+            });
+            @endif
             $("#brands").select2({
                 selectOnClose: true,
                 placeholder: "Pilih Brand"

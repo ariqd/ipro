@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('sales-orders/{id}/approve/print', 'SalesOrder\SalesOrderApproveController@makeKwitansi');
     Route::get('sales-orders/{id}/pdf/quotation', 'SalesOrder\SalesOrderPrintController@makeQuotation');
     Route::post('sales-orders/{id}/pdf/invoice', 'SalesOrder\SalesOrderPrintController@makeInvoice');
+    Route::get('sales-orders/{id}/pdf/surat-jalan', 'SalesOrder\DeliveryOrderController@print');
 
     Route::get('categories/search/{id}', 'CategoryController@search');
 
