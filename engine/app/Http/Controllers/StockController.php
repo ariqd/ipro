@@ -34,7 +34,7 @@ class StockController extends Controller
             $query = new Stock;
             if (!empty($brands)) {
                 $query = Stock::whereHas('item', function ($q) use ($brands) {
-                    $q->whereHas('brands', function($x) use ($brands) {
+                    $q->whereHas('brands', function ($x) use ($brands) {
                         $x->whereIn('brand_id', [$brands]);
                     });
                 });
@@ -47,7 +47,7 @@ class StockController extends Controller
             $d['stocks'] = $query->get();
 
             $d['filtered'] = TRUE;
-//            dd($d['stocks']);
+            //            dd($d['stocks']);
         }
 
         return view('stock.index', $d);
@@ -135,12 +135,12 @@ class StockController extends Controller
             'branch_id' => 'required|numeric',
             'quantity' => 'required|numeric',
             'price_branch' => 'required|numeric',
-//            'weight' => 'required|numeric',
-//            'area' => 'required|numeric',
-//            'width' => 'required|numeric',
-//            'height' => 'required|numeric',
-//            'length' => 'required|numeric',
-//            'price' => 'required|numeric',
+            //            'weight' => 'required|numeric',
+            //            'area' => 'required|numeric',
+            //            'width' => 'required|numeric',
+            //            'height' => 'required|numeric',
+            //            'length' => 'required|numeric',
+            //            'price' => 'required|numeric',
         ]);
 
         if ($validate->fails()) {
@@ -215,6 +215,5 @@ class StockController extends Controller
             ->leftjoin("categories", "categories.id", "items.category_id")
             ->where("category_id", $id)->get();
         return response($data, 200);
-
     }
 }
