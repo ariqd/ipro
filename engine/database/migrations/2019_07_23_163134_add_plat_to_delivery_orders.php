@@ -15,6 +15,7 @@ class AddPlatToDeliveryOrders extends Migration
     {
         Schema::table('delivery_orders', function (Blueprint $table) {
             //
+            $table->string('plat');
         });
     }
 
@@ -27,6 +28,7 @@ class AddPlatToDeliveryOrders extends Migration
     {
         Schema::table('delivery_orders', function (Blueprint $table) {
             //
+            $table->dropColumn('plat');
         });
     }
 }

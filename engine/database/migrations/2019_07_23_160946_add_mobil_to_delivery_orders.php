@@ -14,6 +14,7 @@ class AddMobilToDeliveryOrders extends Migration
     public function up()
     {
         Schema::table('delivery_orders', function (Blueprint $table) {
+            $table->string('mobil');
             //
         });
     }
@@ -27,6 +28,8 @@ class AddMobilToDeliveryOrders extends Migration
     {
         Schema::table('delivery_orders', function (Blueprint $table) {
             //
+            $table->dropColumn('mobil');
+
         });
     }
 }

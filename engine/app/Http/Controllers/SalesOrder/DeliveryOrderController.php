@@ -70,7 +70,7 @@ class DeliveryOrderController extends Controller
     {
         $datasales = Sale::find($id);
         $dataDO = Delivery_Order::where("sales_order_id", "=", $id)->get();
-        $lineDO = Delivery_Order_Detail::where("do_id", "=", $data->id)->get();
+        $lineDO = Delivery_Order_Detail::where("do_id", "=", $dataDO->id)->get();
         return view("print.surat-jalan", [
             "head" => $datasales,
             "DOHead" => $dataDO,
