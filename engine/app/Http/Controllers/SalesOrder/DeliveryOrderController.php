@@ -55,7 +55,7 @@ class DeliveryOrderController extends Controller
             //minus
             $stock = Stock::find($detail->stock_id);
             $stock->quantity -= $qty_kirim;
-            $stock->pesenan -= $qty_kirim;
+            $stock->hold -= $qty_kirim;
             $stock->save();
         }
 
