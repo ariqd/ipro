@@ -37,6 +37,8 @@ class DeliveryOrderController extends Controller
         $do = Delivery_Order::create([
             "nomor_surat" => $nodo,
             "sales_order_id" => $id,
+            "mobil" => $request->mobil,
+            "plat" => $request->plat
         ]);
         $countdata = count($request->do);
         for ($i = 0; $i < $countdata; $i++) {
@@ -68,9 +70,9 @@ class DeliveryOrderController extends Controller
 
     function print($id, Request $request)
     {
-        $datasales = Sale::find($id);
-        $dataDO = Delivery_Order::where("sales_order_id", "=", $id)->get();
-        $lineDO = Delivery_Order_Detail::where("do_id", "=", $dataDO->id)->get();
+        $datasales = Sale::with("Details")->find($id);
+        $dataDO = Delivery_Order::with("Sales")->where("sales_order_id", "=", $id)->first();
+        $lineDO = Delivery_Order_Detail::with("Detail")->where("do_id", "=", $dataDO->id)->get();
         return view("print.surat-jalan", [
             "head" => $datasales,
             "DOHead" => $dataDO,
@@ -87,7 +89,6 @@ class DeliveryOrderController extends Controller
     //     $branch_id = Auth::user()->branch_id;
     //     $branch = Branch::find($branch_id);
     //     $nopo = "SO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
-
     //     $sale = Sale::find($id);
     //     $sale->no_so = $nopo;
     //     $sale->notes = $request->notes;

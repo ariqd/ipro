@@ -1,7 +1,7 @@
 @extends("layouts.print")
 
 @section("title")
-Purchase Order
+Surat Jalan
 @endsection
 
 @push("css")
@@ -104,38 +104,17 @@ Purchase Order
             <td>Total Berat</td>
             <td>No. PO / SO</td>
         </tr>
+        {{ dd($line->detail) }}
+        @foreach ($line as $item)
         <tr>
-            <td>1.</td>
-            <td>Conwood</td>
-            <td>3</td>
-            <td>2.5</td>
-            <td>7,5</td>
-            <td>xxxyyyzzz</td>
+            <td>No.</td>
+            <td>Nama Produk</td>
+            <td>Jumlah</td>
+            <td>Berat</td>
+            <td>Total Berat</td>
+            <td>No. PO / SO</td>
         </tr>
-        <tr>
-            <td>2.</td>
-            <td>Conwood</td>
-            <td>3</td>
-            <td>2.5</td>
-            <td>7,5</td>
-            <td>xxxyyyzzz</td>
-        </tr>
-        <tr>
-            <td>3.</td>
-            <td>Conwood</td>
-            <td>3</td>
-            <td>2.5</td>
-            <td>7,5</td>
-            <td>xxxyyyzzz</td>
-        </tr>
-        <tr>
-            <td>4.</td>
-            <td>Conwood</td>
-            <td>3</td>
-            <td>2.5</td>
-            <td>7,5</td>
-            <td>xxxyyyzzz</td>
-        </tr>
+        @endforeach
         <tr>
             <td colspan="4">Total</td>
             <td colspan="1">30</td>

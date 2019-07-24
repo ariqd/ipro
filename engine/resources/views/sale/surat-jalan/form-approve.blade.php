@@ -273,42 +273,41 @@
         </div>
     </div>
 </div>
-
+<form method="post" action="{{ url("sales-orders/$sale->id/delivery-orders") }}">
 <div class="row">
-    <div class="col-md-6">
-        <label>
-            Dikirim dengan Mobil
-        </label>
-        <input class="form-control" name="mobil" placeholder="Contoh: Tata">
-    </div>
-    <div class="col-md-6">
-        <label>
-            Dikirim dengan Plat
-        </label>
-        <input class="form-control" name="plat" placeholder="Contoh: D 8078 F">
-    </div>
-    <div class="col-12">
-        <h4>Detail Barang</h4>
-        <div class="card">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Qty Pesan</th>
-                            <th>Qty Kirim</th>
-                            <th>Price</th>
-                            <th>Discount</th>
-                            <th>Total</th>
-                            <th>Jumlah Kirim</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                        $flag = 0
-                        @endphp
-                        <form method="post" action="{{ url("sales-orders/$sale->id/delivery-orders") }}">
+        <div class="col-md-6">
+            <label>
+                Dikirim dengan Mobil
+            </label>
+            <input class="form-control" name="mobil" required placeholder="Contoh: Tata">
+        </div>
+        <div class="col-md-6">
+            <label>
+                Dikirim dengan Plat
+            </label>
+            <input class="form-control" name="plat" required placeholder="Contoh: D 8078 F">
+        </div>
+        <div class="col-12">
+            <h4>Detail Barang</h4>
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Qty Pesan</th>
+                                <th>Qty Kirim</th>
+                                <th>Price</th>
+                                <th>Discount</th>
+                                <th>Total</th>
+                                <th>Jumlah Kirim</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $flag = 0
+                            @endphp
                             @foreach($sale->details as $details)
                             <tr>
                                 <td>
@@ -320,7 +319,7 @@
                                 <td>
                                     {{ $details->qty }}
                                 </td>
-                                <td @if>
+                                <td @if($details->qty_kirim != $details->qty) style="color: red" @endif>
                                     {{  $details->qty_kirim }}
                                 </td>
                                 <td>
@@ -333,18 +332,27 @@
                                     Rp{{number_format($details->total)}},00
                                 </td>
                                 <td>
-                                    <input autocomplete="off" type="number" min="0"
-                                        max="{{ $details->qty - $details->qty_kirim }}" name="qty_kirim[]" value="0">
-                                    <input type="hidden" name="do[]" value="{{$details->id}}">
+                                    @if($details->qty_kirim < $details->qty)
+                                        <input autocomplete="off" type="number" min="0"
+                                            max="{{ $details->qty - $details->qty_kirim }}" name="qty_kirim[]"
+                                            value="0">
+                                        <input type="hidden" name="do[]" value="{{$details->id}}">
+                                        @elseif($details->qty_kirim == $details->qty)
+                                        Pengiriman Selesai
+                                        @else
+                                        Pengiriman Berlebih
+                                        @endif
+
+
                                 </td>
 
                             </tr>
                             @endforeach
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 </div>
 
 <div class="row">
