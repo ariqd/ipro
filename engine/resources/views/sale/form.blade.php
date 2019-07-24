@@ -56,25 +56,30 @@
 
             $(".customer").select2({
                 selectOnClose: true,
-                placeholder: "Pilih Customer"
+                placeholder: "Pilih Customer",
+                allowClear: true
             });
             @if(Auth::User()->role == "admin")
-            $(".sales").select2({
+            $("#sales").select2({
                 selectOnClose: true,
-                placeholder: "Pilih Sales"
+                placeholder: "Pilih Sales",
+                allowClear: true
             });
             @endif
             $("#brands").select2({
                 selectOnClose: true,
-                placeholder: "Pilih Brand"
+                placeholder: "Pilih Brand",
+                allowClear: true
             });
             $("#categories").select2({
                 selectOnClose: true,
-                placeholder: 'Pilih brand terlebih dahulu'
+                placeholder: 'Pilih brand terlebih dahulu',
+                allowClear: true
             });
             $("#branches").select2({
                 selectOnClose: true,
-                placeholder: 'Pilih cabang'
+                placeholder: 'Pilih cabang',
+                allowClear: true
             });
 
             $("#brands").change(function () {
@@ -233,6 +238,20 @@
     <div class="row">
         <div class="col-12">
             @include('layouts.feedback')
+        </div>
+        <div class="col-12">
+            <h4><b><label for="sales">Sales</label></b></h4>
+            <div class="card">
+                <div class="card-body">
+                    @if(Gate::allows('isAdmin'))
+                    <select id="sales" name="user_id" class="form-control">
+                        @foreach ($sales as $item)
+                        <option value="{{ $item->id }}"> {{ $item->name }} </option>
+                        @endforeach
+                    </select>
+                    @endif
+                </div>
+            </div>
         </div>
         <div class="col-6">
             <h4><b><label for="customer_select">Customer</label></b></h4>

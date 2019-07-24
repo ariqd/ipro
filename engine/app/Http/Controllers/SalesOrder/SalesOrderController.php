@@ -33,12 +33,11 @@ class SalesOrderController extends Controller
     {
         $counter = Counter::where("name", "=", "QO")->first();
         $branch_id = Auth::user()->branch_id;
-        // $sales = User::where("role","like","%sales%")->get();
         $d['no_qo'] = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         $d['customers'] = Customer::all();
         $d['brands'] = Brand::all();
         $d['branches'] = Branch::all();
-        // $d['branches'] = Branch::all();
+        $d['sales'] = User::where("role", "like", "%sales%")->get();
 
         return view('sale.form', $d);
     }
@@ -47,8 +46,10 @@ class SalesOrderController extends Controller
     {
         $input = $request->all();
         unset($input['_token']);
-
         $input['user_id'] = Auth::id();
+        if (Auth::User()->role == "admin") {
+            $input['user_id'] = $request->user_id;
+        }
         $sales_order_details = $input['item'];
         unset($input['item']);
 
@@ -87,6 +88,8 @@ class SalesOrderController extends Controller
         $d['sale'] = Sale::find($id);
         $d['customers'] = Customer::all();
         $d['brands'] = Brand::all();
+        $d['branches'] = Branch::all();
+        $d['sales'] = User::where("role", "like", "%sales%")->get();
 
         return view('sale.form', $d);
     }

@@ -156,6 +156,9 @@ function addProduct(id) {
         $('.count').text(items_count + " barang dalam keranjang");
 
     }
+    $("#branches").val(null).trigger('change');
+    $("#categories").val(null).trigger('change');
+    $("#brands").val(null).trigger('change');
 }
 
 /**
