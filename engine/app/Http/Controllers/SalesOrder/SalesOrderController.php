@@ -66,7 +66,7 @@ class SalesOrderController extends Controller
             $sales_order_detail['sales_order_id'] = $sales_order->id;
             Sale_Detail::create($sales_order_detail);
             $stock = Stock::find($sales_order_detail['stock_id']);
-            $stock->quantity -= $sales_order_detail['qty'];
+            // $stock->quantity -= $sales_order_detail['qty'];
             $stock->hold += $sales_order_detail['qty'];
             $stock->save();
         }
