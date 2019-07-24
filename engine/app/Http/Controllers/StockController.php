@@ -23,7 +23,7 @@ class StockController extends Controller
         $d['brands'] = Brand::all();
         $d['branches'] = Branch::all();
 
-        $d['stocks'] = Stock::all();
+        $d['stocks'] = Stock::with('item.category.brand')->get();
 
         $d['filtered'] = FALSE;
         if (!empty($request->all())) {
