@@ -259,7 +259,7 @@
     <div class="row" id="table">
         <div class="col-lg-12">
             <div class="table-responsive">
-                <table class="table table-bordered data-table table-light w-100">
+                <table class="table table-bordered table-hover data-table table-light w-100">
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -279,7 +279,14 @@
                         @foreach($stocks as $stock)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $stock->item->category->brand->name .' - '. $stock->item->category->name .' - '. $stock->item->name }}
+                            <td>
+                                <small class="text-secondary">
+                                    {{ $stock->item->category->brand->name }}
+                                    -
+                                    {{ $stock->item->category->name }}
+                                </small> <br>
+                                {{ $stock->item->name }}
+                                {{-- {{ $stock->item->category->brand->name .' - '. $stock->item->category->name .' - '. $stock->item->name }} --}}
                             </td>
                             <td class="cabang">{{ ucfirst($stock->branch->name) }}</td>
                             <td class="stok">
