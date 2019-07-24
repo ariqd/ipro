@@ -47,7 +47,7 @@ class SalesOrderController extends Controller
         $input = $request->all();
         unset($input['_token']);
         $input['user_id'] = Auth::id();
-        if (Auth::User()->role == "admin") {
+        if (Auth::user()->role == "admin") {
             $input['user_id'] = $request->user_id;
         }
         $sales_order_details = $input['item'];
@@ -55,7 +55,6 @@ class SalesOrderController extends Controller
 
         $counter = Counter::where("name", "=", "QO")->first();
         $branch_id = Auth::user()->branch_id;
-        $branch = Branch::find($branch_id);
         $no_po = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         $input["quotation_id"] = $no_po;
 
@@ -64,10 +63,13 @@ class SalesOrderController extends Controller
         $counter->save();
 
         foreach ($sales_order_details as $sales_order_detail) {
+            $stock = Stock::find($sales_order_detail['stock_id']);
+            if ($sales_order_detail['qty'] > $stock->quantity) {
+                $sales_order->delete();
+                return redirect()->back()->withError('Jumlah pesanan ' . $stock->item->name . ' melebihi jumlah yang tersedia!')->withInput($input);
+            }
             $sales_order_detail['sales_order_id'] = $sales_order->id;
             Sale_Detail::create($sales_order_detail);
-            $stock = Stock::find($sales_order_detail['stock_id']);
-            // $stock->quantity -= $sales_order_detail['qty'];
             $stock->hold += $sales_order_detail['qty'];
             $stock->save();
         }

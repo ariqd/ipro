@@ -239,20 +239,20 @@
         <div class="col-12">
             @include('layouts.feedback')
         </div>
+        @if(Gate::allows('isAdmin'))
         <div class="col-12">
             <h4><b><label for="sales">Sales</label></b></h4>
             <div class="card">
                 <div class="card-body">
-                    @if(Gate::allows('isAdmin'))
                     <select id="sales" name="user_id" class="form-control">
                         @foreach ($sales as $item)
                         <option value="{{ $item->id }}"> {{ $item->name }} </option>
                         @endforeach
                     </select>
-                    @endif
                 </div>
             </div>
         </div>
+        @endif
         <div class="col-6">
             <h4><b><label for="customer_select">Customer</label></b></h4>
         </div>
