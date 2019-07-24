@@ -67,7 +67,7 @@ Surat Jalan
 <div class="col-xs-12">
     <div style="text-align:center">
         <h4>Surat Jalan</h4>
-        <h6>182/111/19</h6>
+        <h6>xxx/yyy/zz</h6>
     </div>
 </div>
 <div class="col-xs-12">
@@ -75,7 +75,7 @@ Surat Jalan
         <img src="{!! asset('assets/img/logo.png') !!}" alt="" width="73">
     </div> --}}
     <div class="col-xs-6" style="">
-        <div class="col-xs-12">Bersama ini kendaraan (Harap Isi) No. (Harap Isi)</div>
+        <div class="col-xs-12">Bersama ini kendaraan {{ $head->mobil }} No. {{ $head->plat }}</div>
         <div class="col-xs-12">kami kirimkan barang tersebut, dibawah ini.</div>
         <div class="col-xs-12">Harap terima dengan baik.</div>
     </div>
@@ -102,77 +102,55 @@ Surat Jalan
             <td>Jumlah</td>
             <td>Berat</td>
             <td>Total Berat</td>
-            <td>No. PO / SO</td>
+            <td>No.SO</td>
         </tr>
-        {{ dd($line->detail) }}
         @foreach ($line as $item)
         <tr>
             <td>No.</td>
-            <td>Nama Produk</td>
-            <td>Jumlah</td>
-            <td>Berat</td>
-            <td>Total Berat</td>
-            <td>No. PO / SO</td>
+            <td>{{ $item->detail->stock->item->name }}</td>
+            <td>{{ $item->qty_kirim }}</td>
+            <td>{{ $item->detail->stock->item->weight }}</td>
+            <td>{{ $item->qty_kirim*$item->detail->stock->item->weight }}</td>
+            <td>{{ $item->detail->sale->no_so }}</td>
+
         </tr>
         @endforeach
-        <tr>
-            <td colspan="4">Total</td>
-            <td colspan="1">30</td>
-            <td></td>
-        </tr>
     </table>
-    <div class="col-xs-12 nopadding">
-        <div class="col-xs-6 nopadding">
-            <table>
-                <tr>
-                    <td>Tanggal Rencana Pick Up *)</td>
-                    <td style="width:288px"></td>
-                </tr>
-
-                <tr>
-                    <td>Nama Ekspedisi</td>
-                    <td style="width:288px"></td>
-                </tr>
-
-                <tr>
-                    <td>No. Plat Kendaraan *)</td>
-                    <td style="width:288px"></td>
-                </tr>
-
-                <tr>
-                    <td>Nama Supir *)</td>
-                    <td style="width:288px"></td>
-                </tr>
-
-                <tr>
-                    <td>No HP Supir </td>
-                    <td style="width:288px"></td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-xs-6">
+    <div class="col-xs-12 ">
+        <div class="col-xs-4 ">
             <table>
                 <tr>
                     <td style="width:288px; height: 75px"></td>
                 </tr>
 
                 <tr>
-                    <td style="height: 31px"></td>
+                    <td style="height: 31px">Tanda Tangan Terima</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-xs-4">
+            <table>
+                <tr>
+                    <td style="width:288px; height: 75px"> </td>
+                </tr>
+
+                <tr>
+                    <td style="height: 31px">Mengetahui</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-xs-4">
+            <table>
+                <tr>
+                    <td style="width:288px; height: 75px"></td>
+                </tr>
+
+                <tr>
+                    <td style="height: 31px">Hormat Kami</td>
                 </tr>
             </table>
         </div>
     </div>
-    <div class="col-xs-3 nopadding">
-        No Dok: xxxyyyzzz
-    </div>
-    <div class="col-xs-3 nopadding">
-        No. Rev: 00
-    </div>
-    <div class="col-xs-3 nopadding">
-        Tgl Efektif: DD-MM-YYYY
-    </div>
-    <div class="col-xs-3 nopadding">
-        Hal : 1 Dari 1
-    </div>
+
 </div>
 @endsection

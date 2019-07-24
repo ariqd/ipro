@@ -30,9 +30,9 @@ class DeliveryOrderController extends Controller
 
     public function store(Request $request, $id)
     {
+        $saleheadid = $id;
         $counter = Counter::where("name", "=", "DO")->first();
         $branch_id = Auth::user()->branch_id;
-        $branch = Branch::find($branch_id);
         $nodo = "DO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         $do = Delivery_Order::create([
             "nomor_surat" => $nodo,
@@ -64,20 +64,20 @@ class DeliveryOrderController extends Controller
 
         $counter->counter += 1;
         $counter->save();
-
-        return redirect("sales-orders")->with("info", "Delivery Order Dibuat dengan Nomor $nodo");
+        return redirect("sales-orders")->with("info", "Delivery Order Dibuat dengan Nomor $nodo, <a target='_BLANK' href=sales-orders/".$saleheadid."/pdf/surat-jalan".">Download Faktur</a>");
     }
 
-    function print($id, Request $request)
+    function print($id)
     {
-        $datasales = Sale::with("Details")->find($id);
-        $dataDO = Delivery_Order::with("Sales")->where("sales_order_id", "=", $id)->first();
-        $lineDO = Delivery_Order_Detail::with("Detail")->where("do_id", "=", $dataDO->id)->get();
-        return view("print.surat-jalan", [
-            "head" => $datasales,
-            "DOHead" => $dataDO,
+        $dataDO = Delivery_Order::where("sales_order_id", "=", $id)->first();
+        $lineDO = Delivery_Order_Detail::with("detail.stock.item", "detail.sale")
+            ->where("do_id", "=", $dataDO->id)->get();
+        $pdf = PDF::loadview("print.surat-jalan", [
+            "head" => $dataDO,
             "line" => $lineDO
         ]);
+
+        return $pdf->download("suratjalan.pdf");
     }
 }
 
