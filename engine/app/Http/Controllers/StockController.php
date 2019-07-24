@@ -6,7 +6,6 @@ use App\Brand;
 use App\Stock;
 use App\Item;
 use App\Branch;
-use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
@@ -187,8 +186,8 @@ class StockController extends Controller
     {
         $d['stock'] = Stock::select("stocks.*", "items.name as itemname", "items.code", "brands.name as brandname", "categories.name as categoryname", "branches.name as branchname")
             ->leftjoin("items", "items.id", "stocks.item_id")
-            ->leftjoin("brands", "brands.id", "items.brand_id")
             ->leftjoin("categories", "categories.id", "items.category_id")
+            ->leftjoin("brands", "brands.id", "categories.brand_id")
             ->leftjoin('branches', 'branches.id', 'stocks.branch_id')
             ->where("stocks.id", $id)
             ->first();

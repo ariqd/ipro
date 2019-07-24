@@ -72,6 +72,10 @@
                 selectOnClose: true,
                 placeholder: 'Pilih brand terlebih dahulu'
             });
+            $("#branches").select2({
+                selectOnClose: true,
+                placeholder: 'Pilih cabang'
+            });
 
             $("#brands").change(function () {
                 var id = $("#brands").val();
@@ -112,7 +116,7 @@
                     },
                     success: function (response) {
                         $('.loading').hide();
-                        console.dir(response);
+                        // console.dir(response);
                         if (response.length > 0) {
                             $.each(response, function (index, value) {
                                 var btn;
@@ -177,6 +181,10 @@
 
             $('#categories').change(function () {
                 searchProduct();
+                $("#branches").select2({
+                    selectOnClose: true,
+                    placeholder: 'Pilih cabang'
+                });
             });
 
             $('#branches').change(function () {
@@ -387,8 +395,8 @@
                             <div class="form-group">
                                 <label for="branches">Cabang</label>
                                 <select autocomplete="off" name="branches" id="branches"
-                                    class="form-control branches w-100">
-                                    <option value="" selected disabled>-- Pilih cabang --</option>
+                                    class="form-control branches w-100 select2">
+                                    <option></option>
                                     @foreach($branches as $branch)
                                     <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                                     @endforeach

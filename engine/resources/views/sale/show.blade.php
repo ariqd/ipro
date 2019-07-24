@@ -239,6 +239,17 @@
                     </div>
                 </div>
 
+                <div class="row mt-3">
+                    <div class="col-4">
+                        <b>
+                            Ongkos Kirim
+                        </b>
+                    </div>
+                    <div class="col-8">
+                        Rp {{ number_format($sale->ongkir) }}
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -249,14 +260,14 @@
         <h4>Detail Barang</h4>
         <div class="card">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Nama</th>
                             <th>Qty</th>
-                            <th>Price</th>
-                            <th>Discount</th>
+                            <th>Harga</th>
+                            <th>Diskon</th>
                             <th>Total</th>
                         </tr>
                     </thead>
@@ -265,12 +276,17 @@
                         $flag = 0;
                         @endphp
                         @foreach($sale->details as $details)
-                        @if($details->status==1) @php $flag++ @endphp @endif
+                        @if($details->status == 1) @php $flag++ @endphp @endif
                         <tr>
                             <td>
                                 {{ $loop->iteration }}
                             </td>
                             <td>
+                                <small class="text-secondary">
+                                    {{ $details->stock->item->category->brand->name }}
+                                    -
+                                    {{ $details->stock->item->category->name }}
+                                </small> <br>
                                 {{ $details->stock->item->name }}
                             </td>
                             <td>

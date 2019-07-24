@@ -56,7 +56,7 @@
             <i class="fa fa-exclamation-circle"></i> Sales Order ini telah disetujui.
         </div>
         <div>
-            <a href='approve/print' class='btn btn-light btn-sm float-right' target="_blank"><i class="fa fa-print"></i> 
+            <a href='approve/print' class='btn btn-light btn-sm float-right' target="_blank"><i class="fa fa-print"></i>
                 Print Kwitansi
             </a>
         </div>
@@ -218,7 +218,7 @@
         <h4>Detail Barang</h4>
         <div class="card">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -236,8 +236,12 @@
                                 {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{ $details->stock->item->name }}
-                            </td>
+                                <small class="text-secondary">
+                                    {{ $details->stock->item->category->brand->name }}
+                                    -
+                                    {{ $details->stock->item->category->name }}
+                                </small> <br>
+                                {{ $details->stock->item->name }} </td>
                             <td>
                                 {{ $details->qty }}
                             </td>

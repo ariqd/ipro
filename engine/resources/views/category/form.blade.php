@@ -8,24 +8,22 @@
         </button>
     </div>
     <div class="modal-body">
-        <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="brand" class="form-control-label">Brand</label>
-                <select class="brand form-control" name="brand_id">
-                    <option value="" selected disabled></option>
-                    @foreach($brands as $brand)
-                        <option value="{{ $brand->id }}" {{ @$isEdit && $brand->id == $category->brand->id ? 'selected' : '' }}>
-                            {{ $brand->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+        <div class="form-group">
+            <label for="brand" class="form-control-label">Brand</label> <br>
+            <select class="brand custom-select" name="brand_id" style="width: 100%">
+                <option value="" selected disabled></option>
+                @foreach($brands as $brand)
+                <option value="{{ $brand->id }}" {{ @$isEdit && $brand->id == $category->brand->id ? 'selected' : '' }}>
+                    {{ $brand->name }}
+                </option>
+                @endforeach
+            </select>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="name" class="form-control-label">Nama</label>
                 <input id="name" class="form-control" name="name" type="text"
-                       value="{{ @$isEdit ? $category->name : '' }}">
+                    value="{{ @$isEdit ? $category->name : '' }}">
             </div>
         </div>
     </div>

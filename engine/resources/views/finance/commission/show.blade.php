@@ -27,71 +27,119 @@
 </div>
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-6">
         <h4>Periode {{ $from->format('d F') }} - {{ $to->format('d F') }}</h4>
     </div>
+    <div class="col-6">
+        <h4 class="float-right">
+            Achievement: Rp {{ number_format($user->commission->achievement, '0', ',', '.') }}
+        </h4>
+    </div>
     <div class="col-12">
-        <table class="table table-light table-bordered">
+        <table class="table table-light table-bordered table-hover">
             <thead class="text-center">
                 <tr>
-                    <th>No. SO</th>
-                    <th>Tanggal</th>
-                    <th>Total</th>
-                    {{-- <th>Persentase</th> --}}
-                    <th>Komisi ({{ $user->commission->percentage }}%)</th>
+                    <th rowspan="2" class="align-middle">No</th>
+                    <th rowspan="2" class="align-middle">Keterangan</th>
+                    <th>Total (Exclude PPN)</th>
+                    <th>Komisi</th>
+                    <th>(-10 %)</th>
+                </tr>
+                <tr>
+                    <th>
+                        <span class="float-right font-weight-bold">
+                            @if ($data['achieved'])
+                            <span class="badge badge-success">Achieve</span>
+                            @else
+                            <span class="badge badge-danger">Tidak Achieve</span>
+                            @endif
+                            Rp {{ number_format($data['total']) }}
+                        </span>
+                    </th>
+                    <th>
+                        <span class="float-right font-weight-bold">
+                            Rp {{ number_format($data['total_komisi']) }}
+                        </span>
+                    </th>
+                    <th>
+                        <span class="float-right font-weight-bold">
+                            Rp {{ number_format($data['total_buat_sales']) }}
+                        </span>
+                    </th>
                 </tr>
             </thead>
-            <tbody class="text-center">
+            <tbody>
                 @foreach ($sales_orders as $sales_order)
                 <tr>
-                    <td>
-                        <a class="text-success" href="{{ url("sales-orders/$sales_order->id") }}">{{ $sales_order->no_so }}</a>
+                    <td class="align-middle">{{ $loop->iteration }}</td>
+                    <td class="align-middle">
+                        <small class="text-secondary">
+                            {{ $sales_order->stock->item->category->brand->name }}
+                            -
+                            {{ $sales_order->stock->item->category->name }}
+                        </small> <br>
+                        {{ $sales_order->stock->item->name }} ({{ $sales_order->persen }})
                     </td>
-                    <td>{{ $sales_order->created_at->formatLocalized('%A, %d %B %Y %H:%I:%S') }}</td>
-                    <td>
-                        <span class="float-right">Rp {{ number_format($sales_order->grand_total) }}</span>
+                    <td class="align-middle">
+                        <span class="float-right">Rp {{ number_format($sales_order->total) }}</span>
                     </td>
-                    {{-- <td>
-                        {{ $user->commission->percentage }} %
-                    </td> --}}
-                    <td>
-                        <span class="float-right">Rp {{ number_format($sales_order->total_komisi) }}</span>
+                    <td class="align-middle">
+                        <span class="float-right">Rp {{ number_format($sales_order->komisi) }}</span>
+                    </td>
+                    <td class="align-middle">
+                        <span class="float-right">Rp {{ number_format($sales_order->buat_sales) }}</span>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
             <tfoot>
                 <tr>
-                    <th colspan="3">
-                        <span class="float-right">Total Komisi : </span>
-                    </th>
-                    <th>
-                        <span class="float-right">
-                            Rp {{ number_format($total) }}
+                    <td colspan="2">
+                        <span class="float-right font-weight-bold">
+                            Total:
                         </span>
-                    </th>
+                    </td>
+                    <td>
+                        <span class="float-right font-weight-bold">
+                            Rp {{ number_format($data['total']) }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="float-right font-weight-bold">
+                            Rp {{ number_format($data['total_komisi']) }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="float-right font-weight-bold">
+                            Rp {{ number_format($data['total_buat_sales']) }}
+                        </span>
+                    </td>
                 </tr>
                 <tr>
-                    <th colspan="3">
-                        <span class="float-right">Achievement : </span>
-                    </th>
-                    <th>
-                        <span class="float-right">
-                            Rp {{ number_format($user->commission->achievement) }}
+                    <td colspan="2">
+                        <span class="float-right font-weight-bold">
+                            Status:
                         </span>
-                    </th>
-                </tr>
-                <tr>
-                    <th colspan="3">
-                        <span class="float-right">Status : </span>
-                    </th>
-                    <th class="text-center">
-                        @if ($total < $user->commission->achievement)
-                            <span class="badge badge-danger">Belum Achieve</span>
+                    </td>
+                    <td>
+                        <h4 class="float-right font-weight-bold">
+                            @if ($data['achieved'])
+                            <span class="badge badge-success">Achieve</span>
                             @else
-                            <span class="badge badge-success">Achieved</span>
+                            <span class="badge badge-danger">Tidak Achieve</span>
                             @endif
-                    </th>
+                        </h4>
+                    </td>
+                    <td>
+                        <span class="float-right font-weight-bold">
+                            Rp {{ number_format($data['total_komisi'] * $data['percentage']) }}
+                        </span>
+                    </td>
+                    <td>
+                        <span class="float-right font-weight-bold">
+                            Rp {{ number_format($data['total_buat_sales'] * $data['percentage']) }}
+                        </span>
+                    </td>
                 </tr>
             </tfoot>
         </table>

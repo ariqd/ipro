@@ -17,11 +17,9 @@ class SalesOrderSearchController extends Controller
         $stocks = Stock::with('item')
             ->whereHas('item', function ($query) use ($category_id) {
                 $query->where('category_id', '=', $category_id);
-            })->tap(function ($query) {
-                Auth::user()->role == 'admin' ?: $query->where('branch_id', '=', Auth::user()->branch_id);
-            })->with('branch');
+            })->with('branch')->get();
 
-        return response()->json($stocks->get(), 200);
+        return response()->json($stocks, 200);
     }
 
     public function searchDetailSO($id)

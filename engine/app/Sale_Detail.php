@@ -17,7 +17,7 @@ class Sale_Detail extends Model
 
 	public function sale()
 	{
-		return $this->belongsTo('App\Sales', 'id', 'sales_order_id');
+		return $this->belongsTo('App\Sale', 'id');
     }
 
     public function doDetail()
