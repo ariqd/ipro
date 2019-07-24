@@ -11,6 +11,8 @@ use App\Commission;
 use PDF;
 use Carbon\Carbon;
 use App\Sale_Detail;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class CommissionController extends Controller
 {
@@ -77,11 +79,19 @@ class CommissionController extends Controller
         $data['total_komisi'] = 0;
         $data['total_buat_sales'] = 0;
         $data['total_buat_admin'] = 0;
+        $data['achieved'] = true;
+        $data['percentage'] = 1;
+
         foreach ($sales_orders as $sales_order) {
             $data['total'] += $sales_order->total;
             $data['total_komisi'] += $sales_order->komisi;
             $data['total_buat_sales'] += $sales_order->buat_sales;
             $data['total_buat_admin'] += $sales_order->buat_admin;
+        }
+
+        if ($data['total'] < $user->commission->achievement) {
+            $data['achieved'] = false;
+            $data['percentage'] = 0.3;
         }
 
         return view('finance.commission.show', compact('user', 'sales_orders', 'from', 'to', 'data'));

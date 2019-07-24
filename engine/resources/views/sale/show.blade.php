@@ -240,15 +240,15 @@
                 </div>
 
                 <div class="row mt-3">
-                        <div class="col-4">
-                            <b>
-                                Ongkos Kirim
-                            </b>
-                        </div>
-                        <div class="col-8">
-                            Rp {{ number_format($sale->ongkir) }}
-                        </div>
+                    <div class="col-4">
+                        <b>
+                            Ongkos Kirim
+                        </b>
                     </div>
+                    <div class="col-8">
+                        Rp {{ number_format($sale->ongkir) }}
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -260,7 +260,7 @@
         <h4>Detail Barang</h4>
         <div class="card">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -282,13 +282,12 @@
                                 {{ $loop->iteration }}
                             </td>
                             <td>
-                                {{ $details->stock->item->category->brand->name }}
-                                ->
-                                {{ $details->stock->item->category->name }}
-                                ->
-                                <b>
-                                    {{ $details->stock->item->name }}
-                                </b>
+                                <small class="text-secondary">
+                                    {{ $details->stock->item->category->brand->name }}
+                                    -
+                                    {{ $details->stock->item->category->name }}
+                                </small> <br>
+                                {{ $details->stock->item->name }}
                             </td>
                             <td>
                                 {{ $details->qty }}
