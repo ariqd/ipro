@@ -208,6 +208,18 @@
                     </div>
                 </div>
 
+
+                {{-- <div class="row mt-3">
+                    <div class="col-4">
+                        <b>
+                            Ongkir
+                        </b>
+                    </div>
+                    <div class="col-8">
+                        Rp {{ number_format($sale->ongkir) }}
+                    </div>
+                </div> --}}
+
             </div>
         </div>
     </div>
@@ -216,49 +228,92 @@
 <div class="row">
     <div class="col-12">
         <h4>Detail Barang</h4>
-        <div class="card">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Name</th>
-                            <th>Qty</th>
-                            <th>Price</th>
-                            <th>Discount</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($sale->details as $details)
-                        <tr>
-                            <td>
-                                {{ $loop->iteration }}
-                            </td>
-                            <td>
+        <div class="table-responsive">
+            <table class="table table-light table-hover table-bordered">
+                <thead class="text-center">
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @foreach($sale->details as $details)
+                    <tr>
+                        <td>
+                            {{ $loop->iteration }}
+                        </td>
+                        <td>
+                            <div class="text-left">
                                 <small class="text-secondary">
                                     {{ $details->stock->item->category->brand->name }}
                                     -
                                     {{ $details->stock->item->category->name }}
                                 </small> <br>
-                                {{ $details->stock->item->name }} </td>
-                            <td>
-                                {{ $details->qty }}
-                            </td>
-                            <td>
+                                {{ $details->stock->item->name }}
+                            </div>
+                        </td>
+                        <td>
+                            {{ $details->qty }}
+                        </td>
+                        <td>
+                            <div class="float-right">
                                 Rp{{number_format($details->price) }},00
-                            </td>
-                            <td>
-                                {{ $details->discount}}%
-                            </td>
-                            <td>
+                            </div>
+                        </td>
+                        <td>
+                            {{ $details->discount}}%
+                        </td>
+                        <td>
+                            <div class="float-right">
                                 Rp{{number_format($details->total)}},00
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5">
+                            <div class="float-right">
+                                Total:
+                            </div>
+                        </th>
+                        <th>
+                            <div class="float-right">
+                                Rp {{ number_format($sale->grand_total) }}
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="5">
+                            <div class="float-right">
+                                Ongkos Kirim:
+                            </div>
+                        </th>
+                        <th>
+                            <div class="float-right">
+                                Rp {{ number_format($sale->ongkir) }}
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="5">
+                            <div class="float-right">
+                                Grand Total:
+                            </div>
+                        </th>
+                        <th>
+                            <div class="float-right">
+                                Rp {{ number_format($sale->grand_total + $sale->ongkir) }}
+                            </div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 </div>

@@ -63,6 +63,49 @@
 @endif
 @endif
 <div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body pb-0">
+                <div class="row">
+                    <div class="col-6">
+                        <h4>
+                            Nomor Sales Order:
+                        </h4>
+                    </div>
+                    <div class="col-6 ">
+                        <div class="float-right">
+                            @if($sale->no_so != null)
+                            <h4 class="font-weight-bold">
+                                <span class="badge badge-success">Disetujui</span>
+                                #{{ $sale->no_so }}
+                            </h4>
+                            @else
+                            <span class="badge badge-danger">Belum disetujui oleh finance</span>
+                            @if (auth()->user()->role == 'admin' || auth()->user()->role == 'finance')
+                            <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
+                                class="btn btn-warning btn-sm text-dark"> <i class="fa fa-info-circle"></i> Approve
+                                Request
+                            </a>
+                            @endif
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @if($sale->no_so != null)
+                <div class="row">
+                    <div class="col-6">
+                        <h5>Nomor Quotation:</h5>
+                    </div>
+                    <div class="col-6">
+                        <div class="float-right">
+                            <h5 class="font-weight-bold">#{{ $sale->quotation_id }}</h5>
+                        </div>
+                    </div>
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
     <div class="col-lg-6">
         <h4>Detail Customer</h4>
         <div class="card">
@@ -133,18 +176,6 @@
                         {{ $sale->customer->fax }}
                     </div>
                 </div>
-
-                {{--                <div class="row mt-3">--}}
-                {{--                    <div class="col-4">--}}
-                {{--                        <b>--}}
-                {{--                            Email--}}
-                {{--                        </b>--}}
-                {{--                    </div>--}}
-                {{--                    <div class="col-8">--}}
-                {{--                        {{ $sale->customer->email }}--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
-
             </div>
         </div>
     </div>
@@ -153,27 +184,6 @@
         <div class="card">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-4">
-                        <b>
-                            Nomor SO
-                        </b>
-                    </div>
-                    <div class="col-8">
-                        @if($sale->no_so != null)
-                        {{ $sale->no_so }}
-                        <span class="badge badge-success">Disetujui</span>
-                        @else
-                        <span class="badge badge-danger">Belum disetujui oleh finance</span>
-                        @if (auth()->user()->role == 'admin' || auth()->user()->role == 'finance')
-                        <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
-                            class="btn btn-warning btn-sm text-dark"> <i class="fa fa-check"></i> Approve Request
-                        </a>
-                        @endif
-                        @endif
-                    </div>
-                </div>
-
-                <div class="row mt-3">
                     <div class="col-4">
                         <b>
                             Project
@@ -239,17 +249,6 @@
                     </div>
                 </div>
 
-                <div class="row mt-3">
-                    <div class="col-4">
-                        <b>
-                            Ongkos Kirim
-                        </b>
-                    </div>
-                    <div class="col-8">
-                        Rp {{ number_format($sale->ongkir) }}
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
@@ -258,54 +257,92 @@
 <div class="row">
     <div class="col-12">
         <h4>Detail Barang</h4>
-        <div class="card">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>Qty</th>
-                            <th>Harga</th>
-                            <th>Diskon</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                        $flag = 0;
-                        @endphp
-                        @foreach($sale->details as $details)
-                        @if($details->status == 1) @php $flag++ @endphp @endif
-                        <tr>
-                            <td>
-                                {{ $loop->iteration }}
-                            </td>
-                            <td>
+        <div class="table-responsive">
+            <table class="table table-light table-hover table-bordered">
+                <thead class="text-center">
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Qty</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @foreach($sale->details as $details)
+                    <tr>
+                        <td>
+                            {{ $loop->iteration }}
+                        </td>
+                        <td>
+                            <div class="text-left">
                                 <small class="text-secondary">
                                     {{ $details->stock->item->category->brand->name }}
                                     -
                                     {{ $details->stock->item->category->name }}
                                 </small> <br>
                                 {{ $details->stock->item->name }}
-                            </td>
-                            <td>
-                                {{ $details->qty }}
-                            </td>
-                            <td>
+                            </div>
+                        </td>
+                        <td>
+                            {{ $details->qty }}
+                        </td>
+                        <td>
+                            <div class="float-right">
                                 Rp{{number_format($details->price) }},00
-                            </td>
-                            <td>
-                                {{ $details->discount}}%
-                            </td>
-                            <td>
+                            </div>
+                        </td>
+                        <td>
+                            {{ $details->discount}}%
+                        </td>
+                        <td>
+                            <div class="float-right">
                                 Rp{{number_format($details->total)}},00
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="5">
+                            <div class="float-right">
+                                Total:
+                            </div>
+                        </th>
+                        <th>
+                            <div class="float-right">
+                                Rp {{ number_format($sale->grand_total) }}
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="5">
+                            <div class="float-right">
+                                Ongkos Kirim:
+                            </div>
+                        </th>
+                        <th>
+                            <div class="float-right">
+                                Rp {{ number_format($sale->ongkir) }}
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="5">
+                            <div class="float-right">
+                                Grand Total:
+                            </div>
+                        </th>
+                        <th>
+                            <div class="float-right">
+                                Rp {{ number_format($sale->grand_total + $sale->ongkir) }}
+                            </div>
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
 </div>
@@ -320,22 +357,25 @@
                 <form action="{{ url("sales-orders/$sale->id/pdf/invoice") }}" method="post">
                     @csrf
                     <div class="row">
-                        <div class="form-group col-11">
+                        <div class="form-group col-10">
                             <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print Invoice">
                         </div>
-                        <div class="form-group col-1">
-                            <input type="checkbox" name="markup" class="form-control">
-                            PPN
+                        <div class="custom-control custom-checkbox col-2 my-2">
+                            <input type="checkbox" name="markup" class="custom-control-input" id="defaultCheck1">
+                            <label class="custom-control-label" for="defaultCheck1">
+                                PPN
+                            </label>
                         </div>
                     </div>
                 </form>
             </div>
-            @if($flag != count($sale->details))
+            {{-- @if($flag != count($sale->details)) --}}
             <div class="col-lg-12">
-                <a href="{{ url("sales-orders/$sale->id/delivery-orders") }}" class="btn btn-secondary btn-block"> Buat
-                    Surat Jalan</a>
+                <a href="{{ url("sales-orders/$sale->id/delivery-orders") }}" class="btn btn-secondary btn-block">
+                    Buat Surat Jalan
+                </a>
             </div>
-            @endif
+            {{-- @endif --}}
         </div>
     </div>
 </div>

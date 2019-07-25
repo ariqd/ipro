@@ -47,7 +47,9 @@
                         <th>No. Quotation</th>
                         <th>No. SO</th>
                         <th>Customer</th>
+                        @if (auth()->user()->role == 'admin' || auth()->user()->role == 'finance')
                         <th>Sales</th>
+                        @endif
                         <th></th>
                     </tr>
                 </thead>
@@ -57,15 +59,17 @@
                         <td>{{ $sale->created_at->formatLocalized('%A, %d %B %Y %H:%I:%S') }}</td>
                         <td>{{ $sale->quotation_id }}</td>
                         <td>
-                            {{ $sale->no_so}}
                             @if($sale->no_so != null)
-                            <span class="badge badge-success">Approved</span>
+                            <span class="badge badge-success">Disetujui</span>
                             @else
-                            <span class="badge badge-danger">Not Approved</span>
+                            <span class="badge badge-danger">Belum Disetujui</span>
                             @endif
+                            {{ $sale->no_so}}
                         </td>
                         <td>{{ $sale->customer->project_owner }}</td>
+                        @if (auth()->user()->role == 'admin' || auth()->user()->role == 'finance')
                         <td>{{ $sale->user->name }} ({{ $sale->user->branch->name }})</td>
+                        @endif
                         <td>
                             @if(Gate::allows("isAdmin"))
                             @if($sale->no_so == null)
