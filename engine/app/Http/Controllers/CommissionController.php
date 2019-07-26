@@ -25,20 +25,13 @@ class CommissionController extends Controller
     {
         $input = $request->all();
 
-        $input['achievement'] =  str_replace(',', '', $input['achievement']);
+        $input['achievement'] = str_replace(',', '', $input['achievement']);
         $input['user_id'] = $user->id;
 
         Commission::create($input);
 
         return redirect('finances')->withInfo('Komisi berhasil di set untuk ' . $user->name);
     }
-
-    // public function printKomisi($user)
-    // {
-    //     // $pdf = PDF::loadView('print.commission');
-    //     // return $pdf->download("komisi.pdf");
-    //     return view("print.commission");
-    // }
 
     public function show(User $user)
     {
@@ -49,7 +42,8 @@ class CommissionController extends Controller
         $from = Carbon::create(date('Y'), date('m'), $settings['finance-period-start']->value, 00, 00, 00);
 
         // Tanggal akhir periode ( + 1 bulan)
-        $to = Carbon::create(date('Y'), date('m') + 1, $settings['finance-period-end']->value, 00, 00, 00);
+        $to = $from->addMonth();
+//        $to = Carbon::create(date('Y'), date('m') + 1, $settings['finance-period-end']->value, 00, 00, 00);
 
         $sales_orders = Sale_Detail::join('sales_orders', 'sales_orders.id', '=', 'sales_order_details.sales_order_id')
             ->where([
@@ -96,13 +90,6 @@ class CommissionController extends Controller
 
         return view('finance.commission.show', compact('user', 'sales_orders', 'from', 'to', 'data'));
     }
-
-    // public function count()
-    // {
-    //     $user =
-    //     //
-    // }
-
 
     public function printKomisi($id)
     {
@@ -159,7 +146,5 @@ class CommissionController extends Controller
             $data['percentage'] = 0.3;
         }
         return view("print.commission", compact('user', 'sales_orders', 'from', 'to', 'data'));
-        // PDF::loadview("print.commission", compact('user', 'sales_orders', 'from', 'to', 'data'));
-
     }
 }

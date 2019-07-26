@@ -217,12 +217,12 @@
                     </div>
                     <div class="col-8">
                         Rp {{ number_format($sale->ongkir) }}
-                    </div>
-                </div> --}}
-
             </div>
-        </div>
+        </div> --}}
+
     </div>
+</div>
+</div>
 </div>
 
 <div class="row">
