@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="57e13379-18df-41e6-be42-2e7d8fc29a40" name="Default" comment="REVISI 5.A.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/app/Http/Controllers/CommissionController.php" beforeDir="false" afterPath="$PROJECT_DIR$/engine/app/Http/Controllers/CommissionController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/engine/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/resources/views/finance/commission/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/engine/resources/views/finance/commission/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/engine/resources/views/print/kwitansi.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/engine/resources/views/print/kwitansi.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/resources/views/finance/commission/form.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/engine/resources/views/finance/commission/form.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/engine/resources/views/print/commission.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/engine/resources/views/print/commission.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -187,7 +185,7 @@
     <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../firebase-app" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
+    <property name="settings.editor.selected.configurable" value="MTConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
