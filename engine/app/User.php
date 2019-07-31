@@ -38,11 +38,6 @@ class User extends Authenticatable
         return $this->hasOne('App\Commission');
     }
 
-    public static function isAdmin()
-    {
-        return $this->role == 'admin';
-    }
-
     public function scopeSales($query)
     {
         return $query->where('role', 'sales');

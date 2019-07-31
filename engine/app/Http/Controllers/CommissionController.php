@@ -25,20 +25,13 @@ class CommissionController extends Controller
     {
         $input = $request->all();
 
-        $input['achievement'] =  str_replace(',', '', $input['achievement']);
+        $input['achievement'] = str_replace(',', '', $input['achievement']);
         $input['user_id'] = $user->id;
 
         Commission::create($input);
 
         return redirect('finances')->withInfo('Komisi berhasil di set untuk ' . $user->name);
     }
-
-    // public function printKomisi($user)
-    // {
-    //     // $pdf = PDF::loadView('print.commission');
-    //     // return $pdf->download("komisi.pdf");
-    //     return view("print.commission");
-    // }
 
     public function show(User $user)
     {
@@ -97,13 +90,6 @@ class CommissionController extends Controller
         return view('finance.commission.show', compact('user', 'sales_orders', 'from', 'to', 'data'));
     }
 
-    // public function count()
-    // {
-    //     $user =
-    //     //
-    // }
-
-
     public function printKomisi($id)
     {
         $user = User::find($id);
@@ -159,7 +145,5 @@ class CommissionController extends Controller
             $data['percentage'] = 0.3;
         }
         return view("print.commission", compact('user', 'sales_orders', 'from', 'to', 'data'));
-        // PDF::loadview("print.commission", compact('user', 'sales_orders', 'from', 'to', 'data'));
-
     }
 }
