@@ -53,9 +53,23 @@
                                     <span class="badge badge-danger">Not Approved</span>
                                 @endif</td>
                                 <td>
-                                    <a href="{{ url('purchase-orders/'.$key->id) }}" class="btn btn-dark btn-sm">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <i class="fa fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+
+                                            <a href="{{ url('purchase-orders/'.$key->id) }}" class="dropdown-item">
+                                                <i class="fa fa-eye"></i> Detail</a>
+                                            <a  class="dropdown-item" href="{{ url('purchase-orders/'.$key->id.'/pdf/po') }}">
+                                                <i class="fa fa-print"></i> Print
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {{-- <a href="{{ url('purchase-orders/'.$key->id) }}" class="btn btn-dark btn-sm">
                                         Show
-                                    </a>
+                                    </a> --}}
                                 </td>
                             </tr>
                             @endforeach
