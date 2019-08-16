@@ -28,181 +28,194 @@
 <script src="{{ asset('assets/js/scripts.js') }}"></script>
 <script>
     $(document).ready(function () {
-            let items_count = 0;
+        let items_count = 0;
 
-            $("#customer_select").change(function () {
-                var id = $(this).val();
-                $.ajax({
-                    // url: '/info/' + $(this).val(),
-                    url: "{{ url('sales-orders/create/customer/') }}/" + id,
-                    type: 'get',
-                    data: {},
-                    success: function (data) {
-                        if (data.success === true) {
-                            $("#register_id").val(data.fill.id);
-                            $("#name").val(data.fill.project_owner);
-                            $("#address").val(data.fill.address);
-                            $("#phone").val(data.fill.phone);
-                            $("#fax").val(data.fill.fax);
-                            $("#email").val(data.fill.email);
-                        } else {
-                            alert('Cannot find info');
-                        }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
+        $("#customer_select").change(function () {
+            var id = $(this).val();
+            $.ajax({
+                // url: '/info/' + $(this).val(),
+                url: "{{ url('sales-orders/create/customer/') }}/" + id,
+                type: 'get',
+                data: {},
+                success: function (data) {
+                    if (data.success === true) {
+                        $("#register_id").val(data.fill.id);
+                        $("#name").val(data.fill.project_owner);
+                        $("#address").val(data.fill.address);
+                        $("#phone").val(data.fill.phone);
+                        $("#fax").val(data.fill.fax);
+                        $("#email").val(data.fill.email);
+                    } else {
+                        alert('Cannot find info');
                     }
-                });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {}
             });
+        });
 
-            $(".customer").select2({
-                selectOnClose: true,
-                placeholder: "Pilih Customer",
-                allowClear: true
-            });
-            @if(Auth::User()->role == "admin")
+        $(".customer").select2({
+            selectOnClose: true,
+            placeholder: "Pilih Customer",
+            allowClear: true
+        });
+        @if(Auth::User() -> role == "admin" || Auth::User() -> id == 5)
             $("#sales").select2({
-                selectOnClose: true,
-                placeholder: "Pilih Sales",
-                allowClear: true
-            });
-            @endif
-            $("#brands").select2({
-                selectOnClose: true,
-                placeholder: "Pilih Brand",
-                allowClear: true
-            });
+            selectOnClose: true,
+            placeholder: "Pilih Sales"
+        });
+        @endif
+        $("#brands").select2({
+            selectOnClose: true,
+            placeholder: "Pilih Brand",
+            allowClear: true
+        });
+        $("#categories").select2({
+            selectOnClose: true,
+            placeholder: 'Pilih brand terlebih dahulu',
+            allowClear: true
+        });
+        $("#branches").select2({
+            selectOnClose: true,
+            placeholder: 'Pilih cabang',
+            allowClear: true
+        });
+
+        $("#brands").change(function () {
+            var id = $("#brands").val();
             $("#categories").select2({
                 selectOnClose: true,
-                placeholder: 'Pilih brand terlebih dahulu',
-                allowClear: true
-            });
-            $("#branches").select2({
-                selectOnClose: true,
-                placeholder: 'Pilih cabang',
-                allowClear: true
-            });
-
-            $("#brands").change(function () {
-                var id = $("#brands").val();
-                $("#categories").select2({
-                    selectOnClose: true,
-                    placeholder: 'Choose Category',
-                    ajax: {
-                        url: "{!! url("categories/search") !!}/" + id,
-                        dataType: 'json',
-                        delay: 600,
-                        processResults: function (data) {
-                            return {
-                                results: $.map(data, function (item) {
-                                    return {
-                                        text: item.name,
-                                        id: item.id
-                                    }
-                                })
-                            };
-                        },
-                        cache: true
-                    }
-                });
-            });
-
-            function searchProduct() {
-                items_count = 0;
-                var id = $('#categories').val();
-                $.ajax({
-                    url: '{{ url('sales-orders/create/search-stocks') }}',
-                    method: 'GET',
-                    data: {
-                        category_id: id
+                placeholder: 'Choose Category',
+                ajax: {
+                    url: "{!! url('categories/search') !!}/" + id,
+                    dataType: 'json',
+                    delay: 600,
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {
+                                    text: item.name,
+                                    id: item.id
+                                }
+                            })
+                        };
                     },
-                    beforeSend: function () {
-                        $('.loading').show();
-                        $("#items").html("");
-                    },
-                    success: function (response) {
-                        $('.loading').hide();
-                        // console.dir(response);
-                        if (response.length > 0) {
-                            $.each(response, function (index, value) {
-                                var btn;
-                                if (parseInt(value.quantity) > 0) {
-                                    if (parseInt(value.item.purchase_price) > 0) {
-                                        btn = '<button type="button" class="btn btn-outline-dark addProduct-' + value.id + '  " ' +
-                                            'onclick="addProduct(' + value.id + ')" title="Add to Cart"' +
-                                            ' data-name="' + value.item.name + '"' +
-                                            ' data-code="' + value.id + '"' +
-                                            ' data-quantity="' + value.quantity + '"' +
-                                            ' data-price="' + value.item.purchase_price + '"' +
-                                            ' data-price-branch="' + value.price_branch + '"' +
-                                            ' data-branch="' + value.branch.name + '"' +
-                                            '>' +
-                                            '<i class="fa fa-cart-plus"></i>' +
-                                            '</button>';
-                                    } else {
-                                        btn = '';
-                                    }
+                    cache: true
+                }
+            });
+        });
+
+        function searchProduct() {
+            items_count = 0;
+            var id = $('#categories').val();
+            $.ajax({
+                url: '{{ url("sales-orders/create/search-stocks") }}',
+                method: 'GET',
+                data: {
+                    category_id: id
+                },
+                beforeSend: function () {
+                    $('.loading').show();
+                    $("#items").html("");
+                },
+                success: function (response) {
+                    $('.loading').hide();
+                    // console.dir(response);
+                    if (response.length > 0) {
+                        $.each(response, function (index, value) {
+                            var btn;
+                            if (parseInt(value.quantity) > 0) {
+                                if (parseInt(value.item.purchase_price) > 0) {
+                                    btn =
+                                        '<button type="button" class="btn btn-outline-dark addProduct-' +
+                                        value.id + '  " ' +
+                                        'onclick="addProduct(' + value.id +
+                                        ')" title="Add to Cart"' +
+                                        ' data-name="' + value.item.name + '"' +
+                                        ' data-code="' + value.id + '"' +
+                                        ' data-quantity="' + value.quantity + '"' +
+                                        ' data-price="' + value.item.purchase_price + '"' +
+                                        ' data-price-branch="' + value.price_branch + '"' +
+                                        ' data-branch="' + value.branch.name + '"' +
+                                        '>' +
+                                        '<i class="fa fa-cart-plus"></i>' +
+                                        '</button>';
                                 } else {
                                     btn = '';
                                 }
-                                $("#items").append(
-                                    '<div class="card mb-0 item-card item-branch-' + value.branch.id + ' d-none">' +
-                                    '<div class="card-body item">' +
-                                    '<div class="d-flex justify-content-between align-items-center">' +
-                                    '<div>' +
-                                    '<h5>' + value.item.name + ' (' + value.branch.name + ') ' + '</h5>' +
-                                    '<p class="m-0">Quantity: ' + value.quantity + '</p>' +
-                                    '<p class="m-0">Harga Pusat: Rp ' + value.item.purchase_price + '</p>' +
-                                    '<p class="m-0">Harga Cabang: Rp ' + value.price_branch + '</p>' +
-                                    '</div>' +
-                                    '<div>' +
-                                    btn +
-                                    '</div>' +
-                                    '</div>' +
-                                    '</div>' +
-                                    '</div>'
-                                );
-                                items_count++;
-                            });
-                        } else {
+                            } else {
+                                btn = '';
+                            }
                             $("#items").append(
-                                '<div class="card mb-0">' +
+                                '<div class="card mb-0 item-card item-branch-' + value
+                                .branch.id + ' d-none">' +
                                 '<div class="card-body item">' +
                                 '<div class="d-flex justify-content-between align-items-center">' +
                                 '<div>' +
-                                '<h5>No item found</h5>' +
+                                '<h5>' + value.item.name + ' (' + value.branch.name +
+                                ') ' + '</h5>' +
+                                '<p class="m-0">Quantity: ' + value.quantity + '</p>' +
+                                '<p class="m-0">Harga Pusat: Rp ' + value.item
+                                .purchase_price + '</p>' +
+                                '<p class="m-0">Harga Cabang: Rp ' + value
+                                .price_branch + '</p>' +
+                                '</div>' +
+                                '<div>' +
+                                btn +
                                 '</div>' +
                                 '</div>' +
                                 '</div>' +
                                 '</div>'
                             );
-                        }
-                        $('#search').focus();
-                    },
-                    error: function (error) {
-                        console.log(error);
+                            items_count++;
+                        });
+                    } else {
+                        $("#items").append(
+                            '<div class="card mb-0">' +
+                            '<div class="card-body item">' +
+                            '<div class="d-flex justify-content-between align-items-center">' +
+                            '<div>' +
+                            '<h5>No item found</h5>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        );
                     }
-                });
-            }
-
-            $('#categories').change(function () {
-                searchProduct();
-                $("#branches").select2({
-                    selectOnClose: true,
-                    placeholder: 'Pilih cabang'
-                });
-            });
-
-            $('#branches').change(function () {
-                let branch_id = $(this).val();
-                $('.item-card').addClass('d-none');
-                if (items_count <= 0) {
-                    alert('Pilih brand dan kategori lebih dulu!');
-                    $(this).prop('selectedIndex', 0);
-                } else {
-                    $('.item-branch-' + branch_id).removeClass('d-none');
+                    $('#search').focus();
+                },
+                error: function (error) {
+                    console.log(error);
                 }
             });
+        }
+
+        $('#categories').change(function () {
+            searchProduct();
+            $("#branches").select2({
+                selectOnClose: true,
+                placeholder: 'Pilih cabang'
+            });
         });
+
+        $('#branches').change(function () {
+            let branch_id = $(this).val();
+            $('.item-card').addClass('d-none');
+            if (items_count <= 0) {
+                alert('Pilih brand dan kategori lebih dulu!');
+                $(this).prop('selectedIndex', 0);
+            } else {
+                $('.item-branch-' + branch_id).removeClass('d-none');
+            }
+        });
+    });
+    $("#case_1").change(function(){
+        if($("#case_1").val()==2){
+        $('#sales').val('5').trigger('change');
+        $('#sales').attr("read-only","true");
+        }else{
+        $('#sales').attr("read-only","false");
+        }
+    });
 </script>
 @endpush
 
@@ -239,8 +252,30 @@
         <div class="col-12">
             @include('layouts.feedback')
         </div>
-        @if(Gate::allows('isAdmin'))
-        <div class="col-12">
+        {{-- <div class="row"> --}}
+
+        {{-- </div> --}}
+        @if(Gate::allows('isAdmin') || Auth::user()->id == 5)
+        <div class="col-lg-6">
+            <h4><b><label for="sales">Case</label></b></h4>
+            <div class="card">
+                <div class="card-body">
+                    <select class="form-control" name="case_1" id="case_1">
+                        <option value="1">Sales</option>
+                        <option value="2">Head Office</option>
+                    </select>
+                </div>
+
+                <div class="card-body">
+                    <select name="case_2" id="case_2" class="form-control">
+                        <option value="1">Mandiri</option>
+                        <option value="2">Referral</option>
+                        <option value="3">Admin</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
             <h4><b><label for="sales">Sales</label></b></h4>
             <div class="card">
                 <div class="card-body">
