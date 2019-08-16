@@ -68,13 +68,13 @@ Purchase Order
                 <td width="40%">
                     <p class="text-right" style="margin:0 auto">No. Order :</p>
                 </td>
-                <td width="60%" colspan="3">1</td>
+                <td width="60%" colspan="3">{{$data->purchase_number}}</td>
             </tr>
             <tr>
                 <td width="40%">
                     <p class="text-right" style="margin:0 auto">Date :</p>
                 </td>
-                <td width="60%" colspan="3"><b class="text-danger">2</b></td>
+            <td width="60%" colspan="3"><b class="text-danger">{{date("d-M-Y",strtotime($data->created_at))}}</b></td>
             </tr>
         </table>
     </div>

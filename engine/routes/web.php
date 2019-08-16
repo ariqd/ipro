@@ -55,8 +55,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Additional
     Route::get('sales-orders/{id}/delivery-orders', 'SalesOrder\DeliveryOrderController@getForm');
     Route::post('sales-orders/{id}/delivery-orders', 'SalesOrder\DeliveryOrderController@store');
-    Route::get('print/memo', 'ReceiveController@printMemoPengambilanProduk');
-    Route::get('print/memo', 'ReceiveController@printMemoPengambilanProduk');
+    // Route::get('print/memo', 'ReceiveController@printMemoPengambilanProduk');
+    Route::get('goods-receive/{id}/pdf/memo', 'ReceiveController@printMemoPengambilanProduk');
 
     Route::get('finances/komisi/{user}/set', 'CommissionController@setKomisi')->name('finances.komisi.set');
     Route::post('finances/komisi/{user}/set', 'CommissionController@storeKomisi')->name('finances.komisi.store');

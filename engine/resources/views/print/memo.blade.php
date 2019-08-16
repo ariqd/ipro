@@ -60,14 +60,13 @@ Purchase Order
         padding: 0 !important;
         margin: 0 !important;
     }
-
 </style>
 @endpush
 
 @section("content")
 <div class="col-xs-12">
     <div class="col-xs-3" style="border: black 1px solid">
-        <img src="{!! asset('assets/img/logo.png') !!}" alt="" width="73">
+        <img src="{!! asset('assets/img/logo.png') !!}" alt="" width="70">
     </div>
 
     <div class="col-xs-9" style="border: black 1px solid">
@@ -76,11 +75,13 @@ Purchase Order
 </div>
 <div class="col-xs-12">
     <div class="col-xs-3" style="border: black 1px solid">
-        Customer/Distributor
+            <h5>Customer/Distributor</h5>
     </div>
 
     <div class="col-xs-9" style="border: black 1px solid">
-        <h1></h1>
+        <h5>
+            {{$line[0]->item->brand->name}}
+        </h5>
     </div>
 </div>
 <div class="col-xs-12">
@@ -93,41 +94,25 @@ Purchase Order
             <td>Total Berat</td>
             <td>No. PO / SO</td>
         </tr>
+        @php
+        $total = 0;
+        @endphp
+        @foreach($line as $key)
+        @php
+        $total += $key->qty_get*$key->item->weight;
+        @endphp
         <tr>
-            <td>1.</td>
-            <td>Conwood</td>
-            <td>3</td>
-            <td>2.5</td>
-            <td>7,5</td>
-            <td>xxxyyyzzz</td>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $key->item->category->name }}</td>
+            <td>{{ $key->qty_get }}</td>
+            <td>{{ $key->item->weight }}</td>
+            <td>{{ $key->qty_get*$key->item->weight }}</td>
+            <td>{{ $key->purchase_details->sales->no_so ?? "-" }}</td>
         </tr>
-        <tr>
-            <td>2.</td>
-            <td>Conwood</td>
-            <td>3</td>
-            <td>2.5</td>
-            <td>7,5</td>
-            <td>xxxyyyzzz</td>
-        </tr>
-        <tr>
-            <td>3.</td>
-            <td>Conwood</td>
-            <td>3</td>
-            <td>2.5</td>
-            <td>7,5</td>
-            <td>xxxyyyzzz</td>
-        </tr>
-        <tr>
-            <td>4.</td>
-            <td>Conwood</td>
-            <td>3</td>
-            <td>2.5</td>
-            <td>7,5</td>
-            <td>xxxyyyzzz</td>
-        </tr>
+        @endforeach
         <tr>
             <td colspan="4">Total</td>
-            <td colspan="1">30</td>
+            <td colspan="1">{{$total}}</td>
             <td></td>
         </tr>
     </table>
@@ -136,7 +121,7 @@ Purchase Order
             <table>
                 <tr>
                     <td>Tanggal Rencana Pick Up *)</td>
-                    <td style="width:288px"></td>
+                    <td style="width:288px">{{date("d-m-Y")}}</td>
                 </tr>
 
                 <tr>

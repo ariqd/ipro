@@ -63,8 +63,9 @@
                                             <a href="{{ url('purchase-orders/'.$key->id) }}" class="dropdown-item">
                                                 <i class="fa fa-eye"></i> Detail</a>
                                             <a  class="dropdown-item" href="{{ url('purchase-orders/'.$key->id.'/pdf/po') }}">
-                                                <i class="fa fa-print"></i> Print
+                                                <i class="fa fa-print"></i> Print Order Form
                                             </a>
+
                                         </div>
                                     </div>
                                     {{-- <a href="{{ url('purchase-orders/'.$key->id) }}" class="btn btn-dark btn-sm">

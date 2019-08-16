@@ -20,13 +20,13 @@ class ReceiveController extends Controller
      * @return Response
      */
     public function index()
-    {   
+    {
         $data = Receive::all();
         foreach ($data as $key) {
-            $key["purchase"]=$key->purchase()->first();
+            $key["purchase"] = $key->purchase()->first();
         }
 
-        return view("receive.index",["data"=>$data]);
+        return view("receive.index", ["data" => $data]);
     }
 
     /**
@@ -36,8 +36,8 @@ class ReceiveController extends Controller
      */
     public function create()
     {
-        $d['purchase']=Purchase::where("approval_status","=","1")->get();
-        return view("receive.form",$d);
+        $d['purchase'] = Purchase::where("approval_status", "=", "1")->get();
+        return view("receive.form", $d);
     }
 
     /**
@@ -49,31 +49,30 @@ class ReceiveController extends Controller
     public function store(Request $request)
     {
         $receive = Receive::create([
-            "purchase_id"=>$request->purchaseid,
-            "receipt"=>$request->receipt
+            "purchase_id" => $request->purchaseid,
+            "receipt" => $request->receipt
         ]);
 
-        for ($i=0; $i <count($request->qty) ; $i++) { 
-            $data["receive_id"]=$receive->id;
-            $data["qty_get"]=$request->qtyget[$i];
-            $data["purchase_detail_id"]=$request->purchasedetailid[$i];
+        for ($i = 0; $i < count($request->qty); $i++) {
+            $data["receive_id"] = $receive->id;
+            $data["qty_get"] = $request->qtyget[$i];
+            $data["purchase_detail_id"] = $request->purchasedetailid[$i];
 
             $purchasedetails = Purchase_Detail::find($request->purchasedetailid[$i]);
             $purchasedetails->qty = $request->qtyget[$i];
             $purchasedetails->save();
 
             //plus
-            $stock = Stock::where("item_id","=",$purchasedetails->item_id)->first();
+            $stock = Stock::where("item_id", "=", $purchasedetails->item_id)->first();
             $stock->quantity += $request->qtyget[$i];
             $stock->save();
 
             $price = $purchasedetails->total_price / $purchasedetails->qty;
-            $data["total_price"]=$price * $request->qtyget[$i];
-            
-            Receive_Detail::create($data);
+            $data["total_price"] = $price * $request->qtyget[$i];
 
+            Receive_Detail::create($data);
         }
-        return redirect('goods-receive')->with("info","Barang diterima dengan nomor ".$request->receipt);
+        return redirect('goods-receive')->with("info", "Barang diterima dengan nomor " . $request->receipt);
     }
 
     /**
@@ -86,16 +85,16 @@ class ReceiveController extends Controller
     {
         $header = Receive::find($id);
         $header["PO"] = $header->purchase()->first();
-        $line = Receive_Detail::where("receive_id",$id)->get();
+        $line = Receive_Detail::where("receive_id", $id)->get();
         foreach ($line as $key) {
             $key['purchase_details'] = $key->purchaseDetail()->first();
             $key["item"] = $key['purchase_details']->item()->first();
             $key["purchase_details"]['sales'] = $key["purchase_details"]->sale()->first();
             $key["item"]["category"] = $key["item"]->category()->first();
         }
-        return view("receive.show",[
-            "header"=>$header,
-            "line"=>$line
+        return view("receive.show", [
+            "header" => $header,
+            "line" => $line
         ]);
     }
 
@@ -133,8 +132,23 @@ class ReceiveController extends Controller
         //
     }
 
-    public function printMemoPengambilanProduk()
+    public function printMemoPengambilanProduk($id)
     {
-        return view("print.memo");
+        $header = Receive::find($id);
+        $header["PO"] = $header->purchase()->first();
+        $line = Receive_Detail::where("receive_id", $id)->get();
+        foreach ($line as $key) {
+            $key['purchase_details'] = $key->purchaseDetail()->first();
+            $key["item"] = $key['purchase_details']->item()->first();
+            $key["purchase_details"]['sales'] = $key["purchase_details"]->sale()->first();
+            $key["item"]["category"] = $key["item"]->category()->first();
+            $key["item"]["brand"] = $key["item"]["category"]->brand()->first();
+        }
+        // $d["line"] = $d["header"]->details()->get();
+        $pdf = PDF::loadview("print.memo", [
+            "header" => $header,
+            "line" => $line
+        ]);
+        return $pdf->download("Memo" . date("Ymdhis") . ".pdf");
     }
 }
