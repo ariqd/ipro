@@ -20,8 +20,10 @@ class FinanceController extends Controller
         $settings = Setting::where(['name' => 'finance-period-start'])
             ->orWhere(['name' => 'finance-period-end'])->get()->keyBy('name');
 
-        $d['from'] = Carbon::create(date('Y'), date('m'), $settings['finance-period-start']->value, 00, 00, 00);
-        $d['to'] = Carbon::create(date('Y'), date('m') + 1, $settings['finance-period-end']->value, 00, 00, 00);
+        $d['from'] = Carbon::create(date('Y'), date('m') - 1, $settings['finance-period-end']->value, 00, 00, 00);
+        $d['to'] = Carbon::create(date('Y'), date('m'), $settings['finance-period-start']->value, 00, 00, 00);
+
+        // dd($d);
 
         return view('finance.index', $d);
     }

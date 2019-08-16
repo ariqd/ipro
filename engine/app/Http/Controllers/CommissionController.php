@@ -38,11 +38,15 @@ class CommissionController extends Controller
         $settings = Setting::where(['name' => 'finance-period-start'])
             ->orWhere(['name' => 'finance-period-end'])->get()->keyBy('name');
 
-        // Tanggal periode awal
-        $from = Carbon::create(date('Y'), date('m'), $settings['finance-period-start']->value, 00, 00, 00);
+            
+        $from = Carbon::create(date('Y'), date('m') - 1, $settings['finance-period-end']->value, 00, 00, 00);
+        $to = Carbon::create(date('Y'), date('m'), $settings['finance-period-start']->value, 00, 00, 00);
 
-        // Tanggal akhir periode ( + 1 bulan)
-        $to = Carbon::create(date('Y'), date('m') + 1, $settings['finance-period-end']->value, 00, 00, 00);
+        // Tanggal periode awal
+        // $from = Carbon::create(date('Y'), date('m'), $settings['finance-period-start']->value, 00, 00, 00);
+
+        // // Tanggal akhir periode ( + 1 bulan)
+        // $to = Carbon::create(date('Y'), date('m') + 1, $settings['finance-period-end']->value, 00, 00, 00);
 
         $sales_orders = Sale_Detail::join('sales_orders', 'sales_orders.id', '=', 'sales_order_details.sales_order_id')
             ->where([
