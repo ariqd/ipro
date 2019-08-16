@@ -60,6 +60,7 @@ Purchase Order
         padding: 0 !important;
         margin: 0 !important;
     }
+
 </style>
 @endpush
 

@@ -103,7 +103,7 @@
             </li>
             @endif
 
-            <li class="nav-item">
+            <li class="nav-item d-none">
                 <a href="{{ url('deposits') }}" class="nav-link {{ (request()->is('deposits*')) ? 'active' : '' }}">
                     <i class="fa fa-credit-card"></i> Deposits
                 </a>

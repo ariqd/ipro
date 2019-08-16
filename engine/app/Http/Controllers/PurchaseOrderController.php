@@ -148,6 +148,6 @@ class PurchaseOrderController extends Controller
         $data["data"] = Purchase::with("Details.Item.Category.Brand")->find($id);
         // $d["line"] = $d["header"]->details()->get();
         $pdf = PDF::loadview("print.purchase-order", $data);
-        return $pdf->download("PO.pdf");
+        return $pdf->download("PO".date("Ymdhis").".pdf");
     }
 }
