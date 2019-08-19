@@ -18,8 +18,6 @@ class AlterCommissionsTable extends Migration
             $table->dropColumn('status');
             $table->date('period_start');
             $table->date('period_end');
-            $table->
-
         });
     }
 
