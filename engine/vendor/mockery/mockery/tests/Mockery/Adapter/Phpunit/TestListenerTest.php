@@ -21,18 +21,13 @@
 
 namespace tests\Mockery\Adapter\Phpunit;
 
-use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use PHPUnit\Framework\TestResult;
 use Mockery\Adapter\Phpunit\TestListener;
-use PHPUnit\Framework\TestSuite;
-use PHPUnit\Runner\Version;
-use PHPUnit\Util\Blacklist;
-use PHPUnit_Runner_Version;
 
-if (class_exists('PHPUnit_Runner_Version') && version_compare(PHPUnit_Runner_Version::id(), '6.0.0', '<')) {
+if (class_exists('PHPUnit_Runner_Version') && version_compare(\PHPUnit_Runner_Version::id(), '6.0.0', '<')) {
     class_alias('test\Mockery\Fixtures\EmptyTestCaseV5', 'tests\Mockery\Adapter\Phpunit\EmptyTestCase');
-} elseif (version_compare(Version::id(), '7.0.0', '<')) {
+} elseif (version_compare(\PHPUnit\Runner\Version::id(), '7.0.0', '<')) {
     class_alias('test\Mockery\Fixtures\EmptyTestCaseV6', 'tests\Mockery\Adapter\Phpunit\EmptyTestCase');
 } else {
     class_alias('test\Mockery\Fixtures\EmptyTestCaseV7', 'tests\Mockery\Adapter\Phpunit\EmptyTestCase');
@@ -46,9 +41,9 @@ class TestListenerTest extends MockeryTestCase
          * Skip all tests here if PHPUnit is less than 6.0.0
          */
         if (class_exists('\PHPUnit\Runner\Version')) {
-            $ver = Version::series();
+            $ver = \PHPUnit\Runner\Version::series();
         } else {
-            $ver = PHPUnit_Runner_Version::series();
+            $ver = \PHPUnit_Runner_Version::series();
         }
 
         if (intval($ver) < 6) {
@@ -57,7 +52,7 @@ class TestListenerTest extends MockeryTestCase
         }
         // We intentionally test the static container here. That is what the
         // listener will check.
-        $this->container = Mockery::getContainer();
+        $this->container = \Mockery::getContainer();
         $this->listener = new TestListener();
         $this->testResult = new TestResult();
         $this->test = new EmptyTestCase();
@@ -77,7 +72,7 @@ class TestListenerTest extends MockeryTestCase
         // This is what MockeryPHPUnitIntegration and MockeryTestCase trait
         // will do. We intentionally call the static close method.
         $this->test->addToAssertionCount($this->container->mockery_getExpectationCount());
-        Mockery::close();
+        \Mockery::close();
 
         $this->listener->endTest($this->test, 0);
         $this->assertTrue($this->testResult->wasSuccessful(), 'expected test result to indicate success');
@@ -94,15 +89,15 @@ class TestListenerTest extends MockeryTestCase
         // Satisfy the expectation and close the global container now so we
         // don't taint the environment.
         $mock->bar();
-        Mockery::close();
+        \Mockery::close();
     }
 
     public function testMockeryIsAddedToBlacklist()
     {
-        $suite = Mockery::mock(TestSuite::class);
+        $suite = \Mockery::mock(\PHPUnit\Framework\TestSuite::class);
 
-        $this->assertArrayNotHasKey(Mockery::class, Blacklist::$blacklistedClassNames);
+        $this->assertArrayNotHasKey(\Mockery::class, \PHPUnit\Util\Blacklist::$blacklistedClassNames);
         $this->listener->startTestSuite($suite);
-        $this->assertSame(1, Blacklist::$blacklistedClassNames[Mockery::class]);
+        $this->assertSame(1, \PHPUnit\Util\Blacklist::$blacklistedClassNames[\Mockery::class]);
     }
 }

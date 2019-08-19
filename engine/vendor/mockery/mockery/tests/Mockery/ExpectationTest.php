@@ -20,10 +20,8 @@
  */
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery\Container;
 use Mockery\Exception\InvalidCountException;
 use Mockery\MockInterface;
-use Mockery\Undefined;
 
 class ExpectationTest extends MockeryTestCase
 {
@@ -36,7 +34,7 @@ class ExpectationTest extends MockeryTestCase
     public function mockeryTestTearDown()
     {
         parent::mockeryTestTearDown();
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
     }
 
     public function testReturnsNullWhenNoArgs()
@@ -223,7 +221,7 @@ class ExpectationTest extends MockeryTestCase
     public function testReturnsUndefined()
     {
         $this->mock->shouldReceive('foo')->andReturnUndefined();
-        $this->assertInstanceOf(Undefined::class, $this->mock->foo());
+        $this->assertInstanceOf(\Mockery\Undefined::class, $this->mock->foo());
     }
 
     public function testReturnsValuesSetAsArray()
@@ -257,8 +255,8 @@ class ExpectationTest extends MockeryTestCase
      */
     public function it_can_throw_a_throwable()
     {
-        $this->expectException(Error::class);
-        $this->mock->shouldReceive('foo')->andThrow(new Error());
+        $this->expectException(\Error::class);
+        $this->mock->shouldReceive('foo')->andThrow(new \Error());
         $this->mock->foo();
     }
 
@@ -302,14 +300,14 @@ class ExpectationTest extends MockeryTestCase
         try {
             $this->mock->foo();
             throw new Exception("Expected OutOfBoundsException, non thrown");
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->assertInstanceOf("OutOfBoundsException", $e, "Wrong or no exception thrown: {$e->getMessage()}");
         }
 
         try {
             $this->mock->foo();
             throw new Exception("Expected InvalidArgumentException, non thrown");
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->assertInstanceOf("InvalidArgumentException", $e, "Wrong or no exception thrown: {$e->getMessage()}");
         }
     }
@@ -387,7 +385,7 @@ class ExpectationTest extends MockeryTestCase
 
     public function testExpectsArgumentsArrayThrowsExceptionIfPassedWrongArgumentType()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessageRegExp('/invalid argument (.+), only array and closure are allowed/');
         $this->mock->shouldReceive('foo')->withArgs(5);
         Mockery::close();
@@ -454,6 +452,25 @@ class ExpectationTest extends MockeryTestCase
         Mockery::close();
     }
 
+    public function testExpectsSomeOfArgumentsMatchRealArguments()
+    {
+        $this->mock->shouldReceive('foo')->withSomeOfArgs(1, 3, 5)->times(4);
+        $this->mock->foo(1, 2, 3, 4, 5);
+        $this->mock->foo(1, 3, 5, 2, 4);
+        $this->mock->foo(1, 'foo', 3, 'bar', 5);
+        $this->mock->foo(1, 3, 5);
+        $this->mock->shouldReceive('foo')->withSomeOfArgs('foo')->times(2);
+        $this->mock->foo('foo', 'bar');
+        $this->mock->foo('bar', 'foo');
+    }
+
+    public function testExpectsSomeOfArgumentsGivenArgsDoNotMatchRealArgsAndThrowNoMatchingException()
+    {
+        $this->mock->shouldReceive('foo')->withSomeOfArgs(1, 3, 5);
+        $this->expectException(\Mockery\Exception\NoMatchingExpectationException::class);
+        $this->mock->foo(1, 2, 4, 5);
+    }
+
     public function testExpectsAnyArguments()
     {
         $this->mock->shouldReceive('foo')->withAnyArgs();
@@ -489,7 +506,7 @@ class ExpectationTest extends MockeryTestCase
     public function testShouldNotReceiveThrowsExceptionIfMethodCalled()
     {
         $this->mock->shouldNotReceive('foo');
-        $this->expectException(InvalidCountException::class);
+        $this->expectException(\Mockery\Exception\InvalidCountException::class);
         $this->mock->foo();
         Mockery::close();
     }
@@ -497,7 +514,7 @@ class ExpectationTest extends MockeryTestCase
     public function testShouldNotReceiveWithArgumentThrowsExceptionIfMethodCalled()
     {
         $this->mock->shouldNotReceive('foo')->with(2);
-        $this->expectException(InvalidCountException::class);
+        $this->expectException(\Mockery\Exception\InvalidCountException::class);
         $this->mock->foo(2);
         Mockery::close();
     }
@@ -711,7 +728,7 @@ class ExpectationTest extends MockeryTestCase
         $number_of_calls = 0;
         $this->mock->shouldReceive('foo')
             ->times(2)
-            ->with(Mockery::on(function ($argument) use (&$number_of_calls) {
+            ->with(\Mockery::on(function ($argument) use (&$number_of_calls) {
                 $number_of_calls++;
                 return $number_of_calls <= 3;
             }));
@@ -960,7 +977,7 @@ class ExpectationTest extends MockeryTestCase
 
     public function testByDefaultOperatesFromMockConstruction()
     {
-        $container = new Container(Mockery::getDefaultGenerator(), Mockery::getDefaultLoader());
+        $container = new \Mockery\Container(\Mockery::getDefaultGenerator(), \Mockery::getDefaultLoader());
         $mock = $container->mock('f', array('foo'=>'rfoo', 'bar'=>'rbar', 'baz'=>'rbaz'))->byDefault();
         $mock->shouldReceive('foo')->andReturn('foobar');
         $this->assertEquals('foobar', $mock->foo());
@@ -1596,23 +1613,23 @@ class ExpectationTest extends MockeryTestCase
     public function testReturnUndefinedIfIgnoreMissingMethodsSet()
     {
         $this->mock->shouldIgnoreMissing()->asUndefined();
-        $this->assertInstanceOf(Undefined::class, $this->mock->g(1, 2));
+        $this->assertInstanceOf(\Mockery\Undefined::class, $this->mock->g(1, 2));
     }
 
     public function testReturnAsUndefinedAllowsForInfiniteSelfReturningChain()
     {
         $this->mock->shouldIgnoreMissing()->asUndefined();
-        $this->assertInstanceOf(Undefined::class, $this->mock->g(1, 2)->a()->b()->c());
+        $this->assertInstanceOf(\Mockery\Undefined::class, $this->mock->g(1, 2)->a()->b()->c());
     }
 
     public function testShouldIgnoreMissingFluentInterface()
     {
-        $this->assertInstanceOf(MockInterface::class, $this->mock->shouldIgnoreMissing());
+        $this->assertInstanceOf(\Mockery\MockInterface::class, $this->mock->shouldIgnoreMissing());
     }
 
     public function testShouldIgnoreMissingAsUndefinedFluentInterface()
     {
-        $this->assertInstanceOf(MockInterface::class, $this->mock->shouldIgnoreMissing()->asUndefined());
+        $this->assertInstanceOf(\Mockery\MockInterface::class, $this->mock->shouldIgnoreMissing()->asUndefined());
     }
 
     public function testShouldIgnoreMissingAsDefinedProxiesToUndefinedAllowingToString()
@@ -1631,7 +1648,7 @@ class ExpectationTest extends MockeryTestCase
     /** @issue #253 */
     public function testShouldIgnoreMissingDefaultSelfAndReturnsSelf()
     {
-        $this->mock->shouldIgnoreMissing(Mockery::self());
+        $this->mock->shouldIgnoreMissing(\Mockery::self());
         $this->assertSame($this->mock, $this->mock->a()->b());
     }
 
@@ -1644,7 +1661,7 @@ class ExpectationTest extends MockeryTestCase
     public function testOptionalMockRetrieval()
     {
         $m = mock('f')->shouldReceive('foo')->with(1)->andReturn(3)->mock();
-        $this->assertInstanceOf(MockInterface::class, $m);
+        $this->assertInstanceOf(\Mockery\MockInterface::class, $m);
     }
 
     public function testNotConstraintMatchesArgument()
@@ -1754,7 +1771,7 @@ class ExpectationTest extends MockeryTestCase
 
     public function testGlobalConfigMayForbidMockingNonExistentMethodsOnClasses()
     {
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
         $mock = mock('stdClass');
         $this->expectException(\Mockery\Exception::class);
         $mock->shouldReceive('foo');
@@ -1763,7 +1780,7 @@ class ExpectationTest extends MockeryTestCase
 
     public function testGlobalConfigMayForbidMockingNonExistentMethodsOnAutoDeclaredClasses()
     {
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
         $this->expectException(\Mockery\Exception::class);
         $this->expectExceptionMessage("Mockery can't find 'SomeMadeUpClass' so can't mock it");
         $mock = mock('SomeMadeUpClass');
@@ -1773,7 +1790,7 @@ class ExpectationTest extends MockeryTestCase
 
     public function testGlobalConfigMayForbidMockingNonExistentMethodsOnObjects()
     {
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
         $mock = mock(new stdClass);
         $this->expectException(\Mockery\Exception::class);
         $mock->shouldReceive('foo');
@@ -1785,7 +1802,7 @@ class ExpectationTest extends MockeryTestCase
         $service = mock('MyService');
         $service->shouldReceive('login')->with('user', 'pass')->once()->andReturn(true);
         $service->shouldReceive('hasBookmarksTagged')->with('php')->once()->andReturn(false);
-        $service->shouldReceive('addBookmark')->with(Mockery::pattern('/^http:/'), Mockery::type('string'))->times(3)->andReturn(true);
+        $service->shouldReceive('addBookmark')->with(Mockery::pattern('/^http:/'), \Mockery::type('string'))->times(3)->andReturn(true);
         $service->shouldReceive('hasBookmarksTagged')->with('php')->once()->andReturn(true);
 
         $this->assertTrue($service->login('user', 'pass'));
@@ -1801,7 +1818,7 @@ class ExpectationTest extends MockeryTestCase
         $service = mock('MyService');
         $service->shouldReceive('login')->with('user', 'pass')->once()->andReturn(true);
         $service->shouldReceive('hasBookmarksTagged')->with('php')->once()->andReturn(false);
-        $service->shouldReceive('addBookmark')->with(Mockery::pattern('/^http:/'), Mockery::type('string'))->times(3)->andReturn(true);
+        $service->shouldReceive('addBookmark')->with(Mockery::pattern('/^http:/'), \Mockery::type('string'))->times(3)->andReturn(true);
         $service->shouldReceive('hasBookmarksTagged')->with('php')->twice()->andReturn(true);
 
         $this->assertTrue($service->login('user', 'pass'));
@@ -1876,6 +1893,13 @@ class ExpectationTest extends MockeryTestCase
         $this->assertEquals('bar', $mock->foo());
     }
 
+    public function testPassthruCallMagic()
+    {
+        $mock = mock('Mockery_Magic');
+        $mock->shouldReceive('theAnswer')->once()->passthru();
+        $this->assertSame(42, $mock->theAnswer());
+    }
+
     public function testShouldIgnoreMissingExpectationBasedOnArgs()
     {
         $mock = mock("MyService2")->shouldIgnoreMissing();
@@ -1925,13 +1949,13 @@ class ExpectationTest extends MockeryTestCase
     {
         $this->mock->shouldReceive('foo')->once()->andReturn('green');
         $this->mock->shouldReceive('foo')->andReturn('blue');
-        $this->assertEquals($this->mock->foo(), 'green');
-        $this->assertEquals($this->mock->foo(), 'blue');
+        $this->assertEquals('green', $this->mock->foo());
+        $this->assertEquals('blue', $this->mock->foo());
     }
 
     public function testTimesExpectationForbidsFloatNumbers()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->mock->shouldReceive('foo')->times(1.3);
         Mockery::close();
     }
@@ -1972,14 +1996,14 @@ class ExpectationTest extends MockeryTestCase
 
     public function testWetherMockWithInterfaceOnlyCanNotImplementNonExistingMethods()
     {
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
-        $waterMock = Mockery::mock('IWater');
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+        $waterMock = \Mockery::mock('IWater');
         $this->expectException(\Mockery\Exception::class);
         $waterMock
             ->shouldReceive('nonExistentMethod')
             ->once()
             ->andReturnNull();
-        Mockery::close();
+        \Mockery::close();
     }
 
     public function testCountWithBecauseExceptionMessage()
@@ -2107,5 +2131,13 @@ class MockeryTest_Foo
 {
     public function foo()
     {
+    }
+}
+
+class Mockery_Magic
+{
+    public function __call($method, $args)
+    {
+        return 42;
     }
 }

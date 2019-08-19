@@ -19,7 +19,6 @@
  * @license    http://github.com/padraic/mockery/blob/master/LICENSE New BSD License
  */
 
-use Mockery\Exception\NoMatchingExpectationException;
 use PHPUnit\Framework\TestCase;
 
 class WithFormatterExpectationTest extends TestCase
@@ -44,7 +43,7 @@ class WithFormatterExpectationTest extends TestCase
         $mock = Mockery::mock('stdClass');
         $mock->shouldReceive('doBar')->with('foo');
         $obj = new ClassWithGetter($mock);
-        $this->expectException(NoMatchingExpectationException::class);
+        $this->expectException(\Mockery\Exception\NoMatchingExpectationException::class);
         $obj->getFoo();
     }
 
@@ -68,7 +67,7 @@ class WithFormatterExpectationTest extends TestCase
         $obj = new ClassWithGetterWithParam();
         $string = Mockery::formatObjects(array($obj));
 
-        $this->assertTrue(mb_strpos($string, 'Missing argument 1 for') === false);
+        $this->assertTrue(\mb_strpos($string, 'Missing argument 1 for') === false);
     }
 
     public function testFormatObjectsExcludesStaticProperties()
@@ -76,7 +75,7 @@ class WithFormatterExpectationTest extends TestCase
         $obj = new ClassWithPublicStaticProperty();
         $string = Mockery::formatObjects(array($obj));
 
-        $this->assertTrue(mb_strpos($string, 'excludedProperty') === false);
+        $this->assertTrue(\mb_strpos($string, 'excludedProperty') === false);
     }
 
     public function testFormatObjectsExcludesStaticGetters()
@@ -84,7 +83,7 @@ class WithFormatterExpectationTest extends TestCase
         $obj = new ClassWithPublicStaticGetter();
         $string = Mockery::formatObjects(array($obj));
 
-        $this->assertTrue(mb_strpos($string, 'getExcluded') === false);
+        $this->assertTrue(\mb_strpos($string, 'getExcluded') === false);
     }
 }
 

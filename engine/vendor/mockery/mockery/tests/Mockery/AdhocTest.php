@@ -20,9 +20,6 @@
  */
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery\Container;
-use Mockery\Exception\InvalidCountException;
-use Mockery\MockInterface;
 
 /**
  * Ad-hoc unit tests for various scenarios reported by users
@@ -31,7 +28,7 @@ class Mockery_AdhocTest extends MockeryTestCase
 {
     public function mockeryTestSetUp()
     {
-        $this->container = new Container(Mockery::getDefaultGenerator(), Mockery::getDefaultLoader());
+        $this->container = new \Mockery\Container(\Mockery::getDefaultGenerator(), \Mockery::getDefaultLoader());
     }
 
     public function mockeryTestTearDown()
@@ -48,31 +45,31 @@ class Mockery_AdhocTest extends MockeryTestCase
     public function testMockeryInterfaceForClass()
     {
         $m = $this->container->mock('SplFileInfo');
-        $this->assertInstanceOf(MockInterface::class, $m);
+        $this->assertInstanceOf(\Mockery\MockInterface::class, $m);
     }
 
     public function testMockeryInterfaceForNonExistingClass()
     {
         $m = $this->container->mock('ABC_IDontExist');
-        $this->assertInstanceOf(MockInterface::class, $m);
+        $this->assertInstanceOf(\Mockery\MockInterface::class, $m);
     }
 
     public function testMockeryInterfaceForInterface()
     {
         $m = $this->container->mock('MockeryTest_NameOfInterface');
-        $this->assertInstanceOf(MockInterface::class, $m);
+        $this->assertInstanceOf(\Mockery\MockInterface::class, $m);
     }
 
     public function testMockeryInterfaceForAbstract()
     {
         $m = $this->container->mock('MockeryTest_NameOfAbstract');
-        $this->assertInstanceOf(MockInterface::class, $m);
+        $this->assertInstanceOf(\Mockery\MockInterface::class, $m);
     }
 
     public function testInvalidCountExceptionThrowsRuntimeExceptionOnIllegalComparativeSymbol()
     {
         $this->expectException('Mockery\Exception\RuntimeException');
-        $e = new InvalidCountException;
+        $e = new \Mockery\Exception\InvalidCountException;
         $e->setExpectedCountComparative('X');
     }
 

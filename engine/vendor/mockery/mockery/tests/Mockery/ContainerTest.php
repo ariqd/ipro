@@ -19,14 +19,10 @@
  * @license    http://github.com/padraic/mockery/blob/master/LICENSE New BSD License
  */
 
-use Mockery\Container;
-use Mockery\Exception\NoMatchingExpectationException;
 use Mockery\Generator\MockConfigurationBuilder;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 use Mockery\Exception\BadMethodCallException;
-use MyNameSpace\MyClass2;
-use Some\Thing\That\Doesnt\Exist;
 
 class ContainerTest extends MockeryTestCase
 {
@@ -444,6 +440,36 @@ class ContainerTest extends MockeryTestCase
     }
 
     /**
+     * @group partial
+     */
+    public function testCanUseExclamationToBlacklistMethod()
+    {
+        $m = mock('MockeryTest_PartialNormalClass2[!foo]');
+        $this->assertSame('abc', $m->foo());
+    }
+
+    /**
+     * @group partial
+     */
+    public function testCantCallMethodWhenUsingBlacklistAndNoExpectation()
+    {
+        $m = mock('MockeryTest_PartialNormalClass2[!foo]');
+        $this->expectException(BadMethodCallException::class);
+        $this->expectExceptionMessageRegExp('/::bar\(\), but no expectations were specified/');
+        $m->bar();
+    }
+
+    /**
+     * @group partial
+     */
+    public function testCanUseBlacklistAndExpectionOnNonBlacklistedMethod()
+    {
+        $m = mock('MockeryTest_PartialNormalClass2[!foo]');
+        $m->shouldReceive('bar')->andReturn('test')->once();
+        $this->assertSame('test', $m->bar());
+    }
+
+    /**
      * @group issue/4
      */
     public function testCanMockClassContainingMagicCallMethod()
@@ -534,7 +560,7 @@ class ContainerTest extends MockeryTestCase
         $m = mock('NonExistingClass, MockeryTest_Interface1, MockeryTest_Interface2, \Some\Thing\That\Doesnt\Exist');
         $this->assertInstanceOf(MockeryTest_Interface1::class, $m);
         $this->assertInstanceOf(MockeryTest_Interface2::class, $m);
-        $this->assertInstanceOf(Exist::class, $m);
+        $this->assertInstanceOf(\Some\Thing\That\Doesnt\Exist::class, $m);
     }
 
     /**
@@ -559,7 +585,7 @@ class ContainerTest extends MockeryTestCase
     {
         $m = mock('alias:MyNamespace\MyClass2');
         $m->shouldReceive('staticFoo')->andReturn('bar');
-        $this->assertEquals('bar', MyClass2::staticFoo());
+        $this->assertEquals('bar', \MyNameSpace\MyClass2::staticFoo());
     }
 
     /**
@@ -757,7 +783,7 @@ class ContainerTest extends MockeryTestCase
         ];
         $m->shouldReceive('__construct')->with($params);
 
-        $this->expectException(NoMatchingExpectationException::class);
+        $this->expectException(\Mockery\Exception\NoMatchingExpectationException::class);
         new MyNamespace\MyClass15([]);
     }
 
@@ -765,9 +791,9 @@ class ContainerTest extends MockeryTestCase
     {
         $m = mock('overload:MyNamespace\MyClass16');
         $m->shouldReceive('__construct')
-            ->andThrow(new Exception('instanceMock '.rand(100, 999)));
+            ->andThrow(new \Exception('instanceMock '.rand(100, 999)));
 
-        $this->expectException(Exception::class);
+        $this->expectException(\Exception::class);
         $this->expectExceptionMessageRegExp('/^instanceMock \d{3}$/');
         new MyNamespace\MyClass16();
     }
@@ -1156,7 +1182,7 @@ class ContainerTest extends MockeryTestCase
     {
         $mock = mock('MockeryTest_WithProtectedAndPrivate');
 
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('protectedMethod() cannot be mocked as it is a protected method and mocking protected methods is not enabled for the currently used mock object.');
         $mock->shouldReceive("protectedMethod");
     }
@@ -1167,14 +1193,14 @@ class ContainerTest extends MockeryTestCase
     public function testShouldThrowIfAttemptingToStubPrivateMethod()
     {
         $mock = mock('MockeryTest_WithProtectedAndPrivate');
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('privateMethod() cannot be mocked as it is a private method');
         $mock->shouldReceive("privateMethod");
     }
 
     public function testWakeupMagicIsNotMockedToAllowSerialisationInstanceHack()
     {
-        $this->assertInstanceOf(DateTime::class, mock('DateTime'));
+        $this->assertInstanceOf(\DateTime::class, mock('DateTime'));
     }
 
     /**
@@ -1205,7 +1231,7 @@ class ContainerTest extends MockeryTestCase
         $mock = mock('MyTestClass');
         $mock->shouldReceive('foo')->with(array('yourself' => 21));
 
-        $this->expectException(NoMatchingExpectationException::class);
+        $this->expectException(\Mockery\Exception\NoMatchingExpectationException::class);
         $this->expectExceptionMessage('MyTestClass::foo(resource(...))');
         $mock->foo(fopen('php://memory', 'r'));
     }
@@ -1218,7 +1244,7 @@ class ContainerTest extends MockeryTestCase
         $mock = mock('MyTestClass');
         $mock->shouldReceive('foo')->with(array('yourself' => 21));
 
-        $this->expectException(NoMatchingExpectationException::class);
+        $this->expectException(\Mockery\Exception\NoMatchingExpectationException::class);
         $this->expectExceptionMessage("MyTestClass::foo(['myself' => [...]])");
         $mock->foo($testArray);
     }
@@ -1232,7 +1258,7 @@ class ContainerTest extends MockeryTestCase
         $mock = mock('MyTestClass');
         $mock->shouldReceive('foo')->with(array('yourself' => 21));
 
-        $this->expectException(NoMatchingExpectationException::class);
+        $this->expectException(\Mockery\Exception\NoMatchingExpectationException::class);
         $this->expectExceptionMessage("MyTestClass::foo(['a_scalar' => 2, 'an_array' => [...]])");
         $mock->foo($testArray);
     }
@@ -1246,7 +1272,7 @@ class ContainerTest extends MockeryTestCase
         $mock = mock('MyTestClass');
         $mock->shouldReceive('foo')->with(array('yourself' => 21));
 
-        $this->expectException(NoMatchingExpectationException::class);
+        $this->expectException(\Mockery\Exception\NoMatchingExpectationException::class);
         $this->expectExceptionMessage("MyTestClass::foo(['a_scalar' => 2, 'an_object' => object(stdClass)])");
         $mock->foo($testArray);
     }
@@ -1261,7 +1287,7 @@ class ContainerTest extends MockeryTestCase
         $mock = mock('MyTestClass');
         $mock->shouldReceive('foo')->with(array('yourself' => 21));
 
-        $this->expectException(NoMatchingExpectationException::class);
+        $this->expectException(\Mockery\Exception\NoMatchingExpectationException::class);
         $this->expectExceptionMessage("MyTestClass::foo(['a_scalar' => 2, 'a_closure' => object(Closure");
         $mock->foo($testArray);
     }
@@ -1275,7 +1301,7 @@ class ContainerTest extends MockeryTestCase
         $mock = mock('MyTestClass');
         $mock->shouldReceive('foo')->with(array('yourself' => 21));
 
-        $this->expectException(NoMatchingExpectationException::class);
+        $this->expectException(\Mockery\Exception\NoMatchingExpectationException::class);
         $this->expectExceptionMessage("MyTestClass::foo(['a_scalar' => 2, 'a_resource' => resource(...)])");
         $mock->foo($testArray);
     }
@@ -1328,7 +1354,7 @@ class ContainerTest extends MockeryTestCase
      */
     public function testIsValidClassName($expected, $className)
     {
-        $container = new Container;
+        $container = new \Mockery\Container;
         $this->assertSame($expected, $container->isValidClassName($className));
     }
 

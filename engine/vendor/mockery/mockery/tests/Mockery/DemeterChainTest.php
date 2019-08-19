@@ -23,7 +23,6 @@ if (version_compare(PHP_VERSION, '7.0.0') >= 0) {
     require_once __DIR__.'/DummyClasses/DemeterChain.php';
 }
 
-use DemeterChain\Main;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 class DemeterChainTest extends MockeryTestCase
@@ -194,12 +193,26 @@ class DemeterChainTest extends MockeryTestCase
      */
     public function testDemeterChainsWithClassReturnTypeHints()
     {
-        $a = Mockery::mock(\DemeterChain\A::class);
+        $a = \Mockery::mock(\DemeterChain\A::class);
         $a->shouldReceive('foo->bar->baz')->andReturn(new stdClass);
 
-        $m = new Main();
+        $m = new \DemeterChain\Main();
         $result = $m->callDemeter($a);
 
         $this->assertInstanceOf(stdClass::class, $result);
+    }
+
+    /**
+     * @requires PHP 7.0.0
+     */
+    public function testMultipleDemeterChainsWithClassReturnTypeHints()
+    {
+        $bar = new \DemeterChain\C;
+        $qux = new \DemeterChain\C;
+        $a = \Mockery::mock(\DemeterChain\A::class);
+        $a->shouldReceive('foo->bar')->andReturn($bar);
+        $a->shouldReceive('foo->qux')->andReturn($qux);
+        $this->assertEquals($bar, $a->foo()->bar());
+        $this->assertEquals($qux, $a->foo()->qux());
     }
 }

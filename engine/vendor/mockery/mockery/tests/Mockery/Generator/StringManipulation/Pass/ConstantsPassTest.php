@@ -21,7 +21,6 @@
 
 namespace Mockery\Test\Generator\StringManipulation\Pass;
 
-use function mb_strpos;
 use Mockery as m;
 use Mockery\Generator\MockConfiguration;
 use Mockery\Generator\StringManipulation\Pass\ConstantsPass;
@@ -48,6 +47,6 @@ class ConstantsPassTest extends TestCase
             ['ClassWithConstants' => ['FOO' => 'test']]
         );
         $code = $pass->apply(static::CODE, $config);
-        $this->assertTrue(mb_strpos($code, "const FOO = 'test'") !== false);
+        $this->assertTrue(\mb_strpos($code, "const FOO = 'test'") !== false);
     }
 }

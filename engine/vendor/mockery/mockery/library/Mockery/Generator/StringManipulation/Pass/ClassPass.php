@@ -20,7 +20,6 @@
 
 namespace Mockery\Generator\StringManipulation\Pass;
 
-use Mockery;
 use Mockery\Generator\MockConfiguration;
 
 class ClassPass implements Pass
@@ -45,7 +44,7 @@ class ClassPass implements Pass
         }
 
         if (!class_exists($className)) {
-            Mockery::declareClass($className);
+            \Mockery::declareClass($className);
         }
 
         $code = str_replace(

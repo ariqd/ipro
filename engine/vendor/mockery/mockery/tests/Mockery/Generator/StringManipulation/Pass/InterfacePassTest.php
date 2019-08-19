@@ -21,7 +21,6 @@
 
 namespace Mockery\Test\Generator\StringManipulation\Pass;
 
-use function mb_strpos;
 use Mockery as m;
 use Mockery\Generator\MockConfiguration;
 use Mockery\Generator\StringManipulation\Pass\InterfacePass;
@@ -62,6 +61,6 @@ class InterfacePassTest extends TestCase
 
         $code = $pass->apply(static::CODE, $config);
 
-        $this->assertTrue(mb_strpos($code, "implements MockInterface, \Dave\Dave, \Paddy\Paddy") !== false);
+        $this->assertTrue(\mb_strpos($code, "implements MockInterface, \Dave\Dave, \Paddy\Paddy") !== false);
     }
 }

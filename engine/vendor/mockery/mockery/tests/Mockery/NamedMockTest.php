@@ -22,7 +22,6 @@
 require_once __DIR__.'/DummyClasses/Namespaced.php';
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Nature\Plant;
 use test\Mockery\Stubs\Animal;
 use test\Mockery\Stubs\Habitat;
 
@@ -60,7 +59,7 @@ class NamedMockTest extends MockeryTestCase
     /** @test */
     public function itCreatesConcreteMethodImplementationWithReturnType()
     {
-        $cactus = new Plant();
+        $cactus = new \Nature\Plant();
         $gardener = Mockery::namedMock(
             "NewNamespace\\ClassName",
             "Gardener",

@@ -20,14 +20,11 @@
 
 namespace Mockery\Generator;
 
-use Mockery;
-use ReflectionMethod;
-
 class Method
 {
     private $method;
 
-    public function __construct(ReflectionMethod $method)
+    public function __construct(\ReflectionMethod $method)
     {
         $this->method = $method;
     }
@@ -57,11 +54,11 @@ class Method
         }
 
         if (version_compare(PHP_VERSION, '7.0.0-dev') >= 0 && $this->method->hasReturnType()) {
-            $returnType = (string) $this->method->getReturnType();
+            $returnType = PHP_VERSION_ID >= 70100 ? $this->method->getReturnType()->getName() : (string) $this->method->getReturnType();
 
             if ('self' === $returnType) {
                 $returnType = "\\".$this->method->getDeclaringClass()->getName();
-            } elseif (!Mockery::isBuiltInType($returnType)) {
+            } elseif (!\Mockery::isBuiltInType($returnType)) {
                 $returnType = '\\'.$returnType;
             }
 

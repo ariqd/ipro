@@ -45,7 +45,7 @@ class PHPUnitConstraintTest extends MockeryTestCase
             $this->frameworkConstraint = '\PHPUnit_Framework_Constraint';
         }
 
-        $this->constraint = Mockery::mock($this->frameworkConstraint);
+        $this->constraint = \Mockery::mock($this->frameworkConstraint);
         $this->matcher = new PHPUnitConstraint($this->constraint);
         $this->rethrowingMatcher = new PHPUnitConstraint($this->constraint, true);
     }

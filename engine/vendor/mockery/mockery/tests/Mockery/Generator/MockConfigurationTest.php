@@ -21,11 +21,7 @@
 
 namespace Mockery\Generator;
 
-use Iterator;
-use IteratorAggregate;
-use Mockery\Exception;
 use PHPUnit\Framework\TestCase;
-use Traversable;
 
 class MockConfigurationTest extends TestCase
 {
@@ -117,7 +113,7 @@ class MockConfigurationTest extends TestCase
      */
     public function shouldThrowIfTargetClassIsFinal()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(\Mockery\Exception::class);
         $config = new MockConfiguration(array("Mockery\\Generator\\TestFinal"));
         $config->getTargetClass();
     }
@@ -175,13 +171,13 @@ class MockConfigurationTest extends TestCase
     }
 }
 
-interface TestTraversableInterface extends Traversable
+interface TestTraversableInterface extends \Traversable
 {
 }
-interface TestTraversableInterface2 extends Traversable, Iterator
+interface TestTraversableInterface2 extends \Traversable, \Iterator
 {
 }
-interface TestTraversableInterface3 extends Traversable, IteratorAggregate
+interface TestTraversableInterface3 extends \Traversable, \IteratorAggregate
 {
 }
 

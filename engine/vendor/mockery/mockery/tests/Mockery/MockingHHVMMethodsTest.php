@@ -21,17 +21,14 @@
 
 namespace test\Mockery;
 
-use function defined;
-use HH\ImmVector;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery\Container;
 use Mockery\Generator\Method;
 use test\Mockery\Fixtures\MethodWithHHVMReturnType;
 
 class MockingHHVMMethodsTest extends MockeryTestCase
 {
     /**
-     * @var Container
+     * @var \Mockery\Container
      */
     private $container;
 
@@ -96,7 +93,7 @@ class MockingHHVMMethodsTest extends MockeryTestCase
     {
         $mock = mock('test\Mockery\Fixtures\MethodWithHHVMReturnType');
 
-        $mock->shouldReceive('HHVMImmVector')->andReturn(new ImmVector([1, 2, 3]));
+        $mock->shouldReceive('HHVMImmVector')->andReturn(new \HH\ImmVector([1, 2, 3]));
         $mock->HHVMImmVector();
     }
 
@@ -105,6 +102,6 @@ class MockingHHVMMethodsTest extends MockeryTestCase
      */
     private function isHHVM()
     {
-        return defined('HHVM_VERSION');
+        return \defined('HHVM_VERSION');
     }
 }

@@ -19,18 +19,17 @@
  */
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery\MockInterface;
 
 class GlobalHelpersTest extends MockeryTestCase
 {
     public function mockeryTestSetUp()
     {
-        Mockery::globalHelpers();
+        \Mockery::globalHelpers();
     }
 
     public function mockeryTestTearDown()
     {
-        Mockery::close();
+        \Mockery::close();
     }
 
     /** @test */
@@ -38,8 +37,8 @@ class GlobalHelpersTest extends MockeryTestCase
     {
         $double = mock();
 
-        $this->assertInstanceOf(MockInterface::class, $double);
-        $this->expectException(Exception::class);
+        $this->assertInstanceOf(\Mockery\MockInterface::class, $double);
+        $this->expectException(\Exception::class);
         $double->foo();
     }
 
@@ -48,7 +47,7 @@ class GlobalHelpersTest extends MockeryTestCase
     {
         $double = spy();
 
-        $this->assertInstanceOf(MockInterface::class, $double);
+        $this->assertInstanceOf(\Mockery\MockInterface::class, $double);
         $double->foo();
     }
 
@@ -58,7 +57,7 @@ class GlobalHelpersTest extends MockeryTestCase
         $className = "Class".uniqid();
         $double = namedMock($className);
 
-        $this->assertInstanceOf(MockInterface::class, $double);
+        $this->assertInstanceOf(\Mockery\MockInterface::class, $double);
         $this->assertInstanceOf($className, $double);
     }
 }
