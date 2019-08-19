@@ -14,12 +14,12 @@ function number_format(number, decimals, decPoint, thousandsSep) { // eslint-dis
 
     // @todo: for IE parseFloat(0.55).toFixed(0) = 0;
     s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-    if (s[0].length > 3) {
-        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep)
+    if (s[ 0 ].length > 3) {
+        s[ 0 ] = s[ 0 ].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep)
     }
-    if ((s[1] || '').length < prec) {
-        s[1] = s[1] || '';
-        s[1] += new Array(prec - s[1].length + 1).join('0')
+    if ((s[ 1 ] || '').length < prec) {
+        s[ 1 ] = s[ 1 ] || '';
+        s[ 1 ] += new Array(prec - s[ 1 ].length + 1).join('0')
     }
 
     return s.join(dec)
@@ -28,11 +28,11 @@ function number_format(number, decimals, decPoint, thousandsSep) { // eslint-dis
 var classUang = document.getElementsByClassName("printUang");
 if (classUang.length > 0) {
     for (var i = 0; i < classUang.length; i++) {
-        var val = classUang[i].innerHTML;
+        var val = classUang[ i ].innerHTML;
         if (val !== '' && val != null && !isNaN(val)) {
-            val = parseFloat(classUang[i].innerHTML);
+            val = parseFloat(classUang[ i ].innerHTML);
             var res = "Rp. " + number_format(val, 2, ",", ".");
-            classUang[i].innerHTML = res;
+            classUang[ i ].innerHTML = res;
         }
     }
 }
@@ -75,8 +75,9 @@ function addProduct(id) {
             '       <div class="row">' +
             '           <div class="col-lg-6">' +
             '               <h5><b>' + name + ' (' + branch + ')</b></h5>' +
-            '               <p class="mb-0" id="price-' + code + '">Harga Jual: Rp ' + price_branch + '</p>' +
-            '               <p id="price-pusat-' + code + '">Harga Pusat: Rp ' + price + '</p>' +
+            '               <p id="price-pusat-' + code + '" class="mb-0">Harga Pricelist: Rp ' + price + '</p>' +
+            '               <p id="price-' + code + '" class="mb-0">Harga Jual: Rp ' + price_branch + '</p>' +
+            '               <p id="quantity-' + code + '">Stok Tersedia: ' + quantity + '</p>' +
             '               <input type="hidden" value="' + code + '" name="item[' + items_count + '][stock_id]">' +
             '               <span class="btn btn-outline-danger" onclick="return removeProduct(' + "'" + code + "'" + ');"><i class="fa fa-trash"></i>' +
             '                   Hapus' +
@@ -89,13 +90,13 @@ function addProduct(id) {
             '                   <div class="col-sm-8">' +
             '                   <span class="select">' +
             '                       <input type="number" class="form-control item-qty-' + code + '" id="item-qty-' + code + '"' +
-            '                              min="1" value="1" name="item[' + items_count + '][qty]" onchange="countSubtotal(' + "'" + code + "'" + ')">' +
+            '                              min="1" max="' + quantity + '" value="1" name="item[' + items_count + '][qty]" onchange="countSubtotal(' + "'" + code + "'" + ')">' +
             '                   </span>' +
             '                   </div>' +
             '               </div>' +
             '               <div class="pb-2 form-row">' +
             '                   <label for="item-price-' + code + '"' +
-            '                       class="col-sm-4 col-form-label text-right">Harga Pusat</label>' +
+            '                       class="col-sm-4 col-form-label text-right">Harga Pricelist</label>' +
             '                   <div class="col-sm-8">' +
             '                   <span class="select">' +
             '                       <input type="text" disabled class="form-control item-price-' + code + '" id="item-price-' + code + '"' +

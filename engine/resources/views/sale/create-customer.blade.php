@@ -32,27 +32,27 @@
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="phone" class="form-control-label">No. Telepon</label>
+                <label for="phone" class="form-control-label">No. Telepon Customer</label>
                 <input id="phone" class="form-control" name="phone"
                     value="{{ @$isEdit ? $customer->phone : old('phone') }}">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="address" class="form-control-label">Alamat</label>
+                <label for="address" class="form-control-label">Alamat Customer</label>
                 <textarea name="address" id="address" class="form-control"
                     rows="5">{{ @$isEdit ? $customer->alamat : old('alamat') }}</textarea>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="fax" class="form-control-label">Fax</label>
+                <label for="fax" class="form-control-label">Fax Customer</label>
                 <input id="fax" class="form-control" name="fax" value="{{ @$isEdit ? $customer->fax : old('fax') }}">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="email" class="form-control-label">Email</label>
+                <label for="email" class="form-control-label">Email Customer</label>
                 <input id="email" type="text" class="form-control" name="email"
                     value="{{ @$isEdit ? $customer->email : old('email') }}">
             </div>

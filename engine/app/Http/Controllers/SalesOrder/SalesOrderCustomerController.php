@@ -38,9 +38,9 @@ class SalesOrderCustomerController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('sales-orders/create')->with('error', 'Data yang dibutuhkam belum terisi seluruhnya!')
-                ->withInput()
-                ->withErrors($validator);
+            return redirect('sales-orders/create')->with('error', 'Data customer yang dibutuhkan belum terisi seluruhnya!');
+                // ->withInput()
+                // ->withErrors($validator);
         }
 
         $input['user_id'] = Auth::id();

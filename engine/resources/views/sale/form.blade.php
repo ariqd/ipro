@@ -154,10 +154,10 @@
                                 '<div>' +
                                 '<h5>' + value.item.name + ' (' + value.branch.name +
                                 ') ' + '</h5>' +
-                                '<p class="m-0">Quantity: ' + value.quantity + '</p>' +
-                                '<p class="m-0">Harga Pusat: Rp ' + value.item
+                                '<p>Quantity: ' + value.quantity + '</p>' +
+                                '<p class="m-0">Harga Pricelist: Rp' + value.item
                                 .purchase_price + '</p>' +
-                                '<p class="m-0">Harga Cabang: Rp ' + value
+                                '<p class="m-0">Harga Cabang: Rp' + value
                                 .price_branch + '</p>' +
                                 '</div>' +
                                 '<div>' +
@@ -255,110 +255,99 @@
         </div>
     </div>
     <div class="row">
-        @if(Gate::allows('isAdmin') || Auth::user()->id == 5)
+        <div class="col-12">
+            @include('layouts.feedback')
+        </div>
+    </div>
+    <div class="row">
+        @if(Gate::allows('isAdmin') || Auth::id() == 5)
         <div class="col-lg-12 mb-5">
             <h4><b><label for="sales">Pilih Jenis SO</label></b></h4>
-            {{-- <div class="card">
-                <div class="card-body"> --}}
             <select name="case_2" id="case_2" class="form-control">
                 <option value="1">By Sales (dibuat oleh Sales)</option>
                 <option value="2">By Head Sales (dibuat oleh Head Sales)</option>
                 <option value="3">Referral (dibuat bersama oleh Head Sales dan Sales)</option>
-                <option value="4">By Admin (dibuat oleh Admin)</option>
+                <option value="4">By Admin (dibuat oleh Admin Sales)</option>
             </select>
-            {{-- </div>
-            </div> --}}
         </div>
-        {{-- <div class="col-lg-6">
-            <h4><b><label for="sales">Sales</label></b></h4>
+        @endif
+        <div class="col-12">
+            <h4><b><label for="customer_select">Customer</label></b> &nbsp;
+                @if(Gate::allows('isAdmin')||Gate::allows('isSales'))
+                <a href="#modalForm" data-toggle="modal" data-href="{{ url('sales-orders/create/customer') }}"
+                    class="btn btn-dark btn-sm">
+                    <i class="fa fa-plus"></i> Tambah Customer Baru</a>
+                @endif
+            </h4>
+        </div>
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <select id="sales" name="user_id" class="form-control">
-                        @foreach ($sales as $item)
-                        <option value="{{ $item->id }}"> {{ $item->name }} </option>
-        @endforeach
-        </select>
-    </div>
-    </div>
-    </div> --}}
-    @endif
-    <div class="col-12">
-        <h4><b><label for="customer_select">Customer</label></b> &nbsp;
-            @if(Gate::allows('isAdmin')||Gate::allows('isSales'))
-            <a href="#modalForm" data-toggle="modal" data-href="{{ url('sales-orders/create/customer') }}"
-                class="btn btn-dark btn-sm">
-                <i class="fa fa-plus"></i> Tambah Customer Baru</a>
-            @endif
-        </h4>
-    </div>
-    <div class="col-lg-12">
-        @include('layouts.feedback')
-        <div class="card">
-            <div class="card-body">
-                <div class="form-group">
-                    <select class="form-control customer mb-0" id="customer_select" name="customer_id" required
-                        style="width: 100%">
-                        <option></option>
-                        @foreach($customers as $customer)
-                        <option value="{{ $customer->id }}" class="text-danger"
-                            {{ @$isEdit && $customer->id == $sale->customer->id ? 'selected' : '' }}>
-                            {{ $customer->project_owner }} {{ $customer->created_at->isToday() ? '- NEW!' : '' }}
-                        </option>
-                        @endforeach
-                    </select>
+                    <div class="form-group">
+                        <select class="form-control customer mb-0" id="customer_select" name="customer_id" required
+                            style="width: 100%">
+                            <option></option>
+                            @foreach($customers as $customer)
+                            <option value="{{ $customer->id }}" class="text-danger"
+                                {{ @$isEdit && $customer->id == $sale->customer->id ? 'selected' : '' }}>
+                                {{ $customer->project_owner }} {{ $customer->created_at->isToday() ? '- NEW!' : '' }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <h5 class="card-header bg-secondary">
-                <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example"
-                    id="heading-example" class="d-flex justify-content-between align-items-center collapsed">
-                    <div>
-                        <span id="detail-text">Tampilkan</span> Detail Customer
-                    </div>
-                    <div>
-                        <i class="fa fa-chevron-down"></i>
-                    </div>
-                </a>
-            </h5>
-            <div class="collapse" id="collapse-example" style="background: #F5F5F5;">
-                <div class="card-body">
-                    <div class="form-row">
-                        <div class="form-group col-lg-2">
-                            <label for="register_id">Register ID</label>
-                            <input type="text" class="form-control" id="register_id" disabled name="register_id"
-                                value="{{ @$isEdit ? $sale->customer->id : '' }}">
+                <h5 class="card-header bg-secondary">
+                    <a data-toggle="collapse" href="#collapse-example" aria-expanded="true"
+                        aria-controls="collapse-example" id="heading-example"
+                        class="d-flex justify-content-between align-items-center collapsed">
+                        <div>
+                            <span id="detail-text">Tampilkan</span> Detail Customer
                         </div>
-                        <div class="form-group col-lg-5">
-                            <label for="name">Pemilik Project</label>
-                            <input type="text" class="form-control" id="name" disabled name="name"
-                                value="{{ @$isEdit ? $sale->customer->project_owner : '' }}">
+                        <div>
+                            <i class="fa fa-chevron-down"></i>
                         </div>
-                        <div class="form-group col-lg-5">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" disabled name="email"
-                                value="{{ @$isEdit ? $sale->customer->email : '' }}">
+                    </a>
+                </h5>
+                <div class="collapse" id="collapse-example" style="background: #F5F5F5;">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-lg-2">
+                                <label for="register_id">Register ID</label>
+                                <input type="text" class="form-control" id="register_id" disabled name="register_id"
+                                    value="{{ @$isEdit ? $sale->customer->id : '' }}">
+                            </div>
+                            <div class="form-group col-lg-5">
+                                <label for="name">Pemilik Project</label>
+                                <input type="text" class="form-control" id="name" disabled name="name"
+                                    value="{{ @$isEdit ? $sale->customer->project_owner : '' }}">
+                            </div>
+                            <div class="form-group col-lg-5">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" disabled name="email"
+                                    value="{{ @$isEdit ? $sale->customer->email : '' }}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-lg-6">
-                            <label for="address">Alamat</label>
-                            <input type="text" class="form-control" id="address" disabled name="address"
-                                value="{{ @$isEdit ? $sale->customer->address : '' }}">
-                        </div>
-                        <div class="form-group col-lg-3">
-                            <label for="phone">Telp</label>
-                            <input type="text" class="form-control" id="phone" disabled name="phone"
-                                value="{{ @$isEdit ? $sale->customer->phone : '' }}">
-                        </div>
-                        <div class="form-group col-lg-3">
-                            <label for="fax">Fax</label>
-                            <input type="text" class="form-control" id="fax" disabled name="fax"
-                                value="{{ @$isEdit ? $sale->customer->fax : '' }}">
+                        <div class="form-row">
+                            <div class="form-group col-lg-6">
+                                <label for="address">Alamat</label>
+                                <input type="text" class="form-control" id="address" disabled name="address"
+                                    value="{{ @$isEdit ? $sale->customer->address : '' }}">
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="phone">Telp</label>
+                                <input type="text" class="form-control" id="phone" disabled name="phone"
+                                    value="{{ @$isEdit ? $sale->customer->phone : '' }}">
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <label for="fax">Fax</label>
+                                <input type="text" class="form-control" id="fax" disabled name="fax"
+                                    value="{{ @$isEdit ? $sale->customer->fax : '' }}">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -447,21 +436,20 @@
                                     @endforeach
                                 </select>
                             </div>
-
                             <div class="card mb-0" id="itemsList">
                                 <div class="card-body p-0" id="items">
                                     <div id="items-text" class="text-secondary p-3">
-                                        Hasil pencarian akan muncul disini
+                                        <i class="fa fa-shopping-cart"></i> Hasil pencarian akan muncul disini
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-8">
-                            <div class="card">
+                            <div class="card mt-3 mt-lg-0">
                                 <div class="card-body p-0" id="items2">
                                     <div class="d-flex justify-content-between align-items-center p-3">
                                         <div id="items2-text" class="count text-secondary">
-                                            Belum ada barang dipilih
+                                            <i class="fa fa-shopping-cart"></i> Belum ada barang dipilih
                                         </div>
                                         <div>
                                             <b>Total:</b> <span id="grand-total-span">Rp 0</span>
