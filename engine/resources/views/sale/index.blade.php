@@ -28,7 +28,7 @@
             @if (Auth::user()->role != 'finance')
             <div>
                 <a href="{{ url('sales-orders/create') }}" class="btn btn-dark">
-                    <i class="fa fa-plus"></i> Create Sales Quotation
+                    <i class="fa fa-plus"></i> Buat Sales Quotation
                 </a>
             </div>
             @endif
