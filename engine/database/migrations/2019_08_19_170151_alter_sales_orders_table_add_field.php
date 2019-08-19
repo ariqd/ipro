@@ -15,8 +15,8 @@ class AlterSalesOrdersTableAddField extends Migration
     {
         Schema::table('sales_orders', function (Blueprint $table) {
             //
-            $table->integer('sales_id');
-            $table->integer('admin_id');
+            $table->integer('sales_id')->nullable();
+            $table->integer('admin_id')->nullable();
         });
     }
 
