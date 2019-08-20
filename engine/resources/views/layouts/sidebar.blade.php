@@ -75,6 +75,7 @@
             </li>
             @endif
 
+            @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
             <li class="nav-item">
                 <a href="{{ url('purchase-orders') }}"
                     class="nav-link {{ (request()->is('purchase-orders*')) ? 'active' : '' }}">
@@ -87,6 +88,7 @@
                     <i class="fa fa-truck"></i> Goods Receive
                 </a>
             </li>
+            @endif
 
             <li class="nav-item">
                 <a href="{{ url('sales-orders') }}"
@@ -101,7 +103,6 @@
                     <i class="fa fa-line-chart"></i> Finance
                 </a>
             </li>
-            @endif
 
             <li class="nav-item d-none">
                 <a href="{{ url('deposits') }}" class="nav-link {{ (request()->is('deposits*')) ? 'active' : '' }}">
@@ -110,10 +111,11 @@
             </li>
 
             <li class="nav-item">
-                    <a href="{{ url('settings') }}" class="nav-link {{ (request()->is('settings*')) ? 'active' : '' }}">
-                        <i class="fa fa-cog"></i> Settings
-                    </a>
-                </li>
+                <a href="{{ url('settings') }}" class="nav-link {{ (request()->is('settings*')) ? 'active' : '' }}">
+                    <i class="fa fa-cog"></i> Settings
+                </a>
+            </li>
+            @endif
         </ul>
     </nav>
 </div>
