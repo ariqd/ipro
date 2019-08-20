@@ -21,6 +21,7 @@
     .card-header .collapsed .fa {
         transform: rotate(90deg);
     }
+
 </style>
 @endpush
 
@@ -58,7 +59,7 @@
             placeholder: "Pilih Customer",
             allowClear: true
         });
-        @if(Auth::User() -> role == "admin" || Auth::User() -> id == 5)
+        @if(Gate::allows('isAdmin') || Auth::id() == 5)
         $("#sales").select2({
             selectOnClose: true,
             placeholder: "Pilih Sales"
@@ -154,10 +155,10 @@
                                 '<div>' +
                                 '<h5>' + value.item.name + ' (' + value.branch.name +
                                 ') ' + '</h5>' +
-                                '<p class="m-0">Quantity: ' + value.quantity + '</p>' +
-                                '<p class="m-0">Harga Pusat: Rp ' + value.item
+                                '<p>Quantity: ' + value.quantity + '</p>' +
+                                '<p class="m-0">Harga Pricelist: Rp' + value.item
                                 .purchase_price + '</p>' +
-                                '<p class="m-0">Harga Cabang: Rp ' + value
+                                '<p class="m-0">Harga Cabang: Rp' + value
                                 .price_branch + '</p>' +
                                 '</div>' +
                                 '<div>' +
@@ -209,7 +210,7 @@
             }
         });
     });
-    $("#case_1").change(function() {
+    $("#case_1").change(function () {
         if ($("#case_1").val() == 2) {
             $('#sales').val('5').trigger('change');
             $('#sales').attr("read-only", "true");
@@ -217,6 +218,13 @@
             $('#sales').attr("read-only", "false");
         }
     });
+    $('#collapse-example').on('shown.bs.collapse', function () {
+        document.getElementById('detail-text').innerHTML = 'Sembunyikan';
+    })
+    $('#collapse-example').on('hidden.bs.collapse', function () {
+        document.getElementById('detail-text').innerHTML = 'Tampilkan';
+    })
+
 </script>
 @endpush
 
@@ -226,25 +234,24 @@
     @csrf
     {{ @$edit ? method_field('PUT') : '' }}
     <div class="row">
-        <div class="col-lg-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h2>
-                        <small>
-                            <a href="{{ url('sales-orders') }}" class="text-dark">Sales Orders</a> /
-                        </small>
-                        <b>{{ @$isEdit ? 'Edit' : 'Buat' }} Quotation</b>
-                    </h2>
-                </div>
-                <div>
-                    <div class="form-group row">
-                        <label for="quotation_id" class="col-5 col-form-label text-right">Quotation ID</label>
-                        <div class="col-7">
-                            <input type="text" class="form-control" id="quotation_id" name="quotation_id" value="{{ @$isEdit ? $sale->quotation_id : $no_qo }}" required>
-                        </div>
-                    </div>
+        <div class="col-12 col-lg-6">
+            <h2>
+                <small>
+                    <a href="{{ url('sales-orders') }}" class="text-dark border-bottom border-dark">Sales Orders</a> /
+                </small>
+                <b>{{ @$isEdit ? 'Edit' : 'Buat' }} Quotation</b>
+            </h2>
+        </div>
+        <div class="col-12 col-lg-6 mt-3 mt-lg-0">
+            <div class="form-group row">
+                <label for="quotation_id" class="col-12 col-lg-5 col-form-label text-lg-right">Quotation ID</label>
+                <div class="col-12 col-lg-7">
+                    <input type="text" class="form-control" id="quotation_id" name="quotation_id"
+                        value="{{ @$isEdit ? $sale->quotation_id : $no_qo }}" required>
                 </div>
             </div>
+        </div>
+        <div class="col-12">
             <hr>
         </div>
     </div>
@@ -252,52 +259,27 @@
         <div class="col-12">
             @include('layouts.feedback')
         </div>
-        {{-- <div class="row"> --}}
-
-        {{-- </div> --}}
-        @if(Gate::allows('isAdmin') || Auth::user()->id == 5)
-        <div class="col-lg-6">
-            <h4><b><label for="sales">Case</label></b></h4>
-            <div class="card">
-                <div class="card-body">
-                    <select class="form-control" name="case_1" id="case_1">
-                        <option value="1">Sales</option>
-                        <option value="2">Head Office</option>
-                    </select>
-                </div>
-
-                <div class="card-body">
-                    <select name="case_2" id="case_2" class="form-control">
-                        <option value="1">Mandiri</option>
-                        <option value="2">Referral</option>
-                        <option value="3">Admin</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-            <h4><b><label for="sales">Sales</label></b></h4>
-            <div class="card">
-                <div class="card-body">
-                    <select id="sales" name="user_id" class="form-control">
-                        @foreach ($sales as $item)
-                        <option value="{{ $item->id }}"> {{ $item->name }} </option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
+    </div>
+    <div class="row">
+        @if(Gate::allows('isAdmin') || Auth::id() == 5)
+        <div class="col-lg-12 mb-5">
+            <h4><b><label for="sales">Pilih Jenis SO</label></b></h4>
+            <select name="case_2" id="case_2" class="form-control">
+                <option value="1">By Sales (dibuat oleh Sales)</option>
+                <option value="2">By Head Sales (dibuat oleh Head Sales)</option>
+                <option value="3">Referral (dibuat bersama oleh Head Sales dan Sales)</option>
+                <option value="4">By Admin (dibuat oleh Admin Sales)</option>
+            </select>
         </div>
         @endif
-        <div class="col-6">
-            <h4><b><label for="customer_select">Customer</label></b></h4>
-        </div>
-        <div class="col-6">
-            <div class="float-right">
+        <div class="col-12">
+            <h4><b><label for="customer_select">Customer</label></b> &nbsp;
                 @if(Gate::allows('isAdmin')||Gate::allows('isSales'))
-                <a href="#modalForm" data-toggle="modal" data-href="{{ url('sales-orders/create/customer') }}" class="btn btn-outline-dark btn-sm">
-                    <i class="fa fa-plus"></i> Buat Customer</a>
+                <a href="#modalForm" data-toggle="modal" data-href="{{ url('sales-orders/create/customer') }}"
+                    class="btn btn-dark btn-sm">
+                    <i class="fa fa-plus"></i> Tambah Customer Baru</a>
                 @endif
-            </div>
+            </h4>
         </div>
         <div class="col-lg-12">
             <div class="card">
@@ -306,8 +288,9 @@
                         <select class="form-control customer mb-0" id="customer_select" name="customer_id" required style="width: 100%">
                             <option></option>
                             @foreach($customers as $customer)
-                            <option value="{{ $customer->id }}" {{ @$isEdit && $customer->id == $sale->customer->id ? 'selected' : '' }}>
-                                {{ $customer->project_owner }}
+                            <option value="{{ $customer->id }}" class="text-danger"
+                                {{ @$isEdit && $customer->id == $sale->customer->id ? 'selected' : '' }}>
+                                {{ $customer->project_owner }} {{ $customer->created_at->isToday() ? '- NEW!' : '' }}
                             </option>
                             @endforeach
                         </select>
@@ -316,7 +299,7 @@
                 <h5 class="card-header bg-secondary">
                     <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-flex justify-content-between align-items-center collapsed">
                         <div>
-                            Detail Customer
+                            <span id="detail-text">Tampilkan</span> Detail Customer
                         </div>
                         <div>
                             <i class="fa fa-chevron-down"></i>
@@ -443,21 +426,20 @@
                                     @endforeach
                                 </select>
                             </div>
-
                             <div class="card mb-0" id="itemsList">
                                 <div class="card-body p-0" id="items">
                                     <div id="items-text" class="text-secondary p-3">
-                                        Hasil pencarian akan muncul disini
+                                        <i class="fa fa-shopping-cart"></i> Hasil pencarian akan muncul disini
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-8">
-                            <div class="card">
+                            <div class="card mt-3 mt-lg-0">
                                 <div class="card-body p-0" id="items2">
                                     <div class="d-flex justify-content-between align-items-center p-3">
                                         <div id="items2-text" class="count text-secondary">
-                                            Belum ada barang dipilih
+                                            <i class="fa fa-shopping-cart"></i> Belum ada barang dipilih
                                         </div>
                                         <div>
                                             <b>Total:</b> <span id="grand-total-span">Rp 0</span>
