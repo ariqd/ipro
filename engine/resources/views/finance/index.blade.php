@@ -35,6 +35,7 @@
                     <th>Persentase</th>
                     <th>Total Komisi</th>
                     <th>Achievement</th>
+                    <th>Achieved</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -46,6 +47,7 @@
                     <td>{{ @$user->commission->percentage ?? '0' }} %</td>
                     <td>Rp {{ number_format(@$user->commission->total_commission) ?? '-' }}</td>
                     <td>Rp {{ number_format(@$user->commission->achievement) ?? '-' }}</td>
+                    <td>Rp {{ number_format(@$user->commission->achieved) ?? '-' }}</td>
                     <td>
                         @if (empty($user->commission->percentage))
                         <span class="badge badge-warning">Komisi periode ini belum diatur</span>
