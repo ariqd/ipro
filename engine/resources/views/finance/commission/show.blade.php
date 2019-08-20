@@ -30,7 +30,7 @@
 
 <div class="row">
     <div class="col-6">
-        <h4>Periode {{ $from->format('d F') }} - {{ $to->format('d F') }}</h4>
+        <h4>Periode {{ $from }} - {{ $to }}</h4>
     </div>
     <div class="col-6">
         <h4 class="float-right">

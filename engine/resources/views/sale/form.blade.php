@@ -27,17 +27,17 @@
 @push("js")
 <script src="{{ asset('assets/js/scripts.js') }}"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         let items_count = 0;
 
-        $("#customer_select").change(function () {
+        $("#customer_select").change(function() {
             var id = $(this).val();
             $.ajax({
                 // url: '/info/' + $(this).val(),
                 url: "{{ url('sales-orders/create/customer/') }}/" + id,
                 type: 'get',
                 data: {},
-                success: function (data) {
+                success: function(data) {
                     if (data.success === true) {
                         $("#register_id").val(data.fill.id);
                         $("#name").val(data.fill.project_owner);
@@ -49,7 +49,7 @@
                         alert('Cannot find info');
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {}
+                error: function(jqXHR, textStatus, errorThrown) {}
             });
         });
 
@@ -59,7 +59,7 @@
             allowClear: true
         });
         @if(Auth::User() -> role == "admin" || Auth::User() -> id == 5)
-            $("#sales").select2({
+        $("#sales").select2({
             selectOnClose: true,
             placeholder: "Pilih Sales"
         });
@@ -80,7 +80,7 @@
             allowClear: true
         });
 
-        $("#brands").change(function () {
+        $("#brands").change(function() {
             var id = $("#brands").val();
             $("#categories").select2({
                 selectOnClose: true,
@@ -89,9 +89,9 @@
                     url: "{!! url('categories/search') !!}/" + id,
                     dataType: 'json',
                     delay: 600,
-                    processResults: function (data) {
+                    processResults: function(data) {
                         return {
-                            results: $.map(data, function (item) {
+                            results: $.map(data, function(item) {
                                 return {
                                     text: item.name,
                                     id: item.id
@@ -105,7 +105,8 @@
         });
 
         function searchProduct() {
-            items_count = 0;
+
+    items_count = 0;
             var id = $('#categories').val();
             $.ajax({
                 url: '{{ url("sales-orders/create/search-stocks") }}',
@@ -113,15 +114,15 @@
                 data: {
                     category_id: id
                 },
-                beforeSend: function () {
+                beforeSend: function() {
                     $('.loading').show();
                     $("#items").html("");
                 },
-                success: function (response) {
+                success: function(response) {
                     $('.loading').hide();
                     // console.dir(response);
                     if (response.length > 0) {
-                        $.each(response, function (index, value) {
+                        $.each(response, function(index, value) {
                             var btn;
                             if (parseInt(value.quantity) > 0) {
                                 if (parseInt(value.item.purchase_price) > 0) {
@@ -183,13 +184,13 @@
                     }
                     $('#search').focus();
                 },
-                error: function (error) {
+                error: function(error) {
                     console.log(error);
                 }
             });
         }
 
-        $('#categories').change(function () {
+        $('#categories').change(function() {
             searchProduct();
             $("#branches").select2({
                 selectOnClose: true,
@@ -197,7 +198,7 @@
             });
         });
 
-        $('#branches').change(function () {
+        $('#branches').change(function() {
             let branch_id = $(this).val();
             $('.item-card').addClass('d-none');
             if (items_count <= 0) {
@@ -208,12 +209,12 @@
             }
         });
     });
-    $("#case_1").change(function(){
-        if($("#case_1").val()==2){
-        $('#sales').val('5').trigger('change');
-        $('#sales').attr("read-only","true");
-        }else{
-        $('#sales').attr("read-only","false");
+    $("#case_1").change(function() {
+        if ($("#case_1").val() == 2) {
+            $('#sales').val('5').trigger('change');
+            $('#sales').attr("read-only", "true");
+        } else {
+            $('#sales').attr("read-only", "false");
         }
     });
 </script>
@@ -239,8 +240,7 @@
                     <div class="form-group row">
                         <label for="quotation_id" class="col-5 col-form-label text-right">Quotation ID</label>
                         <div class="col-7">
-                            <input type="text" class="form-control" id="quotation_id" name="quotation_id"
-                                value="{{ @$isEdit ? $sale->quotation_id : $no_qo }}" required>
+                            <input type="text" class="form-control" id="quotation_id" name="quotation_id" value="{{ @$isEdit ? $sale->quotation_id : $no_qo }}" required>
                         </div>
                     </div>
                 </div>
@@ -294,8 +294,7 @@
         <div class="col-6">
             <div class="float-right">
                 @if(Gate::allows('isAdmin')||Gate::allows('isSales'))
-                <a href="#modalForm" data-toggle="modal" data-href="{{ url('sales-orders/create/customer') }}"
-                    class="btn btn-outline-dark btn-sm">
+                <a href="#modalForm" data-toggle="modal" data-href="{{ url('sales-orders/create/customer') }}" class="btn btn-outline-dark btn-sm">
                     <i class="fa fa-plus"></i> Buat Customer</a>
                 @endif
             </div>
@@ -304,12 +303,10 @@
             <div class="card">
                 <div class="card-body">
                     <div class="form-group">
-                        <select class="form-control customer mb-0" id="customer_select" name="customer_id" required
-                            style="width: 100%">
+                        <select class="form-control customer mb-0" id="customer_select" name="customer_id" required style="width: 100%">
                             <option></option>
                             @foreach($customers as $customer)
-                            <option value="{{ $customer->id }}"
-                                {{ @$isEdit && $customer->id == $sale->customer->id ? 'selected' : '' }}>
+                            <option value="{{ $customer->id }}" {{ @$isEdit && $customer->id == $sale->customer->id ? 'selected' : '' }}>
                                 {{ $customer->project_owner }}
                             </option>
                             @endforeach
@@ -317,9 +314,7 @@
                     </div>
                 </div>
                 <h5 class="card-header bg-secondary">
-                    <a data-toggle="collapse" href="#collapse-example" aria-expanded="true"
-                        aria-controls="collapse-example" id="heading-example"
-                        class="d-flex justify-content-between align-items-center collapsed">
+                    <a data-toggle="collapse" href="#collapse-example" aria-expanded="true" aria-controls="collapse-example" id="heading-example" class="d-flex justify-content-between align-items-center collapsed">
                         <div>
                             Detail Customer
                         </div>
@@ -333,35 +328,29 @@
                         <div class="form-row">
                             <div class="form-group col-lg-2">
                                 <label for="register_id">Register ID</label>
-                                <input type="text" class="form-control" id="register_id" disabled name="register_id"
-                                    value="{{ @$isEdit ? $sale->customer->id : '' }}">
+                                <input type="text" class="form-control" id="register_id" disabled name="register_id" value="{{ @$isEdit ? $sale->customer->id : '' }}">
                             </div>
                             <div class="form-group col-lg-5">
                                 <label for="name">Pemilik Project</label>
-                                <input type="text" class="form-control" id="name" disabled name="name"
-                                    value="{{ @$isEdit ? $sale->customer->project_owner : '' }}">
+                                <input type="text" class="form-control" id="name" disabled name="name" value="{{ @$isEdit ? $sale->customer->project_owner : '' }}">
                             </div>
                             <div class="form-group col-lg-5">
                                 <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" disabled name="email"
-                                    value="{{ @$isEdit ? $sale->customer->email : '' }}">
+                                <input type="email" class="form-control" id="email" disabled name="email" value="{{ @$isEdit ? $sale->customer->email : '' }}">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-lg-6">
                                 <label for="address">Alamat</label>
-                                <input type="text" class="form-control" id="address" disabled name="address"
-                                    value="{{ @$isEdit ? $sale->customer->address : '' }}">
+                                <input type="text" class="form-control" id="address" disabled name="address" value="{{ @$isEdit ? $sale->customer->address : '' }}">
                             </div>
                             <div class="form-group col-lg-3">
                                 <label for="phone">Telp</label>
-                                <input type="text" class="form-control" id="phone" disabled name="phone"
-                                    value="{{ @$isEdit ? $sale->customer->phone : '' }}">
+                                <input type="text" class="form-control" id="phone" disabled name="phone" value="{{ @$isEdit ? $sale->customer->phone : '' }}">
                             </div>
                             <div class="form-group col-lg-3">
                                 <label for="fax">Fax</label>
-                                <input type="text" class="form-control" id="fax" disabled name="fax"
-                                    value="{{ @$isEdit ? $sale->customer->fax : '' }}">
+                                <input type="text" class="form-control" id="fax" disabled name="fax" value="{{ @$isEdit ? $sale->customer->fax : '' }}">
                             </div>
                         </div>
                     </div>
@@ -441,15 +430,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="categories">Kategori</label>
-                                <select autocomplete="off" name="category" id="categories"
-                                    class="form-control categories w-100">
+                                <select autocomplete="off" name="category" id="categories" class="form-control categories w-100">
                                     <option value="" selected disabled></option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="branches">Cabang</label>
-                                <select autocomplete="off" name="branches" id="branches"
-                                    class="form-control branches w-100 select2">
+                                <select autocomplete="off" name="branches" id="branches" class="form-control branches w-100 select2">
                                     <option></option>
                                     @foreach($branches as $branch)
                                     <option value="{{ $branch->id }}">{{ $branch->name }}</option>
@@ -492,32 +479,27 @@
                     <div class="form-row">
                         <div class="form-group col-12">
                             <label for="project">Project</label>
-                            <input type="text" class="form-control" id="project" name="project"
-                                value="{{ @$isEdit ? $sale->project : '' }}">
+                            <input type="text" class="form-control" id="project" name="project" value="{{ @$isEdit ? $sale->project : '' }}">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-12">
                             <label for="pic">Person in Charge (PIC)</label>
-                            <input type="text" class="form-control" id="pic" name="pic"
-                                value="{{ @$isEdit ? $sale->pic : '' }}">
+                            <input type="text" class="form-control" id="pic" name="pic" value="{{ @$isEdit ? $sale->pic : '' }}">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-lg-4">
                             <label for="send_address">Alamat Kirim</label>
-                            <input type="text" class="form-control" id="send_address" name="send_address"
-                                value="{{ @$isEdit ? $sale->send_address : '' }}">
+                            <input type="text" class="form-control" id="send_address" name="send_address" value="{{ @$isEdit ? $sale->send_address : '' }}">
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="send_date">Tanggal Kirim</label>
-                            <input type="date" class="form-control" id="send_date" name="send_date"
-                                min="{{ date('Y-m-d') }}" value="{{ @$isEdit ? $sale->send_date : date('Y-m-d') }}">
+                            <input type="date" class="form-control" id="send_date" name="send_date" min="{{ date('Y-m-d') }}" value="{{ @$isEdit ? $sale->send_date : date('Y-m-d') }}">
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="telp_pic">No. Telp PIC</label>
-                            <input type="text" class="form-control" id="telp_pic" name="send_pic_phone"
-                                value="{{ @$isEdit ? $sale->send_pic_phone : '' }}">
+                            <input type="text" class="form-control" id="telp_pic" name="send_pic_phone" value="{{ @$isEdit ? $sale->send_pic_phone : '' }}">
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="ongkir">Ongkos Kirim</label>
@@ -525,34 +507,29 @@
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="grand-total-span-input">Total Barang</label>
-                            <input type="number" name="grand_total" readonly id="grand-total-span-input"
-                                class="form-control">
+                            <input type="number" name="grand_total" readonly id="grand-total-span-input" class="form-control">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-8">
                             <label for="note">Catatan</label>
-                            <textarea name="note" id="note" class="form-control"
-                                rows="5">{{ @$isEdit ? $sale->note : '' }}</textarea>
+                            <textarea name="note" id="note" class="form-control" rows="5">{{ @$isEdit ? $sale->note : '' }}</textarea>
                         </div>
                         <div class="form-group col-4">
                             <label for="payment_method">Pembayaran</label>
                             <div class="custom-control custom-radio">
-                                <input type="radio" id="payment_method_cbd" checked="checked" name="payment_method"
-                                    class="custom-control-input" value="CBD">
+                                <input type="radio" id="payment_method_cbd" checked="checked" name="payment_method" class="custom-control-input" value="CBD">
                                 <label class="custom-control-label" for="payment_method_cbd">Cash Before Delivery
                                     (CBD)</label>
                             </div>
                             @if(Gate::allows("isAdmin")||Gate::allows("isFinance"))
                             <div class="custom-control custom-radio mt-2">
-                                <input type="radio" id="payment_method_cod" name="payment_method"
-                                    class="custom-control-input" value="COD">
+                                <input type="radio" id="payment_method_cod" name="payment_method" class="custom-control-input" value="COD">
                                 <label class="custom-control-label" for="payment_method_cod">Cash On Delivery
                                     (COD)</label>
                             </div>
                             <div class="custom-control custom-radio mt-2">
-                                <input type="radio" id="payment_method_credit" name="payment_method"
-                                    class="custom-control-input" value="Credit">
+                                <input type="radio" id="payment_method_credit" name="payment_method" class="custom-control-input" value="Credit">
                                 <label class="custom-control-label" for="payment_method_credit">Down Payment /
                                     Credit</label>
                             </div>
@@ -573,8 +550,7 @@
 </form>
 
 <!-- Modal -->
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
