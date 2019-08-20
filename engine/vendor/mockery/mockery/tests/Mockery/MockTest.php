@@ -26,31 +26,31 @@ class Mockery_MockTest extends MockeryTestCase
 {
     public function testAnonymousMockWorksWithNotAllowingMockingOfNonExistentMethods()
     {
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
         $m = mock();
         $m->shouldReceive("test123")->andReturn(true);
         assertThat($m->test123(), equalTo(true));
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
     }
 
     public function testMockWithNotAllowingMockingOfNonExistentMethodsCanBeGivenAdditionalMethodsToMockEvenIfTheyDontExistOnClass()
     {
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
         $m = mock('ExampleClassForTestingNonExistentMethod');
         $m->shouldAllowMockingMethod('testSomeNonExistentMethod');
         $m->shouldReceive("testSomeNonExistentMethod")->andReturn(true);
         assertThat($m->testSomeNonExistentMethod(), equalTo(true));
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
     }
 
     public function testProtectedMethodMockWithNotAllowingMockingOfNonExistentMethodsWhenShouldAllowMockingProtectedMethodsIsCalled()
     {
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
         $m = mock('ClassWithProtectedMethod');
         $m->shouldAllowMockingProtectedMethods();
         $m->shouldReceive('foo')->andReturn(true);
         assertThat($m->foo(), equalTo(true));
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
     }
 
     public function testShouldAllowMockingMethodReturnsMockInstance()
@@ -104,7 +104,7 @@ class Mockery_MockTest extends MockeryTestCase
     {
         Mockery::getConfiguration()->allowMockingNonExistentMethods(false);
         $mock = mock('ClassWithMethods')->shouldIgnoreMissing();
-        $this->expectException(BadMethodCallException::class);
+        $this->expectException(\BadMethodCallException::class);
         $mock->nonExistentMethod();
     }
 

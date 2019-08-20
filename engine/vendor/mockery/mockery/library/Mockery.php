@@ -18,9 +18,6 @@
  * @license    http://github.com/padraic/mockery/blob/master/LICENSE New BSD License
  */
 
-use Mockery\CompositeExpectation;
-use Mockery\Configuration;
-use Mockery\Container;
 use Mockery\ExpectationInterface;
 use Mockery\Generator\CachingGenerator;
 use Mockery\Generator\Generator;
@@ -28,23 +25,9 @@ use Mockery\Generator\MockConfigurationBuilder;
 use Mockery\Generator\StringManipulationGenerator;
 use Mockery\Loader\EvalLoader;
 use Mockery\Loader\Loader;
-use Mockery\Matcher\AndAnyOtherArgs;
-use Mockery\Matcher\Any;
-use Mockery\Matcher\AnyOf;
-use Mockery\Matcher\Contains;
-use Mockery\Matcher\Ducktype;
-use Mockery\Matcher\HasKey;
-use Mockery\Matcher\HasValue;
 use Mockery\Matcher\MatcherAbstract;
 use Mockery\ClosureWrapper;
-use Mockery\Matcher\MustBe;
-use Mockery\Matcher\Not;
-use Mockery\Matcher\NotAnyOf;
-use Mockery\Matcher\Pattern;
-use Mockery\Matcher\Subset;
-use Mockery\Matcher\Type;
-use Mockery\Mock;
-use Mockery\MockInterface;
+use Mockery\Generator\MockNameBuilder;
 
 class Mockery
 {
@@ -53,24 +36,24 @@ class Mockery
     /**
      * Global container to hold all mocks for the current unit test running.
      *
-     * @var Container|null
+     * @var \Mockery\Container|null
      */
     protected static $_container = null;
 
     /**
      * Global configuration handler containing configuration options.
      *
-     * @var Configuration
+     * @var \Mockery\Configuration
      */
     protected static $_config = null;
 
     /**
-     * @var Generator
+     * @var \Mockery\Generator\Generator
      */
     protected static $_generator;
 
     /**
-     * @var Loader
+     * @var \Mockery\Loader\Loader
      */
     protected static $_loader;
 
@@ -120,7 +103,7 @@ class Mockery
      */
     public static function isBuiltInType($type)
     {
-        return in_array($type, Mockery::builtInTypes());
+        return in_array($type, \Mockery::builtInTypes());
     }
 
     /**
@@ -128,7 +111,7 @@ class Mockery
      *
      * @param mixed ...$args
      *
-     * @return MockInterface
+     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
      */
     public static function mock(...$args)
     {
@@ -141,11 +124,11 @@ class Mockery
      *
      * @param mixed ...$args
      *
-     * @return MockInterface
+     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
      */
     public static function spy(...$args)
     {
-        if (count($args) && $args[0] instanceof Closure) {
+        if (count($args) && $args[0] instanceof \Closure) {
             $args[0] = new ClosureWrapper($args[0]);
         }
 
@@ -157,7 +140,7 @@ class Mockery
      *
      * @param mixed ...$args
      *
-     * @return MockInterface
+     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
      */
     public static function instanceMock(...$args)
     {
@@ -169,7 +152,7 @@ class Mockery
      *
      * @param mixed ...$args
      *
-     * @return MockInterface
+     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
      */
     public static function namedMock(...$args)
     {
@@ -188,12 +171,12 @@ class Mockery
      *
      * @throws LogicException
      *
-     * @return MockInterface
+     * @return \Mockery\MockInterface|\Mockery\LegacyMockInterface
      */
     public static function self()
     {
         if (is_null(self::$_container)) {
-            throw new LogicException('You have not declared any mocks yet');
+            throw new \LogicException('You have not declared any mocks yet');
         }
 
         return self::$_container->self();
@@ -228,7 +211,7 @@ class Mockery
      *
      * @param string $name
      *
-     * @return Mock
+     * @return \Mockery\Mock
      */
     public static function fetchMock($name)
     {
@@ -253,7 +236,7 @@ class Mockery
     /**
      * Setter for the $_generator static propery.
      *
-     * @param Generator $generator
+     * @param \Mockery\Generator\Generator $generator
      */
     public static function setGenerator(Generator $generator)
     {
@@ -324,9 +307,9 @@ class Mockery
     /**
      * Set the container.
      *
-     * @param Container $container
+     * @param \Mockery\Container $container
      *
-     * @return Container
+     * @return \Mockery\Container
      */
     public static function setContainer(Mockery\Container $container)
     {
@@ -346,11 +329,11 @@ class Mockery
     /**
      * Return instance of ANY matcher.
      *
-     * @return Any
+     * @return \Mockery\Matcher\Any
      */
     public static function any()
     {
-        return new Any();
+        return new \Mockery\Matcher\Any();
     }
 
     /**
@@ -359,21 +342,21 @@ class Mockery
      * An alternative name to `andAnyOtherArgs` so
      * the API stays closer to `any` as well.
      *
-     * @return AndAnyOtherArgs
+     * @return \Mockery\Matcher\AndAnyOtherArgs
      */
     public static function andAnyOthers()
     {
-        return new AndAnyOtherArgs();
+        return new \Mockery\Matcher\AndAnyOtherArgs();
     }
 
     /**
      * Return instance of AndAnyOtherArgs matcher.
      *
-     * @return AndAnyOtherArgs
+     * @return \Mockery\Matcher\AndAnyOtherArgs
      */
     public static function andAnyOtherArgs()
     {
-        return new AndAnyOtherArgs();
+        return new \Mockery\Matcher\AndAnyOtherArgs();
     }
 
     /**
@@ -381,11 +364,11 @@ class Mockery
      *
      * @param mixed $expected
      *
-     * @return Type
+     * @return \Mockery\Matcher\Type
      */
     public static function type($expected)
     {
-        return new Type($expected);
+        return new \Mockery\Matcher\Type($expected);
     }
 
     /**
@@ -393,11 +376,11 @@ class Mockery
      *
      * @param array ...$args
      *
-     * @return Ducktype
+     * @return \Mockery\Matcher\Ducktype
      */
     public static function ducktype(...$args)
     {
-        return new Ducktype($args);
+        return new \Mockery\Matcher\Ducktype($args);
     }
 
     /**
@@ -406,11 +389,11 @@ class Mockery
      * @param array $part
      * @param bool $strict - (Optional) True for strict comparison, false for loose
      *
-     * @return Subset
+     * @return \Mockery\Matcher\Subset
      */
     public static function subset(array $part, $strict = true)
     {
-        return new Subset($part, $strict);
+        return new \Mockery\Matcher\Subset($part, $strict);
     }
 
     /**
@@ -418,11 +401,11 @@ class Mockery
      *
      * @param array ...$args
      *
-     * @return Contains
+     * @return \Mockery\Matcher\Contains
      */
     public static function contains(...$args)
     {
-        return new Contains($args);
+        return new \Mockery\Matcher\Contains($args);
     }
 
     /**
@@ -430,11 +413,11 @@ class Mockery
      *
      * @param mixed $key
      *
-     * @return HasKey
+     * @return \Mockery\Matcher\HasKey
      */
     public static function hasKey($key)
     {
-        return new HasKey($key);
+        return new \Mockery\Matcher\HasKey($key);
     }
 
     /**
@@ -442,11 +425,11 @@ class Mockery
      *
      * @param mixed $val
      *
-     * @return HasValue
+     * @return \Mockery\Matcher\HasValue
      */
     public static function hasValue($val)
     {
-        return new HasValue($val);
+        return new \Mockery\Matcher\HasValue($val);
     }
 
     /**
@@ -466,11 +449,11 @@ class Mockery
      *
      * @param mixed $expected
      *
-     * @return MustBe
+     * @return \Mockery\Matcher\MustBe
      */
     public static function mustBe($expected)
     {
-        return new MustBe($expected);
+        return new \Mockery\Matcher\MustBe($expected);
     }
 
     /**
@@ -478,11 +461,11 @@ class Mockery
      *
      * @param mixed $expected
      *
-     * @return Not
+     * @return \Mockery\Matcher\Not
      */
     public static function not($expected)
     {
-        return new Not($expected);
+        return new \Mockery\Matcher\Not($expected);
     }
 
     /**
@@ -490,11 +473,11 @@ class Mockery
      *
      * @param array ...$args
      *
-     * @return AnyOf
+     * @return \Mockery\Matcher\AnyOf
      */
     public static function anyOf(...$args)
     {
-        return new AnyOf($args);
+        return new \Mockery\Matcher\AnyOf($args);
     }
 
     /**
@@ -502,11 +485,11 @@ class Mockery
      *
      * @param array ...$args
      *
-     * @return NotAnyOf
+     * @return \Mockery\Matcher\NotAnyOf
      */
     public static function notAnyOf(...$args)
     {
-        return new NotAnyOf($args);
+        return new \Mockery\Matcher\NotAnyOf($args);
     }
 
     /**
@@ -514,23 +497,23 @@ class Mockery
      *
      * @param mixed $expected
      *
-     * @return Pattern
+     * @return \Mockery\Matcher\Pattern
      */
     public static function pattern($expected)
     {
-        return new Pattern($expected);
+        return new \Mockery\Matcher\Pattern($expected);
     }
 
     /**
      * Lazy loader and Getter for the global
      * configuration container.
      *
-     * @return Configuration
+     * @return \Mockery\Configuration
      */
     public static function getConfiguration()
     {
         if (is_null(self::$_config)) {
-            self::$_config = new Configuration();
+            self::$_config = new \Mockery\Configuration();
         }
 
         return self::$_config;
@@ -679,8 +662,8 @@ class Mockery
      */
     private static function extractInstancePublicProperties($object, $nesting)
     {
-        $reflection = new ReflectionClass(get_class($object));
-        $properties = $reflection->getProperties(ReflectionProperty::IS_PUBLIC);
+        $reflection = new \ReflectionClass(get_class($object));
+        $properties = $reflection->getProperties(\ReflectionProperty::IS_PUBLIC);
         $cleanedProperties = array();
 
         foreach ($properties as $publicProperty) {
@@ -749,14 +732,14 @@ class Mockery
      * Utility function to parse shouldReceive() arguments and generate
      * expectations from such as needed.
      *
-     * @param Mockery\MockInterface $mock
+     * @param Mockery\LegacyMockInterface $mock
      * @param array ...$args
      * @param callable $add
-     * @return CompositeExpectation
+     * @return \Mockery\CompositeExpectation
      */
-    public static function parseShouldReturnArgs(MockInterface $mock, $args, $add)
+    public static function parseShouldReturnArgs(\Mockery\LegacyMockInterface $mock, $args, $add)
     {
-        $composite = new CompositeExpectation();
+        $composite = new \Mockery\CompositeExpectation();
 
         foreach ($args as $arg) {
             if (is_array($arg)) {
@@ -777,20 +760,20 @@ class Mockery
      * Sets up expectations on the members of the CompositeExpectation and
      * builds up any demeter chain that was passed to shouldReceive.
      *
-     * @param MockInterface $mock
+     * @param \Mockery\LegacyMockInterface $mock
      * @param string $arg
      * @param callable $add
      * @throws Mockery\Exception
-     * @return ExpectationInterface
+     * @return \Mockery\ExpectationInterface
      */
-    protected static function buildDemeterChain(MockInterface $mock, $arg, $add)
+    protected static function buildDemeterChain(\Mockery\LegacyMockInterface $mock, $arg, $add)
     {
         /** @var Mockery\Container $container */
         $container = $mock->mockery_getContainer();
         $methodNames = explode('->', $arg);
         reset($methodNames);
 
-        if (!Mockery::getConfiguration()->mockingNonExistentMethodsAllowed()
+        if (!\Mockery::getConfiguration()->mockingNonExistentMethodsAllowed()
             && !$mock->mockery_isAnonymous()
             && !in_array(current($methodNames), $mock->mockery_getMockableMethods())
         ) {
@@ -843,12 +826,12 @@ class Mockery
      * Gets a new demeter configured
      * mock from the container.
      *
-     * @param Container $container
+     * @param \Mockery\Container $container
      * @param string $parent
      * @param string $method
      * @param Mockery\ExpectationInterface $exp
      *
-     * @return Mock
+     * @return \Mockery\Mock
      */
     private static function getNewDemeterMock(
         Mockery\Container $container,
@@ -873,7 +856,10 @@ class Mockery
                 $parRefMethodRetType = $parRefMethod->getReturnType();
 
                 if ($parRefMethodRetType !== null) {
-                    $mock = self::namedMock($newMockName, (string) $parRefMethodRetType);
+                    $nameBuilder = new MockNameBuilder();
+                    $nameBuilder->addPart('\\' . $newMockName);
+                    $type = PHP_VERSION_ID >= 70100 ? $parRefMethodRetType->getName() : (string)$parRefMethodRetType;
+                    $mock = self::namedMock($nameBuilder->build(), $type);
                     $exp->andReturn($mock);
 
                     return $mock;
@@ -891,7 +877,7 @@ class Mockery
      * Gets an specific demeter mock from
      * the ones kept by the container.
      *
-     * @param Container $container
+     * @param \Mockery\Container $container
      * @param string $demeterMockKey
      *
      * @return mixed
@@ -953,7 +939,7 @@ class Mockery
         $tmpfname = tempnam(sys_get_temp_dir(), "Mockery");
         file_put_contents($tmpfname, $targetCode);
         require $tmpfname;
-        Mockery::registerFileForCleanUp($tmpfname);
+        \Mockery::registerFileForCleanUp($tmpfname);
     }
 
     /**

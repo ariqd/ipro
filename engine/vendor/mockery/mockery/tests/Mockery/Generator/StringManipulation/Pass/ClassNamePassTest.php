@@ -21,7 +21,6 @@
 
 namespace Mockery\Generator\StringManipulation\Pass;
 
-use function mb_strpos;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\Generator\MockConfiguration;
 
@@ -41,7 +40,7 @@ class ClassNamePassTest extends MockeryTestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "Dave\Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertTrue(mb_strpos($code, 'namespace Mockery;') === false);
+        $this->assertTrue(\mb_strpos($code, 'namespace Mockery;') === false);
     }
 
     /**
@@ -51,8 +50,8 @@ class ClassNamePassTest extends MockeryTestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "Dave\Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertTrue(mb_strpos($code, 'namespace Mockery;') === false);
-        $this->assertTrue(mb_strpos($code, 'namespace Dave;') !== false);
+        $this->assertTrue(\mb_strpos($code, 'namespace Mockery;') === false);
+        $this->assertTrue(\mb_strpos($code, 'namespace Dave;') !== false);
     }
 
     /**
@@ -62,7 +61,7 @@ class ClassNamePassTest extends MockeryTestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertTrue(mb_strpos($code, 'class Dave') !== false);
+        $this->assertTrue(\mb_strpos($code, 'class Dave') !== false);
     }
 
     /**
@@ -72,6 +71,6 @@ class ClassNamePassTest extends MockeryTestCase
     {
         $config = new MockConfiguration(array(), array(), array(), "\Dave\Dave");
         $code = $this->pass->apply(static::CODE, $config);
-        $this->assertTrue(mb_strpos($code, 'namespace Dave;') !== false);
+        $this->assertTrue(\mb_strpos($code, 'namespace Dave;') !== false);
     }
 }

@@ -23,7 +23,6 @@ declare(strict_types=1);
 
 namespace Mockery\Test\Generator\StringManipulation\Pass;
 
-use function mb_strpos;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\Generator\DefinedTargetClass;
@@ -99,14 +98,14 @@ class MagicMethodTypeHintsPassTest extends MockeryTestCase
             'public function __isset($name) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, 'string $name') !== false);
+        $this->assertTrue(\mb_strpos($code, 'string $name') !== false);
 
         $this->configureForInterface();
         $code = $this->pass->apply(
             'public function __isset($name) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, 'string $name') !== false);
+        $this->assertTrue(\mb_strpos($code, 'string $name') !== false);
     }
 
     /**
@@ -122,12 +121,12 @@ class MagicMethodTypeHintsPassTest extends MockeryTestCase
             'public function __isset($name) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, 'string $name') !== false);
+        $this->assertTrue(\mb_strpos($code, 'string $name') !== false);
         $code = $this->pass->apply(
             'public function __unset($name) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, 'string $name') !== false);
+        $this->assertTrue(\mb_strpos($code, 'string $name') !== false);
     }
 
     /**
@@ -140,14 +139,14 @@ class MagicMethodTypeHintsPassTest extends MockeryTestCase
             'public function __isset($name) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, ' : bool') !== false);
+        $this->assertTrue(\mb_strpos($code, ' : bool') !== false);
 
         $this->configureForInterface();
         $code = $this->pass->apply(
             'public function __isset($name) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, ' : bool') !== false);
+        $this->assertTrue(\mb_strpos($code, ' : bool') !== false);
     }
 
     /**
@@ -160,14 +159,14 @@ class MagicMethodTypeHintsPassTest extends MockeryTestCase
             'public function __toString() {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, ' : string') !== false);
+        $this->assertTrue(\mb_strpos($code, ' : string') !== false);
 
         $this->configureForInterface();
         $code = $this->pass->apply(
             'public function __toString() {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, ' : string') !== false);
+        $this->assertTrue(\mb_strpos($code, ' : string') !== false);
     }
 
     /**
@@ -180,14 +179,14 @@ class MagicMethodTypeHintsPassTest extends MockeryTestCase
             'public function __call($method, array $args) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, 'string $method') !== false);
+        $this->assertTrue(\mb_strpos($code, 'string $method') !== false);
 
         $this->configureForInterface();
         $code = $this->pass->apply(
             'public function __call($method, array $args) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, 'string $method') !== false);
+        $this->assertTrue(\mb_strpos($code, 'string $method') !== false);
     }
 
     /**
@@ -200,14 +199,14 @@ class MagicMethodTypeHintsPassTest extends MockeryTestCase
             'public static function __callStatic($method, array $args) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, 'string $method') !== false);
+        $this->assertTrue(\mb_strpos($code, 'string $method') !== false);
 
         $this->configureForInterface();
         $code = $this->pass->apply(
             'public static function __callStatic($method, array $args) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, 'string $method') !== false);
+        $this->assertTrue(\mb_strpos($code, 'string $method') !== false);
     }
 
     /**
@@ -220,14 +219,14 @@ class MagicMethodTypeHintsPassTest extends MockeryTestCase
             'public static function __isset($parameter) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, ') {') !== false);
+        $this->assertTrue(\mb_strpos($code, ') {') !== false);
 
         $this->configureForInterface('Mockery\Test\Generator\StringManipulation\Pass\MagicReturnInterfaceDummy');
         $code = $this->pass->apply(
             'public static function __isset($parameter) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, ') {') !== false);
+        $this->assertTrue(\mb_strpos($code, ') {') !== false);
     }
 
     /**
@@ -269,16 +268,16 @@ class MagicMethodTypeHintsPassTest extends MockeryTestCase
             'public function __call($method, array $args) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, '$method') !== false);
-        $this->assertTrue(mb_strpos($code, 'array $args') !== false);
+        $this->assertTrue(\mb_strpos($code, '$method') !== false);
+        $this->assertTrue(\mb_strpos($code, 'array $args') !== false);
 
         $this->configureForInterface();
         $code = $this->pass->apply(
             'public function __call($method, array $args) {}',
             $this->mockedConfiguration
         );
-        $this->assertTrue(mb_strpos($code, '$method') !== false);
-        $this->assertTrue(mb_strpos($code, 'array $args') !== false);
+        $this->assertTrue(\mb_strpos($code, '$method') !== false);
+        $this->assertTrue(\mb_strpos($code, 'array $args') !== false);
     }
 
     protected function configureForClass(string $className = 'Mockery\Test\Generator\StringManipulation\Pass\MagicDummy')

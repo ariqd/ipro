@@ -45,7 +45,7 @@
                     <th rowspan="2" class="align-middle">Keterangan</th>
                     <th>Total (Exclude PPN)</th>
                     <th>Komisi</th>
-                    <th>(-10 %)</th>
+                    {{-- <th>(-10 %)</th> --}}
                 </tr>
                 <tr>
                     <th>
@@ -63,11 +63,11 @@
                             Rp {{ number_format($data['total_komisi']) }}
                         </span>
                     </th>
-                    <th>
+                    {{-- <th>
                         <span class="float-right font-weight-bold">
                             Rp {{ number_format($data['total_buat_sales']) }}
                         </span>
-                    </th>
+                    </th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -76,15 +76,8 @@
                 <tr>
                     <td class="align-middle">{{ $loop->iteration }}</td>
                     <td class="align-middle">
-                        {{-- <small class="text-secondary">
-                            {{ $sales_order->stock->item->category->brand->name }}
-                            -
-                            {{ $sales_order->stock->item->category->name }}
-                        </small> <br> --}}
                         #{{ $sales_order->no_so }} <br>
-                        {{-- @foreach ($sales_order as $stock) --}}
-                            <small class="text-secondary">{{ $sales_order->stock->item->category->name }}</small> <br>
-                        {{-- @endforeach --}}
+                        <small class="text-secondary">{{ $sales_order->stock->item->category->name }}</small> <br>
                     </td>
                     <td class="align-middle">
                         <span class="float-right">Rp {{ number_format($sales_order->total) }}</span>
@@ -92,9 +85,9 @@
                     <td class="align-middle">
                         <span class="float-right">Rp {{ number_format($sales_order->komisi) }}</span>
                     </td>
-                    <td class="align-middle">
+                    {{-- <td class="align-middle">
                         <span class="float-right">Rp {{ number_format($sales_order->buat_sales) }}</span>
-                    </td>
+                    </td> --}}
                 </tr>
                 @endforeach
             </tbody>
@@ -115,11 +108,11 @@
                             Rp {{ number_format($data['total_komisi']) }}
                         </span>
                     </td>
-                    <td>
+                    {{-- <td>
                         <span class="float-right font-weight-bold">
                             Rp {{ number_format($data['total_buat_sales']) }}
                         </span>
-                    </td>
+                    </td> --}}
                 </tr>
                 <tr>
                     <td colspan="2">
@@ -137,14 +130,14 @@
                         </h4>
                     </td>
                     <td>
-                        <span class="float-right font-weight-bold">
+                        {{-- <span class="float-right font-weight-bold">
                             Rp {{ number_format($data['total_komisi'] * $data['percentage']) }}
-                        </span>
+                        </span> --}}
                     </td>
                     <td>
-                        <span class="float-right font-weight-bold">
+                        {{-- <span class="float-right font-weight-bold">
                             Rp {{ number_format($data['total_buat_sales'] * $data['percentage']) }}
-                        </span>
+                        </span> --}}
                     </td>
                 </tr>
             </tfoot>

@@ -32,7 +32,7 @@ class HamcrestExpectationTest extends MockeryTestCase
 
     public function mockeryTestTearDown()
     {
-        Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
+        \Mockery::getConfiguration()->allowMockingNonExistentMethods(true);
         parent::mockeryTestTearDown();
     }
 

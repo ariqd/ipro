@@ -22,7 +22,6 @@
 namespace test\Mockery;
 
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use test\Mockery\Fixtures\MethodWithVoidReturnType;
 
 /**
  * @requires PHP 7.1.0RC3
@@ -40,7 +39,7 @@ class MockingVoidMethodsTest extends MockeryTestCase
     {
         $mock = mock("test\Mockery\Fixtures\MethodWithVoidReturnType");
 
-        $this->assertInstanceOf(MethodWithVoidReturnType::class, $mock);
+        $this->assertInstanceOf(\test\Mockery\Fixtures\MethodWithVoidReturnType::class, $mock);
     }
 
     /** @test */

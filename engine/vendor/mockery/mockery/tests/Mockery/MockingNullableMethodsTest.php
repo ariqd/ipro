@@ -21,12 +21,9 @@
 
 namespace test\Mockery;
 
-use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use Mockery\Container;
 use Mockery\Generator\Method;
 use test\Mockery\Fixtures\MethodWithNullableReturnType;
-use TypeError;
 
 /**
  * @requires PHP 7.1.0RC3
@@ -34,7 +31,7 @@ use TypeError;
 class MockingNullableMethodsTest extends MockeryTestCase
 {
     /**
-     * @var Container
+     * @var \Mockery\Container
      */
     private $container;
 
@@ -64,7 +61,7 @@ class MockingNullableMethodsTest extends MockeryTestCase
         $mock = mock("test\Mockery\Fixtures\MethodWithNullableReturnType");
 
         $mock->shouldReceive('nonNullablePrimitive')->andReturn(null);
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
         $mock->nonNullablePrimitive();
     }
 
@@ -109,7 +106,7 @@ class MockingNullableMethodsTest extends MockeryTestCase
         $mock = mock("test\Mockery\Fixtures\MethodWithNullableReturnType");
 
         $mock->shouldReceive('nonNullableSelf')->andReturn(null);
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
         $mock->nonNullableSelf();
     }
 
@@ -154,7 +151,7 @@ class MockingNullableMethodsTest extends MockeryTestCase
         $mock = mock("test\Mockery\Fixtures\MethodWithNullableReturnType");
 
         $mock->shouldReceive('nonNullableClass')->andReturn(null);
-        $this->expectException(TypeError::class);
+        $this->expectException(\TypeError::class);
         $mock->nonNullableClass();
     }
 
@@ -183,7 +180,7 @@ class MockingNullableMethodsTest extends MockeryTestCase
     /** @test */
     public function it_allows_returning_null_for_nullable_object_return_types()
     {
-        $double= Mockery::mock(MethodWithNullableReturnType::class);
+        $double= \Mockery::mock(MethodWithNullableReturnType::class);
 
         $double->shouldReceive("nullableClass")->andReturnNull();
 
@@ -193,7 +190,7 @@ class MockingNullableMethodsTest extends MockeryTestCase
     /** @test */
     public function it_allows_returning_null_for_nullable_string_return_types()
     {
-        $double= Mockery::mock(MethodWithNullableReturnType::class);
+        $double= \Mockery::mock(MethodWithNullableReturnType::class);
 
         $double->shouldReceive("nullableString")->andReturnNull();
 
@@ -203,7 +200,7 @@ class MockingNullableMethodsTest extends MockeryTestCase
     /** @test */
     public function it_allows_returning_null_for_nullable_int_return_types()
     {
-        $double= Mockery::mock(MethodWithNullableReturnType::class);
+        $double= \Mockery::mock(MethodWithNullableReturnType::class);
 
         $double->shouldReceive("nullableInt")->andReturnNull();
 
@@ -213,7 +210,7 @@ class MockingNullableMethodsTest extends MockeryTestCase
     /** @test */
     public function it_returns_null_on_calls_to_ignored_methods_of_spies_if_return_type_is_nullable()
     {
-        $double = Mockery::spy(MethodWithNullableReturnType::class);
+        $double = \Mockery::spy(MethodWithNullableReturnType::class);
 
         $this->assertNull($double->nullableClass());
     }
