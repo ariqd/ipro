@@ -15,6 +15,7 @@
     $('.data-table').DataTable({
         "ordering": false
     });
+
 </script>
 @endpush
 

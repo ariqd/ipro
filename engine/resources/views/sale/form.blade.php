@@ -27,9 +27,19 @@
 
 @push("js")
 <script src="{{ asset('assets/js/scripts.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.5.0/cleave.js"
+    integrity="sha256-cKDTH0H5beL+NbNqIPKJ9F4o19obOcC07Gd+KLaKbAU=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
         let items_count = 0;
+
+        var cleave = new Cleave('.cleave', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand',
+            // numeralDecimalMark: ',',
+            // delimiter: '.'
+            // delimiter: '.'
+        });
 
         $("#customer_select").change(function () {
             var id = $(this).val();
@@ -232,37 +242,24 @@
 <form action="{{ @$edit ? url('sales-orders/'.$sales->id) : url('sales-orders') }}" method="post">
     @csrf
     {{ @$edit ? method_field('PUT') : '' }}
-    <div class="row">
-        <div class="col-12 col-lg-6">
-            <h2>
-                <small>
-                    <a href="{{ url('sales-orders') }}" class="text-dark border-bottom border-dark">Sales Orders</a> /
-                </small>
-                <b>{{ @$isEdit ? 'Edit' : 'Buat' }} Quotation</b>
+    <div class="row align-middle">
+        <div class="col-12">
+            <a href="{{ url('sales-orders') }}" class="text-muted"><i>Sales Orders</i></a>
+            <h2 class="mb-0">
+                <b>{{ @$isEdit ? 'Edit' : 'Buat' }} Quotation Order</b>
             </h2>
-        </div>
-        <div class="col-12 col-lg-6 mt-3 mt-lg-0">
-            <div class="form-group row">
-                <label for="quotation_id" class="col-12 col-lg-5 col-form-label text-lg-right">Quotation ID</label>
-                <div class="col-12 col-lg-7">
-                    <input type="text" class="form-control" id="quotation_id" name="quotation_id"
-                        value="{{ @$isEdit ? $sale->quotation_id : $no_qo }}" required>
-                </div>
-            </div>
         </div>
         <div class="col-12">
             <hr>
         </div>
-    </div>
-    <div class="row">
         <div class="col-12">
             @include('layouts.feedback')
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-5">
         @if(Gate::allows('isAdmin') || Auth::id() == 5)
-        <div class="col-lg-12 mb-5">
-            <h4><b><label for="sales">Pilih Jenis SO</label></b></h4>
+        <div class="col-lg-12">
+            <h4><b><label for="sales"># Pilih Jenis Sales Order</label></b></h4>
             <select name="case_2" id="case_2" class="form-control">
                 <option value="1">By Sales (dibuat oleh Sales)</option>
                 <option value="2">By Head Sales (dibuat oleh Head Sales)</option>
@@ -271,11 +268,13 @@
             </select>
         </div>
         @endif
+    </div>
+    <div class="row mb-3">
         <div class="col-12">
-            <h4><b><label for="customer_select">Customer</label></b> &nbsp;
+            <h4><b><label for="customer_select"># Customer</label></b> &nbsp;
                 @if(Gate::allows('isAdmin')||Gate::allows('isSales'))
                 <a href="#modalForm" data-toggle="modal" data-href="{{ url('sales-orders/create/customer') }}"
-                    class="btn btn-dark btn-sm">
+                    class="btn btn-secondary btn-sm">
                     <i class="fa fa-plus"></i> Tambah Customer Baru</a>
                 @endif
             </h4>
@@ -349,15 +348,15 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg-12">
-            <h4><b>Items</b></h4>
+            <h4><b># Barang</b></h4>
             <div class="card">
                 <div class="card-body">
                     @if(@$isEdit && !empty($sale->details))
                     <div class="row">
                         <div class="col-12">
-                            <h5><b>Item Saat Ini</b></h5>
+                            <h5><b>Barang Saat Ini</b></h5>
                             <div class="table-responsive">
                                 <table class="table table-bordered">
                                     <thead>
@@ -384,13 +383,13 @@
                                                 {{ $details->qty }}
                                             </td>
                                             <td>
-                                                Rp{{number_format($details->price) }},00
+                                                Rp{{number_format($details->price) }}
                                             </td>
                                             <td>
                                                 {{ $details->discount }}%
                                             </td>
                                             <td>
-                                                Rp{{number_format($details->total)}},00
+                                                Rp{{number_format($details->total)}}
                                             </td>
                                         </tr>
                                         @empty
@@ -407,7 +406,7 @@
                     @endif
                     <div class="row">
                         <div class="col-12">
-                            <h5><b>Tambah Item</b></h5>
+                            <h5><b>Tambah Barang</b></h5>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group">
@@ -465,57 +464,89 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <h4 class="card-title"><b>Details</b></h4>
+            <h4 class="card-title"><b># Detail Sales Order</b></h4>
             <div class="card">
                 <div class="card-body">
-                    <div class="form-row">
-                        <div class="form-group col-12">
-                            <label for="project">Project</label>
+                    <div class="form-group row">
+                        <label for="quotation_id" class="col-12 col-md-2 col-form-label">Quotation
+                            ID</label>
+                        <div class="col-8 col-md-4">
+                            <input type="text" class="form-control" id="quotation_id" name="quotation_id"
+                                value="{{ @$isEdit ? $sale->quotation_id : $no_qo }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="project" class="col-12 col-lg-2 col-form-label">Project</label>
+                        <div class="col-12 col-md-8">
                             <input type="text" class="form-control" id="project" name="project"
-                                value="{{ @$isEdit ? $sale->project : '' }}">
+                                value="{{ @$isEdit ? $sale->project : '' }}" required </div> </div> <div
+                                class="form-row">
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-12">
-                            <label for="pic">Person in Charge (PIC)</label>
+                    <div class="form-group row">
+                        <label for="pic" class="col-12 col-lg-2 col-form-label">Person in Charge</label>
+                        <div class="col-12 col-md-8">
                             <input type="text" class="form-control" id="pic" name="pic"
-                                value="{{ @$isEdit ? $sale->pic : '' }}">
+                                value="{{ @$isEdit ? $sale->pic : '' }}" required>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-lg-4">
-                            <label for="send_address">Alamat Kirim</label>
-                            <input type="text" class="form-control" id="send_address" name="send_address"
-                                value="{{ @$isEdit ? $sale->send_address : '' }}">
+                    <div class="form-group row">
+                        <label for="send_address" class="col-12 col-lg-2 col-form-label">Alamat Kirim</label>
+                        <div class="col-12 col-md-8">
+                            <textarea name="send_address" id="send_address" class="form-control"
+                                rows="5">{{ @$isEdit ? $sale->send_address : '' }}</textarea>
                         </div>
-                        <div class="form-group col-lg-4">
-                            <label for="send_date">Tanggal Kirim</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="send_date" class="col-12 col-lg-2 col-form-label">Tanggal Kirim</label>
+                        <div class="col-8 col-md-4">
                             <input type="date" class="form-control" id="send_date" name="send_date"
-                                min="{{ date('Y-m-d') }}" value="{{ @$isEdit ? $sale->send_date : date('Y-m-d') }}">
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label for="telp_pic">No. Telp PIC</label>
-                            <input type="text" class="form-control" id="telp_pic" name="send_pic_phone"
-                                value="{{ @$isEdit ? $sale->send_pic_phone : '' }}">
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label for="ongkir">Ongkos Kirim</label>
-                            <input type="number" name="ongkir" id="ongkir" class="form-control">
-                        </div>
-                        <div class="form-group col-lg-4">
-                            <label for="grand-total-span-input">Total Barang</label>
-                            <input type="number" name="grand_total" readonly id="grand-total-span-input"
-                                class="form-control">
+                                min="{{ date('Y-m-d') }}" value="{{ @$isEdit ? $sale->send_date : date('Y-m-d') }}"
+                                required>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group col-8">
-                            <label for="note">Catatan</label>
+                    <div class="form-group row">
+                        <label for="telp_pic" class="col-12 col-lg-2 col-form-label">No. Telp PIC</label>
+                        <div class="col-8 col-md-4">
+                            <input type="text" class="form-control" id="telp_pic" name="send_pic_phone"
+                                value="{{ @$isEdit ? $sale->send_pic_phone : '' }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="ongkir" class="col-12 col-lg-2 col-form-label">Ongkos Kirim</label>
+                        <div class="col-8 col-md-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Rp</span>
+                                </div>
+                                <input type="number" name="ongkir" id="ongkir" class="form-control" required
+                                    value="{{ @$isEdit ? $sale->ongkir : '' }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="grand-total-span-input" class="col-12 col-lg-2 col-form-label">Total Harga
+                            Barang</label>
+                        <div class="col-8 col-md-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Rp</span>
+                                </div>
+                                <input type="number" name="grand_total" readonly id="grand-total-span-input"
+                                    class="form-control cleave" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="note" class="col-12 col-lg-2 col-form-label">Catatan</label>
+                        <div class="col-12 col-md-8">
                             <textarea name="note" id="note" class="form-control"
                                 rows="5">{{ @$isEdit ? $sale->note : '' }}</textarea>
                         </div>
-                        <div class="form-group col-4">
-                            <label for="payment_method">Pembayaran</label>
+                    </div>
+                    <div class="form-group row">
+                        <label for="payment_method" class="col-12 col-lg-2 col-form-label">Pembayaran</label>
+                        <div class="col-12 col-md-8">
                             <div class="custom-control custom-radio">
                                 <input type="radio" id="payment_method_cbd" checked="checked" name="payment_method"
                                     class="custom-control-input" value="CBD">
@@ -542,46 +573,12 @@
             </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row pb-5">
         <div class="col-12">
-            <button type="submit" class="btn btn-success float-right">
-                <i class="fa fa-check"></i> {{ @$isEdit ? 'Edit' : 'Create' }} Quotation Order
+            <button type="submit" class="btn btn-success">
+                <i class="fa fa-check"></i> {{ @$isEdit ? 'Edit' : 'Buat' }} Quotation Order
             </button>
         </div>
     </div>
 </form>
-
-<!-- Modal -->
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Pilih Item</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered table-stripped" id="table-pick">
-                    <thead>
-                        <tr>
-                            <th>Kategori</th>
-                            <th>Kode Barang</th>
-                            <th>Nama Barang</th>
-                            <th>Stock</th>
-                            <th>Berat/Pcs</th>
-                            <th>Harga/Unit</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-pick-item-body"></tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
