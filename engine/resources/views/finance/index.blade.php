@@ -25,14 +25,13 @@
 
 <div class="row">
     <div class="col-12">
-        <h4>Komisi Sales | Periode {{ $from->formatLocalized('%d %B') }} - {{ $to->formatLocalized('%d %B') }}</h4>
+        <h4>Komisi Sales | Periode {{ $from }} - {{ $to }}</h4>
     </div>
     <div class="col-12">
         <table class="table table-light data-table table-hover">
             <thead>
                 <tr>
                     <th>Nama</th>
-                    <th>Persentase</th>
                     <th>Total Komisi</th>
                     <th>Achievement</th>
                     <th>Achieved</th>
@@ -44,15 +43,20 @@
                 @foreach ($sales as $user)
                 <tr>
                     <td>{{ $user->name }} ({{ $user->branch->name }})</td>
-                    <td>{{ @$user->commission->percentage ?? '0' }} %</td>
+
+                    @if ($user->commission->achieved < $user->commission->achievement)
+                    <td>Rp {{ number_format(@$user->commission->total_commission_not_achieve) ?? '-' }}</td>
+                    @else
                     <td>Rp {{ number_format(@$user->commission->total_commission) ?? '-' }}</td>
+                    @endif
+
                     <td>Rp {{ number_format(@$user->commission->achievement) ?? '-' }}</td>
                     <td>Rp {{ number_format(@$user->commission->achieved) ?? '-' }}</td>
                     <td>
                         @if (empty($user->commission->percentage))
                         <span class="badge badge-warning">Komisi periode ini belum diatur</span>
                         @else
-                        @if ($user->commission->total_commission < $user->commission->achievement)
+                        @if ($user->commission->achieved < $user->commission->achievement)
                             <span class="badge badge-danger">Belum Achieve</span>
                             @else
                             <span class="badge badge-success">Achieved</span>

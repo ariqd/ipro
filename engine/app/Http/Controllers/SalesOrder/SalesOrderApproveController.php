@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use App\Commission;
+use App\Commission_Detail;
 
 class SalesOrderApproveController extends Controller
 {
@@ -67,6 +68,8 @@ class SalesOrderApproveController extends Controller
 
         $totalkomisiachieveadmin = 0;
         $totalkomisinotachieveadmin = 0;
+
+        $role = "";
         foreach ($sales_orders as $value) {
             if ($value->user_id == 5) {
                 if ($value->sales_id != null) {
@@ -79,6 +82,7 @@ class SalesOrderApproveController extends Controller
                     }
                     $totalachieve += $value->total* 0.5;
                     $totalachievesales += $value->total* 0.5;
+                    $role = "Referral";
                 } elseif ($value->admin_id != null) {
                     if ($value->stock->item->category->brand->id == 0) {
                         $value['komisi_achieve'] = $value->total * 0.005 * 0.016;
@@ -88,7 +92,9 @@ class SalesOrderApproveController extends Controller
                         $value['komisi_achieve_admin'] = $value->total * 0.02 * 0.01 * 0.04;
                     }
                     $totalachieve += $value->total* 0.8;
-                    $totalachievesales += $value->total* 0.2;
+                    $totalachieveadmin += $value->total* 0.2;
+                    $role = "Admin";
+
                 } else {
                     if ($value->stock->item->category->brand->id == 0) {
                         $value['komisi_achieve'] = $value->total * 0.005 * 0.02;
@@ -108,6 +114,7 @@ class SalesOrderApproveController extends Controller
                     }
                     $totalachieve += $value->total;
                     $totalachievesales += $value->total;
+                    $role = "Sales";
 
                 } elseif ($value->admin_id != null) {
                     if ($value->stock->item->category->brand->id == 0) {
@@ -118,7 +125,9 @@ class SalesOrderApproveController extends Controller
                         $value['komisi_achieve_admin'] = $value->total * 0.02 * 0.005;
                     }
                     $totalachieve += $value->total* 0.8;
-                    $totalachievesales += $value->total* 0.2;
+                    $totalachieveadmin += $value->total* 0.2;
+                    $role = "Admin";
+
                 } else {
                     if ($value->stock->item->category->brand->id == 0) {
                         $value['komisi_achieve'] = $value->total * 0.005 * 0.02;
@@ -151,6 +160,14 @@ class SalesOrderApproveController extends Controller
         $commission->achieved += $totalachieve;
         $commission->save();
 
+        Commission_Detail::create([
+            "user_id"=>$sale->user->id,
+            "commission"=> $totalkomisiachieve,
+            "commission_not_achieve"=> $totalkomisinotachieve,
+            "sales_order_id"=>$sale->id,
+            "role"=>$role,
+        ]);
+
         //save komisi jika bahu membahu
         if($sale->sales_id != null){
             $commission = Commission::where('user_id', $sale->sales_id)->first();
@@ -158,6 +175,14 @@ class SalesOrderApproveController extends Controller
             $commission->total_commission_not_achieve += $totalkomisinotachievesales;
             $commission->achieved += $totalachievesales;
             $commission->save();
+
+            Commission_Detail::create([
+                "user_id"=>$sale->sales_id,
+                "commission"=> $totalkomisiachievesales,
+                "commission_not_achieve"=> $totalkomisinotachievesales,
+                "sales_order_id"=>$sale->id,
+                "role"=>$role,
+            ]);
         }
 
         //save komisi jika ada admin
@@ -167,6 +192,13 @@ class SalesOrderApproveController extends Controller
             $commission->total_commission_not_achieve += $totalkomisinotachieveadmin;
             $commission->achieved += $totalachieveadmin;
             $commission->save();
+            Commission_Detail::create([
+                "user_id"=>$sale->admin_id,
+                "commission"=> $totalkomisiachieveadmin,
+                "commission_not_achieve"=> $totalkomisinotachieveadmin,
+                "sales_order_id"=>$sale->id,
+                "role"=>$role,
+            ]);
             }
         return redirect()->back()->with("info", "SO berhasil disetujui, <a href='approve/print' class='btn btn-light'>Print Kwitansi</a>");
     }

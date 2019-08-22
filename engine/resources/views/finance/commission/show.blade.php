@@ -34,10 +34,11 @@
     </div>
     <div class="col-6">
         <h4 class="float-right">
-            Achievement: Rp {{ number_format($user->commission->achievement, '0', ',', '.') }}
+            Achievement: Rp {{ number_format($commission->achievement, '0', ',', '.') }}
         </h4>
     </div>
     <div class="col-12">
+
         <table class="table table-light table-bordered table-hover">
             <thead class="text-center">
                 <tr>
@@ -45,49 +46,61 @@
                     <th rowspan="2" class="align-middle">Keterangan</th>
                     <th>Total (Exclude PPN)</th>
                     <th>Komisi</th>
+                    <th>Role</th>
                     {{-- <th>(-10 %)</th> --}}
                 </tr>
                 <tr>
                     <th>
                         <span class="float-right font-weight-bold">
-                            @if ($data['achieved'])
+                            @if ($commission->achieved > $commission->achievement)
                             <span class="badge badge-success">Achieve</span>
                             @else
                             <span class="badge badge-danger">Tidak Achieve</span>
                             @endif
-                            Rp {{ number_format($data['total']) }}
+                            Rp {{ number_format($commission->achieved) }}
                         </span>
                     </th>
                     <th>
                         <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_komisi']) }}
+                            @if ($commission->achieved > $commission->achievement)
+                            Rp {{ number_format($commission->total_commission) }}
+                            <span class="badge badge-success">Achieve</span>
+                            @else
+                            Rp {{ number_format($commission->total_commission_not_achieve) }}
+                            <span class="badge badge-danger">Tidak Achieve</span>
+                            @endif
                         </span>
                     </th>
                     {{-- <th>
-                        <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_buat_sales']) }}
-                        </span>
+                                        <span class="float-right font-weight-bold">
+                                            Rp {{ number_format($data['total_buat_sales']) }}
+                    </span>
                     </th> --}}
                 </tr>
             </thead>
             <tbody>
-                @foreach ($sales_orders as $sales_order)
-                {{-- {{ dd($sales_order) }} --}}
+
+                @foreach ($detail_commission as $sales_order)
                 <tr>
                     <td class="align-middle">{{ $loop->iteration }}</td>
                     <td class="align-middle">
-                        #{{ $sales_order->no_so }} <br>
-                        <small class="text-secondary">{{ $sales_order->stock->item->category->name }}</small> <br>
+                        #{{ $sales_order->sale->no_so }} <br>
                     </td>
                     <td class="align-middle">
-                        <span class="float-right">Rp {{ number_format($sales_order->total) }}</span>
+                        <span class="float-right">Rp {{ number_format($sales_order->sale->grand_total) }}</span>
                     </td>
                     <td class="align-middle">
-                        <span class="float-right">Rp {{ number_format($sales_order->komisi) }}</span>
+                        @if ($commission->achieved > $commission->achievement)
+                        <span class="float-right">Rp {{ number_format($sales_order->commission) }}</span>
+                        @else
+                        <span class="float-right">Rp {{ number_format($sales_order->commission_not_achieve) }}</span>
+                        @endif
+
                     </td>
-                    {{-- <td class="align-middle">
-                        <span class="float-right">Rp {{ number_format($sales_order->buat_sales) }}</span>
-                    </td> --}}
+                    <td class="align-middle">
+                        <span class="">Dengan {{$sales_order->role}}</span>
+                    </td>
+
                 </tr>
                 @endforeach
             </tbody>
@@ -100,18 +113,24 @@
                     </td>
                     <td>
                         <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total']) }}
+                            {{-- Rp {{ number_format($data['total']) }} --}}
                         </span>
                     </td>
                     <td>
                         <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_komisi']) }}
+                            @if ($commission->achieved > $commission->achievement)
+                            Rp {{ number_format($commission->total_commission) }}
+                            <span class="badge badge-success">Achieve</span>
+                            @else
+                            Rp {{ number_format($commission->total_commission_not_achieve) }}
+                            <span class="badge badge-danger">Tidak Achieve</span>
+                            @endif
                         </span>
                     </td>
                     {{-- <td>
-                        <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_buat_sales']) }}
-                        </span>
+                                        <span class="float-right font-weight-bold">
+                                            Rp {{ number_format($data['total_buat_sales']) }}
+                    </span>
                     </td> --}}
                 </tr>
                 <tr>
@@ -122,21 +141,22 @@
                     </td>
                     <td>
                         <h4 class="float-right font-weight-bold">
-                            @if ($data['achieved'])
-                            <span class="badge badge-success">Achieve</span>
-                            @else
-                            <span class="badge badge-danger">Tidak Achieve</span>
-                            @endif
+                            @if ($commission->achieved > $commission->achievement)
+                                <span class="badge badge-success">Achieve</span>
+                                @else
+                                <span class="badge badge-danger">Tidak Achieve</span>
+                                @endif
+                                Rp {{ number_format($commission->achieved) }}
                         </h4>
                     </td>
                     <td>
                         {{-- <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_komisi'] * $data['percentage']) }}
+                                            Rp {{ number_format($data['total_komisi'] * $data['percentage']) }}
                         </span> --}}
                     </td>
                     <td>
                         {{-- <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_buat_sales'] * $data['percentage']) }}
+                                            Rp {{ number_format($data['total_buat_sales'] * $data['percentage']) }}
                         </span> --}}
                     </td>
                 </tr>

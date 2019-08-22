@@ -16,12 +16,21 @@ class FinanceController extends Controller
      */
     public function index()
     {
+        $setting = 1;
+        $month =date("n")-1;
+        $day = 15;
+        if($day < 15){
+            $month--;
+        }
+        $monthmoduloberjalan = $month - ($month % $setting);
+        $monthmodulosisa = $monthmoduloberjalan + $setting;
+
+
         $d['sales'] = User::sales()->get();
         $settings = Setting::where(['name' => 'finance-period-start'])
             ->orWhere(['name' => 'finance-period-end'])->get()->keyBy('name');
-
-        $d['from'] = Carbon::create(date('Y'), date('m') - 1, $settings['finance-period-end']->value, 00, 00, 00);
-        $d['to'] = Carbon::create(date('Y'), date('m'), $settings['finance-period-start']->value, 00, 00, 00);
+        $d['from'] = date("d F",mktime(0, 0, 0, $monthmoduloberjalan+1  , 15, date("Y")));
+        $d['to'] = date("d F",mktime(0, 0, 0, $monthmodulosisa+1, 14, date("Y")));
 
         // dd($d);
 

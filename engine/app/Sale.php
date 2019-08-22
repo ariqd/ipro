@@ -11,6 +11,8 @@ class Sale extends Model
     protected $fillable = [
         'customer_id',
         'user_id',
+        'sales_id',
+        'admin_id',
         'quotation_id',
         'project',
         'send_address',
@@ -43,7 +45,7 @@ class Sale extends Model
         return $this->whereNull("no_so");
     }
 
-    public function scopeMySales($query) 
+    public function scopeMySales($query)
     {
         return $query->where('user_id', Auth::id());
     }

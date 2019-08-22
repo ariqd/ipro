@@ -48,7 +48,7 @@ class SalesOrderController extends Controller
         unset($input['_token']);
         $input['user_id'] = Auth::id();
         if (Auth::user()->role == "admin") {
-            $input['user_id'] = $request->user_id;
+            $input['user_id'] = Auth::id();
         }
         $sales_order_details = $input['item'];
         unset($input['item']);
