@@ -11,7 +11,7 @@
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="name" class="form-control-label">Nama</label>
-                <input id="name" class="form-control" name="name" type="text"
+                <input required id="name" class="form-control" name="name" type="text"
                        value="{{ @$isEdit ? $brand->name : '' }}">
             </div>
         </div>

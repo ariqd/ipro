@@ -1,65 +1,68 @@
 <form action="{{ @$customer ? url('customers/'.@$customer->id) : url('customers') }}" method="post">
     @csrf
-    {{ @$customer ? method_field('PUT') : '' }}
-    <div class="modal-header">
-        <h5 class="modal-title">{{ @$customer ? 'Edit' : 'Tambah' }} Customer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div class="modal-header bg-dark text-light">
+        <h5 class="modal-title"><i class="fa fa-plus"></i> Tambah Customer</h5>
+        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="project_owner" class="form-control-label">Project Owner</label>
+                <label for="project_owner" class="form-control-label">Nama Customer / Project Owner</label>
                 <input id="project_owner" class="form-control" name="project_owner"
-                       value="{{ @$customer ? @$customer->project_owner : '' }}">
+                    value="{{ @$isEdit ? $customer->project_owner : old('project_owner') }}">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="no_ktp" class="form-control-label">No. KTP</label>
-                <input id="no_ktp" type="number" class="form-control" maxlength="16" name="no_ktp"
-                       value="{{ @$customer ? @$customer->no_ktp : '' }}">
+                <input id="no_ktp" class="form-control" name="no_ktp"
+                    value="{{ @$isEdit ? $customer->no_ktp : old('no_ktp') }}">
+                <small class="text-secondary">Boleh dikosongkan</small>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="npwp" class="form-control-label">NPWP</label>
-                <input id="npwp" type="text" class="form-control" name="npwp"
-                       value="{{ @$customer ? @$customer->npwp : '' }}">
+                <input id="npwp" class="form-control" name="npwp"
+                    value="{{ @$isEdit ? $customer->npwp : old('npwp') }}">
+                <small class="text-secondary">Boleh dikosongkan</small>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="phone" class="form-control-label">No. Telepon</label>
-                <input id="phone" class="form-control" name="phone" value="{{ @$customer ? @$customer->phone : '' }}">
+                <label for="phone" class="form-control-label">No. Telepon Customer</label>
+                <input id="phone" class="form-control" name="phone"
+                    value="{{ @$isEdit ? $customer->phone : old('phone') }}">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="address" class="form-control-label">Alamat</label>
-                <textarea name="address" id="address"
-                          class="form-control">{{ @$customer ? @$customer->address : '' }}</textarea>
+                <label for="address" class="form-control-label">Alamat Customer</label>
+                <textarea name="address" id="address" class="form-control"
+                    rows="5">{{ @$isEdit ? $customer->alamat : old('alamat') }}</textarea>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="fax" class="form-control-label">Fax</label>
-                <input id="fax" class="form-control" name="fax" value="{{ @$customer ? @$customer->fax : '' }}">
+                <label for="fax" class="form-control-label">Fax Customer</label>
+                <input id="fax" class="form-control" name="fax" value="{{ @$isEdit ? $customer->fax : old('fax') }}">
+                <small class="text-secondary">Boleh dikosongkan</small>
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="email" class="form-control-label">Email</label>
-                <input id="email" type="email" class="form-control" name="email"
-                       value="{{ @$customer ? @$customer->email : '' }}">
+                <label for="email" class="form-control-label">Email Customer</label>
+                <input id="email" type="text" class="form-control" name="email"
+                    value="{{ @$isEdit ? $customer->email : old('email') }}">
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal"> Batal</button>
-        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>
-            {{ @$customer ? 'Edit' : 'Tambah' }}
+        <button type="button" class="btn btn-danger" data-dismiss="modal"> Cancel</button>
+        <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>
+            Simpan
         </button>
     </div>
 </form>

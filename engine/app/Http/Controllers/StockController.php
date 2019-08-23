@@ -201,7 +201,7 @@ class StockController extends Controller
 
         $stock = Stock::find($id);
 
-        $stock->stock = $stock->stock + $input['add'];
+        $stock->quantity = $stock->quantity + $input['add'];
 
         $stock->save();
         return redirect('/stocks')->with('info', 'Stok ' . $stock->name . ' berhasil ditambahkan ' . $input['add'] . ' pcs menjadi ' . $stock->stock . 'pcs per batang');

@@ -56,7 +56,6 @@ class CustomerController extends Controller
             'email' => 'required',
             'address' => 'required',
             'phone' => 'required',
-            'fax' => 'required',
         ]);
 
         if ($validate->fails()) { // if validation fails

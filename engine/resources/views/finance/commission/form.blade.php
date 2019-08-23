@@ -22,7 +22,7 @@
             <h2 class="font-weight-bold">Set Komisi {{ $user->name }}</h2>
         </div>
         <div class="col-4">
-            <h4 class="float-right">Periode 15 Juli - 14 Agustus</h4>
+            <h4 class="float-right">Periode {{ $from }} - {{ $to }}</h4>
         </div>
     </div>
 
@@ -33,10 +33,10 @@
                     <form action="{{ route('finances.komisi.store', $user) }}" method="post">
                         @csrf
 
-                        <div class="form-group">
+                        <div class="form-group d-none">
                             <label for="percentage" class="font-weight-bold">Persentase Komisi (%)</label>
                             <div class="input-group">
-                                <input type="text" name="percentage" id="percentage" class="form-control">
+                                <input type="text" value="100" name="percentage" id="percentage" class="form-control">
                                 <div class="input-group-append">
                                     <span class="input-group-text">%</span>
                                 </div>
