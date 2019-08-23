@@ -207,14 +207,14 @@ class SalesOrderApproveController extends Controller
     {
         $sale = Sale::find($id);
         $customer = $sale->customer;
-        $data["terbilang"] = $this->angkaTerbilang($sale->grandtotal + $sale->ongkir);
+        $data["terbilang"] = $this->angkaTerbilang($sale->grand_total + $sale->ongkir);
         $data["project_name"] = $sale->project;
         $data["updated_at"] = $sale->updated_at;
         $data["customer_name"] = $customer->project_owner;
-        $data["nominal"] = $sale->grandtotal;
+        $data["nominal"] = $sale->grand_total + $sale->ongkir;
         $data["QO"] = $sale->quotation_id;
         $data["SO"] = $sale->no_so;
         $pdf = PDF::loadView('print.kwitansi', $data);
-        return $pdf->stream('invoice.pdf');
+        return $pdf->stream('invoice '.date("Ymd").'.pdf');
     }
 }

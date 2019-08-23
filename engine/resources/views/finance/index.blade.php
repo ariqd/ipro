@@ -43,11 +43,14 @@
                 @foreach ($sales as $user)
                 <tr>
                     <td>{{ $user->name }} ({{ $user->branch->name }})</td>
-
+                    @if (empty($user->commission->percentage))
+                    <span class="badge badge-warning">Komisi periode ini belum diatur</span>
+                    @else
                     @if ($user->commission->achieved < $user->commission->achievement)
                     <td>Rp {{ number_format(@$user->commission->total_commission_not_achieve) ?? '-' }}</td>
                     @else
                     <td>Rp {{ number_format(@$user->commission->total_commission) ?? '-' }}</td>
+                    @endif
                     @endif
 
                     <td>Rp {{ number_format(@$user->commission->achievement) ?? '-' }}</td>

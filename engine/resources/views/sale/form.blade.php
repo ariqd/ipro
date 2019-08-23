@@ -218,7 +218,7 @@
             let branch_id = $(this).val();
             $('.item-card').addClass('d-none');
             if (items_count <= 0) {
-                alert('Pilih brand dan kategori lebih dulu!');
+                // alert('Pilih brand dan kategori lebih dulu!');
                 $(this).prop('selectedIndex', 0);
             } else {
                 $('.item-branch-' + branch_id).removeClass('d-none');

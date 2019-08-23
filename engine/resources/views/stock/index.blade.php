@@ -267,7 +267,7 @@
                         <th class="stock">Stok (per Batang)</th>
                         <th class="holds">Stok (Hold per Batang)</th>
                         <th class="berat">Berat (kg)</th>
-                        <th class="harga">Harga Pusat</th>
+                        <th class="harga">Harga Pricelist</th>
                         <th class="harga_cabang">Harga Cabang</th>
                         <th></th>
                         <th class="d-none"></th>

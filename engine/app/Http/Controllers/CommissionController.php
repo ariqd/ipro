@@ -19,7 +19,17 @@ class CommissionController extends Controller
 {
     public function setKomisi(User $user)
     {
-        return view('finance.commission.form', compact('user'));
+        $setting = 1;
+        $month =date("n")-1;
+        $day = 15;
+        if($day < 15){
+            $month--;
+        }
+        $monthmoduloberjalan = $month - ($month % $setting);
+        $monthmodulosisa = $monthmoduloberjalan + $setting;
+        $from = date("d F",mktime(0, 0, 0, $monthmoduloberjalan+1  , 15, date("Y")));
+        $to = date("d F",mktime(0, 0, 0, $monthmodulosisa+1, 14, date("Y")));
+        return view('finance.commission.form', compact('user','from','to'));
     }
 
     public function storeKomisi(Request $request, User $user)

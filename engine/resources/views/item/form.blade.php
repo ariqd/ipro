@@ -35,7 +35,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="purchase_price" class="form-control-label">Harga Beli</label>
+            <label for="purchase_price" class="form-control-label">Harga Pricelist</label>
             <div class="input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Rp</span>
