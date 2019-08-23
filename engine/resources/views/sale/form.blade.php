@@ -21,6 +21,7 @@
     .card-header .collapsed .fa {
         transform: rotate(90deg);
     }
+
 </style>
 @endpush
 
@@ -90,7 +91,7 @@
             allowClear: true
         });
 
-        $("#categories").change(function(){
+        $("#categories").change(function () {
             $("#branches").val(null).trigger('change');
         })
 
@@ -234,31 +235,30 @@
         }
     });
 
-    $("#case_2").change(function(){
+    $("#case_2").change(function () {
         $(".case4").hide();
-        $(".case4").prop("disabled",true);
+        $(".case4").prop("disabled", true);
         $(".case3").hide();
-        $(".case3").prop("disabled",true);
+        $(".case3").prop("disabled", true);
         let case2 = $("#case_2").val();
-        if( case2 == 3){
+        if (case2 == 3) {
             $(".case3").show();
-            $(".case3").prop("disabled",false);
+            $(".case3").prop("disabled", false);
 
             $(".case4").hide();
-            $(".case4").prop("disabled",true);
-        }
-        else if(case2 == 4){
+            $(".case4").prop("disabled", true);
+        } else if (case2 == 4) {
             $(".case4").show();
-            $(".case4").prop("disabled",false);
+            $(".case4").prop("disabled", false);
 
             $(".case3").hide();
-            $(".case3").prop("disabled",true);
-        }else{
+            $(".case3").prop("disabled", true);
+        } else {
             $(".case3").hide();
-            $(".case3").prop("disabled",true);
+            $(".case3").prop("disabled", true);
 
             $(".case4").hide();
-            $(".case4").prop("disabled",true);
+            $(".case4").prop("disabled", true);
         }
     });
 
@@ -302,22 +302,21 @@
                 <option value="4">By Admin (dibuat oleh Admin Sales)</option>
             </select>
             <div class="case3" style="display: none;">
-            Referral
-            <select name="sales_id" class="form-control sales case3" style="display: none;">
-                @foreach ($sales as $item)
-                <option value="{{$item->id}}"> {{$item->name}}</option>
-                @endforeach
-            </select>
+                Referral
+                <select name="sales_id" class="form-control sales case3" style="display: none;">
+                    @foreach ($sales as $item)
+                    <option value="{{$item->id}}"> {{$item->name}}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="case4" style="display: none;">
-            Admin
-            <select name="admin_id" class="form-control sales case4" style="display: none;">
-                @foreach ($sales as $item)
-                <option value="{{$item->id}}"> {{$item->name}}</option>
-                @endforeach
-            </select>
+                Admin
+                <select name="admin_id" class="form-control sales case4" style="display: none;">
+                    @foreach ($sales as $item)
+                    <option value="{{$item->id}}"> {{$item->name}}</option>
+                    @endforeach
+                </select>
             </div>
-
         </div>
     </div>
     @endif
