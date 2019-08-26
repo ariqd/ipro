@@ -1,8 +1,8 @@
 <form action="{{ @$isEdit ? url('categories/'.$category->id) : url('categories') }}" method="post">
     @csrf
     {{ @$isEdit ? method_field('PUT') : '' }}
-    <div class="modal-header">
-        <h5 class="modal-title">{{ @$isEdit ? 'Edit' : 'Tambah' }} Category</h5>
+    <div class="modal-header bg-dark text-light border border-dark">
+        <h5 class="modal-title">{{ @$isEdit ? 'Edit' : 'Tambah' }} Kategori</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -21,16 +21,16 @@
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="name" class="form-control-label">Nama</label>
+                <label for="name" class="form-control-label">Nama Kategori</label>
                 <input id="name" class="form-control" name="name" type="text"
-                    value="{{ @$isEdit ? $category->name : '' }}" required>
+                    value="{{ @$isEdit ? $category->name : '' }}" required placeholder="Nama kategori">
             </div>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal"> Batal</button>
-        <button type="submit" class="btn btn-dark"><i class="fa fa-check"></i>
-            {{ @$isEdit ? 'Edit' : 'Tambah' }}
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Batal</button>
+        <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>
+            {{ @$isEdit ? 'Edit' : 'Simpan' }}
         </button>
     </div>
 </form>

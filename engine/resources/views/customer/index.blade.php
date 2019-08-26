@@ -44,13 +44,13 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">Master Data</h5>
+                    <p class="mb-0 text-muted">Master Data</p>
                     <h2><b>Customer</b></h2>
                 </div>
                 <div>
                     <a href="#modalForm" data-href="{{ url('customers/create') }}" data-toggle="modal"
-                       class="btn btn-dark">
-                        <i class="fa fa-plus"></i> Add Customer
+                       class="btn btn-success">
+                        <i class="fa fa-plus"></i> Tambah Customer
                     </a>
                 </div>
             </div>
@@ -64,11 +64,11 @@
     <div class="row">
         <div class="col-12">
             <div class="table-responsive">
-                <table class="table table-light table-bordered data-table">
+                <table class="table table-light table-hover data-table">
                     <thead>
                     <tr>
                         <th>No</th>
-                        <th>Project Owner</th>
+                        <th>Nama / Project Owner</th>
                         <th>KTP</th>
                         <th>NPWP</th>
                         <th>Phone</th>

@@ -1,27 +1,53 @@
-<div class="modal-header">
-    <h5 class="modal-title">Detail Produk - {{ $item->name }}</h5>
+<div class="modal-header bg-dark text-light">
+    <h5 class="modal-title">Detail Produk</h5>
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
-    <div class="table-responsive">
-        <table class="table">
-            <tbody>
-                <tr>
-                    <td><b>Brand</b></td>
-                    <td>{{ $item->brandname }}</td>
-                </tr>
-                <tr>
-                    <td><b>Category</b></td>
-                    <td>{{ $item->categoryname }}</td>
-                </tr>
-                <tr>
-                    <td><b>Nama</b></td>
-                    <td>{{ $item->name }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="row">
+        <div class="col-8">
+            <p class="text-muted mb-0">{{ $item->category->brand->name }} - {{ $item->category->name }}</p>
+            <h3><small>{{ $item->code }}</small> <br> {{ $item->name }}</h3>
+        </div>
+        <div class="col-4">
+            <p class="float-right mb-0 text-muted">Harga Pricelist</p>
+            <h4 class="float-right">Rp{{ number_format($item->purchase_price, 0, ',', '.') }}</h4>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col-4">
+            <div class="text-center">
+                <p class="text-muted mb-0">Berat</p>
+                <h3>{{ $item->weight }} <small>Kg</small></h3>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="text-center">
+                <p class="text-muted mb-0">Panjang</p>
+                <h3>{{ $item->width }} <small>mm</small></h3>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="text-center">
+                <p class="text-muted mb-0">Lebar</p>
+                <h3>{{ $item->height }} <small>mm</small></h3>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-6">
+            <div class="text-center">
+                <p class="text-muted mb-0">Kebutuhan per meter persegi</p>
+                <h3>{{ $item->area }} <small>m2</small></h3>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="text-center">
+                <p class="text-muted mb-0">Tebal</p>
+                <h3>{{ $item->length }} <small>mm</small></h3>
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal-footer">

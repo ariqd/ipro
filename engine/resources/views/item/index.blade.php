@@ -30,46 +30,34 @@
     .dataTables_wrapper .mylength .dataTables_length {
         float: right
     }
+
 </style>
 @endpush
 
 @push('script')
 <script>
     $(document).ready(function () {
-            function addCommas(nStr) {
-                nStr += '';
-                let x = nStr.split('.');
-                let x1 = x[0];
-                let x2 = x.length > 1 ? '.' + x[1] : '';
-                let rgx = /(\d+)(\d{3})/;
-                while (rgx.test(x1)) {
-                    x1 = x1.replace(rgx, '$1' + ',' + '$2');
-                }
-                return x1 + x2;
-            }
+        $('.data-table').DataTable();
 
-            $('.data-table').DataTable({
-                responsive: true
-            });
+        $('.btnDelete').on('click', function (e) {
+            e.preventDefault();
+            var parent = $(this).parent();
 
-            $('.btnDelete').on('click', function (e) {
-                e.preventDefault();
-                var parent = $(this).parent();
-
-                swal({
+            swal({
                     title: "Apa anda yakin?",
                     text: "Data akan terhapus secara permanen!",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true
                 })
-                    .then(function (willDelete) {
-                        if (willDelete) {
-                            parent.find('.formDelete').submit();
-                        }
-                    });
-            });
+                .then(function (willDelete) {
+                    if (willDelete) {
+                        parent.find('.formDelete').submit();
+                    }
+                });
         });
+    });
+
 </script>
 @endpush
 
@@ -78,35 +66,33 @@
 <div class="container">
     <div class="d-flex justify-content-between">
         <div>
-            <h5 class="mb-0">Master Data</h5>
-            <h2><b>Items</b></h2>
+            <p class="mb-0 text-muted">Master Data</p>
+            <h2><b>Produk</b></h2>
         </div>
         <div class="d-flex align-items-center ">
             <div class="input-group mr-2">
-                <div class="input-group-prepend">
+                <input type="text" id="myInput" class="form-control" placeholder="Cari produk..." aria-label="Search"
+                    aria-describedby="add-on">                    
+                <div class="input-group-append">
                     <span class="input-group-text" id="add-on"><i class="fa fa-search"></i></span>
                 </div>
-                <input type="text" id="myInput" class="form-control" placeholder="Search item..." aria-label="Search"
-                    aria-describedby="add-on">
             </div>
             @if(Gate::allows('isAdmin'))
-            <a href="#modalForm" data-toggle="modal" data-href="{{ url('items/create') }}" class="btn btn-dark"><i
-                    class="fa fa-plus"></i> Add Item</a>
+            <a href="#modalForm" data-toggle="modal" data-href="{{ url('items/create') }}" class="btn btn-success"><i
+                    class="fa fa-plus"></i> Tambah Produk</a>
             @endif
         </div>
     </div>
     @include('layouts.feedback')
-    <div class="row" id="table">
+    <div class="row mt-3" id="table">
         <div class="col-lg-12">
             <div class="table-responsive">
                 <table class="table data-table table-light table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Code</th>
-                            <th>Brand</th>
-                            <th>Category</th>
-                            <th>Name</th>
+                            <th>Kode - Nama Produk</th>
+                            <th>Merek - Kategori</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -114,13 +100,22 @@
                         @foreach($items as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->code }}</td>
-                            <td>{{ $item->category->brand->name }} </td>
-                            <td>{{ $item->category->name }}</td>
-                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->code }} - {{ $item->name }}</td>
+                            <td>{{ $item->category->brand->name }} - {{ $item->category->name }}</td>
                             <td>
-                                <a href="#modalForm" data-toggle="modal" data-href="items/{{ $item->id }}/edit"
+                                <a href="#modalForm" data-toggle="modal"
+                                    data-href="{{ url('items/' . $item->id) }}"
+                                    class="btn btn-light btn-sm">Detail</a>
+                                <a href="#modalForm" data-toggle="modal"
+                                    data-href="{{ url('items/' . $item->id . '/edit') }}"
                                     class="btn btn-secondary btn-sm">Edit</a>
+                                <a href="#" class="btn btn-danger btn-sm btnDelete">
+                                    Hapus
+                                </a>
+                                <form action="{{ url('items/'.$item->id) }}" method="post" class="formDelete d-none">
+                                    {!! csrf_field() !!}
+                                    {!! method_field('delete') !!}
+                                </form>
                             </td>
                         </tr>
                         @endforeach

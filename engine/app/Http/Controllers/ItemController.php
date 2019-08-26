@@ -19,7 +19,7 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $d['items'] = Item::with('category.brand')->get();
+        $d['items'] = Item::with(['category.brand'])->latest()->get();
 
         return view('item.index', $d);
     }
@@ -31,7 +31,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $category = Category::all();
+        $category = Category::has('brand')->orderBy('name', 'desc')->get();
 
         return view('item.form', ["categories" => $category]);
     }
@@ -46,17 +46,27 @@ class ItemController extends Controller
     {
         $input = $request->all();
         unset($input['_token']);
+        $input['number'] =
 
-        $validate = Validator::make($input, [
+        $validator = Validator::make($input, [
             'name' => 'required',
+            'purchase_price' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'code' => 'required',
+            'height' => 'required|numeric',
+            'area' => 'required|numeric',
+            'length' => 'required|numeric'
+        ], [
+            'required' => 'Kolom :attribute harus diisi',
+            'numeric' => 'Kolom :attribute harus berupa angka'
         ]);
 
-        if ($validate->fails()) {
-            return redirect('items')->withErrors($validate)->withInput($input);
-        } else {
-            $item = Item::create($input);
-            return redirect('items')->with('info', $item->name . ' berhasil ditambahkan!');
-        }
+        if ($validator->fails())
+            return redirect('items')->withErrors($validator)->withInput();
+
+        $item = Item::create($input);
+
+        return redirect('items')->with('info', $item->name . ' berhasil ditambahkan!');
     }
 
     /**
@@ -68,6 +78,7 @@ class ItemController extends Controller
     public function show($id)
     {
         $d['item'] = Item::find($id);
+
         return view('item.show', $d);
     }
 
@@ -81,7 +92,8 @@ class ItemController extends Controller
     {
         $d['item'] = Item::find($id);
         $d['isEdit'] = TRUE;
-        $d['categories'] = Category::all();
+        $d['categories'] = Category::has('brand')->orderBy('name', 'desc')->get();
+
         return view('item.form', $d);
     }
 

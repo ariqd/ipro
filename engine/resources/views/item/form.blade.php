@@ -1,9 +1,9 @@
 <form action="{{ @$isEdit ? url('items/'.$item->id) : url('items') }}" method="post">
     @csrf
     {{ @$isEdit ? method_field('PUT') : '' }}
-    <div class="modal-header">
-        <h5 class="modal-title">{{ @$isEdit? 'Edit' : 'Tambah' }} Item</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div class="modal-header bg-dark text-light">
+        <h5 class="modal-title">{{ @$isEdit? 'Edit' : 'Tambah' }} Produk</h5>
+        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -40,8 +40,8 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text">Rp</span>
                 </div>
-                <input autocomplete="off" id="purchase_price" class="form-control" name="purchase_price"
-                    value="{{ @$isEdit ? $item->purchase_price : '' }}">
+                <input type="text" autocomplete="off" id="purchase_price" class="form-control cleave"
+                    name="purchase_price" value="{{ @$isEdit ? $item->purchase_price : '' }}">
             </div>
         </div>
         <div class="form-group">
@@ -97,8 +97,8 @@
 
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal"> Batal</button>
-        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>
+        <button type="button" class="btn btn-muted" data-dismiss="modal"> Batal</button>
+        <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>
             {{ @$isEdit ? 'Edit' : 'Tambah' }}
         </button>
     </div>
@@ -110,4 +110,11 @@
         allowClear: true,
         dropdownParent: $("#modalForm")
     });
+
+    // var cleave = new Cleave('.cleave', {
+    //     numeral: true,
+    //     numeralThousandsGroupStyle: 'thousand',
+    //     // delimiter: '.'
+    // });
+
 </script>

@@ -23,12 +23,12 @@
             <div class="col-lg-12">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">Master Data</h5>
-                        <h2><b>Branches</b></h2>
+                        <p class="mb-0 text-muted">Master Data</p>
+                        <h2><b>Cabang</b></h2>
                     </div>
                     <div>
                         <a href="#modalForm" data-toggle="modal" data-href="{{ url('branches/create') }}"
-                           class="btn btn-dark"><i class="fa fa-plus"></i> Add Branch</a>
+                           class="btn btn-success"><i class="fa fa-plus"></i> Tambah Cabang</a>
                     </div>
                 </div>
             </div>
@@ -41,12 +41,12 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="table table-responsive">
-                    <table class="table bg-light table-bordered data-table">
+                    <table class="table bg-light table-hover data-table">
                         <thead>
                         <tr>
-                            <th>No</th>
-                            <th>ID</th>
-                            <th>Name</th>
+                            <th width="20">No</th>
+                            {{-- <th>ID</th> --}}
+                            <th>Nama Cabang</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -54,7 +54,7 @@
                         @foreach($branches as $branch)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $branch->id }}</td>
+                                {{-- <td>{{ $branch->id }}</td> --}}
                                 <td>{{ $branch->name }}</td>
                                 <td>
                                     <a href="#modalForm" data-toggle="modal"

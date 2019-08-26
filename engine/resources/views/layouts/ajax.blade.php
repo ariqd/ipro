@@ -26,8 +26,8 @@
 @endpush
 
 <div class="modal fade" id="modalForm" tabindex="-1" role="dialog" data-backdrop="static">
-    <div class="modal-dialog {{ @$size == 'lg' ? 'modal-lg' : '' }}" role="document">
-        <div class="modal-content" id="modal_content"></div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content border border-dark" id="modal_content"></div>
     </div>
 </div>
 <div class="loading">

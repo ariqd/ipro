@@ -28,8 +28,6 @@
                     <h2 class="font-weight-bold">User</h2>
                 </div>
                 <div>
-                    {{--<a href="#modalForm" data-toggle="modal" data-href="{{ url('branches') }}"--}}
-                    {{--class="btn btn-success"><i class="fa fa-tree"></i> Atur Cabang</a>--}}
                     <a href="{{ url('branches') }}" class="btn btn-secondary"><i class="fa fa-tree"></i> Atur Cabang</a>
                     <a href="#modalForm" data-toggle="modal" data-href="{{ url('accounts/create') }}"
                         class="btn btn-dark"><i class="fa fa-plus"></i> Tambah User</a>

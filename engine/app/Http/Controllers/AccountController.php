@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Branch;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
@@ -54,7 +55,17 @@ class AccountController extends Controller
         $input = $request->all();
         unset($input['_token']);
 
-//        $input['password'] = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; //secret
+        $validator = Validator::make($input, [
+            'username' => 'required|unique:users'
+        ], [
+            'required' => 'Kolom :attribute wajib diisi!',
+            'unique' => 'Username has been taken'
+        ]);
+
+        if ($validator->fails())
+            return redirect()->back()->withInput()->withErrors($validator);
+
+        // $input['password'] = '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm'; //secret
         $input['password'] = bcrypt($input['password']);
 
         $user = User::create($input);
