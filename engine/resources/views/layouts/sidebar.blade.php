@@ -22,33 +22,33 @@
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a href="{{ url('brands') }}" class="nav-link {{ (request()->is('brands*')) ? 'active' : '' }}">
-                            <i class="fa fa-list"></i> Brands
+                            <i class="fa fa-list"></i> Merek
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="{{ url('categories') }}"
                             class="nav-link {{ (request()->is('categories*')) ? 'active' : '' }}">
-                            <i class="fa fa-list"></i> Categories
+                            <i class="fa fa-list"></i> Kategori
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="{{ url('items') }}" class="nav-link {{ (request()->is('items*')) ? 'active' : '' }}">
-                            <i class="fa fa-list"></i> Items
+                            <i class="fa fa-list"></i> Produk
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="{{ url('stocks') }}" class="nav-link {{ (request()->is('stocks*')) ? 'active' : '' }}">
-                            <i class="fa fa-list"></i> Stocks
+                            <i class="fa fa-list"></i> Stok
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a href="{{ url('branches') }}"
                             class="nav-link {{ (request()->is('branches*')) ? 'active' : '' }}">
-                            <i class="fa fa-tree"></i> iPro Branches
+                            <i class="fa fa-tree"></i> Cabang iPro
                         </a>
                     </li>
 
@@ -56,12 +56,6 @@
                         <a href="{{ url('customers') }}"
                             class="nav-link {{ request()->is('customers*') ? 'active' : '' }}">
                             <i class="fa fa-shopping-bag"></i> Customers
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="{{ url('vendors') }}" class="nav-link {{ request()->is('vendors*') ? 'active' : '' }}">
-                            <i class="fa fa-truck"></i> Vendors
                         </a>
                     </li>
 

@@ -87,6 +87,8 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Brand::destroy($id);
+        
+        return redirect('/brands')->with('info', 'Merek berhasil dihapus!');
     }
 }

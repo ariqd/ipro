@@ -27,19 +27,9 @@
 
 @push("js")
 <script src="{{ asset('assets/js/scripts.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.5.0/cleave.js"
-    integrity="sha256-cKDTH0H5beL+NbNqIPKJ9F4o19obOcC07Gd+KLaKbAU=" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function () {
         let items_count = 0;
-
-        var cleave = new Cleave('.cleave', {
-            numeral: true,
-            numeralThousandsGroupStyle: 'thousand',
-            // numeralDecimalMark: ',',
-            // delimiter: '.'
-            // delimiter: '.'
-        });
 
         $("#customer_select").change(function () {
             var id = $(this).val();
@@ -122,7 +112,6 @@
         });
 
         function searchProduct() {
-
             items_count = 0;
             var id = $('#categories').val();
             $.ajax({

@@ -30,113 +30,115 @@
     .dataTables_wrapper .mylength .dataTables_length {
         float: right
     }
+
 </style>
 @endpush
 
 @push('script')
 <script>
     $(document).ready(function () {
-            function addCommas(nStr) {
-                nStr += '';
-                x = nStr.split('.');
-                x1 = x[0];
-                x2 = x.length > 1 ? '.' + x[1] : '';
-                var rgx = /(\d+)(\d{3})/;
-                while (rgx.test(x1)) {
-                    x1 = x1.replace(rgx, '$1' + ',' + '$2');
-                }
-                return x1 + x2;
+        function addCommas(nStr) {
+            nStr += '';
+            x = nStr.split('.');
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
             }
+            return x1 + x2;
+        }
 
-            var table = $('.data-table').DataTable({
-                // responsive: true,
-                paging: false,
-                dom: "<'myfilter'f><'mylength'l>t",
-                // scrollY: '4000px',
-                // scrollCollapse: true,
-                // pageResize: true
+        var table = $('.data-table').DataTable({
+            // responsive: true,
+            paging: false,
+            dom: "<'myfilter'f><'mylength'l>t",
+            // scrollY: '4000px',
+            // scrollCollapse: true,
+            // pageResize: true
+        });
+
+        countStock();
+        countWeight();
+        countPrice();
+        countPriceBranch();
+        countHold();
+
+        function countStock() {
+            var sum = 0;
+            $('.stok').each(function () {
+                sum += parseInt($(this).text());
             });
+            $('.total_stock').text(sum);
+        }
 
-            countStock();
-            countWeight();
+        function countHold() {
+            var sum = 0;
+            $('.hold').each(function () {
+                sum += parseInt($(this).text());
+            });
+            $('.total_holds').text(sum);
+        }
+
+        function countWeight() {
+            var sum = 0;
+            $('.weight').each(function () {
+                sum += parseFloat($(this).text());
+            });
+            var text = sum + ' Kg';
+            if (sum > 1000) {
+                sum = sum / 1000;
+                var weight = Number(sum).toFixed(2);
+                text = weight + ' Ton';
+            }
+            $('.total_weight').text(text);
+        }
+
+        function countPrice() {
+            var sum = 0;
+            $('.price').each(function () {
+                sum += parseFloat($(this).text());
+            });
+            $('.total_price').text(addCommas(sum));
+        }
+
+        function countPriceBranch() {
+            var sum = 0;
+            $('.price_branch').each(function () {
+                sum += parseFloat($(this).text());
+            });
+            $('.total_price_branch').text(addCommas(sum));
+        }
+
+        $('#myInput').on('keyup', function () {
+            table.search(this.value).draw();
+
             countPrice();
             countPriceBranch();
+            countWeight();
+            countStock();
             countHold();
+        });
 
-            function countStock() {
-                var sum = 0;
-                $('.stok').each(function () {
-                    sum += parseInt($(this).text());
-                });
-                $('.total_stock').text(sum);
-            }
+        $('.btnDelete').on('click', function (e) {
+            e.preventDefault();
+            var parent = $(this).parent();
 
-            function countHold() {
-                var sum = 0;
-                $('.hold').each(function () {
-                    sum += parseInt($(this).text());
-                });
-                $('.total_holds').text(sum);
-            }
-
-            function countWeight() {
-                var sum = 0;
-                $('.weight').each(function () {
-                    sum += parseFloat($(this).text());
-                });
-                var text = sum + ' Kg';
-                if (sum > 1000) {
-                    sum = sum / 1000;
-                    var weight = Number(sum).toFixed(2);
-                    text = weight + ' Ton';
-                }
-                $('.total_weight').text(text);
-            }
-
-            function countPrice() {
-                var sum = 0;
-                $('.price').each(function () {
-                    sum += parseFloat($(this).text());
-                });
-                $('.total_price').text(addCommas(sum));
-            }
-
-            function countPriceBranch() {
-                var sum = 0;
-                $('.price_branch').each(function () {
-                    sum += parseFloat($(this).text());
-                });
-                $('.total_price_branch').text(addCommas(sum));
-            }
-
-            $('#myInput').on('keyup', function () {
-                table.search(this.value).draw();
-
-                countPrice();
-                countPriceBranch();
-                countWeight();
-                countStock();
-                countHold();
-            });
-
-            $('.btnDelete').on('click', function (e) {
-                e.preventDefault();
-                var parent = $(this).parent();
-
-                swal({
+            swal({
                     title: "Apa anda yakin?",
                     text: "Data akan terhapus secara permanen!",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true
                 })
-                    .then(function (willDelete) {
-                        if (willDelete) {
-                            parent.find('.formDelete').submit();
-                        }
-                    });
-            });
+                .then(function (willDelete) {
+                    if (willDelete) {
+                        parent.find('.formDelete').submit();
+                    }
+                });
         });
+    });
+
 </script>
 @endpush
 
@@ -146,8 +148,8 @@
     <div class="col-lg-12">
         <div class="d-flex justify-content-between align-items-center">
             <div>
-                <h5 class="mb-0">Master Data</h5>
-                <h2><b>Stocks</b></h2>
+                <p class="mb-0 text-muted">Master Data</p>
+                <h2><b>Stok</b></h2>
             </div>
             <div class="d-flex">
                 <div class="input-group mr-2">
@@ -167,8 +169,8 @@
                 </a>
                 @endif
                 @if(Gate::allows('isAdmin'))
-                <a href="#modalForm" data-toggle="modal" data-href="{{ url('stocks/create') }}" class="btn btn-dark"><i
-                        class="fa fa-plus"></i> Add Stock</a>
+                <a href="#modalForm" data-toggle="modal" data-href="{{ url('stocks/create') }}" class="btn btn-success"><i
+                        class="fa fa-plus"></i> Tambah Stok</a>
                 @endif
             </div>
         </div>
@@ -263,12 +265,12 @@
                     <tr>
                         <th>No.</th>
                         <th>Item</th>
-                        <th>Cabang</th>
+                        {{-- <th>Cabang</th> --}}
                         <th class="stock">Stok (per Batang)</th>
                         <th class="holds">Stok (Hold per Batang)</th>
                         <th class="berat">Berat (kg)</th>
                         <th class="harga">Harga Pricelist</th>
-                        <th class="harga_cabang">Harga Cabang</th>
+                        <th class="harga_cabang">Harga Cabang {{ ucfirst(Auth::user()->branch->name) }}</th>
                         <th></th>
                         <th class="d-none"></th>
                         <th class="d-none"></th>
@@ -284,11 +286,8 @@
                                 -
                                 {{ $stock->item->category->name }}
                             </small> <br>
-                            {{ $stock->item->name }}
-                            {{-- {{ $stock->item->category->brand->name .' - '. $stock->item->category->name .' - '. $stock->item->name }}
-                            --}}
+                            {{ $stock->item->code }} - {{ $stock->item->name }}
                         </td>
-                        <td class="cabang">{{ ucfirst($stock->branch->name) }}</td>
                         <td class="stok">
                             {{ $stock->quantity - $stock->hold }}
                         </td>
@@ -299,10 +298,10 @@
                             {{ $stock->item->weight }}
                         </td>
                         <td class="harga">
-                            Rp {{ number_format($stock->item->purchase_price) }}
+                            Rp {{ number_format($stock->item->purchase_price, 0, ',', '.') }}
                         </td>
                         <td class="harga_cabang">
-                            Rp {{ number_format($stock->price_branch) }}
+                            Rp {{ number_format($stock->price_branch, 0, ',', '.') }}
                         </td>
                         <td>
                             <div class="btn-group">
@@ -348,7 +347,6 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td></td>
                         <td></td>
                         <td class="cabang">
                             <span class="float-right">

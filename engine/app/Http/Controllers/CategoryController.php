@@ -15,8 +15,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Category::all();
-        return view("category.index", ["categories" => $data]);
+        $data = Brand::with('categories')->get();
+        // $data = Category::with('brand')->get();
+
+        return view("category.index", ["brands" => $data]);
     }
 
     /**
@@ -95,7 +97,8 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $category = Category::find($id);
-        $category->softdelete();
+        $category->delete();
+
         return redirect('categories')->with('info', 'Hapus kategori sukses!');
 
     }
