@@ -3,31 +3,31 @@
 @section('title', 'Goods Receive')
 
 @push("css")
-    <style>
-        .loading {
-            background: lightgrey;
-            padding: 15px;
-            position: fixed;
-            border-radius: 4px;
-            left: 50%;
-            top: 50%;
-            text-align: center;
-            margin: -40px 0 0 -50px;
-            z-index: 2000;
-            display: none;
-        }
-    </style>
+<style>
+    .loading {
+        background: lightgrey;
+        padding: 15px;
+        position: fixed;
+        border-radius: 4px;
+        left: 50%;
+        top: 50%;
+        text-align: center;
+        margin: -40px 0 0 -50px;
+        z-index: 2000;
+        display: none;
+    }
+</style>
 @endpush
 
 @push("js")
-    <script type="text/javascript">
-        $("#purchaseid").select2({
+<script type="text/javascript">
+    $("#purchaseid").select2({
             placeholder: "Choose PO"
         });
-    </script>
+</script>
 
-    <script type="text/javascript">
-        count = 0;
+<script type="text/javascript">
+    count = 0;
         $("#purchaseid").change(function () {
             $("#purchase-body").empty();
             $.ajax({
@@ -147,68 +147,68 @@
             input.setAttribute('class', "purchaseid");
             container.appendChild(input);
         })
-    </script>
+</script>
 @endpush
 
 @section('content')
-    <div class="loading">
-        <i class="fas fa-sync fa-spin fa-2x fa-fw"></i><br/>
-        <span>Loading</span>
+<div class="loading">
+    <i class="fas fa-sync fa-spin fa-2x fa-fw"></i><br />
+    <span>Loading</span>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            @include("layouts.feedback")
+            <div class="d-flex justify-content-between">
+                <div>
+                    <h2>
+                        <small>
+                            <a href="{{ url('goods-receive') }}" class="text-dark">Goods Receive</a> /
+                        </small>
+                        <b>Create</b>
+                    </h2>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                @include("layouts.feedback")
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <h2>
-                            <small>
-                                <a href="{{ url('goods-receive') }}" class="text-dark">Goods Receive</a> /
-                            </small>
-                            <b>Create</b>
-                        </h2>
-                    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group row">
+                <label for="payment_method" class="col-4 col-form-label">Purchase Order ID</label>
+                <div class="col-7">
+                    <select autocomplete="off" name="purchase_id" id="purchaseid" class="form-control brands w-100">
+                        <option></option>
+                        @foreach($purchase as $key)
+                        <option value="{{ $key->id }}">{{ $key->purchase_number }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="payment_method" class="col-4 col-form-label">Purchase Order ID</label>
-                    <div class="col-7">
-                        <select autocomplete="off" name="purchase_id" id="purchaseid" class="form-control brands w-100">
-                            <option></option>
-                            @foreach($purchase as $key)
-                                <option value="{{ $key->id }}">{{ $key->purchase_number }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+        <div class="col-lg-6">
+            <div class="form-group row">
+                <label for="payment_method" class="col-4 col-form-label">DO Number</label>
+                <div class="col-7">
+                    <input type="text" required="" class="form-control" id="receipt" name="receipt" value="">
                 </div>
             </div>
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="payment_method" class="col-4 col-form-label">DO Number</label>
-                    <div class="col-7">
-                        <input type="text" required="" class="form-control" id="receipt" name="receipt" value="">
-                    </div>
-                </div>
-            </div>
-
         </div>
-        <div class="row">
 
-            <div class="col-lg-12">
-                <div class="col-lg-12 text-right">
-                    <h2>Total : <span id="grandtotal">Rp. 0,-</span></h2>
-                </div>
-                <h4>Cart</h4>
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-light">
-                                <thead>
+    </div>
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="col-lg-12 text-right">
+                <h2>Total : <span id="grandtotal">Rp. 0,-</span></h2>
+            </div>
+            <h4>Cart</h4>
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-light">
+                            <thead>
                                 <tr>
                                     <th>No.</th>
                                     <th>Kategori</th>
@@ -221,30 +221,30 @@
                                     <th>No Sales</th>
                                     <th></th>
                                 </tr>
-                                </thead>
-                                <tbody id="purchase-body">
+                            </thead>
+                            <tbody id="purchase-body">
 
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
             </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">
 
-            </div>
-            <div class="col-lg-6">
-                <form action="{{url("/goods-receive")}}" method="POST">
-                    @csrf
-                    <div id="input-body">
-
-                    </div>
-                    <input type="submit" class="form-control btn btn-success" value="Create Goods Receive">
-                </form>
-            </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-lg-6">
+
+        </div>
+        <div class="col-lg-6">
+            <form action="{{url("/goods-receive")}}" method="POST">
+                @csrf
+                <div id="input-body">
+
+                </div>
+                <input type="submit" class="form-control btn btn-success" value="Create Goods Receive">
+            </form>
+        </div>
+    </div>
+</div>
 @endsection
