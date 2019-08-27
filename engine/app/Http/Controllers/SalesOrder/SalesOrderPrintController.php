@@ -26,7 +26,15 @@ class SalesOrderPrintController extends Controller
 //        $pdf->loadHTML('<h1>Test</h1>');
 //        return $pdf->stream();
         $data = Sale::find($id);
-        $pdf = PDF::loadView('print.kwitansi', ['sale' => $data]);
+        $customer = $data->customer;
+        $data["terbilang"] = $this->angkaTerbilang($data->grand_total + $data->ongkir);
+        $data["project_name"] = $data->project;
+        $data["updated_at"] = $data->updated_at;
+        $data["customer_name"] = $customer->project_owner;
+        $data["nominal"] = $data->grand_total + $data->ongkir;
+        $data["QO"] = $data->quotation_id;
+        $data["SO"] = $data->no_so;
+        $pdf = PDF::loadView('print.kwitansi', $data);
         return $pdf->download('invoice.pdf');
     }
 

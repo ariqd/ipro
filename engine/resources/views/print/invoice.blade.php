@@ -60,7 +60,7 @@ Kwitansi
     <div class="col-xs-5">
     </div>
     <div class="col-xs-2" style="font-size: 20px">
-        <center><strong>INVOICE</strong></center>
+        <strong>INVOICE</strong>
     </div>
     <div class="col-xs-5" class="col-xs-6" style="font-size: 11px">
         <table width="80%" style="float: right">
