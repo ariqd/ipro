@@ -15,7 +15,7 @@ class BrandController extends Controller
     public function index()
     {
         $data = Brand::all();
-        return view("brand.index",["brands"=>$data]);
+        return view("brand.index", ["brands" => $data]);
     }
 
     /**
@@ -36,8 +36,21 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        Brand::create($request->all());
+        $brand = Brand::create($request->all());
 
+        if ($request->has('logo')) {
+            $dir = "assets/img/" . $request->name;
+
+            if (is_dir($dir) === false) {
+                mkdir($dir);
+            }
+            $file = $request->logo;
+            $file3 = $request->name . "logo-" . date("dmyhis") . "." . $file->getClientOriginalExtension();
+            $file->move($dir, $file3);
+            $brand->logo = $file3;
+            $brand->save();
+
+        }
         return redirect('brands')->with('info', 'Tambah brand sukses!');
     }
 
@@ -76,6 +89,19 @@ class BrandController extends Controller
     {
         $brand = Brand::find($id);
         $brand->update($request->all());
+        if ($request->has('logo')) {
+            $dir = "assets/img/" . $request->name;
+
+            if (is_dir($dir) === false) {
+                mkdir($dir);
+            }
+            $file = $request->logo;
+            $file3 = $request->name . "logo-" . date("dmyhis") . "." . $file->getClientOriginalExtension();
+            $file->move($dir, $file3);
+            $brand->logo = $file3;
+            $brand->save();
+
+        }
         return redirect('brands')->with('info', 'Edit brand sukses!');
     }
 
@@ -88,7 +114,7 @@ class BrandController extends Controller
     public function destroy($id)
     {
         Brand::destroy($id);
-        
+
         return redirect('/brands')->with('info', 'Merek berhasil dihapus!');
     }
 }

@@ -19,7 +19,7 @@
 @section('content')
     <div class="row">
         <div class="col-8">
-            <h2 class="font-weight-bold">Set Komisi {{ $user->name }}</h2>
+            <h2 class="font-weight-bold">Set Achievement {{ $user->name }}</h2>
         </div>
         <div class="col-4">
             <h4 class="float-right">Periode {{ $from }} - {{ $to }}</h4>

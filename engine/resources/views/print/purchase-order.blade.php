@@ -57,7 +57,6 @@ Purchase Order
 @section("content")
 <div class="col-xs-12" style="margin-top: 10%">
     <div class="col-xs-5">
-
     </div>
     <div class="col-xs-2" style="font-size: 19px">
         <center><strong>ORDER FORM</strong></center>
@@ -81,7 +80,7 @@ Purchase Order
 </div>
 <div class="col-xs-12" style="margin-top: 0%">
     <div class="col-xs-3" style="margin-top: 0%; margin-bottom: 0%">
-        From: <img src="logo.jpg" alt="logo" style="width: 75%;">
+    From:  <img src="{!! asset('assets/img/'.$data->details[0]->item->category->brand->name.'/'.$data->details[0]->item->category->brand->logo) !!}" alt="" width="70">
     </div>
     <div class="col-xs-4" style="font-size: 12px">
         <br><br>
@@ -296,4 +295,5 @@ Purchase Order
         </table>
     </div>
 </div>
+
 @endsection

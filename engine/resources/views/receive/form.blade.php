@@ -49,7 +49,6 @@
                             var cell7 = row.insertCell(7);
                             var cell8 = row.insertCell(8);
                             var cell9 = row.insertCell(9);
-                            var cell10 = row.insertCell(10);
                             cell0.setAttribute('class', "form_id");
                             cell7.setAttribute('class', "subtotal");
 
@@ -59,15 +58,14 @@
                             cell4.innerHTML = value.item.weight;
                             cell5.innerHTML = value.qty;
                             cell6.innerHTML = '<input class="form-control" type="number" onchange="calculateAmmount(' + count + ',' + value.item.purchase_price + ')" id="qtyget-' + count + '" min="1" max="' + value.qty + '" value="' + value.qty + '"></input>';
-                            cell7.innerHTML = value.item.purchase_price;
-                            cell8.innerHTML = '<input class="form-control totalammount" id="purchase-' + count + '" disabled value="' + value.total_price + '"></input>';
+                            cell7.innerHTML = '<input class="form-control totalammount" id="purchase-' + count + '" disabled value="' + value.total_price + '"></input>';
                             console.dir(value);
                             if (value.sales_id != null) {
-                                cell9.innerHTML = value.sales.no_so;
+                                cell8.innerHTML = value.sales.no_so;
                             } else {
-                                cell9.innerHTML = "-";
+                                cell8.innerHTML = "-";
                             }
-                            cell10.innerHTML = '<a onclick=voidItem("item-' + count + '")><i class="fa fa-trash"></i></a>';
+                            cell9.innerHTML = '<a onclick=voidItem("item-' + count + '")><i class="fa fa-trash"></i></a>';
 
                             var container = document.getElementById("input-body");
                             var input = document.createElement("input");
@@ -219,7 +217,6 @@
                                     <th>Berat/pcs</th>
                                     <th>Order Qty/pcs</th>
                                     <th>Get Qty/pcs</th>
-                                    <th>Price/pcs</th>
                                     <th>Total Amount (IDR)</th>
                                     <th>No Sales</th>
                                     <th></th>

@@ -150,4 +150,22 @@ class PurchaseOrderController extends Controller
         $pdf = PDF::loadview("print.purchase-order", $data);
         return $pdf->download("PO".date("Ymdhis").".pdf");
     }
+
+    public function printMemoPengambilanProduk($id)
+    {
+        $header = Purchase::find($id);
+        $line = Purchase_Detail::with("sale","item.category.brand")->where("purchase_id", $id)->get();
+        // foreach ($line as $key) {
+        //     $key["item"] = $key->item()->first();
+        //     $key["purchase_details"]['sales'] = $key->sale()->first();
+        //     $key["item"]["category"] = $key["item"]->category()->first();
+        //     $key["item"]["brand"] = $key["item"]["category"]->brand()->first();
+        // }
+        // $d["line"] = $d["header"]->details()->get();
+        $pdf = PDF::loadview("print.memo", [
+            "header" => $header,
+            "line" => $line
+        ]);
+        return $pdf->download("Memo" . date("Ymdhis") . ".pdf");
+    }
 }

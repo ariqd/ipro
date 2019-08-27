@@ -66,7 +66,7 @@ Purchase Order
 @section("content")
 <div class="col-xs-12">
     <div class="col-xs-3" style="border: black 1px solid">
-        <img src="{!! asset('assets/img/logo.png') !!}" alt="" width="70">
+        <img src="{!! asset('assets/img/'.$line[0]->item->category->brand->name.'/'.$line[0]->item->category->brand->logo) !!}" alt="" width="70">
     </div>
 
     <div class="col-xs-9" style="border: black 1px solid">
@@ -80,7 +80,7 @@ Purchase Order
 
     <div class="col-xs-9" style="border: black 1px solid">
         <h5>
-            {{$line[0]->item->brand->name}}
+            {{ $line[0]->item->category->brand->name }}
         </h5>
     </div>
 </div>

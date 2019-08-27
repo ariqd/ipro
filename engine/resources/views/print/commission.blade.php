@@ -47,7 +47,7 @@ Komisi
                             <th rowspan="2" class="align-middle">Keterangan</th>
                             <th>Total (Exclude PPN)</th>
                             <th>Komisi</th>
-                            {{-- <th>(-10 %)</th> --}}
+                            <th>(-10 %)</th>
                         </tr>
                         <tr>
                             <th>
@@ -71,11 +71,17 @@ Komisi
                                         @endif
                                 </span>
                             </th>
-                            {{-- <th>
+                            <th>
                                         <span class="float-right font-weight-bold">
-                                            Rp {{ number_format($data['total_buat_sales']) }}
+                                        @if ($commission->achieved > $commission->achievement)
+                                        Rp {{ number_format($commission->total_commission * 0.01) }}
+                                        <span class="badge badge-success">Achieve</span>
+                                        @else
+                                        Rp {{ number_format($commission->total_commission_not_achieve * 0.01) }}
+                                        <span class="badge badge-danger">Tidak Achieve</span>
+                                        @endif
                             </span>
-                            </th> --}}
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -95,10 +101,14 @@ Komisi
                                     @else
                                     <span class="float-right">Rp {{ number_format($sales_order->commission_not_achieve) }}</span>
                                     @endif
-
                             </td>
-
-
+                            <td class="align-middle">
+                                    @if ($commission->achieved > $commission->achievement)
+                                    <span class="float-right">Rp {{ number_format(($sales_order->commission * 0.01)) }}</span>
+                                    @else
+                                    <span class="float-right">Rp {{ number_format(($sales_order->commission_not_achieve * 0.01)) }}</span>
+                                    @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -169,7 +179,8 @@ Komisi
             <tr>
                 <td>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
                 </td>
-                <td>IRENE</td>
+                <td>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                </td>
             </tr>
 
             <tr>
@@ -336,7 +347,9 @@ Komisi
         <tr>
             <td>(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
             </td>
-            <td>IRENE</td>
+            <td>
+            (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+            </td>
         </tr>
 
         <tr>

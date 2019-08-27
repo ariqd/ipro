@@ -45,10 +45,7 @@
 
                                         <a href="{{ url('goods-receive/'.$key->id) }}" class="dropdown-item">
                                             <i class="fa fa-eye"></i> Detail</a>
-                                        <a class="dropdown-item"
-                                            href="{{ url('goods-receive/'.$key->id.'/pdf/memo') }}">
-                                            <i class="fa fa-print"></i> Print Memo Pengambilan
-                                        </a>
+
                                         <form action="{{ url('goods-receive/'.$key->id) }}" method="post"
                                             class="formDelete d-none">
                                             {!! csrf_field() !!}

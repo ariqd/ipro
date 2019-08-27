@@ -13,7 +13,6 @@
 
 <script type="text/javascript">
     $('.data-table').DataTable();
-
 </script>
 @endpush
 
@@ -46,8 +45,7 @@
                     <th rowspan="2" class="align-middle">Keterangan</th>
                     <th>Total (Exclude PPN)</th>
                     <th>Komisi</th>
-                    <th>Role</th>
-                    {{-- <th>(-10 %)</th> --}}
+                    <th>(-10 %)</th>
                 </tr>
                 <tr>
                     <th>
@@ -71,11 +69,17 @@
                             @endif
                         </span>
                     </th>
-                    {{-- <th>
-                                        <span class="float-right font-weight-bold">
-                                            Rp {{ number_format($data['total_buat_sales']) }}
-                    </span>
-                    </th> --}}
+                    <th>
+                        <span class="float-right font-weight-bold">
+                        @if ($commission->achieved > $commission->achievement)
+                            Rp {{ number_format($commission->total_commission*0.01) }}
+                            <span class="badge badge-success">Achieve</span>
+                            @else
+                            Rp {{ number_format($commission->total_commission_not_achieve*0.01) }}
+                            <span class="badge badge-danger">Tidak Achieve</span>
+                            @endif
+                        </span>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -97,8 +101,14 @@
                         @endif
 
                     </td>
+
                     <td class="align-middle">
-                        <span class="">Dengan {{$sales_order->role}}</span>
+                        @if ($commission->achieved > $commission->achievement)
+                        <span class="float-right">Rp {{ number_format($sales_order->commission*0.01) }}</span>
+                        @else
+                        <span class="float-right">Rp {{ number_format($sales_order->commission_not_achieve*0.01) }}</span>
+                        @endif
+
                     </td>
 
                 </tr>
@@ -142,11 +152,11 @@
                     <td>
                         <h4 class="float-right font-weight-bold">
                             @if ($commission->achieved > $commission->achievement)
-                                <span class="badge badge-success">Achieve</span>
-                                @else
-                                <span class="badge badge-danger">Tidak Achieve</span>
-                                @endif
-                                Rp {{ number_format($commission->achieved) }}
+                            <span class="badge badge-success">Achieve</span>
+                            @else
+                            <span class="badge badge-danger">Tidak Achieve</span>
+                            @endif
+                            Rp {{ number_format($commission->achieved) }}
                         </h4>
                     </td>
                     <td>

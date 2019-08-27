@@ -350,9 +350,9 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="row">
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
                 <a href="{{ url('sales-orders/'.$sale->id.'/pdf/quotation') }}" class="btn btn-dark btn-block my-2"> Print Quotation</a>
-            </div>
+            </div> -->
             <div class="col-lg-6">
                 <form action="{{ url("sales-orders/$sale->id/pdf/invoice") }}" method="post">
                     @csrf

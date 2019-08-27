@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('purchase-orders/{id}/approve', "PurchaseOrderController@approve");
     Route::get('purchase-orders/{id}/search', "PurchaseOrderController@search");
     Route::get('purchase-orders/{id}/pdf/po', 'PurchaseOrderController@printPO');
+    Route::get('purchase-orders/{id}/pdf/memo', 'PurchaseOrderController@printMemoPengambilanProduk');
 
 
     Route::resource('sales-orders', 'SalesOrder\SalesOrderController');
@@ -56,7 +57,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('sales-orders/{id}/delivery-orders', 'SalesOrder\DeliveryOrderController@getForm');
     Route::post('sales-orders/{id}/delivery-orders', 'SalesOrder\DeliveryOrderController@store');
     // Route::get('print/memo', 'ReceiveController@printMemoPengambilanProduk');
-    Route::get('goods-receive/{id}/pdf/memo', 'ReceiveController@printMemoPengambilanProduk');
 
     Route::get('finances/komisi/{user}/set', 'CommissionController@setKomisi')->name('finances.komisi.set');
     Route::post('finances/komisi/{user}/set', 'CommissionController@storeKomisi')->name('finances.komisi.store');
