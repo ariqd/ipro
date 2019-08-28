@@ -52,6 +52,8 @@
                                             {!! method_field('delete') !!}
                                         </form>
                                     </div>
+                                </div>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
