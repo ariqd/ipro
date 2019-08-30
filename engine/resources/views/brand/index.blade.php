@@ -12,9 +12,7 @@
 <script src="https://cdn.datatables.net/plug-ins/1.10.19/features/scrollResize/dataTables.scrollResize.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#datatable').DataTable({
-            responsive: true,
-        });
+        $('#datatable').DataTable();
 
         $('.btnDelete').on('click', function (e) {
             e.preventDefault();
@@ -62,12 +60,13 @@
     </div>
     <div class="row mt-3">
         <div class="col-lg-12">
-            <div class="table table-responsive">
+            <div class="table-responsive">
                 <table class="table bg-light table-hover border" id="datatable">
                     <thead>
                         <tr>
                             <th width="20">No</th>
-                            <th>Nama Merek</th>
+                            <th>Logo</th>
+                            <th>Nama</th>
                             <th>Tanggal Dibuat</th>
                             <th></th>
                         </tr>
@@ -76,6 +75,10 @@
                         @foreach($brands as $brand)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
+                            <td>
+                                <img src="{{ asset("assets/img/$brand->name/$brand->logo") }}" alt="{{ $brand->name }}"
+                                    class="img-fluid" width="50">
+                            </td>
                             <td>{{ $brand->name }}</td>
                             <td>{{ $brand->created_at->toDayDateTimeString() }}</td>
                             <td>
