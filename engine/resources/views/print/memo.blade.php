@@ -158,13 +158,13 @@ Purchase Order
         </div>
     </div>
     <div class="col-xs-3 nopadding">
-        No Dok: xxxyyyzzz
+        No Dok: 
     </div>
     <div class="col-xs-3 nopadding">
-        No. Rev: 00
+        No. Rev: 
     </div>
     <div class="col-xs-3 nopadding">
-        Tgl Efektif: DD-MM-YYYY
+        Tgl Efektif: 
     </div>
     <div class="col-xs-3 nopadding">
         Hal : 1 Dari 1

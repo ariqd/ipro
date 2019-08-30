@@ -20,7 +20,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('purchase-orders/{id}/pdf/po', 'PurchaseOrderController@printPO');
     Route::get('purchase-orders/{id}/pdf/memo', 'PurchaseOrderController@printMemoPengambilanProduk');
 
-
+    Route::get('nota-khusus', 'SalesOrder\SalesOrderController@notaKhusus');
+    Route::post('nota-khusus-create', 'SalesOrder\SalesOrderController@notaKhususCreate');
     Route::resource('sales-orders', 'SalesOrder\SalesOrderController');
     Route::get('sales-orders/create/search-stocks', 'SalesOrder\SalesOrderSearchController@searchStocks');
     Route::get('sales-orders/search/{id}', "SalesOrder\SalesOrderSearchController@searchdetailSO");

@@ -90,6 +90,12 @@
                     <i class="fa fa-arrow-down"></i> Sales Order
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ url('nota-khusus') }}"
+                    class="nav-link {{ (request()->is('nota-khusus*')) && !request()->is('nota-khusus/check/approve') ? 'active' : '' }}">
+                    <i class="fa fa-arrow-down"></i> Nota Khusus
+                </a>
+            </li>
 
             @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
             <li class="nav-item">
