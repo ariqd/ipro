@@ -511,7 +511,7 @@
                         <label for="quotation_id" class="col-12 col-md-2 col-form-label">Quotation
                             ID</label>
                         <div class="col-8 col-md-4">
-                            <input type="text" class="form-control" id="quotation_id" name="quotation_id"
+                            <input readonly type="text" class="form-control" id="quotation_id" name="quotation_id"
                                 value="{{ @$isEdit ? $sale->quotation_id : $no_qo }}" required>
                         </div>
                     </div>
@@ -519,7 +519,7 @@
                         <label for="project" class="col-12 col-lg-2 col-form-label">Project</label>
                         <div class="col-12 col-md-8">
                             <input type="text" class="form-control" id="project" name="project"
-                                value="{{ @$isEdit ? $sale->project : '' }}" required </div> </div> <div
+                                value="{{ @$isEdit ? $sale->project : '' }}" required
                                 class="form-row">
                         </div>
                     </div>
