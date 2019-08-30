@@ -68,6 +68,7 @@
                         <tr>
                             <th width="20">No</th>
                             <th>Nama Merek</th>
+                            <th>Tanggal Dibuat</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -76,6 +77,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $brand->name }}</td>
+                            <td>{{ $brand->created_at->toDayDateTimeString() }}</td>
                             <td>
                                 <a href="#modalForm" data-toggle="modal"
                                     data-href="{{ url('brands/'.$brand->id.'/edit') }}"

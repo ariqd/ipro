@@ -13,6 +13,23 @@
 
 <script type="text/javascript">
     $('.data-table').DataTable();
+    $('.btnDelete').on('click', function (e) {
+        e.preventDefault();
+        var parent = $(this).parent();
+
+        swal({
+                title: "Apa anda yakin?",
+                text: "Data akan terhapus secara permanen!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            })
+            .then(function (willDelete) {
+                if (willDelete) {
+                    parent.find('.formDelete').submit();
+                }
+            });
+    });
 
 </script>
 @endpush
@@ -24,13 +41,13 @@
         <div class="col-lg-12">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h5 class="mb-0">Master Data</h5>
+                    <p class="mb-0 text-muted">Master Data</p>
                     <h2 class="font-weight-bold">User</h2>
                 </div>
                 <div>
                     <a href="{{ url('branches') }}" class="btn btn-secondary"><i class="fa fa-tree"></i> Atur Cabang</a>
                     <a href="#modalForm" data-toggle="modal" data-href="{{ url('accounts/create') }}"
-                        class="btn btn-dark"><i class="fa fa-plus"></i> Tambah User</a>
+                        class="btn btn-success"><i class="fa fa-plus"></i> Tambah User</a>
                 </div>
             </div>
         </div>
@@ -48,12 +65,11 @@
                         <tr>
                             <th>No</th>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>Nama</th>
                             <th>Username</th>
                             <th>Email</th>
                             <th>Role</th>
                             <th>Cabang</th>
-                            {{--<th>Branch</th>--}}
                             <th></th>
                         </tr>
                     </thead>
@@ -72,7 +88,14 @@
                             <td>
                                 <a href="#modalForm" data-toggle="modal"
                                     data-href="{{ url('accounts/'.$user->id.'/edit') }}"
-                                    class="btn btn-secondary btn-sm">Edit</a>
+                                    class="btn btn-secondary btn-sm m-1">Edit</a>
+                                <a href="#" class="btn btn-danger btn-sm m-1 btnDelete">
+                                    Hapus
+                                </a>
+                                <form action="{{ url('accounts/'.$user->id) }}" method="post" class="formDelete d-none">
+                                    {!! csrf_field() !!}
+                                    {!! method_field('delete') !!}
+                                </form>
                             </td>
                         </tr>
                         @endforeach

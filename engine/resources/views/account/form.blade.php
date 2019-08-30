@@ -1,7 +1,7 @@
 <form action="{{ @$isEdit ? url('accounts/'.$user->id) : url('accounts') }}" method="post">
     @csrf
     {{ @$isEdit ? method_field('PUT') : '' }}
-    <div class="modal-header">
+    <div class="modal-header bg-dark text-light">
         <h5 class="modal-title">{{ @$isEdit ? 'Edit' : 'Tambah' }} User</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -11,21 +11,22 @@
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="name" class="form-control-label">Nama</label>
-                <input id="name" class="form-control" name="name" type="text" value="{{ @$isEdit ? $user->name : '' }}">
+                <input id="name" class="form-control" name="name" type="text" value="{{ @$isEdit ? $user->name : '' }}"
+                autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="username" class="form-control-label">Username</label>
                 <input id="username" class="form-control" name="username" type="text"
-                    value="{{ @$isEdit ? $user->username : '' }}">
+                    value="{{ @$isEdit ? $user->username : '' }}" autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="email" class="form-control-label">Email</label>
                 <input id="email" class="form-control" name="email" type="email"
-                    value="{{ @$isEdit ? $user->email : '' }}">
+                    value="{{ @$isEdit ? $user->email : '' }}" autocomplete="off">
             </div>
         </div>
         <div class="form-group row">
@@ -36,13 +37,11 @@
                 @if (@$isEdit)
                 <small class="form-text text-muted">Biarkan kosong jika tidak akan diganti</small>
                 @endif
-
                 @if ($errors->has('password'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->first('password') }}</strong>
                 </span>
                 @endif
-
                 <div class="form-check mt-2">
                     <input class="form-check-input" onclick="myFunction()" type="checkbox" value="" id="defaultCheck1">
                     <label class="form-check-label" for="defaultCheck1">

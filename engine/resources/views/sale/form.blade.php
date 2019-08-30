@@ -485,15 +485,15 @@
                         </div>
                         <div class="col-lg-8">
                             <div class="card mt-3 mt-lg-0">
-                                <div class="card-body p-0" id="items2">
-                                    <div class="d-flex justify-content-between align-items-center p-3">
-                                        <div id="items2-text" class="count text-secondary">
-                                            <i class="fa fa-shopping-cart"></i> Belum ada barang dipilih
-                                        </div>
-                                        <div>
-                                            <b>Total:</b> <span id="grand-total-span">Rp 0</span>
-                                        </div>
+                                <div class="d-flex justify-content-between align-items-center p-3">
+                                    <div id="items2-text" class="count text-secondary">
+                                        <i class="fa fa-shopping-cart"></i> Belum ada barang dipilih
                                     </div>
+                                    <div>
+                                        <b>Total:</b> <span id="grand-total-span">Rp 0</span>
+                                    </div>
+                                </div>
+                                <div class="card-body p-0" id="items2">
                                 </div>
                             </div>
                         </div>

@@ -72,7 +72,7 @@
         <div class="d-flex align-items-center ">
             <div class="input-group mr-2">
                 <input type="text" id="myInput" class="form-control" placeholder="Cari produk..." aria-label="Search"
-                    aria-describedby="add-on">                    
+                    aria-describedby="add-on">
                 <div class="input-group-append">
                     <span class="input-group-text" id="add-on"><i class="fa fa-search"></i></span>
                 </div>
@@ -92,7 +92,8 @@
                         <tr>
                             <th>No</th>
                             <th>Kode - Nama Produk</th>
-                            <th>Merek - Kategori</th>
+                            {{-- <th>Merek - Kategori</th> --}}
+                            <th>Tanggal Dibuat</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -100,16 +101,22 @@
                         @foreach($items as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->code }} - {{ $item->name }}</td>
-                            <td>{{ $item->category->brand->name }} - {{ $item->category->name }}</td>
                             <td>
-                                <a href="#modalForm" data-toggle="modal"
-                                    data-href="{{ url('items/' . $item->id) }}"
-                                    class="btn btn-light btn-sm">Detail</a>
+                                <small class="text-muted">
+                                    {{ $item->category->brand->name }} -
+                                    {{ $item->category->name }}
+                                </small> <br>
+                                {{ $item->code }} - {{ $item->name }}
+                            </td>
+                            {{-- <td></td> --}}
+                            <td>{{ $item->created_at->toDayDateTimeString() }}</td>
+                            <td>
+                                <a href="#modalForm" data-toggle="modal" data-href="{{ url('items/' . $item->id) }}"
+                                    class="btn btn-light btn-sm m-1">Detail</a>
                                 <a href="#modalForm" data-toggle="modal"
                                     data-href="{{ url('items/' . $item->id . '/edit') }}"
-                                    class="btn btn-secondary btn-sm">Edit</a>
-                                <a href="#" class="btn btn-danger btn-sm btnDelete">
+                                    class="btn btn-secondary btn-sm m-1">Edit</a>
+                                <a href="#" class="btn btn-danger btn-sm m-1 btnDelete">
                                     Hapus
                                 </a>
                                 <form action="{{ url('items/'.$item->id) }}" method="post" class="formDelete d-none">

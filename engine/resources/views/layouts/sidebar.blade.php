@@ -104,11 +104,11 @@
                 </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="{{ url('settings') }}" class="nav-link {{ (request()->is('settings*')) ? 'active' : '' }}">
                     <i class="fa fa-cog"></i> Settings
                 </a>
-            </li>
+            </li> --}}
             @endif
         </ul>
     </nav>

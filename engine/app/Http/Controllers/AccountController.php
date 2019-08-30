@@ -6,7 +6,6 @@ use App\Branch;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
 class AccountController extends Controller
 {
     /**
@@ -28,12 +27,8 @@ class AccountController extends Controller
     public function create()
     {
         $d['types'] = [
-//            'branch' => 'Branch Manager',
             'admin' => 'Admin',
-//            'manager' => 'Manajer Cabang',
             'sales' => 'Sales Cabang',
-            'sales_silang' => 'Sales Silang',
-            'sales_freelance' => 'Sales Freelance',
             'finance' => 'Finance',
             'head_sales' => 'Head Sales',
             'admin_sales' => 'Admin Sales',
@@ -56,7 +51,8 @@ class AccountController extends Controller
         unset($input['_token']);
 
         $validator = Validator::make($input, [
-            'username' => 'required|unique:users'
+            'username' => 'required|unique:users',
+            'role' => 'required'
         ], [
             'required' => 'Kolom :attribute wajib diisi!',
             'unique' => 'Username has been taken'
@@ -95,10 +91,9 @@ class AccountController extends Controller
         $d['user'] = User::find($id);
         $d['isEdit'] = TRUE;
         $d['types'] = [
-//            'branch' => 'Branch Manager',
             'admin' => 'Admin',
-//            'manager' => 'Manajer Cabang',
             'sales' => 'Sales Cabang',
+            'finance' => 'Finance',
         ];
 
         $d['branches'] = Branch::all();

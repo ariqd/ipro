@@ -68,7 +68,7 @@
                     <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama / Project Owner</th>
+                        <th>Project Owner</th>
                         <th>KTP</th>
                         <th>NPWP</th>
                         <th>Phone</th>

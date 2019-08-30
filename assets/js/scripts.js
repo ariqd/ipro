@@ -69,7 +69,7 @@ function addProduct(id) {
         $('#item-qty-' + code).val(parseInt($('#item-qty-' + code).val()) + 1);
         countSubtotal(code);
     } else {
-        $("#items2").append(
+        $("#items2").prepend(
             '<div class="card mb-0" id="product-' + code + '">' +
             '   <div class="card-body">' +
             '       <div class="row">' +
