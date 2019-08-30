@@ -2,6 +2,44 @@
 
 @section('title', 'Master Data User / Cabang')
 
+@push('css')
+<link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet" />
+<style>
+    .categories li a:hover {
+        text-decoration: underline!important;
+    }
+</style>
+@endpush
+
+@push('js')
+<script src="{{ asset('assets/plugins/DataTables/datatables.min.js') }}"></script>
+@endpush
+
+@push("script")
+<script>
+    $('#datatable').DataTable();
+
+    $('.btnDelete').on('click', function (e) {
+        e.preventDefault();
+        var parent = $(this).parent();
+
+        swal({
+                title: "Apa anda yakin?",
+                text: "Kategori, Item, serta Stok akan terhapus secara permanen!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then(function (willDelete) {
+                if (willDelete) {
+                    parent.find('.formDelete').submit();
+                }
+            });
+    });
+
+</script>
+@endpush
+
 @section('content')
 @include('layouts.ajax')
 <div class="container">
@@ -42,9 +80,9 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $brand->name }}</td>
                             <td>
-                                <ul>
-                                    @foreach ($brand->categories as $category)
-                                    <li class="mb-3">
+                                <ul class="list-unstyled categories">
+                                    @forelse ($brand->categories as $category)
+                                    <li class="mb-2">
                                         {{ $category->name }} <br>
                                         <a href="#modalForm" data-toggle="modal"
                                             data-href="{{ url('categories/'.$category->id.'/edit') }}"
@@ -56,7 +94,9 @@
                                             {!! method_field('delete') !!}
                                         </form>
                                     </li>
-                                    @endforeach
+                                    @empty
+                                    <li class="text-muted">-</li>
+                                    @endforelse
                                 </ul>
                             </td>
                             <td>{{ $brand->created_at->toDayDateTimeString() }}</td>
@@ -69,38 +109,3 @@
     </div>
 </div>
 @endsection
-
-@push('css')
-<link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet" />
-{{-- <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet" /> --}}
-@endpush
-
-@push('js')
-<script src="{{ asset('assets/plugins/DataTables/datatables.min.js') }}"></script>
-{{-- <script src="https://cdn.datatables.net/plug-ins/1.10.19/features/scrollResize/dataTables.scrollResize.min.js"></script> --}}
-@endpush
-
-@push("script")
-<script>
-    $('#datatable').DataTable();
-
-    $('.btnDelete').on('click', function (e) {
-        e.preventDefault();
-        var parent = $(this).parent();
-
-        swal({
-                title: "Apa anda yakin?",
-                text: "Kategori, Item, serta Stok akan terhapus secara permanen!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then(function (willDelete) {
-                if (willDelete) {
-                    parent.find('.formDelete').submit();
-                }
-            });
-    });
-
-</script>
-@endpush

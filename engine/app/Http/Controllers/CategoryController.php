@@ -15,8 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $data = Brand::with('categories')->get();
-        // $data = Category::with('brand')->get();
+        $data = Brand::with('categories')->latest()->get();
 
         return view("category.index", ["brands" => $data]);
     }
@@ -28,7 +27,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $data['brands'] = Brand::all();
+        $data['brands'] = Brand::latest()->get();
+
         return view('category.form', $data);
     }
 
@@ -40,12 +40,9 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-//        $input = $request->all();
-//        unset($input['_token']);
+        $category = Category::create($request->all());
 
-        Category::create($request->all());
-
-        return redirect('categories')->with('info', 'Tambah kategori sukses!');
+        return redirect('categories')->with('info', 'Tambah kategori '. $category->name.' sukses!');
     }
 
     /**
@@ -85,6 +82,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->update($request->all());
+        
         return redirect('categories')->with('info', 'Edit kategori sukses!');
     }
 
