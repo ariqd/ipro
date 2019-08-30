@@ -267,11 +267,16 @@
     @csrf
     {{ @$edit ? method_field('PUT') : '' }}
     <div class="row align-middle">
-        <div class="col-12">
+        <div class="col-6">
             <a href="{{ url('sales-orders') }}" class="text-muted"><i>Sales Orders</i></a>
             <h2 class="mb-0">
                 <b>{{ @$isEdit ? 'Edit' : 'Buat' }} Quotation Order</b>
             </h2>
+        </div>
+        <div class="col-6">
+            <a href="{{ url('sales-orders') }}" class="btn btn-light float-right">
+                <i class="fa fa-arrow-left"></i> Daftar SO
+            </a> 
         </div>
         <div class="col-12">
             <hr>
@@ -519,8 +524,7 @@
                         <label for="project" class="col-12 col-lg-2 col-form-label">Project</label>
                         <div class="col-12 col-md-8">
                             <input type="text" class="form-control" id="project" name="project"
-                                value="{{ @$isEdit ? $sale->project : '' }}" required
-                                class="form-row">
+                                value="{{ @$isEdit ? $sale->project : '' }}" required class="form-row">
                         </div>
                     </div>
                     <div class="form-group row">
