@@ -71,7 +71,6 @@
                             <th width="20">No</th>
                             <th>Nama Merek</th>
                             <th>Kategori</th>
-                            <th>Tanggal Dibuat</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -80,13 +79,16 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $brand->name }}</td>
                             <td>
-                                <ul class="list-unstyled categories">
+                                <ul class="categories">
                                     @forelse ($brand->categories as $category)
-                                    <li class="mb-2">
+                                    <li class="mb-3">
                                         {{ $category->name }} <br>
                                         <a href="#modalForm" data-toggle="modal"
+                                            data-href="{{ url('categories/'.$category->id) }}"
+                                            class="text-muted">Detail</a>
+                                        <a href="#modalForm" data-toggle="modal"
                                             data-href="{{ url('categories/'.$category->id.'/edit') }}"
-                                            class="text-warning">Edit</a>
+                                            class="text-warning ml-3">Edit</a>
                                         <a href="#" class="text-danger ml-3 btnDelete">Hapus</a>
                                         <form action="{{ url('categories/'.$category->id) }}" method="post"
                                             class="formDelete d-none">
@@ -99,7 +101,6 @@
                                     @endforelse
                                 </ul>
                             </td>
-                            <td>{{ $brand->created_at->toDayDateTimeString() }}</td>
                         </tr>
                         @endforeach
                     </tbody>

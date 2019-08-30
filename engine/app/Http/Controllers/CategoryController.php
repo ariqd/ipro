@@ -53,7 +53,9 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $data['category'] = Category::find($id);
+
+        return view('category.show', $data);
     }
 
     /**
@@ -82,7 +84,7 @@ class CategoryController extends Controller
     {
         $category = Category::find($id);
         $category->update($request->all());
-        
+
         return redirect('categories')->with('info', 'Edit kategori sukses!');
     }
 

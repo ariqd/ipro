@@ -19,7 +19,7 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        $d['items'] = Item::with(['category.brand'])->latest()->get();
+        $d['items'] = Item::with('category.brand')->latest()->get();
 
         return view('item.index', $d);
     }

@@ -15,7 +15,12 @@
             <h4 class="float-right">Rp{{ number_format($item->purchase_price, 0, ',', '.') }}</h4>
         </div>
     </div>
-    <div class="row pt-5">
+    <div class="row">
+        <div class="col-12">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-4">
             <div class="text-center">
                 <p class="text-muted mb-0">Berat</p>
