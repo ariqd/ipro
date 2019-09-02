@@ -5,7 +5,7 @@ $(document).on('click', 'a.page-link', function (event) {
 $(document).on('submit', 'form#frm', function (event) {
     event.preventDefault();
     var form = $(this);
-    var data = new FormData($(this)[ 0 ]);
+    var data = new FormData($(this)[0]);
     var url = form.attr("action");
     $.ajax({
         type: form.attr('method'),
@@ -19,7 +19,7 @@ $(document).on('submit', 'form#frm', function (event) {
             if (data.fail) {
                 for (control in data.errors) {
                     $('input[name=' + control + ']').addClass('is-invalid');
-                    $('#error-' + control).html(data.errors[ control ]);
+                    $('#error-' + control).html(data.errors[control]);
                 }
             } else {
                 $('#modalForm').modal('hide');
@@ -55,7 +55,7 @@ function ajaxDelete(filename, token, content) {
     $('.loading').show();
     $.ajax({
         type: 'POST',
-        data: { _method: 'DELETE', _token: token },
+        data: {_method: 'DELETE', _token: token},
         url: filename,
         success: function (data) {
             $('#modalDelete').modal('hide');
@@ -69,6 +69,7 @@ function ajaxDelete(filename, token, content) {
 }
 
 $('#modalForm').on('show.bs.modal', function (event) {
+    console.log('hello');
     var button = $(event.relatedTarget);
     ajaxLoad(button.data('href'), 'modal_content');
 });
@@ -79,5 +80,6 @@ $('#modalDelete').on('show.bs.modal', function (event) {
     $('#delete_token').val(button.data('token'));
 });
 $('#modalForm').on('shown.bs.modal', function () {
+    console.log('hello');
     $('#focus').trigger('focus')
 });
