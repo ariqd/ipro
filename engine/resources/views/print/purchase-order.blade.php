@@ -241,11 +241,11 @@ Purchase Order
         Ship to<br>
     </div>
     <div class="col-xs-2" style="font-size: 11px">
-        xxx<br>
-        xxx<br>
-        xxx<br>
-        xxx<br>
-        xxx<br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
     </div>
     <div class="col-xs-3" style="font-size: 11px">
     </div>
@@ -255,9 +255,9 @@ Purchase Order
         Request Date Pick Up<br>
     </div>
     <div class="col-xs-2" style="font-size: 11px">
-        xxx<br>
-        xxx<br>
-        xxx<br>
+        <br>
+        <br>
+        <br>
     </div>
 </div>
 

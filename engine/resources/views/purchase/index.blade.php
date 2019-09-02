@@ -32,11 +32,11 @@
         </div>
         <div class="col-lg-12">
             <div class="table-responsive">
-                <table class="table data-table table-hover table-light">
+                <table class="table data-table table-bordered table-light">
                     <thead>
                         <tr>
                             <th>Date</th>
-                            <th>No. Purchase</th>
+                            <th>No Purchase</th>
                             <th>Disetujui</th>
                             <th></th>
                         </tr>
