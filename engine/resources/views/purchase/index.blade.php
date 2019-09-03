@@ -15,63 +15,66 @@
     $('.data-table').DataTable();
 </script>
 @endpush
+
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
             @include("layouts.feedback")
-
             <div class="d-flex justify-content-between">
                 <div>
                     <h2><b>Purchase Orders</b></h2>
                 </div>
                 <div>
-                    <a href="{{ url('/purchase-orders/create') }}" class="btn btn-dark"><i class="fa fa-plus"></i> New Purchase Order</a>
+                    <a href="{{ url('/purchase-orders/create') }}" class="btn btn-dark"><i class="fa fa-plus"></i> 
+                        Purchase Order Baru</a>
                 </div>
             </div>
         </div>
         <div class="col-lg-12">
             <div class="table-responsive">
-                <table class="table data-table table-bordered table-light">
+                <table class="table data-table table-hover table-light">
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>No Purchase</th>
-                            <th>Disetujui</th>
+                            <td>No.</td>
+                            <th>Tanggal</th>
+                            <th>No. PO</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($data as $key)
                         <tr>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ date("l, d-m-Y",strtotime($key->created_at)) }}</td>
                             <td>{{ $key->purchase_number }}</td>
                             <td>@if($key->approval_status == 1)
-                                <span class="badge badge-success">Approved</span>
+                                <span class="badge badge-success">Disetujui</span>
                                 @else
-                                <span class="badge badge-danger">Not Approved</span>
+                                <span class="badge badge-danger">Ditolak</span>
                                 @endif</td>
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-bars"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
 
                                         <a href="{{ url('purchase-orders/'.$key->id) }}" class="dropdown-item">
                                             <i class="fa fa-eye"></i> Detail</a>
-                                        <a class="dropdown-item" href="{{ url('purchase-orders/'.$key->id.'/pdf/memo') }}">
+                                        <a class="dropdown-item"
+                                            href="{{ url('purchase-orders/'.$key->id.'/pdf/memo') }}">
                                             <i class="fa fa-print"></i> Print Memo Pengambilan
                                         </a>
-                                        <a class="dropdown-item" href="{{ url('purchase-orders/'.$key->id.'/pdf/po') }}">
+                                        <a class="dropdown-item"
+                                            href="{{ url('purchase-orders/'.$key->id.'/pdf/po') }}">
                                             <i class="fa fa-print"></i> Print Order Form
                                         </a>
 
                                     </div>
                                 </div>
-                                {{-- <a href="{{ url('purchase-orders/'.$key->id) }}" class="btn btn-dark btn-sm">
-                                Show
-                                </a> --}}
                             </td>
                         </tr>
                         @endforeach

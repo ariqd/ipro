@@ -87,7 +87,6 @@
 @endpush
 
 @section('content')
-{{--@include('layouts.ajax', ['size' => 'lg'])--}}
 <div class="loading">
     <i class="fas fa-sync fa-spin fa-2x fa-fw"></i><br />
     <span>Loading</span>
@@ -145,7 +144,7 @@
                                 <th>Order Qty/pcs</th>
                                 <th>Approved Qty/pcs</th>
                                 <th>Total Amount (IDR)</th>
-                                @if(Gate::allows('isFinance') || Gate::allows('isAdmin') && $create)
+                                @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                                 <th>Approve</th>
                                 @endif
                             </tr>
@@ -167,13 +166,13 @@
                                 <td><input type="number" min="1" max="{{ $key->qty }}" value="{{ $key->qty }}"
                                         name="{{ "qty-".$key->id }}" class="form-control"></td>
                                 @else
-                                <td>{{ $key->qty_approval }} pcs</td>
+                                <td>{{ $key->qty_approval ?? 0 }} pcs</td>
                                 @endif
                                 @else
-                                <td>{{ $key->qty_approval }} pcs</td>
+                                <td>{{ $key->qty_approval ?? 0 }} pcs</td>
                                 @endif
                                 <td class="text-right">Rp{{ number_format($key->total_price, 0, ',', '.') }}</td>
-                                @if(Gate::allows('isFinance') || Gate::allows('isAdmin') && $create)
+                                @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                                 <td>
                                     <label class="switch">
                                         <input @if($key->approval_finance == 0) @else checked=""
@@ -200,6 +199,7 @@
                                 <td class="text-right">
                                     Rp{{ number_format($total_amount, 0, ',', '.') }}
                                 </td>
+                                <td></td>
                             </tr>
                         </tfoot>
                     </table>
