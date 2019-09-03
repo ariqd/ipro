@@ -98,17 +98,18 @@
             <div class="d-flex justify-content-between">
                 <div>
                     <h2>
-                        {{--Buat Purchase Order Baru--}}
                         <small>
                             <a href="{{ url('purchase-orders') }}" class="text-dark">Purchase Orders</a> /
                         </small>
-                        <b>Show</b>
+                        <b>Detail</b>
                     </h2>
+                </div>
+                <div>
+                    <a href="{{ url('purchase-orders') }}" class="btn btn-light"><i class="fa fa-arrow-left"></i> Purchase Orders</a>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="row">
         <div class="col-lg-6">
             <div class="form-group row">
@@ -134,19 +135,16 @@
             <div class="col-lg-12">
                 <h4>List PO</h4>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-light">
+                    <table class="table table-hover table-light border">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Kategori</th>
-                                <th>Kode Barang</th>
-                                <th>Item</th>
+                                <th>Produk</th>
                                 <th>Berat/pcs</th>
                                 <th>Order Qty/pcs</th>
-                                <th>Approval Qty/pcs</th>
-                                <th>Price/pcs</th>
+                                <th>Approved Qty/pcs</th>
                                 <th>Total Amount (IDR)</th>
-                                @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
+                                @if(Gate::allows('isFinance') || Gate::allows('isAdmin') && $create)
                                 <th>Approve</th>
                                 @endif
                             </tr>
@@ -156,25 +154,25 @@
                             @foreach($line as $key)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $key->item->category->brand->name }} {{ $key->item->category->name }}</td>
-                                <td>{{ $key->item->code }}</td>
-                                <td>{{ $key->item->name }}</td>
-                                <td>{{ $key->item->weight }}</td>
-                                <td>{{ $key->qty }}</td>
+                                <td>
+                                    <small class="text-secondary">{{ $key->item->category->brand->name }} -
+                                        {{ $key->item->category->name }}</small> <br>
+                                    {{ $key->item->code }} - {{ $key->item->name }}
+                                </td>
+                                <td>{{ $key->item->weight }} Kg</td>
+                                <td>{{ $key->qty }} pcs</td>
                                 @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                                 @if($key->approval_finance > 1)
                                 <td><input type="number" min="1" max="{{ $key->qty }}" value="{{ $key->qty }}"
                                         name="{{ "qty-".$key->id }}" class="form-control"></td>
                                 @else
-                                <td>{{ $key->qty_approval }}</td>
+                                <td>{{ $key->qty_approval }} pcs</td>
                                 @endif
-                                @else
-                                <td>{{ $key->qty_approval }}</td>
-                                @endif
-                                <td>{{ $key->purchase_price }}</td>
-                                <td>{{ $key->total_price }}</td>
-                                @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
-                                <td><label class="switch">
+
+                                <td class="text-right">Rp{{ number_format($key->total_price, 0, ',', '.') }}</td>
+                                @if(Gate::allows('isFinance') || Gate::allows('isAdmin') && $create)
+                                <td>
+                                    <label class="switch">
                                         <input @if($key->approval_finance == 0) @else checked=""
                                         @endif type="checkbox" name="{{"approve-".$key->id }}">
                                         <span class="slider"></span>
@@ -184,6 +182,23 @@
                             </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td>
+                                    {{ $total_weight }} Kg
+                                </td>
+                                <td>
+                                    {{ $total_qty }} pcs
+                                </td>
+                                <td>
+                                    {{ $total_qty_approved }} pcs
+                                </td>
+                                <td class="text-right">
+                                    Rp{{ number_format($total_amount, 0, ',', '.') }}
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

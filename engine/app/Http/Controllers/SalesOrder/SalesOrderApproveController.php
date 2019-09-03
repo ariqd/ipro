@@ -96,7 +96,6 @@ class SalesOrderApproveController extends Controller
                     $totalachieve += $value->total * 0.8;
                     $totalachieveadmin += $value->total * 0.2;
                     $role = "Admin";
-
                 } else {
                     //Solo
                     if ($value->stock->item->category->lainlain == 1) {
@@ -120,7 +119,6 @@ class SalesOrderApproveController extends Controller
                     $totalachieve += $value->total;
                     $totalachievesales += $value->total;
                     $role = "Sales";
-
                 } elseif ($value->admin_id != null) {
                     //Ditulisin
                     if ($value->stock->item->category->lainlain == 1) {
@@ -133,7 +131,6 @@ class SalesOrderApproveController extends Controller
                     $totalachieve += $value->total * 0.8;
                     $totalachieveadmin += $value->total * 0.2;
                     $role = "Admin";
-
                 } else {
                     //Solo
                     if ($value->stock->item->category->lainlain == 1) {
@@ -155,7 +152,6 @@ class SalesOrderApproveController extends Controller
             $totalkomisinotachieveadmin += $value['komisi_achieve_admin'] * 0.3;
 
             $totalSO += $value->total;
-
         }
 
         //endcalulatecommission

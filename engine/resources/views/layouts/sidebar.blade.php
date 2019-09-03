@@ -18,47 +18,40 @@
                 <a href="#" class="nav-link nav-dropdown-toggle">
                     <i class="fa fa-asterisk"></i> Master Data <i class="fa fa-caret-left"></i>
                 </a>
-
                 <ul class="nav-dropdown-items">
                     <li class="nav-item">
                         <a href="{{ url('brands') }}" class="nav-link {{ (request()->is('brands*')) ? 'active' : '' }}">
                             <i class="fa fa-list"></i> Merek
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ url('categories') }}"
                             class="nav-link {{ (request()->is('categories*')) ? 'active' : '' }}">
                             <i class="fa fa-list"></i> Kategori
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ url('items') }}" class="nav-link {{ (request()->is('items*')) ? 'active' : '' }}">
                             <i class="fa fa-list"></i> Produk
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ url('stocks') }}" class="nav-link {{ (request()->is('stocks*')) ? 'active' : '' }}">
                             <i class="fa fa-list"></i> Stok
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ url('branches') }}"
                             class="nav-link {{ (request()->is('branches*')) ? 'active' : '' }}">
                             <i class="fa fa-tree"></i> Cabang iPro
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ url('customers') }}"
                             class="nav-link {{ request()->is('customers*') ? 'active' : '' }}">
                             <i class="fa fa-shopping-bag"></i> Customers
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a href="{{ url('accounts') }}"
                             class="nav-link {{ request()->is('accounts*') ? 'active' : '' }}">
@@ -66,6 +59,21 @@
                         </a>
                     </li>
                 </ul>
+            </li>
+            @endif
+
+            @if (Gate::allows('isSales') || Gate::allows('isAdmin'))
+            <li class="nav-item">
+                <a href="{{ url('sales-orders') }}"
+                    class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
+                    <i class="fa fa-arrow-down"></i> Sales Order
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('nota-khusus') }}"
+                    class="nav-link {{ (request()->is('nota-khusus*')) && !request()->is('nota-khusus/check/approve') ? 'active' : '' }}">
+                    <i class="fa fa-exclamation-circle"></i> Nota Khusus
+                </a>
             </li>
             @endif
 
@@ -84,37 +92,17 @@
             </li>
             @endif
 
-            <li class="nav-item">
-                <a href="{{ url('sales-orders') }}"
-                    class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
-                    <i class="fa fa-arrow-down"></i> Sales Order
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ url('nota-khusus') }}"
-                    class="nav-link {{ (request()->is('nota-khusus*')) && !request()->is('nota-khusus/check/approve') ? 'active' : '' }}">
-                    <i class="fa fa-arrow-down"></i> Nota Khusus
-                </a>
-            </li>
-
             @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
             <li class="nav-item">
                 <a href="{{ url('finances') }}" class="nav-link {{ (request()->is('finances*')) ? 'active' : '' }}">
                     <i class="fa fa-line-chart"></i> Finance
                 </a>
             </li>
-
             <li class="nav-item d-none">
                 <a href="{{ url('deposits') }}" class="nav-link {{ (request()->is('deposits*')) ? 'active' : '' }}">
                     <i class="fa fa-credit-card"></i> Deposits
                 </a>
             </li>
-
-            {{-- <li class="nav-item">
-                <a href="{{ url('settings') }}" class="nav-link {{ (request()->is('settings*')) ? 'active' : '' }}">
-                    <i class="fa fa-cog"></i> Settings
-                </a>
-            </li> --}}
             @endif
         </ul>
     </nav>

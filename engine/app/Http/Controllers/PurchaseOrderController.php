@@ -19,19 +19,19 @@ class PurchaseOrderController extends Controller
     public function index()
     {
         $d["data"] = Purchase::all();
+
         return view('purchase.index', $d);
     }
 
     public function create()
-    {   //PO/SO Date kodecabang, Cabang, Urut
-        //PO 160419 01 BDG 00001
+    {
         $counter = Counter::where("name", "=", "PO")->first();
-        $branch_id = Auth::user()->branch_id;
-        $branch = Branch::find($branch_id);
         $data['brands'] = Brand::all();
         $data['categories'] = Category::all();
         $data['sales'] = Sale::all();
-        $data['no_po'] = "PO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
+        $data['no_po'] = "PO" . date("ymd") . str_pad(auth()->user()->branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
+        $data['create'] = TRUE;
+
         return view('purchase.form', $data);
     }
 
@@ -39,11 +39,22 @@ class PurchaseOrderController extends Controller
     {
         $d["header"] = Purchase::find($id);
         $d["line"] = $d["header"]->details()->get();
+        $d['total_amount'] = 0;
+        $d['total_weight'] = 0;
+        $d['total_qty'] = 0;
+        $d['total_qty_approved'] = 0;
+        $d['create'] = false;
         foreach ($d["line"] as $value) {
             $value["item"] = $value->item()->first();
             $value["item"]["category"] = $value["item"]->category()->first();
             $value["item"]["category"]["brand"] = $value["item"]["category"]->brand()->first();
+
+            $d['total_weight'] += $value->item->weight;
+            $d['total_qty'] += $value->qty;
+            $d['total_qty_approved'] += $value->qty_approval;
+            $d['total_amount'] += $value->total_price;
         }
+
         return view("purchase.show", $d);
     }
 
@@ -148,13 +159,13 @@ class PurchaseOrderController extends Controller
         $data["data"] = Purchase::with("Details.Item.Category.Brand")->find($id);
         // $d["line"] = $d["header"]->details()->get();
         $pdf = PDF::loadview("print.purchase-order", $data);
-        return $pdf->download("PO".date("Ymdhis").".pdf");
+        return $pdf->download("PO" . date("Ymdhis") . ".pdf");
     }
 
     public function printMemoPengambilanProduk($id)
     {
         $header = Purchase::find($id);
-        $line = Purchase_Detail::with("sale","item.category.brand")->where("purchase_id", $id)->get();
+        $line = Purchase_Detail::with("sale", "item.category.brand")->where("purchase_id", $id)->get();
         // foreach ($line as $key) {
         //     $key["item"] = $key->item()->first();
         //     $key["purchase_details"]['sales'] = $key->sale()->first();

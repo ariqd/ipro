@@ -38,4 +38,12 @@ class BranchController extends Controller
         $branch->update($request->all());
         return redirect('branches')->with('info', 'Edit cabang sukses!');
     }
+
+    public function destroy($id)
+    {
+        $branch = Branch::find($id);
+        $branch->delete();
+
+        return redirect('branches')->with('info', 'Hapus kategori sukses!');
+    }
 }

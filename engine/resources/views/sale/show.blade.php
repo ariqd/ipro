@@ -290,7 +290,7 @@
                         </td>
                         <td>
                             <div class="float-right">
-                                Rp{{number_format($details->price) }},00
+                                Rp{{ number_format($details->price, 0, ',', '.') }},00
                             </div>
                         </td>
                         <td>
@@ -298,7 +298,7 @@
                         </td>
                         <td>
                             <div class="float-right">
-                                Rp{{number_format($details->total)}},00
+                                Rp{{ number_format($details->total, 0, ',', '.')}},00
                             </div>
                         </td>
                     </tr>

@@ -6,8 +6,15 @@ use App\Branch;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 class AccountController extends Controller
 {
+    private $types = [
+        'admin' => 'Admin',
+        'sales' => 'Sales Cabang',
+        'finance' => 'Finance',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -26,14 +33,7 @@ class AccountController extends Controller
      */
     public function create()
     {
-        $d['types'] = [
-            'admin' => 'Admin',
-            'sales' => 'Sales Cabang',
-            'finance' => 'Finance',
-            'head_sales' => 'Head Sales',
-            'admin_sales' => 'Admin Sales',
-        ];
-
+        $d['types'] = $this->types;
         $d['branches'] = Branch::all();
 
         return view('account.form', $d);
@@ -90,12 +90,7 @@ class AccountController extends Controller
     {
         $d['user'] = User::find($id);
         $d['isEdit'] = TRUE;
-        $d['types'] = [
-            'admin' => 'Admin',
-            'sales' => 'Sales Cabang',
-            'finance' => 'Finance',
-        ];
-
+        $d['types'] = $this->types;
         $d['branches'] = Branch::all();
 
         return view('account.form', $d);

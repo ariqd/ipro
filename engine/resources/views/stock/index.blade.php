@@ -160,8 +160,9 @@
                         aria-label="Search" aria-describedby="add-on">
                 </div>
                 @if($filtered)
-                <a href="{{ url('stocks') }}" class="btn btn-dark mr-2"><i class="fa fa-refresh"></i> Clear
-                    Filter</a>
+                <a href="{{ url('stocks') }}" class="btn btn-dark mr-2">
+                    <i class="fa fa-refresh"></i> Clear Filter
+                </a>
                 @else
                 <a class="btn btn-secondary mr-2" data-toggle="collapse" href="#collapseExample" role="button"
                     aria-expanded="false" aria-controls="collapseExample">
@@ -265,7 +266,6 @@
                     <tr>
                         <th>No.</th>
                         <th>Item</th>
-                        {{-- <th>Cabang</th> --}}
                         <th class="stock">Stok (per Batang)</th>
                         <th class="holds">Stok (Hold per Batang)</th>
                         <th class="berat">Berat (kg)</th>
