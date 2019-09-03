@@ -46,7 +46,6 @@ class ItemController extends Controller
     {
         $input = $request->all();
         unset($input['_token']);
-        $input['number'] =
 
         $validator = Validator::make($input, [
             'name' => 'required',
