@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\SalesOrder;
 
-use App\Sale;
-use App\Sale_Detail;
 use App\Branch;
-use App\Counter;
-use App\Customer;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use PDF;
 use App\Commission;
 use App\Commission_Detail;
+use App\Counter;
+use App\Customer;
+use App\Http\Controllers\Controller;
+use App\Sale;
+use App\Sale_Detail;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class SalesOrderApproveController extends Controller
 {
@@ -71,64 +71,72 @@ class SalesOrderApproveController extends Controller
         $role = "";
         foreach ($sales_orders as $value) {
             if ($value->user_id == 5) {
+                //HO
                 if ($value->sales_id != null) {
-                    if ($value->stock->item->category->brand->id == 0) {
-                        $value['komisi_achieve'] = $value->total * 0.005 * 0.01;
-                        $value['komisi_achieve_referal'] = $value->total * 0.005 * 0.01;
+                    //Bahu Membahu
+                    if ($value->stock->item->category->lainlain == 1) {
+                        $value['komisi_achieve'] = $value->total * 0.005 * 0.5;
+                        $value['komisi_achieve_referal'] = $value->total * 0.005 * 0.5;
                     } else {
-                        $value['komisi_achieve'] = $value->total * 0.02 * 0.01;
-                        $value['komisi_achieve_referal'] = $value->total * 0.02 * 0.01;
+                        $value['komisi_achieve'] = $value->total * 0.02 * 0.5;
+                        $value['komisi_achieve_referal'] = $value->total * 0.02 * 0.5;
                     }
                     $totalachieve += $value->total * 0.5;
                     $totalachievesales += $value->total * 0.5;
                     $role = "Referral";
                 } elseif ($value->admin_id != null) {
-                    if ($value->stock->item->category->brand->id == 0) {
-                        $value['komisi_achieve'] = $value->total * 0.005 * 0.016;
-                        $value['komisi_achieve_admin'] = $value->total * 0.005 * 0.004;
+                    //Ditulisin
+                    if ($value->stock->item->category->lainlain == 1) {
+                        $value['komisi_achieve'] = $value->total * 0.005 * 0.8;
+                        $value['komisi_achieve_admin'] = $value->total * 0.005 * 0.2;
                     } else {
-                        $value['komisi_achieve'] = $value->total * 0.02 * 0.01 * 0.016;
-                        $value['komisi_achieve_admin'] = $value->total * 0.02 * 0.01 * 0.04;
+                        $value['komisi_achieve'] = $value->total * 0.02 * 0.8;
+                        $value['komisi_achieve_admin'] = $value->total * 0.02 * 0.2;
                     }
                     $totalachieve += $value->total * 0.8;
                     $totalachieveadmin += $value->total * 0.2;
                     $role = "Admin";
                 } else {
-                    if ($value->stock->item->category->brand->id == 0) {
-                        $value['komisi_achieve'] = $value->total * 0.005 * 0.02;
+                    //Solo
+                    if ($value->stock->item->category->lainlain == 1) {
+                        $value['komisi_achieve'] = $value->total * 0.005;
                     } else {
-                        $value['komisi_achieve'] = $value->total * 0.02 * 0.01 * 0.02;
+                        $value['komisi_achieve'] = $value->total * 0.02;
                     }
                     $totalachieve += $value->total;
                 }
             } else {
+                //Sales
                 if ($value->sales_id != null) {
-                    if ($value->stock->item->category->brand->id == 0) {
-                        $value['komisi_achieve'] = $value->total * 0.005 * 0.01;
-                        $value['komisi_achieve_referal'] = $value->total * 0.005 * 0.01;
+                    //Bahu Membahu
+                    if ($value->stock->item->category->lainlain == 1) {
+                        $value['komisi_achieve'] = $value->total * 0.005 * 0.5;
+                        $value['komisi_achieve_referal'] = $value->total * 0.005 * 0.5;
                     } else {
-                        $value['komisi_achieve'] = $value->total * 0.02 * 0.01;
-                        $value['komisi_achieve_referal'] = $value->total * 0.02 * 0.01;
+                        $value['komisi_achieve'] = $value->total * 0.02 * 0.5;
+                        $value['komisi_achieve_referal'] = $value->total * 0.02 * 0.5;
                     }
                     $totalachieve += $value->total;
                     $totalachievesales += $value->total;
                     $role = "Sales";
                 } elseif ($value->admin_id != null) {
-                    if ($value->stock->item->category->brand->id == 0) {
-                        $value['komisi_achieve'] = $value->total * 0.005 * 0.015;
-                        $value['komisi_achieve_admin'] = $value->total * 0.005 * 0.005;
+                    //Ditulisin
+                    if ($value->stock->item->category->lainlain == 1) {
+                        $value['komisi_achieve'] = $value->total * 0.005 * 0.75;
+                        $value['komisi_achieve_admin'] = $value->total * 0.005 * 0.25;
                     } else {
-                        $value['komisi_achieve'] = $value->total * 0.02 * 0.015;
-                        $value['komisi_achieve_admin'] = $value->total * 0.02 * 0.005;
+                        $value['komisi_achieve'] = $value->total * 0.02 * 0.75;
+                        $value['komisi_achieve_admin'] = $value->total * 0.02 * 0.25;
                     }
                     $totalachieve += $value->total * 0.8;
                     $totalachieveadmin += $value->total * 0.2;
                     $role = "Admin";
                 } else {
-                    if ($value->stock->item->category->brand->id == 0) {
-                        $value['komisi_achieve'] = $value->total * 0.005 * 0.02;
+                    //Solo
+                    if ($value->stock->item->category->lainlain == 1) {
+                        $value['komisi_achieve'] = $value->total *0.005;
                     } else {
-                        $value['komisi_achieve'] = $value->total * 0.02 * 0.02;
+                        $value['komisi_achieve'] = $value->total *0.02;
                     }
                     $totalachieve += $value->total;
                 }

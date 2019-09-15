@@ -74,10 +74,10 @@ Komisi
                             <th>
                                         <span class="float-right font-weight-bold">
                                         @if ($commission->achieved > $commission->achievement)
-                                        Rp {{ number_format($commission->total_commission * 0.01) }}
+                                        Rp {{ number_format($commission->total_commission * 0.9) }}
                                         <span class="badge badge-success">Achieve</span>
                                         @else
-                                        Rp {{ number_format($commission->total_commission_not_achieve * 0.01) }}
+                                        Rp {{ number_format($commission->total_commission_not_achieve * 0.9) }}
                                         <span class="badge badge-danger">Tidak Achieve</span>
                                         @endif
                             </span>
@@ -104,9 +104,9 @@ Komisi
                             </td>
                             <td class="align-middle">
                                     @if ($commission->achieved > $commission->achievement)
-                                    <span class="float-right">Rp {{ number_format(($sales_order->commission * 0.01)) }}</span>
+                                    <span class="float-right">Rp {{ number_format(($sales_order->commission * 0.9)) }}</span>
                                     @else
-                                    <span class="float-right">Rp {{ number_format(($sales_order->commission_not_achieve * 0.01)) }}</span>
+                                    <span class="float-right">Rp {{ number_format(($sales_order->commission_not_achieve * 0.9)) }}</span>
                                     @endif
                             </td>
                         </tr>

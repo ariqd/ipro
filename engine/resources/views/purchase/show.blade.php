@@ -79,7 +79,6 @@
     .slider.round:before {
         border-radius: 50%;
     }
-
 </style>
 @endpush
 
@@ -165,9 +164,6 @@
                                 @if($key->approval_finance > 1)
                                 <td><input type="number" min="1" max="{{ $key->qty }}" value="{{ $key->qty }}"
                                         name="{{ "qty-".$key->id }}" class="form-control"></td>
-                                @else
-                                <td>{{ $key->qty_approval ?? 0 }} pcs</td>
-                                @endif
                                 @else
                                 <td>{{ $key->qty_approval ?? 0 }} pcs</td>
                                 @endif

@@ -40,8 +40,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->lainlain=="on"){
+            $arr["lainlain"] = 1;
+            $request->merge($arr);
+        }else{
+            $arr["lainlain"] = 0;
+            $request->merge($arr);
+        }
         $category = Category::create($request->all());
-
         return redirect('categories')->with('info', 'Tambah kategori '. $category->name.' sukses!');
     }
 
@@ -83,6 +89,13 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $category = Category::find($id);
+        if($request->lainlain=="on"){
+            $arr["lainlain"] = 1;
+            $request->merge($arr);
+        }else{
+            $arr["lainlain"] = 0;
+            $request->merge($arr);
+        }
         $category->update($request->all());
 
         return redirect('categories')->with('info', 'Edit kategori sukses!');

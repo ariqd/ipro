@@ -280,7 +280,7 @@
             @include('layouts.feedback')
         </div>
     </div>
-    @if(Gate::allows('isAdmin') || Auth::id() == 5)
+    {{-- @if(Gate::allows('isAdmin') || Auth::id() == 5) --}}
     <div class="row mb-5">
         <div class="col-lg-12">
             <h4><b><label for="sales"># Pilih Jenis Sales Order</label></b></h4>
@@ -308,7 +308,7 @@
             </div>
         </div>
     </div>
-    @endif
+    {{-- @endif --}}
     <div class="row mb-3">
         <div class="col-12">
             <h4><b><label for="customer_select"># Customer</label></b> &nbsp;
