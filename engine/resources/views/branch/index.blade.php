@@ -74,6 +74,11 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $branch->name }}</td>
                             <td>
+                                <ul class="list-unstyled">
+                                    @foreach ($branch->warehouses as $warehouse)
+                                    <li>{{ $warehouse->name }}</li>
+                                    @endforeach
+                                </ul>
                                 <a href="{{ url("warehouse/$branch->id/create") }}" class="btn btn-sm btn-success">
                                     <i class="fa fa-plus"></i> Tambah Gudang
                                 </a>
