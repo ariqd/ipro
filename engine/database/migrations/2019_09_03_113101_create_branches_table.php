@@ -18,6 +18,7 @@ class CreateBranchesTable extends Migration {
 			$table->string('name', 191);
 			$table->string('city', 191)->nullable();
 			$table->text('address', 65535)->nullable();
+			$table->string('notes', 191)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

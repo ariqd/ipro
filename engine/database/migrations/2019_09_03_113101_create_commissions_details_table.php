@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCommissionsDetailsTable extends Migration {
+class CreateCommissionsDetailsTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,14 +13,14 @@ class CreateCommissionsDetailsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('commissions_details', function(Blueprint $table)
-		{
+		Schema::create('commissions_details', function (Blueprint $table) {
 			$table->integer('id', true);
 			$table->integer('user_id');
 			$table->integer('commission');
 			$table->integer('commission_not_achieve');
 			$table->integer('sales_order_id');
 			$table->text('role', 65535);
+			$table->string('notes', 191)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -35,5 +36,4 @@ class CreateCommissionsDetailsTable extends Migration {
 	{
 		Schema::drop('commissions_details');
 	}
-
 }

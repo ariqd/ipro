@@ -39,18 +39,19 @@ class BrandController extends Controller
         $brand = Brand::create($request->all());
 
         if ($request->has('logo')) {
-            $dir = "assets/img/" . $request->name;
+            $dir = "assets/img/logo";
 
             if (is_dir($dir) === false) {
                 mkdir($dir);
             }
+
             $file = $request->logo;
-            $file3 = $request->name . "logo-" . date("dmyhis") . "." . $file->getClientOriginalExtension();
+            $file3 = "logo-" . date("dmyhis") . "." . $file->getClientOriginalExtension();
             $file->move($dir, $file3);
             $brand->logo = $file3;
             $brand->save();
-
         }
+
         return redirect('brands')->with('info', 'Tambah brand sukses!');
     }
 
@@ -75,6 +76,7 @@ class BrandController extends Controller
     {
         $d['brand'] = Brand::find($id);
         $d['isEdit'] = TRUE;
+
         return view('brand.form', $d);
     }
 
@@ -90,18 +92,19 @@ class BrandController extends Controller
         $brand = Brand::find($id);
         $brand->update($request->all());
         if ($request->has('logo')) {
-            $dir = "assets/img/" . $request->name;
+            $dir = "assets/img/logo";
 
             if (is_dir($dir) === false) {
                 mkdir($dir);
             }
+
             $file = $request->logo;
-            $file3 = $request->name . "logo-" . date("dmyhis") . "." . $file->getClientOriginalExtension();
+            $file3 = "logo-" . date("dmyhis") . "." . $file->getClientOriginalExtension();
             $file->move($dir, $file3);
             $brand->logo = $file3;
             $brand->save();
-
         }
+
         return redirect('brands')->with('info', 'Edit brand sukses!');
     }
 

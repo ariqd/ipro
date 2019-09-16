@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateCountersTable extends Migration {
+class CreateCountersTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,11 +13,11 @@ class CreateCountersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('counters', function(Blueprint $table)
-		{
+		Schema::create('counters', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('name', 191);
 			$table->integer('counter');
+			$table->string('notes', 191)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -32,5 +33,4 @@ class CreateCountersTable extends Migration {
 	{
 		Schema::drop('counters');
 	}
-
 }

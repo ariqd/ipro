@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateReceivesTable extends Migration {
+class CreateReceivesTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,11 +13,11 @@ class CreateReceivesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('receives', function(Blueprint $table)
-		{
+		Schema::create('receives', function (Blueprint $table) {
 			$table->integer('id', true);
 			$table->integer('purchase_id');
 			$table->text('receipt', 65535);
+			$table->string('notes', 191)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -32,5 +33,4 @@ class CreateReceivesTable extends Migration {
 	{
 		Schema::drop('receives');
 	}
-
 }

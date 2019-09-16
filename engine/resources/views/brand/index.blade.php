@@ -65,8 +65,8 @@
                     <thead>
                         <tr>
                             <th width="20">No</th>
-                            <th>Logo</th>
                             <th>Nama</th>
+                            <th>Catatan</th>
                             <th>Tanggal Dibuat</th>
                             <th></th>
                         </tr>
@@ -76,10 +76,11 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                <img src="{{ asset("assets/img/$brand->name/$brand->logo") }}" alt="{{ $brand->name }}"
-                                    class="img-fluid" width="50">
+                                <img src="{{ asset("assets/img/logo/$brand->logo") }}" alt="{{ $brand->name }}"
+                                    class="img-fluid" width="50"> <br>
+                                {{ $brand->name }}
                             </td>
-                            <td>{{ $brand->name }}</td>
+                            <td>{{ $brand->notes }}</td>
                             <td>{{ $brand->created_at->toDayDateTimeString() }}</td>
                             <td>
                                 <a href="#modalForm" data-toggle="modal"

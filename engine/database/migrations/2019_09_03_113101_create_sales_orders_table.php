@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateSalesOrdersTable extends Migration {
+class CreateSalesOrdersTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,8 +13,7 @@ class CreateSalesOrdersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('sales_orders', function(Blueprint $table)
-		{
+		Schema::create('sales_orders', function (Blueprint $table) {
 			$table->increments('id');
 			$table->bigInteger('customer_id')->unsigned();
 			$table->bigInteger('user_id')->unsigned();
@@ -29,12 +29,12 @@ class CreateSalesOrdersTable extends Migration {
 			$table->text('note', 65535);
 			$table->date('tgl_pembayaran')->nullable();
 			$table->integer('grand_total');
-			$table->timestamps();
-			$table->softDeletes();
 			$table->string('no_so', 191)->nullable();
 			$table->string('notes', 191)->nullable();
 			$table->string('no_order', 191)->nullable();
 			$table->integer('ongkir')->nullable()->default(0);
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -48,5 +48,4 @@ class CreateSalesOrdersTable extends Migration {
 	{
 		Schema::drop('sales_orders');
 	}
-
 }

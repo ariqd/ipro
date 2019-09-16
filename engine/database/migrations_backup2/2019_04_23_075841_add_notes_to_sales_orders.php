@@ -14,7 +14,7 @@ class AddNotesToSalesOrders extends Migration
     public function up()
     {
         Schema::table('sales_orders', function (Blueprint $table) {
-            $table->string('notes')->nullable();
+            $table->string('notes', 191)->nullable();
             $table->string('no_order')->nullable();
             //
         });

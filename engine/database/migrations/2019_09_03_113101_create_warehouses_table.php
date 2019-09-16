@@ -16,6 +16,7 @@ class CreateWarehousesTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->integer('name');
+			$table->string('notes', 191)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

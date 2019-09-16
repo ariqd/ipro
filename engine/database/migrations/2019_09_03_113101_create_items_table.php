@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateItemsTable extends Migration {
+class CreateItemsTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,8 +13,7 @@ class CreateItemsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('items', function(Blueprint $table)
-		{
+		Schema::create('items', function (Blueprint $table) {
 			$table->increments('id');
 			$table->integer('category_id')->unsigned();
 			$table->string('code', 191);
@@ -24,6 +24,7 @@ class CreateItemsTable extends Migration {
 			$table->float('width', 10, 0);
 			$table->float('height', 10, 0);
 			$table->float('length', 10, 0);
+			$table->string('notes', 191)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -39,5 +40,4 @@ class CreateItemsTable extends Migration {
 	{
 		Schema::drop('items');
 	}
-
 }

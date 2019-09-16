@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateBrandsTable extends Migration {
+class CreateBrandsTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,11 +13,11 @@ class CreateBrandsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('brands', function(Blueprint $table)
-		{
+		Schema::create('brands', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('name', 191);
 			$table->text('logo', 65535);
+			$table->string('notes', 191)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -32,5 +33,4 @@ class CreateBrandsTable extends Migration {
 	{
 		Schema::drop('brands');
 	}
-
 }
