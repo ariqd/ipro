@@ -12,4 +12,9 @@ class Branch extends Model
     {
         return $this->hasMany('App\User');
     }
+
+    public function warehouses()
+    {
+        return $this->hasMany('App\Warehouse');
+    }
 }

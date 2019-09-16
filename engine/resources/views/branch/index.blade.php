@@ -64,6 +64,7 @@
                         <tr>
                             <th width="20">No</th>
                             <th>Nama Cabang</th>
+                            <th>Gudang</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -73,13 +74,19 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $branch->name }}</td>
                             <td>
+                                <a href="{{ url("warehouse/$branch->id/create") }}" class="btn btn-sm btn-success">
+                                    <i class="fa fa-plus"></i> Tambah Gudang
+                                </a>
+                            </td>
+                            <td>
                                 <a href="#modalForm" data-toggle="modal"
                                     data-href="{{ url('branches/'.$branch->id.'/edit') }}"
                                     class="btn btn-secondary btn-sm">Edit</a>
                                 <a href="#" class="btn btn-danger btn-sm m-1 btnDelete">
                                     Hapus
                                 </a>
-                                <form action="{{ url('branches/'.$branch->id) }}" method="post" class="formDelete d-none">
+                                <form action="{{ url('branches/'.$branch->id) }}" method="post"
+                                    class="formDelete d-none">
                                     {!! csrf_field() !!}
                                     {!! method_field('delete') !!}
                                 </form>
