@@ -59,7 +59,7 @@
                                 <div class="col-md-6">
                                     <input id="name" type="text"
                                         class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
-                                        value="{{ $edit ? $warehouse->name : old('name') }}" required
+                                        value="{{ @$edit ? @$warehouse->name : old('name') }}" required
                                         placeholder="Nama Cabang">
 
                                     @if ($errors->has('name'))
@@ -76,7 +76,7 @@
                                 <div class="col-md-6">
                                     <input id="address" type="text"
                                         class="form-control{{ $errors->has('address') ? ' is-invalid' : '' }}"
-                                        name="address" value="{{ $edit ? $warehouse->address : old('address') }}"
+                                        name="address" value="{{ @$edit ? @$warehouse->address : old('address') }}"
                                         required placeholder="Alamat Cabang">
 
                                     @if ($errors->has('address'))
@@ -93,7 +93,7 @@
                                 <div class="col-md-6">
                                     <input id="notes" type="text"
                                         class="form-control{{ $errors->has('notes') ? ' is-invalid' : '' }}"
-                                        name="notes" value="{{ $edit ? $warehouse->notes : old('notes') }}" required
+                                        name="notes" value="{{ @$edit ? @$warehouse->notes : old('notes') }}" required
                                         placeholder="Catatan">
 
                                     @if ($errors->has('notes'))
@@ -116,6 +116,7 @@
                         </div>
                     </div>
                 </form>
+                @if (@$edit)
                 <a href="#" class="btn btn-danger float-right btnDelete">
                     <i class="fa fa-exclamation-circle"></i> Hapus Gudang
                 </a>
@@ -124,6 +125,7 @@
                     {!! csrf_field() !!}
                     {!! method_field('delete') !!}
                 </form>
+                @endif
             </div>
         </div>
     </div>

@@ -83,7 +83,8 @@
                                 <ul class="list-unstyled">
                                     @foreach ($branch->warehouses as $warehouse)
                                     <li><a href="{{ url('warehouse/'.$warehouse->id) }}"
-                                            class="text-dark underline-on-hover">{{ $warehouse->name }}</a></li>
+                                            class="text-dark underline-on-hover"
+                                            title="Edit gudang {{ $warehouse->name }}">{{ $warehouse->name }}</a></li>
                                     @endforeach
                                 </ul>
                                 <a href="{{ url("warehouse/$branch->id/create") }}" class="btn btn-sm btn-success">
