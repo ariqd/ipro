@@ -5,6 +5,11 @@
 @push('css')
 <link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet" />
 <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet" />
+<style>
+tr.align-middle td {
+    vertical-align: middle;
+}
+</style>
 @endpush
 
 @push('script')
@@ -65,21 +70,22 @@
                     <thead>
                         <tr>
                             <th width="20">No</th>
-                            <th>Logo</th>
                             <th>Nama</th>
+                            <th>Catatan</th>
                             <th>Tanggal Dibuat</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($brands as $brand)
-                        <tr>
+                        <tr class="align-middle">
                             <td>{{ $loop->iteration }}</td>
                             <td>
-                                <img src="{{ asset("assets/img/$brand->name/$brand->logo") }}" alt="{{ $brand->name }}"
-                                    class="img-fluid" width="50">
+                                <img src="{{ asset("assets/img/logo/$brand->logo") }}" alt="{{ $brand->name }}"
+                                    class="img-fluid mr-3" width="50">
+                                {{ $brand->name }}
                             </td>
-                            <td>{{ $brand->name }}</td>
+                            <td>{{ $brand->notes }}</td>
                             <td>{{ $brand->created_at->toDayDateTimeString() }}</td>
                             <td>
                                 <a href="#modalForm" data-toggle="modal"

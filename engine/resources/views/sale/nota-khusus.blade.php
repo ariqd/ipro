@@ -270,7 +270,7 @@
         <div class="col-12">
             <a href="{{ url('nota-khusus-create') }}" class="text-muted"><i>Sales Orders</i></a>
             <h2 class="mb-0">
-                <b>{{ @$isEdit ? 'Edit' : 'Buat' }} Quotation Order</b>
+                <b>{{ @$isEdit ? 'Edit' : 'Buat' }} Nota Khusus</b>
             </h2>
         </div>
         <div class="col-12">
@@ -511,7 +511,7 @@
                         <label for="quotation_id" class="col-12 col-md-2 col-form-label">Quotation
                             ID</label>
                         <div class="col-8 col-md-4">
-                            <input  type="text" class="form-control" id="quotation_id" name="quotation_id"
+                            <input type="text" class="form-control" id="quotation_id" name="quotation_id"
                                 value="{{ @$isEdit ? $sale->quotation_id : $no_qo }}" required>
                         </div>
                     </div>
@@ -519,8 +519,7 @@
                         <label for="project" class="col-12 col-lg-2 col-form-label">Project</label>
                         <div class="col-12 col-md-8">
                             <input type="text" class="form-control" id="project" name="project"
-                                value="{{ @$isEdit ? $sale->project : '' }}" required
-                                class="form-row">
+                                value="{{ @$isEdit ? $sale->project : '' }}" required class="form-row">
                         </div>
                     </div>
                     <div class="form-group row">

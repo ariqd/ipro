@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateHoldsTable extends Migration {
+class CreateHoldsTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,13 +13,13 @@ class CreateHoldsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('holds', function(Blueprint $table)
-		{
+		Schema::create('holds', function (Blueprint $table) {
 			$table->increments('id');
 			$table->integer('stocks_id')->unsigned();
 			$table->integer('user_id')->unsigned();
 			$table->integer('quantity');
 			$table->boolean('status');
+			$table->string('notes', 191)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -34,5 +35,4 @@ class CreateHoldsTable extends Migration {
 	{
 		Schema::drop('holds');
 	}
-
 }

@@ -74,14 +74,15 @@
     .slider.round:before {
         border-radius: 50%;
     }
+
 </style>
-<form action="{{ @$isEdit ? url('categories/'.$category->id) : url('categories') }}" method="post">
+<form action="{{ @$edit ? url('categories/'.$category->id) : url('categories') }}" method="post">
     @csrf
-    {{ @$isEdit ? method_field('PUT') : '' }}
+    {{ @$edit ? method_field('PUT') : '' }}
     <div class="modal-header bg-dark text-light border border-dark">
-        <h5 class="modal-title">{{ @$isEdit ? 'Edit' : 'Tambah' }} Kategori</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+        <h5 class="modal-title">{{ @$edit ? 'Edit' : 'Tambah' }} Kategori</h5>
+        <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true"><i class="fa fa-times"></i></span>
         </button>
     </div>
     <div class="modal-body">
@@ -90,18 +91,25 @@
             <select class="brand custom-select" name="brand_id" style="width: 100%" required>
                 <option value="" selected disabled></option>
                 @foreach($brands as $brand)
-                <option value="{{ $brand->id }}" {{ @$isEdit && $brand->id == $category->brand->id ? 'selected' : '' }}>
+                <option value="{{ $brand->id }}" {{ @$edit && $brand->id == $category->brand->id ? 'selected' : '' }}>
                     {{ $brand->name }}
                 </option>
                 @endforeach
             </select>
         </div>
-        <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="name" class="form-control-label">Nama Kategori</label>
-                <input id="name" class="form-control" name="name" type="text"
-                    value="{{ @$isEdit ? $category->name : '' }}" required placeholder="Nama kategori">
-            </div>
+        <div class="form-group">
+            <label for="name" class="form-control-label">Nama Kategori</label>
+            <input id="name" class="form-control" name="name" type="text" value="{{ @$edit ? $category->name : '' }}"
+                required placeholder="Nama kategori">
+        </div>
+        <div class="form-group">
+            <label for="lainlain" class="form-control-label">Lain Lain</label>
+            <br>
+            <label class="switch">
+                <input @if(@$category->lainlain==0) @else checked=""
+                @endif type="checkbox" name="lainlain">
+                <span class="slider"></span>
+            </label>
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
@@ -112,12 +120,17 @@
                     <span class="slider"></span>
                 </label>
             </div>
+        <div class="form-group">
+            <label for="notes" class="form-control-label">Catatan</label>
+            <input required id="notes" class="form-control" name="notes" type="text"
+                value="{{ @$edit ? $category->notes : '' }}" placeholder="Catatan">
+            <small class="text-muted">Boleh dikosongkan</small>
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal"> Batal</button>
         <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>
-            {{ @$isEdit ? 'Edit' : 'Simpan' }}
+            {{ @$edit ? 'Edit' : 'Simpan' }}
         </button>
     </div>
 </form>
@@ -128,4 +141,5 @@
         allowClear: true,
         dropdownParent: $("#modalForm")
     });
+
 </script>

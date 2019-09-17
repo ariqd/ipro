@@ -18,7 +18,7 @@ class PurchaseOrderController extends Controller
 {
     public function index()
     {
-        $d["data"] = Purchase::all();
+        $d["data"] = Purchase::latest()->get();
 
         return view('purchase.index', $d);
     }
@@ -30,7 +30,6 @@ class PurchaseOrderController extends Controller
         $data['categories'] = Category::all();
         $data['sales'] = Sale::all();
         $data['no_po'] = "PO" . date("ymd") . str_pad(auth()->user()->branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
-        $data['create'] = TRUE;
 
         return view('purchase.form', $data);
     }
@@ -43,7 +42,6 @@ class PurchaseOrderController extends Controller
         $d['total_weight'] = 0;
         $d['total_qty'] = 0;
         $d['total_qty_approved'] = 0;
-        $d['create'] = false;
         foreach ($d["line"] as $value) {
             $value["item"] = $value->item()->first();
             $value["item"]["category"] = $value["item"]->category()->first();
@@ -60,8 +58,6 @@ class PurchaseOrderController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-
         $counter = Counter::where("name", "=", "PO")->first();
         $branch_id = Auth::user()->branch_id;
         $branch = Branch::find($branch_id);

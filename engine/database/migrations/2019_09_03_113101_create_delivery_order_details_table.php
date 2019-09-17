@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateDeliveryOrderDetailsTable extends Migration {
+class CreateDeliveryOrderDetailsTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,12 +13,12 @@ class CreateDeliveryOrderDetailsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('delivery_order_details', function(Blueprint $table)
-		{
+		Schema::create('delivery_order_details', function (Blueprint $table) {
 			$table->integer('id', true);
 			$table->integer('do_id');
 			$table->integer('qty_kirim')->default(0);
 			$table->integer('sales_order_detail_id');
+			$table->string('notes', 191)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -33,5 +34,4 @@ class CreateDeliveryOrderDetailsTable extends Migration {
 	{
 		Schema::drop('delivery_order_details');
 	}
-
 }

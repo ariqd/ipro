@@ -6,8 +6,9 @@
 <link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet" />
 <style>
     .categories li a:hover {
-        text-decoration: underline!important;
+        text-decoration: underline !important;
     }
+
 </style>
 @endpush
 
@@ -79,13 +80,15 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $brand->name }}</td>
                             <td>
-                                <ul class="categories">
+                                <ul class="categories list-unstyled">
                                     @forelse ($brand->categories as $category)
                                     <li class="mb-3">
-                                        {{ $category->name }} <br>
+                                        <p class="mb-0">
+                                            {{ $category->name }}
+                                        </p>
                                         <a href="#modalForm" data-toggle="modal"
-                                            data-href="{{ url('categories/'.$category->id) }}"
-                                            class="text-muted">Detail</a>
+                                            data-href="{{ url('categories/'.$category->id) }}" class="text-muted">Lihat
+                                            Detail</a>
                                         <a href="#modalForm" data-toggle="modal"
                                             data-href="{{ url('categories/'.$category->id.'/edit') }}"
                                             class="text-warning ml-3">Edit</a>

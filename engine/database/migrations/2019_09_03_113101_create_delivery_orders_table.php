@@ -3,7 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateDeliveryOrdersTable extends Migration {
+class CreateDeliveryOrdersTable extends Migration
+{
 
 	/**
 	 * Run the migrations.
@@ -12,15 +13,15 @@ class CreateDeliveryOrdersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('delivery_orders', function(Blueprint $table)
-		{
+		Schema::create('delivery_orders', function (Blueprint $table) {
 			$table->integer('id', true);
 			$table->text('nomor_surat', 65535);
 			$table->integer('sales_order_id');
-			$table->timestamps();
-			$table->softDeletes();
 			$table->string('mobil', 191);
 			$table->string('plat', 191);
+			$table->string('notes', 191)->nullable();
+			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 
@@ -34,5 +35,4 @@ class CreateDeliveryOrdersTable extends Migration {
 	{
 		Schema::drop('delivery_orders');
 	}
-
 }

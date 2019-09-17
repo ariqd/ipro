@@ -5,6 +5,12 @@
 @push('css')
 <link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet" />
 <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet" />
+<style>
+    .underline-on-hover:hover {
+        text-decoration: underline;
+    }
+
+</style>
 @endpush
 
 @push('js')
@@ -64,6 +70,7 @@
                         <tr>
                             <th width="20">No</th>
                             <th>Nama Cabang</th>
+                            <th>Gudang</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -73,13 +80,26 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $branch->name }}</td>
                             <td>
+                                <ul class="list-unstyled">
+                                    @foreach ($branch->warehouses as $warehouse)
+                                    <li><a href="{{ url('warehouse/'.$warehouse->id) }}"
+                                            class="text-dark underline-on-hover"
+                                            title="Edit gudang {{ $warehouse->name }}">{{ $warehouse->name }}</a></li>
+                                    @endforeach
+                                </ul>
+                                <a href="{{ url("warehouse/$branch->id/create") }}" class="btn btn-sm btn-success">
+                                    <i class="fa fa-plus"></i> Tambah Gudang
+                                </a>
+                            </td>
+                            <td>
                                 <a href="#modalForm" data-toggle="modal"
                                     data-href="{{ url('branches/'.$branch->id.'/edit') }}"
                                     class="btn btn-secondary btn-sm">Edit</a>
                                 <a href="#" class="btn btn-danger btn-sm m-1 btnDelete">
                                     Hapus
                                 </a>
-                                <form action="{{ url('branches/'.$branch->id) }}" method="post" class="formDelete d-none">
+                                <form action="{{ url('branches/'.$branch->id) }}" method="post"
+                                    class="formDelete d-none">
                                     {!! csrf_field() !!}
                                     {!! method_field('delete') !!}
                                 </form>

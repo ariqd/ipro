@@ -24,6 +24,7 @@ class CreateVendorsTable extends Migration {
 			$table->string('pic_name', 191)->nullable();
 			$table->string('pic_phone', 191)->nullable();
 			$table->string('pic_email', 191)->nullable();
+			$table->string('notes', 191)->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

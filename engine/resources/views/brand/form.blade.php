@@ -8,19 +8,31 @@
         </button>
     </div>
     <div class="modal-body">
-        <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="name" class="form-control-label">Nama Merek</label>
-                <input required id="name" class="form-control" name="name" type="text"
-                    value="{{ @$isEdit ? $brand->name : '' }}" placeholder="Nama Merek">
-            </div>
+        <div class="form-group">
+            <label for="name" class="form-control-label">Nama Merek</label>
+            <input required id="name" class="form-control" name="name" type="text"
+                value="{{ @$isEdit ? $brand->name : '' }}" placeholder="Nama Merek">
         </div>
-        <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="name" class="form-control-label">Logo</label>
-                <input required id="logo" class="form-control" name="logo" type="file"
-                    value="{{ @$isEdit ? $brand->logo : '' }}" placeholder="Nama Merek">
-            </div>
+        @if(@$isEdit)
+        <div class="form-group">
+            <label for="name" class="form-control-label">Logo Saat Ini</label> <br>
+            <img src="{{ asset("assets/img/logo/$brand->logo") }}" alt="{{ $brand->name }}" class="img-fluid"
+                width="100">
+        </div>
+        @endif
+        <div class="form-group">
+            <label for="name" class="form-control-label">{{ @$isEdit ? 'Ganti' : '' }} Logo</label>
+            <input {{ @$isEdit ? '' : 'required' }} id="logo" class="form-control" name="logo" type="file"
+                value="{{ @$isEdit ? $brand->logo : '' }}" placeholder="Nama Merek">
+            @if(@$isEdit)
+            <small class="text-muted">Kosongkan jika tidak ganti logo</small>
+            @endif
+        </div>
+        <div class="form-group">
+            <label for="notes" class="form-control-label">Catatan</label>
+            <input required id="notes" class="form-control" name="notes" type="text"
+                value="{{ @$isEdit ? $brand->notes : '' }}" placeholder="Catatan">
+            <small class="text-muted">Boleh dikosongkan</small>
         </div>
     </div>
     <div class="modal-footer">

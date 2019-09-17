@@ -40,15 +40,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if($request->lainlain=="on"){
+        if ($request->lainlain == "on") {
             $arr["lainlain"] = 1;
             $request->merge($arr);
-        }else{
+        } else {
             $arr["lainlain"] = 0;
             $request->merge($arr);
         }
         $category = Category::create($request->all());
-        return redirect('categories')->with('info', 'Tambah kategori '. $category->name.' sukses!');
+        return redirect('categories')->with('info', 'Tambah kategori ' . $category->name . ' sukses!');
     }
 
     /**
@@ -74,7 +74,7 @@ class CategoryController extends Controller
     {
         $d['category'] = Category::find($id);
         $d['brands'] = Brand::all();
-        $d['isEdit'] = TRUE;
+        $d['edit'] = TRUE;
 
         return view('category.form', $d);
     }
@@ -89,10 +89,10 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $category = Category::find($id);
-        if($request->lainlain=="on"){
+        if ($request->lainlain == "on") {
             $arr["lainlain"] = 1;
             $request->merge($arr);
-        }else{
+        } else {
             $arr["lainlain"] = 0;
             $request->merge($arr);
         }
@@ -113,7 +113,6 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect('categories')->with('info', 'Hapus kategori sukses!');
-
     }
 
     public function search(Request $request, $id)
