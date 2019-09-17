@@ -2,7 +2,7 @@
     @csrf
     {{ @$isEdit ? method_field('PUT') : '' }}
     <div class="modal-header">
-        <h5 class="modal-title">{{ @$isEdit ? 'Edit' : 'Tambah' }} Branch</h5>
+        <h5 class="modal-title">{{ @$isEdit ? 'Edit' : 'Tambah' }} Cabang</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

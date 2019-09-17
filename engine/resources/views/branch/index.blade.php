@@ -5,6 +5,12 @@
 @push('css')
 <link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet" />
 <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet" />
+<style>
+    .underline-on-hover:hover {
+        text-decoration: underline;
+    }
+
+</style>
 @endpush
 
 @push('js')
@@ -76,7 +82,8 @@
                             <td>
                                 <ul class="list-unstyled">
                                     @foreach ($branch->warehouses as $warehouse)
-                                    <li>{{ $warehouse->name }}</li>
+                                    <li><a href="{{ url('warehouse/'.$warehouse->id) }}"
+                                            class="text-dark underline-on-hover">{{ $warehouse->name }}</a></li>
                                     @endforeach
                                 </ul>
                                 <a href="{{ url("warehouse/$branch->id/create") }}" class="btn btn-sm btn-success">

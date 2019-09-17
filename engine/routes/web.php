@@ -68,7 +68,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('settings', 'SettingsController@update')->name('settings.update');
 
     Route::get('warehouse/{branch}/create', 'WarehouseController@create');
-    Route::get('warehouse/{branch}/edit', 'WarehouseController@edit');
+    Route::get('warehouse/{id}', 'WarehouseController@edit');
     Route::post('warehouse/store', 'WarehouseController@store');
-    Route::put('warehouse/update', 'WarehouseController@update');
+    Route::put('warehouse/{id}/update', 'WarehouseController@update');
+    Route::delete('warehouse/{id}/destroy', 'WarehouseController@destroy');
 });

@@ -9,7 +9,8 @@ class BranchController extends Controller
 {
     public function index()
     {
-        $d['branches'] = Branch::all();
+        $d['branches'] = Branch::with('warehouses')->get();
+
         return view('branch.index', $d);
     }
 
