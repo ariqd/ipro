@@ -107,7 +107,7 @@
             <div class="col-lg-12">
                 <label for="lainlain" class="form-control-label">Lain Lain</label>
                 <label class="switch">
-                    <input @if($category->lainlain==0) @else checked=""
+                    <input @if(@$isEdit && $category->lainlain==0) @else checked=""
                     @endif type="checkbox" name="lainlain">
                     <span class="slider"></span>
                 </label>

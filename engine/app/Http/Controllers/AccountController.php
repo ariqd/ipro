@@ -13,6 +13,7 @@ class AccountController extends Controller
         'admin' => 'Admin',
         'sales' => 'Sales Cabang',
         'finance' => 'Finance',
+        'gudang' => 'Gudang',
     ];
 
     /**
