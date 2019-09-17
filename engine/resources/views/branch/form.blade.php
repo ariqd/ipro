@@ -15,8 +15,9 @@
         </div>
         <div class="form-group">
             <label for="notes" class="form-control-label">Catatan</label>
-            <input id="notes" class="form-control" name="notes" type="text"
-                value="{{ @$isEdit ? $branch->notes : '' }}" placeholder="Catatan">
+            <input id="notes" class="form-control" name="notes" type="text" value="{{ @$isEdit ? $branch->notes : '' }}"
+                placeholder="Catatan">
+            <small class="text-secondary">Boleh dikosongkan</small>
         </div>
     </div>
     <div class="modal-footer">
