@@ -8,17 +8,21 @@
         </button>
     </div>
     <div class="modal-body">
-        <div class="form-group row">
-            <div class="col-lg-12">
-                <label for="name" class="form-control-label">Nama</label>
-                <input id="name" class="form-control" name="name" type="text"
-                       value="{{ @$isEdit ? $branch->name : '' }}">
-            </div>
+        <div class="form-group">
+            <label for="name" class="form-control-label">Nama</label>
+            <input id="name" class="form-control" name="name" type="text" value="{{ @$isEdit ? $branch->name : '' }}"
+                placeholder="Nama Cabang">
+        </div>
+        <div class="form-group">
+            <label for="notes" class="form-control-label">Catatan</label>
+            <input id="notes" class="form-control" name="notes" type="text" value="{{ @$isEdit ? $branch->notes : '' }}"
+                placeholder="Catatan">
+            <small class="text-secondary">Boleh dikosongkan</small>
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal"> Batal</button>
-        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Batal</button>
+        <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>
             {{ @$isEdit ? 'Edit' : 'Tambah' }}
         </button>
     </div>

@@ -372,10 +372,15 @@
                 </div>
             </div>
         </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="notes">Catatan</label>
+                <textarea name="notes" id="notes" rows="7" class="form-control"></textarea>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-6">
-
         </div>
         <div class="col-lg-6">
             <form action="{{url("/purchase-orders")}}" method="POST">
