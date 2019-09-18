@@ -249,9 +249,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-6">
-
-        </div>
+        <div class="col-lg-6"></div>
         <div class="col-lg-6">
             <form action="{{url("/goods-receive")}}" method="POST">
                 @csrf

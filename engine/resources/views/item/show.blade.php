@@ -54,6 +54,15 @@
             </div>
         </div>
     </div>
+    <div class="row mt-3">
+        <div class="col-12">
+            <hr>
+            <p class="text-muted mb-0">Catatan</p>
+            <p>
+                {{ $item->notes }}
+            </p>
+        </div>
+    </div>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-danger" data-dismiss="modal"> Tutup</button>
