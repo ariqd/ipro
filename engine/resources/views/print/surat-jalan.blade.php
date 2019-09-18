@@ -64,132 +64,93 @@ Surat Jalan
 @endpush
 
 @section("content")
-<div class="row">
-    <div class="col-9">
-        <h2 class="font-weight-bold">Finances - Detail Komisi {{ $user->name }} ({{ $user->branch->name }})</h2>
-    </div>
-    <div class="col-3">
-        <a href="{{ url('finances') }}" class="btn btn-secondary float-right"><i class="fa fa-times"></i> Kembali</a>
+<div class="col-xs-12">
+    <div style="text-align:center">
+        <h4>Surat Jalan</h4>
+        <h6>xxx/yyy/zz</h6>
     </div>
 </div>
+<div class="col-xs-12">
+    {{-- <div class="col-xs-3" style="">
+        <img src="{!! asset('assets/img/logo.png') !!}" alt="" width="73">
+    </div> --}}
+    <div class="col-xs-6" style="">
+        <div class="col-xs-12">Bersama ini kendaraan {{ $head->mobil }} No. {{ $head->plat }}</div>
+        <div class="col-xs-12">kami kirimkan barang tersebut, dibawah ini.</div>
+        <div class="col-xs-12">Harap terima dengan baik.</div>
+    </div>
+    <div class="col-xs-6">
+        <div class="col-xs-12">Bandung , {{ Carbon\Carbon::parse(date("Y-m-d"))->formatLocalized('%A, %d %B %Y')}}</div>
+        <div class="col-xs-12">Nama Customer</div>
+        <div class="col-xs-12">Nama Toko</div>
+        <div class="col-xs-12">Alamat Toko</div>
+    </div>
+</div>
+<div class="col-xs-12">
+    <div class="col-xs-6" style="">
 
-<div class="row">
-    <div class="col-6">
-        <h4>Periode {{ $from->format('d F') }} - {{ $to->format('d F') }}</h4>
     </div>
-    <div class="col-6">
-        <h4 class="float-right">
-            Achievement: Rp {{ number_format($user->commission->achievement, '0', ',', '.') }}
-        </h4>
+    <div class="col-xs-6" style="">
+
     </div>
-    <div class="col-12">
-        <table class="table table-light table-bordered table-hover">
-            <thead class="text-center">
+</div>
+<div class="col-xs-12">
+    <table class="table table-bordered">
+        <tr>
+            <td>No.</td>
+            <td>Nama Produk</td>
+            <td>Jumlah</td>
+            <td>Berat</td>
+            <td>Total Berat</td>
+            <td>No.SO</td>
+        </tr>
+        @foreach ($line as $item)
+        <tr>
+            <td>No.</td>
+            <td>{{ $item->detail->stock->item->name }}</td>
+            <td>{{ $item->qty_kirim }}</td>
+            <td>{{ $item->detail->stock->item->weight }}</td>
+            <td>{{ $item->qty_kirim*$item->detail->stock->item->weight }}</td>
+            <td>{{ $item->detail->sale->no_so }}</td>
+
+        </tr>
+        @endforeach
+    </table>
+    <div class="col-xs-12 ">
+        <div class="col-xs-4 ">
+            <table>
                 <tr>
-                    <th rowspan="2" class="align-middle">No</th>
-                    <th rowspan="2" class="align-middle">Keterangan</th>
-                    <th>Total (Exclude PPN)</th>
-                    <th>Komisi</th>
-                    <th>(-10 %)</th>
+                    <td style="width:288px; height: 75px"></td>
                 </tr>
+
                 <tr>
-                    <th>
-                        <span class="float-right font-weight-bold">
-                            @if ($data['achieved'])
-                            <span class="badge badge-success">Achieve</span>
-                            @else
-                            <span class="badge badge-danger">Tidak Achieve</span>
-                            @endif
-                            Rp {{ number_format($data['total']) }}
-                        </span>
-                    </th>
-                    <th>
-                        <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_komisi']) }}
-                        </span>
-                    </th>
-                    <th>
-                        <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_buat_sales']) }}
-                        </span>
-                    </th>
+                    <td style="height: 31px">Tanda Tangan Terima</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach ($sales_orders as $sales_order)
+            </table>
+        </div>
+        <div class="col-xs-4">
+            <table>
                 <tr>
-                    <td class="align-middle">{{ $loop->iteration }}</td>
-                    <td class="align-middle">
-                        <small class="text-secondary">
-                            {{ $sales_order->stock->item->category->brand->name }}
-                            -
-                            {{ $sales_order->stock->item->category->name }}
-                        </small> <br>
-                        {{ $sales_order->stock->item->name }} ({{ $sales_order->persen }})
-                    </td>
-                    <td class="align-middle">
-                        <span class="float-right">Rp {{ number_format($sales_order->total) }}</span>
-                    </td>
-                    <td class="align-middle">
-                        <span class="float-right">Rp {{ number_format($sales_order->komisi) }}</span>
-                    </td>
-                    <td class="align-middle">
-                        <span class="float-right">Rp {{ number_format($sales_order->buat_sales) }}</span>
-                    </td>
+                    <td style="width:288px; height: 75px"> </td>
                 </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
+
                 <tr>
-                    <td colspan="2">
-                        <span class="float-right font-weight-bold">
-                            Total:
-                        </span>
-                    </td>
-                    <td>
-                        <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total']) }}
-                        </span>
-                    </td>
-                    <td>
-                        <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_komisi']) }}
-                        </span>
-                    </td>
-                    <td>
-                        <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_buat_sales']) }}
-                        </span>
-                    </td>
+                    <td style="height: 31px">Mengetahui</td>
                 </tr>
+            </table>
+        </div>
+        <div class="col-xs-4">
+            <table>
                 <tr>
-                    <td colspan="2">
-                        <span class="float-right font-weight-bold">
-                            Status:
-                        </span>
-                    </td>
-                    <td>
-                        <h4 class="float-right font-weight-bold">
-                            @if ($data['achieved'])
-                            <span class="badge badge-success">Achieve</span>
-                            @else
-                            <span class="badge badge-danger">Tidak Achieve</span>
-                            @endif
-                        </h4>
-                    </td>
-                    <td>
-                        <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_komisi'] * $data['percentage']) }}
-                        </span>
-                    </td>
-                    <td>
-                        <span class="float-right font-weight-bold">
-                            Rp {{ number_format($data['total_buat_sales'] * $data['percentage']) }}
-                        </span>
-                    </td>
+                    <td style="width:288px; height: 75px"></td>
                 </tr>
-            </tfoot>
-        </table>
+
+                <tr>
+                    <td style="height: 31px">Hormat Kami</td>
+                </tr>
+            </table>
+        </div>
     </div>
+
 </div>
 @endsection
