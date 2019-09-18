@@ -16,137 +16,147 @@
         z-index: 2000;
         display: none;
     }
+
 </style>
 @endpush
 
 @push("js")
 <script type="text/javascript">
     $("#purchaseid").select2({
-            placeholder: "Choose PO"
-        });
+        placeholder: "Choose PO"
+    });
+
 </script>
 
 <script type="text/javascript">
     count = 0;
-        $("#purchaseid").change(function () {
-            $("#purchase-body").empty();
-            $.ajax({
-                url: "{!! url("purchase-orders/") !!}/" + $("#purchaseid").val() + "/search",
-                method: "get",
-                success: function (response) {
-                    var table = document.getElementById("purchase-body");
-                    $(response.detail).each(function (key, value) {
-                        if (value.approval_finance == 1) {
-                            var row = table.insertRow();
-                            row.setAttribute('class', 'item-' + count);
-                            var cell0 = row.insertCell(0);
-                            var cell1 = row.insertCell(1);
-                            var cell2 = row.insertCell(2);
-                            var cell3 = row.insertCell(3);
-                            var cell4 = row.insertCell(4);
-                            var cell5 = row.insertCell(5);
-                            var cell6 = row.insertCell(6);
-                            var cell7 = row.insertCell(7);
-                            var cell8 = row.insertCell(8);
-                            var cell9 = row.insertCell(9);
-                            cell0.setAttribute('class', "form_id");
-                            cell7.setAttribute('class', "subtotal");
+    $("#purchaseid").change(function () {
+        $("#purchase-body").empty();
+        $.ajax({
+            url: "{!! url("
+            purchase - orders / ") !!}/" + $("#purchaseid").val() + "/search",
+            method: "get",
+            success: function (response) {
+                var table = document.getElementById("purchase-body");
+                $(response.detail).each(function (key, value) {
+                    if (value.approval_finance == 1) {
+                        var row = table.insertRow();
+                        row.setAttribute('class', 'item-' + count);
+                        var cell0 = row.insertCell(0);
+                        var cell1 = row.insertCell(1);
+                        var cell2 = row.insertCell(2);
+                        var cell3 = row.insertCell(3);
+                        var cell4 = row.insertCell(4);
+                        var cell5 = row.insertCell(5);
+                        var cell6 = row.insertCell(6);
+                        var cell7 = row.insertCell(7);
+                        var cell8 = row.insertCell(8);
+                        var cell9 = row.insertCell(9);
+                        cell0.setAttribute('class', "form_id");
+                        cell7.setAttribute('class', "subtotal");
 
-                            cell1.innerHTML = value.category.name;
-                            cell2.innerHTML = value.item.code;
-                            cell3.innerHTML = value.item.name;
-                            cell4.innerHTML = value.item.weight;
-                            cell5.innerHTML = value.qty;
-                            cell6.innerHTML = '<input class="form-control" type="number" onchange="calculateAmmount(' + count + ',' + value.item.purchase_price + ')" id="qtyget-' + count + '" min="1" max="' + value.qty + '" value="' + value.qty + '"></input>';
-                            cell7.innerHTML = '<input class="form-control totalammount" id="purchase-' + count + '" disabled value="' + value.total_price + '"></input>';
-                            console.dir(value);
-                            if (value.sales_id != null) {
-                                cell8.innerHTML = value.sales.no_so;
-                            } else {
-                                cell8.innerHTML = "-";
-                            }
-                            cell9.innerHTML = '<a onclick=voidItem("item-' + count + '")><i class="fa fa-trash"></i></a>';
-
-                            var container = document.getElementById("input-body");
-                            var input = document.createElement("input");
-                            input.type = "hidden";
-                            input.name = "item-id[]";
-                            input.setAttribute('value', value.item.id);
-                            input.setAttribute('class', "item-" + count);
-                            container.appendChild(input);
-
-                            var input = document.createElement("input");
-                            input.type = "hidden";
-                            input.name = "qty[]";
-                            input.setAttribute('value', value.qty);
-                            input.setAttribute('class', "item-" + count);
-                            container.appendChild(input);
-
-
-                            var input = document.createElement("input");
-                            input.type = "hidden";
-                            input.name = "qtyget[]";
-                            input.setAttribute('value', $("#qtyget-" + count).val());
-                            input.setAttribute('class', "item-" + count);
-                            container.appendChild(input);
-
-                            var input = document.createElement("input");
-                            input.type = "hidden";
-                            input.name = "purchasedetailid[]";
-                            input.setAttribute('value', value.id);
-                            input.setAttribute('class', "item-" + count);
-                            container.appendChild(input);
-
-                            count++;
+                        cell1.innerHTML = value.category.name;
+                        cell2.innerHTML = value.item.code;
+                        cell3.innerHTML = value.item.name;
+                        cell4.innerHTML = value.item.weight;
+                        cell5.innerHTML = value.qty;
+                        cell6.innerHTML =
+                            '<input class="form-control" type="number" onchange="calculateAmmount(' +
+                            count + ',' + value.item.purchase_price + ')" id="qtyget-' +
+                            count + '" min="1" max="' + value.qty + '" value="' + value
+                            .qty + '"></input>';
+                        cell7.innerHTML =
+                            '<input class="form-control totalammount" id="purchase-' +
+                            count + '" disabled value="' + value.total_price + '"></input>';
+                        console.dir(value);
+                        if (value.sales_id != null) {
+                            cell8.innerHTML = value.sales.no_so;
+                        } else {
+                            cell8.innerHTML = "-";
                         }
-                    });
-                    updateRowOrder();
-                    calculateTotalAmmount();
+                        cell9.innerHTML = '<a onclick=voidItem("item-' + count +
+                            '")><i class="fa fa-trash"></i></a>';
 
-                },
-                error: function (xhr, statusCode, error) {
-                }
-            });
+                        var container = document.getElementById("input-body");
+                        var input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = "item-id[]";
+                        input.setAttribute('value', value.item.id);
+                        input.setAttribute('class', "item-" + count);
+                        container.appendChild(input);
+
+                        var input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = "qty[]";
+                        input.setAttribute('value', value.qty);
+                        input.setAttribute('class', "item-" + count);
+                        container.appendChild(input);
+
+
+                        var input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = "qtyget[]";
+                        input.setAttribute('value', $("#qtyget-" + count).val());
+                        input.setAttribute('class', "item-" + count);
+                        container.appendChild(input);
+
+                        var input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = "purchasedetailid[]";
+                        input.setAttribute('value', value.id);
+                        input.setAttribute('class', "item-" + count);
+                        container.appendChild(input);
+
+                        count++;
+                    }
+                });
+                updateRowOrder();
+                calculateTotalAmmount();
+
+            },
+            error: function (xhr, statusCode, error) {}
         });
+    });
 
 
-        function calculateAmmount(count, purchase_price) {
-            var total = $("#qtyget-" + count).val() * purchase_price;
-            $("#purchase-" + count).val(total);
-            calculateTotalAmmount();
-        }
+    function calculateAmmount(count, purchase_price) {
+        var total = $("#qtyget-" + count).val() * purchase_price;
+        $("#purchase-" + count).val(total);
+        calculateTotalAmmount();
+    }
 
-        function calculateTotalAmmount() {
-            var grandtotal = 0;
-            $(".totalammount").each(function () {
-                grandtotal += parseInt(this.value);
-            });
-            $("#grandtotal").text("Rp. " + grandtotal);
-        }
-
-        $("#receipt").change(function () {
-            $(".receipt").remove();
-            var receiptnumber = $("#receipt").val();
-            var container = document.getElementById("input-body");
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "receipt";
-            input.setAttribute('value', receiptnumber);
-            input.setAttribute('class', "receipt");
-            container.appendChild(input);
+    function calculateTotalAmmount() {
+        var grandtotal = 0;
+        $(".totalammount").each(function () {
+            grandtotal += parseInt(this.value);
         });
+        $("#grandtotal").text("Rp. " + grandtotal);
+    }
 
-        $("#purchaseid").change(function () {
-            $(".purchaseid").remove();
-            var purchaseidnumber = $("#purchaseid").val();
-            var container = document.getElementById("input-body");
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = "purchaseid";
-            input.setAttribute('value', purchaseidnumber);
-            input.setAttribute('class', "purchaseid");
-            container.appendChild(input);
-        })
+    $("#receipt").change(function () {
+        $(".receipt").remove();
+        var receiptnumber = $("#receipt").val();
+        var container = document.getElementById("input-body");
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "receipt";
+        input.setAttribute('value', receiptnumber);
+        input.setAttribute('class', "receipt");
+        container.appendChild(input);
+    });
+
+    $("#purchaseid").change(function () {
+        $(".purchaseid").remove();
+        var purchaseidnumber = $("#purchaseid").val();
+        var container = document.getElementById("input-body");
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = "purchaseid";
+        input.setAttribute('value', purchaseidnumber);
+        input.setAttribute('class', "purchaseid");
+        container.appendChild(input);
+    })
+
 </script>
 @endpush
 
@@ -230,6 +240,12 @@
                 </div>
             </div>
 
+        </div>
+        <div class="col-12">
+            <div class="form-group">
+                <label for="notes">Catatan</label>
+                <textarea name="notes" id="notes" rows="7" class="form-control"></textarea>
+            </div>
         </div>
     </div>
     <div class="row">

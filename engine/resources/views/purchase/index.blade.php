@@ -36,7 +36,7 @@
                 <table class="table data-table table-hover table-light">
                     <thead>
                         <tr>
-                            <td>No.</td>
+                            <th>No.</th>
                             <th>Tanggal</th>
                             <th>No. PO</th>
                             <th>Status</th>

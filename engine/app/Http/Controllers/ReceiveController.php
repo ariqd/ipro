@@ -37,6 +37,7 @@ class ReceiveController extends Controller
     public function create()
     {
         $d['purchase'] = Purchase::where("approval_status", "=", "1")->get();
+
         return view("receive.form", $d);
     }
 
@@ -72,6 +73,7 @@ class ReceiveController extends Controller
 
             Receive_Detail::create($data);
         }
+
         return redirect('goods-receive')->with("info", "Barang diterima dengan nomor " . $request->receipt);
     }
 

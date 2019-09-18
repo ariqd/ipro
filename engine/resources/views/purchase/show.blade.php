@@ -79,6 +79,7 @@
     .slider.round:before {
         border-radius: 50%;
     }
+
 </style>
 @endpush
 
@@ -104,7 +105,8 @@
                     </h2>
                 </div>
                 <div>
-                    <a href="{{ url('purchase-orders') }}" class="btn btn-light"><i class="fa fa-arrow-left"></i> Purchase Orders</a>
+                    <a href="{{ url('purchase-orders') }}" class="btn btn-light"><i class="fa fa-arrow-left"></i>
+                        Purchase Orders</a>
                 </div>
             </div>
         </div>
@@ -162,8 +164,10 @@
                                 <td>{{ $key->qty }} pcs</td>
                                 @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                                 @if($key->approval_finance > 1)
-                                <td><input type="number" min="1" max="{{ $key->qty }}" value="{{ $key->qty }}"
-                                        name="{{ "qty-".$key->id }}" class="form-control"></td>
+                                <td>
+                                    <input type="number" min="1" max="{{ $key->qty }}" value="{{ $key->qty }}"
+                                        name="{{ "qty-".$key->id }}" class="form-control">
+                                </td>
                                 @else
                                 <td>{{ $key->qty_approval ?? 0 }} pcs</td>
                                 @endif
@@ -177,12 +181,17 @@
                                     </label>
                                 </td>
                                 @endif
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="2"></td>
+                                <td colspan="2">
+                                    <div class="float-right">
+                                        <b>Total</b>
+                                    </div>
+                                </td>
                                 <td>
                                     {{ $total_weight }} Kg
                                 </td>
