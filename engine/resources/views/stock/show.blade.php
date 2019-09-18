@@ -8,54 +8,58 @@
     <div class="table-responsive">
         <table class="table table-borderless">
             <tbody>
-            <tr>
-                <td><b>Kode Produk</b></td>
-                <td>{{ $stock->item->code }}</td>
-            </tr>
-            <tr>
-                <td><b>Brand</b></td>
-                <td>{{ $stock->item->category->brand->name }}</td>
-            </tr>
-            <tr>
-                <td><b>Kategori</b></td>
-                <td>{{ $stock->item->category->name }}</td>
-            </tr>
-            <tr>
-                <td><b>Nama</b></td>
-                <td>{{ $stock->item->name }}</td>
-            </tr>
-            <tr>
-                <td><b>Cabang</b></td>
-                <td>{{ $stock->branch->name }}</td>
-            </tr>
-            <tr>
-                <td><b>Stok (per Batang)</b></td>
-                <td>{{ $stock->quantity }} pcs</td>
-            </tr>
-            <tr>
-                <td><b>Harga</b></td>
-                <td>Rp {{ number_format($stock->price) }}</td>
-            </tr>
-            <tr>
-                <td><b>Berat</b></td>
-                <td>{{ $stock->weight }} Kg</td>
-            </tr>
-            <tr>
-                <td><b>Kebutuhan per Meter Persegi</b></td>
-                <td>{{ $stock->area }} m2</td>
-            </tr>
-            <tr>
-                <td><b>Lebar</b></td>
-                <td>{{ $stock->width }} m</td>
-            </tr>
-            <tr>
-                <td><b>Tinggi</b></td>
-                <td>{{ $stock->height }} m</td>
-            </tr>
-            <tr>
-                <td><b>Panjang</b></td>
-                <td>{{ $stock->length }} m</td>
-            </tr>
+                <tr>
+                    <td><b>Kode Produk</b></td>
+                    <td>{{ $stock->item->code }}</td>
+                </tr>
+                <tr>
+                    <td><b>Brand</b></td>
+                    <td>{{ $stock->item->category->brand->name }}</td>
+                </tr>
+                <tr>
+                    <td><b>Kategori</b></td>
+                    <td>{{ $stock->item->category->name }}</td>
+                </tr>
+                <tr>
+                    <td><b>Nama</b></td>
+                    <td>{{ $stock->item->name }}</td>
+                </tr>
+                <tr>
+                    <td><b>Cabang</b></td>
+                    <td>{{ $stock->branch->name }}</td>
+                </tr>
+                <tr>
+                    <td><b>Stok (per Batang)</b></td>
+                    <td>{{ $stock->quantity }} pcs</td>
+                </tr>
+                <tr>
+                    <td><b>Harga</b></td>
+                    <td>Rp {{ number_format($stock->price) }}</td>
+                </tr>
+                <tr>
+                    <td><b>Berat</b></td>
+                    <td>{{ $stock->weight }} Kg</td>
+                </tr>
+                <tr>
+                    <td><b>Kebutuhan per Meter Persegi</b></td>
+                    <td>{{ $stock->area }} m2</td>
+                </tr>
+                <tr>
+                    <td><b>Lebar</b></td>
+                    <td>{{ $stock->width }} m</td>
+                </tr>
+                <tr>
+                    <td><b>Tinggi</b></td>
+                    <td>{{ $stock->height }} m</td>
+                </tr>
+                <tr>
+                    <td><b>Panjang</b></td>
+                    <td>{{ $stock->length }} m</td>
+                </tr>
+                <tr>
+                    <th><b>Catatan</b></th>
+                    <td>{{ $stock->notes }}</td>
+                </tr>
             </tbody>
         </table>
     </div>

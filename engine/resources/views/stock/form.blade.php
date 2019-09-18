@@ -68,9 +68,15 @@
             </small>
             @endif
         </div>
+        <div class="form-group">
+            <label for="notes" class="form-control-label">Catatan</label>
+            <input required id="notes" class="form-control" name="notes" type="text"
+                value="{{ @$isEdit ? $stock->notes : '' }}" placeholder="Catatan">
+            <small class="text-muted">Boleh dikosongkan</small>
+        </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-link" data-dismiss="modal"> Batal</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Batal</button>
         <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>
             {{ @$isEdit ? 'Edit' : 'Tambah' }}
         </button>
