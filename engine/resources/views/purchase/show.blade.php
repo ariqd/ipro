@@ -162,15 +162,17 @@
                                 </td>
                                 <td>{{ $key->item->weight }} Kg</td>
                                 <td>{{ $key->qty }} pcs</td>
-                                @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
-                                @if($key->approval_finance > 1)
                                 <td>
-                                    <input type="number" min="1" max="{{ $key->qty }}" value="{{ $key->qty }}"
-                                        name="{{ "qty-".$key->id }}" class="form-control">
+                                    <div class="input-group">
+                                        <input type="number" min="1" max="{{ $key->qty }}"
+                                            value="{{ $key->approval_finance >= 1 ? $key->qty_approval : $key->qty }}"
+                                            name="{{ "qty-".$key->id }}" class="form-control"
+                                            {{ Gate::allows('isFinance') || Gate::allows('isAdmin') ? '' : 'disabled' }}>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">pcs</span>
+                                        </div>
+                                    </div>
                                 </td>
-                                @else
-                                <td>{{ $key->qty_approval ?? 0 }} pcs</td>
-                                @endif
                                 <td class="text-right">Rp{{ number_format($key->total_price, 0, ',', '.') }}</td>
                                 @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                                 <td>
@@ -180,7 +182,6 @@
                                         <span class="slider"></span>
                                     </label>
                                 </td>
-                                @endif
                                 @endif
                             </tr>
                             @endforeach

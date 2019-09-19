@@ -70,7 +70,7 @@
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a href="{{ url('purchase-orders/'.$key->id) }}" class="dropdown-item">
-                                            <i class="fa fa-eye"></i> Detail</a>
+                                            <i class="fa fa-eye"></i> Detail Approval</a>
                                         <a class="dropdown-item"
                                             href="{{ url('purchase-orders/'.$key->id.'/pdf/memo') }}">
                                             <i class="fa fa-print"></i> Print Memo Pengambilan
