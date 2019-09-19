@@ -283,7 +283,7 @@
     <div class="row mb-5">
         <div class="col-lg-12">
             <h4><b><label for="sales"># Pilih Jenis Sales Order</label></b></h4>
-            <select name="case_2" id="case_2" class`="form-control">
+            <select name="case_2" id="case_2" class="form-control">
                 <option value="1">By Sales (dibuat oleh Sales)</option>
                 <option value="2">By Head Sales (dibuat oleh Head Sales)</option>
                 <option value="3">Referral (dibuat bersama oleh Head Sales dan Sales)</option>
@@ -291,7 +291,7 @@
             </select>
             <div class="case3 pt-3" style="display: none;">
                 <label for="sales_id">Referral</label>
-                <select name="sales_id" class="form-control sales case3 pt-3" style="display: none;" id="sales_id">
+                <select name="sales_id" class="form-control sales case3" style="display: none;" id="sales_id">
                     @foreach ($sales as $item)
                     <option value="{{$item->id}}"> {{$item->name}}</option>
                     @endforeach
@@ -299,7 +299,7 @@
             </div>
             <div class="case4 pt-3" style="display: none;">
                 <label for="admin_id">Admin</label>
-                <select name="admin_id" class="form-control sales case4 pt-3" style="display: none;" id="admin_id">
+                <select name="admin_id" class="form-control sales case4" style="display: none;" id="admin_id">
                     @foreach ($sales as $item)
                     <option value="{{$item->id}}"> {{$item->name}}</option>
                     @endforeach

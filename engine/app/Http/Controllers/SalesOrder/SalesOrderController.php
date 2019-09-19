@@ -37,7 +37,7 @@ class SalesOrderController extends Controller
         $d['customers'] = Customer::orderBy('created_at', 'desc')->get();
         $d['brands'] = Brand::all();
         $d['branches'] = Branch::all();
-        $d['sales'] = User::where("role", "like", "%sales%")->get();
+        $d['sales'] = User::sales()->get()->except(auth()->id());
 
         return view('sale.form', $d);
     }
@@ -91,7 +91,7 @@ class SalesOrderController extends Controller
         $d['customers'] = Customer::all();
         $d['brands'] = Brand::all();
         $d['branches'] = Branch::all();
-        $d['sales'] = User::where("role", "like", "%sales%")->get();
+        $d['sales'] = User::sales()->get()->except(auth()->id());
 
         return view('sale.form', $d);
     }

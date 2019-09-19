@@ -13,6 +13,7 @@
 
 <script type="text/javascript">
     $('.data-table').DataTable();
+
 </script>
 @endpush
 
@@ -44,42 +45,43 @@
                 <tr>
                     <td>{{ $user->name }} ({{ $user->branch->name }})</td>
                     @if (empty($user->commission->percentage))
-                    <span class="badge badge-warning">Komisi periode ini belum diatur</span>
+                    <td>
+                        <span class="badge badge-warning">Komisi periode ini belum diatur</span>
+                    </td>
                     @else
                     @if ($user->commission->achieved < $user->commission->achievement)
-                    <td>Rp {{ number_format(@$user->commission->total_commission_not_achieve) ?? '-' }}</td>
-                    @else
-                    <td>Rp {{ number_format(@$user->commission->total_commission) ?? '-' }}</td>
-                    @endif
-                    @endif
-
-                    <td>Rp {{ number_format(@$user->commission->achievement) ?? '-' }}</td>
-                    <td>Rp {{ number_format(@$user->commission->achieved) ?? '-' }}</td>
-                    <td>
-                        @if (empty($user->commission->percentage))
-                        <span class="badge badge-warning">Komisi periode ini belum diatur</span>
+                        <td>Rp {{ number_format(@$user->commission->total_commission_not_achieve) ?? '-' }}</td>
                         @else
-                        @if ($user->commission->achieved < $user->commission->achievement)
-                            <span class="badge badge-danger">Belum Achieve</span>
-                            @else
-                            <span class="badge badge-success">Achieved</span>
-                            @endif
-                            @endif
-                    </td>
-                    <td>
-                        @if (empty($user->commission->percentage))
-                        <small class="text-danger">
-                            <a href="{{ route("finances.komisi.set", $user) }}" class="btn btn-dark btn-sm my-1">
-                                <i class="fa fa-plus"></i> Set Komisi
-                            </a>
-                        </small>
-                        @else
-                        <a href="{{ route('finances.komisi.show', $user) }}" class="btn btn-secondary btn-sm">Detail
-                            Komisi</a>
-                        <a href="{{ route("finances.komisi.print", $user) }}" class="btn btn-success btn-sm my-1">
-                            Print Laporan Komisi</a>
+                        <td>Rp {{ number_format(@$user->commission->total_commission) ?? '-' }}</td>
                         @endif
-                    </td>
+                        @endif
+                        <td>Rp {{ number_format(@$user->commission->achievement) ?? '-' }}</td>
+                        <td>Rp {{ number_format(@$user->commission->achieved) ?? '-' }}</td>
+                        <td>
+                            @if (empty($user->commission->percentage))
+                            <span class="badge badge-warning">Komisi periode ini belum diatur</span>
+                            @else
+                            @if ($user->commission->achieved < $user->commission->achievement)
+                                <span class="badge badge-danger">Belum Achieve</span>
+                                @else
+                                <span class="badge badge-success">Achieved</span>
+                                @endif
+                                @endif
+                        </td>
+                        <td>
+                            @if (empty($user->commission->percentage))
+                            <small class="text-danger">
+                                <a href="{{ route("finances.komisi.set", $user) }}" class="btn btn-dark btn-sm my-1">
+                                    <i class="fa fa-plus"></i> Set Komisi
+                                </a>
+                            </small>
+                            @else
+                            <a href="{{ route('finances.komisi.show', $user) }}" class="btn btn-secondary btn-sm">Detail
+                                Komisi</a>
+                            <a href="{{ route("finances.komisi.print", $user) }}" class="btn btn-success btn-sm my-1">
+                                Print Laporan Komisi</a>
+                            @endif
+                        </td>
                 </tr>
                 @endforeach
             </tbody>

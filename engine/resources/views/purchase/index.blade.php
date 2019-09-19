@@ -46,7 +46,6 @@
                     </thead>
                     <tbody>
                         @foreach($data as $key)
-                        {{-- {{ dd($key) }} --}}
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $key->created_at->toDayDateTimeString() }}</td>
