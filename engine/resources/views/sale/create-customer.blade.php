@@ -57,6 +57,14 @@
                     value="{{ @$isEdit ? $customer->email : old('email') }}">
             </div>
         </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="notes" class="form-control-label">Catatan</label>
+                <input id="notes" type="text" class="form-control" name="notes"
+                    value="{{ @$customer->notes ?? old('notes') }}">
+                <small class="text-secondary">Boleh dikosongkan</small>
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal"> Cancel</button>

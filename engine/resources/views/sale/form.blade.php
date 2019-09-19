@@ -280,27 +280,26 @@
             @include('layouts.feedback')
         </div>
     </div>
-    {{-- @if(Gate::allows('isAdmin') || Auth::id() == 5) --}}
     <div class="row mb-5">
         <div class="col-lg-12">
             <h4><b><label for="sales"># Pilih Jenis Sales Order</label></b></h4>
-            <select name="case_2" id="case_2" class="form-control">
+            <select name="case_2" id="case_2" class`="form-control">
                 <option value="1">By Sales (dibuat oleh Sales)</option>
                 <option value="2">By Head Sales (dibuat oleh Head Sales)</option>
                 <option value="3">Referral (dibuat bersama oleh Head Sales dan Sales)</option>
                 <option value="4">By Admin (dibuat oleh Admin Sales)</option>
             </select>
-            <div class="case3" style="display: none;">
-                Referral
-                <select name="sales_id" class="form-control sales case3" style="display: none;">
+            <div class="case3 pt-3" style="display: none;">
+                <label for="sales_id">Referral</label>
+                <select name="sales_id" class="form-control sales case3 pt-3" style="display: none;" id="sales_id">
                     @foreach ($sales as $item)
                     <option value="{{$item->id}}"> {{$item->name}}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="case4" style="display: none;">
-                Admin
-                <select name="admin_id" class="form-control sales case4" style="display: none;">
+            <div class="case4 pt-3" style="display: none;">
+                <label for="admin_id">Admin</label>
+                <select name="admin_id" class="form-control sales case4 pt-3" style="display: none;" id="admin_id">
                     @foreach ($sales as $item)
                     <option value="{{$item->id}}"> {{$item->name}}</option>
                     @endforeach
@@ -308,7 +307,6 @@
             </div>
         </div>
     </div>
-    {{-- @endif --}}
     <div class="row mb-3">
         <div class="col-12">
             <h4><b><label for="customer_select"># Customer</label></b> &nbsp;
@@ -519,8 +517,7 @@
                         <label for="project" class="col-12 col-lg-2 col-form-label">Project</label>
                         <div class="col-12 col-md-8">
                             <input type="text" class="form-control" id="project" name="project"
-                                value="{{ @$isEdit ? $sale->project : '' }}" required
-                                class="form-row">
+                                value="{{ @$isEdit ? $sale->project : '' }}" required class="form-row">
                         </div>
                     </div>
                     <div class="form-group row">

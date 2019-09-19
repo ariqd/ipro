@@ -218,7 +218,10 @@
             <div class="col-lg-6">
                 @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                 @if($header->approval_status == 0)
-                <input type="submit" class="form-control btn btn-success" value="Create Purchase Order">
+                <input type="submit" class="form-control btn btn-success" value="Approve & Create Purchase Order"
+                    name="button">
+                @else
+                <input type="submit" class="form-control btn btn-warning" value="Update Approve" name="button">
                 @endif
                 @endif
             </div>

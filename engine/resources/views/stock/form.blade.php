@@ -70,8 +70,8 @@
         </div>
         <div class="form-group">
             <label for="notes" class="form-control-label">Catatan</label>
-            <input required id="notes" class="form-control" name="notes" type="text"
-                value="{{ @$isEdit ? $stock->notes : '' }}" placeholder="Catatan">
+            <input id="notes" class="form-control" name="notes" type="text" value="{{ @$isEdit ? $stock->notes : '' }}"
+                placeholder="Catatan">
             <small class="text-muted">Boleh dikosongkan</small>
         </div>
     </div>

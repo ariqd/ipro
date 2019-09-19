@@ -14,14 +14,18 @@ class Purchase_Detail extends Model
 		return $this->belongsTo('App\Purchase', 'id', 'purchase_id');
 	}
 
-	   public function item()
-    {
-        return $this->belongsTo('App\Item');
-    }
-
+	public function item()
+	{
+		return $this->belongsTo('App\Item');
+	}
 
 	public function sale()
 	{
 		return $this->belongsTo('App\Sale', 'sales_id', 'id');
+	}
+
+	public function scopeApproved($query)
+	{
+		return $query->where('approval_finance', '=', 1);
 	}
 }

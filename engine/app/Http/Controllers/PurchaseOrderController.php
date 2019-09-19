@@ -18,7 +18,7 @@ class PurchaseOrderController extends Controller
 {
     public function index()
     {
-        $d["data"] = Purchase::latest()->get();
+        $d["data"] = Purchase::latest()->with('details')->get();
 
         return view('purchase.index', $d);
     }
@@ -109,12 +109,11 @@ class PurchaseOrderController extends Controller
     public function approve(Request $request, $id)
     {
         $query = Purchase::find($id);
-        $detail = $query->details()->get();
-        $count = count($detail);
+        $detail = $query->details;
+
         foreach ($detail as $value) {
             $i = $value->id;
             $stringqty = "qty-$i";
-            $stringapprove = "approve-$i";
             if ($request->has("approve-$i")) {
                 if ($request->$stringqty == null) {
                     $value->qty_approval = $value->qty;
@@ -122,13 +121,22 @@ class PurchaseOrderController extends Controller
                     $value->qty_approval = $request->$stringqty;
                 }
                 $value->approval_finance = 1;
-                $value->save();
             } else {
+                $value->qty_approval = 0;
                 $value->approval_finance = 0;
-                $value->save();
             }
+            $value->save();
         }
-        $query->approval_status = 1;
+
+        $allItems = $query->details()->count();
+        $approvedItems = $query->details()->approved()->count();
+
+        if (($approvedItems < $allItems) && $approvedItems == 0) {
+            $query->approval_status = 0;
+        } else {
+            $query->approval_status = 1;
+        }
+
         $query->save();
 
         return redirect("purchase-orders")->with("info", "PO dengan nomor $query->purchase_number disetujui");
@@ -147,6 +155,7 @@ class PurchaseOrderController extends Controller
             $key["brand"] = $key["category"]->brand()->first();
             $key["sales"] = $key->sale()->first();
         }
+
         return response()->json($data, 200);
     }
 

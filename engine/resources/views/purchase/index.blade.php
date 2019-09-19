@@ -13,6 +13,7 @@
 
 <script type="text/javascript">
     $('.data-table').DataTable();
+
 </script>
 @endpush
 
@@ -26,7 +27,7 @@
                     <h2><b>Purchase Orders</b></h2>
                 </div>
                 <div>
-                    <a href="{{ url('/purchase-orders/create') }}" class="btn btn-dark"><i class="fa fa-plus"></i> 
+                    <a href="{{ url('/purchase-orders/create') }}" class="btn btn-dark"><i class="fa fa-plus"></i>
                         Purchase Order Baru</a>
                 </div>
             </div>
@@ -45,15 +46,22 @@
                     </thead>
                     <tbody>
                         @foreach($data as $key)
+                        {{-- {{ dd($key) }} --}}
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ date("l, d-m-Y",strtotime($key->created_at)) }}</td>
+                            <td>{{ $key->created_at->toDayDateTimeString() }}</td>
                             <td>{{ $key->purchase_number }}</td>
-                            <td>@if($key->approval_status == 1)
-                                <span class="badge badge-success">Disetujui</span>
+                            <td>
+                                @if($key->approval_status == 1)
+                                <span
+                                    class="badge badge-{{ $key->details()->approved()->count() < $key->details()->count() ? 'warning' : 'success' }}">
+                                    Disetujui {{ $key->details()->approved()->count() }} dari
+                                    {{ $key->details()->count() }}
+                                </span>
                                 @else
-                                <span class="badge badge-danger">Ditolak</span>
-                                @endif</td>
+                                <span class="badge badge-danger">Belum Disetujui</span>
+                                @endif
+                            </td>
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-outline-dark btn-sm dropdown-toggle"
@@ -61,7 +69,6 @@
                                         <i class="fa fa-bars"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
-
                                         <a href="{{ url('purchase-orders/'.$key->id) }}" class="dropdown-item">
                                             <i class="fa fa-eye"></i> Detail</a>
                                         <a class="dropdown-item"
@@ -72,7 +79,6 @@
                                             href="{{ url('purchase-orders/'.$key->id.'/pdf/po') }}">
                                             <i class="fa fa-print"></i> Print Order Form
                                         </a>
-
                                     </div>
                                 </div>
                             </td>
