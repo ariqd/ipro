@@ -74,8 +74,8 @@ class PurchaseOrderController extends Controller
                 $purchase_detail = [
                     "item_id" => $request->$item[$i],
                     "qty" => $request->qty[$i],
-                    "purchase_price" => $itemdetail->purchase_price,
-                    "total_price" => $request->qty[$i] * $itemdetail->purchase_price,
+                    "purchase_price" => $request->modal[$i],
+                    "total_price" => $request->qty[$i] * $request->modal[$i],
                     "purchase_id" => $purchase->id,
                     "sales_id" => $request->sales[$i]
                 ];
@@ -83,8 +83,8 @@ class PurchaseOrderController extends Controller
                 $purchase_detail = [
                     "item_id" => $request->$item[$i],
                     "qty" => $request->qty[$i],
-                    "purchase_price" => $itemdetail->purchase_price,
-                    "total_price" => $request->qty[$i] * $itemdetail->purchase_price,
+                    "purchase_price" => $request->modal[$i],
+                    "total_price" => $request->qty[$i] * $request->modal[$i],
                     "purchase_id" => $purchase->id
                 ];
             }
