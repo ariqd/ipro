@@ -72,7 +72,7 @@
                         <td>{{ $sale->user->name }} ({{ $sale->user->branch->name }})</td>
                         @endif
                         <td>
-                            @if(Gate::allows("isAdmin"))
+                            @if(Gate::allows("isAdmin")||Gate::allows("isGudang"))
                             @if($sale->no_so == null)
                             <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
                                 class="btn btn-warning btn-sm my-1 text-dark">

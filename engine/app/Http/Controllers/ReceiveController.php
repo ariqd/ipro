@@ -63,7 +63,14 @@ class ReceiveController extends Controller
             $purchasedetails->save();
 
             //plus
+
             $stock = Stock::where("item_id", "=", $purchasedetails->item_id)->first();
+            if($stock == null){
+               $stock = Stock::create([
+                    "item_id" => $purchasedetails->item_id,
+                    "branch_id" => 1
+                ]);
+            }
             $stock->quantity += $request->qtyget[$i];
             $stock->save();
 

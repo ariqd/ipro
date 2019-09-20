@@ -233,9 +233,9 @@ Sales Order
                     <td colspan="3">
                         <div class="text-right"><b>JUMLAH</b></div>
                     </td>
+                    <td></td>
+                    <td></td>
                     <td>Rp. {{ number_format($total) }}</td>
-                    <td></td>
-                    <td></td>
                 </tr>
             </tfoot>
         </table>
@@ -352,9 +352,9 @@ Sales Order
                     <td colspan="3">
                         <div class="text-right"><b>JUMLAH</b></div>
                     </td>
-                    <td> Rp. {{ number_format($total -$diskon) }}</td>
                     <td></td>
                     <td></td>
+                    <td> Rp. {{ number_format($total) }}</td>
                 </tr>
             </tfoot>
         </table>
@@ -400,22 +400,18 @@ Sales Order
 <div class="row">
     <div class="col-xs-4">
         <div class="text-center">
-            <p>Mengetahui,</p>
-            <p style="margin-top: 120px">(IRENE)</p>
-            <P>KEUANGAN</P>
+            
         </div>
     </div>
     <div class="col-xs-4">
         <div class="text-center">
-            <p>Mengetahui,</p>
-            <p style="margin-top: 120px">(RIA ADRIYATI)</p>
-            <P>HEAD SALES</P>
+            
         </div>
     </div>
     <div class="col-xs-4">
         <div class="text-center">
             <p>Yang Membuat,</p>
-            <p style="margin-top: 120px">Erlin</p>
+            <p style="margin-top: 120px">{{Auth::User()->name}}</p>
             <P>SALES</P>
         </div>
     </div>

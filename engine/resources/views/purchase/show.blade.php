@@ -177,6 +177,7 @@
                                     </label>
                                 </td>
                                 @endif
+                                @endif
                             </tr>
                             @endforeach
                         </tbody>

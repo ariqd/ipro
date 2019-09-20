@@ -20,10 +20,10 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        $data['customers'] = Customer::all();
+
         if (Auth::user()->role != "admin") {
-            $data['customers'] = Customer::mine()->get();
-        } else {
-            $data['customers'] = Customer::all();
+            $data['customers'] = Customer::where("user_id", Auth::id())->get();
         }
 
         return view('customer.index', $data);
@@ -52,21 +52,19 @@ class CustomerController extends Controller
 
         $validate = Validator::make($input, [
             'project_owner' => 'required',
-            'no_ktp' => 'unique:customers',
-            'phone' => 'required',
-            'address' => 'required',
+            'no_ktp' => 'required|unique:customers',
             'email' => 'required',
-        ], [
-            'required' => 'The :attribute field is required.',
+            'address' => 'required',
+            'phone' => 'required',
         ]);
 
-        if ($validate->fails()) {
+        if ($validate->fails()) { // if validation fails
             return redirect('customers')->with('error', 'Your data is not complete.')->withErrors($validate->errors())->withInput($input);
         } else {
             $input['user_id'] = Auth::id();
-            $customer = Customer::create($input);
+            Customer::create($input);
 
-            return redirect('customers')->with('info', 'Create customer ' . $customer->project_owner . ' success!');
+            return redirect('customers')->with('info', 'Create customer success!');
         }
     }
 

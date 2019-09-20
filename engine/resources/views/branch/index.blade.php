@@ -71,7 +71,6 @@
                             <th width="20">No</th>
                             <th>Nama Cabang</th>
                             <th>Gudang</th>
-                            <th>Catatan</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -91,9 +90,6 @@
                                 <a href="{{ url("warehouse/$branch->id/create") }}" class="btn btn-sm btn-success">
                                     <i class="fa fa-plus"></i> Tambah Gudang
                                 </a>
-                            </td>
-                            <td>
-                                <p>{{ $branch->notes }}</p>
                             </td>
                             <td>
                                 <a href="#modalForm" data-toggle="modal"

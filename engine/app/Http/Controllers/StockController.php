@@ -22,9 +22,10 @@ class StockController extends Controller
     {
         $d['brands'] = Brand::all();
         $d['branches'] = Branch::all();
-        $d['stocks'] = Stock::with(['item.category.brand'])->get();
-        $d['filtered'] = FALSE;
 
+        $d['stocks'] = Stock::with(['item.category.brand'])->get();
+
+        $d['filtered'] = FALSE;
         if (!empty($request->all())) {
             $brands = $request->get('brands');
             $branches = $request->get('branches');
@@ -43,7 +44,9 @@ class StockController extends Controller
             }
 
             $d['stocks'] = $query->get();
+
             $d['filtered'] = TRUE;
+            //            dd($d['stocks']);
         }
 
         return view('stock.index', $d);
@@ -82,18 +85,8 @@ class StockController extends Controller
         if ($validate->fails()) {
             return redirect('stocks')->withErrors($validate)->withInput($input);
         } else {
-            $stockAlreadyExists = Stock::where([
-                ['item_id', '=', $input['item_id']],
-                ['branch_id', '=', $input['branch_id']]
-            ])->first();
-
-            if (!$stockAlreadyExists) {
-                $stock = Stock::create($input);
-                return redirect('stocks')->with('info', $stock->item->name . ' berhasil ditambahkan!');
-            }
-
-            return redirect('stocks')
-                ->with('error', 'Stock ' . $stockAlreadyExists->item->name . ' with branch ' . $stockAlreadyExists->branch->name . ' already exists!');
+            $stock = Stock::create($input);
+            return redirect('stocks')->with('info', $stock->name . ' berhasil ditambahkan!');
         }
     }
 
@@ -106,7 +99,6 @@ class StockController extends Controller
     public function show($id)
     {
         $d['stock'] = Stock::find($id);
-
         return view('stock.show', $d);
     }
 
@@ -122,7 +114,6 @@ class StockController extends Controller
         $d['branches'] = Branch::all();
         $d['stock'] = Stock::find($id);
         $d['isEdit'] = TRUE;
-
         return view('stock.form', $d);
     }
 
@@ -143,6 +134,12 @@ class StockController extends Controller
             'branch_id' => 'required|numeric',
             'quantity' => 'required|numeric',
             'price_branch' => 'required|numeric',
+            //            'weight' => 'required|numeric',
+            //            'area' => 'required|numeric',
+            //            'width' => 'required|numeric',
+            //            'height' => 'required|numeric',
+            //            'length' => 'required|numeric',
+            //            'price' => 'required|numeric',
         ]);
 
         if ($validate->fails()) {
@@ -167,8 +164,7 @@ class StockController extends Controller
     public function destroy($id)
     {
         Stock::destroy($id);
-
-        return redirect('/stocks')->with('info', 'Stok produk berhasil dihapus!');
+        return redirect('/stocks')->with('info', 'Produk berhasil dihapus!');
     }
 
     public function getTable(Request $request)
@@ -195,7 +191,6 @@ class StockController extends Controller
             ->leftjoin('branches', 'branches.id', 'stocks.branch_id')
             ->where("stocks.id", $id)
             ->first();
-
         return view('stock.restock', $d);
     }
 
@@ -205,9 +200,10 @@ class StockController extends Controller
         unset($input['_token']);
 
         $stock = Stock::find($id);
-        $stock->quantity = $stock->quantity + $input['add'];
-        $stock->save();
 
+        $stock->quantity = $stock->quantity + $input['add'];
+
+        $stock->save();
         return redirect('/stocks')->with('info', 'Stok ' . $stock->name . ' berhasil ditambahkan ' . $input['add'] . ' pcs menjadi ' . $stock->stock . 'pcs per batang');
     }
 
@@ -217,7 +213,6 @@ class StockController extends Controller
             ->leftjoin("items", "items.id", "stocks.item_id")
             ->leftjoin("categories", "categories.id", "items.category_id")
             ->where("category_id", $id)->get();
-
         return response($data, 200);
     }
 }

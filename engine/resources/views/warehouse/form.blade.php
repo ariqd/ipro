@@ -95,7 +95,6 @@
                                         class="form-control{{ $errors->has('notes') ? ' is-invalid' : '' }}"
                                         name="notes" value="{{ @$edit ? @$warehouse->notes : old('notes') }}" required
                                         placeholder="Catatan">
-                                    <small class="text-secondary">Boleh dikosongkan</small>
 
                                     @if ($errors->has('notes'))
                                     <span class="invalid-feedback" role="alert">

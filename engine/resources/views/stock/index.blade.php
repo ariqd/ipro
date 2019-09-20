@@ -270,8 +270,7 @@
                         <th class="holds">Stok (Hold per Batang)</th>
                         <th class="berat">Berat (kg)</th>
                         <th class="harga">Harga Pricelist</th>
-                        <th>Cabang</th>
-                        <th class="harga_cabang">Harga Cabang</th>
+                        <th class="harga_cabang">Harga Cabang {{ ucfirst(Auth::user()->branch->name) }}</th>
                         <th></th>
                         <th class="d-none"></th>
                         <th class="d-none"></th>
@@ -301,7 +300,6 @@
                         <td class="harga">
                             Rp {{ number_format($stock->item->purchase_price, 0, ',', '.') }}
                         </td>
-                        <td>{{ $stock->branch->name }}</td>
                         <td class="harga_cabang">
                             Rp {{ number_format($stock->price_branch, 0, ',', '.') }}
                         </td>
@@ -367,7 +365,6 @@
                         <td class="border-right harga">
                             Rp <span class="total_price"></span>
                         </td>
-                        <td></td>
                         <td class="border-right harga_cabang">
                             Rp <span class="total_price_branch"></span>
                         </td>

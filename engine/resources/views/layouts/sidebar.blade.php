@@ -94,6 +94,12 @@
 
             @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
             <li class="nav-item">
+                <a href="{{ url('sales-orders') }}"
+                    class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
+                    <i class="fa fa-arrow-down"></i> Sales Order
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ url('finances') }}" class="nav-link {{ (request()->is('finances*')) ? 'active' : '' }}">
                     <i class="fa fa-line-chart"></i> Finance
                 </a>
@@ -101,6 +107,49 @@
             <li class="nav-item d-none">
                 <a href="{{ url('deposits') }}" class="nav-link {{ (request()->is('deposits*')) ? 'active' : '' }}">
                     <i class="fa fa-credit-card"></i> Deposits
+                </a>
+            </li>
+            @endif
+
+            @if(Gate::allows('isGudang'))
+            <li class="nav-item nav-dropdown">
+                <a href="#" class="nav-link nav-dropdown-toggle">
+                    <i class="fa fa-asterisk"></i> Master Data <i class="fa fa-caret-left"></i>
+                </a>
+                <ul class="nav-dropdown-items">
+                    <li class="nav-item">
+                        <a href="{{ url('brands') }}" class="nav-link {{ (request()->is('brands*')) ? 'active' : '' }}">
+                            <i class="fa fa-list"></i> Merek
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('categories') }}"
+                            class="nav-link {{ (request()->is('categories*')) ? 'active' : '' }}">
+                            <i class="fa fa-list"></i> Kategori
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('items') }}" class="nav-link {{ (request()->is('items*')) ? 'active' : '' }}">
+                            <i class="fa fa-list"></i> Produk
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('stocks') }}" class="nav-link {{ (request()->is('stocks*')) ? 'active' : '' }}">
+                            <i class="fa fa-list"></i> Stok
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('goods-receive') }}"
+                    class="nav-link {{ (request()->is('goods-receive*')) ? 'active' : '' }}">
+                    <i class="fa fa-truck"></i> Goods Receive
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('sales-orders') }}"
+                    class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
+                    <i class="fa fa-arrow-down"></i> Sales Order
                 </a>
             </li>
             @endif

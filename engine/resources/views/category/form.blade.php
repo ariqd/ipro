@@ -102,15 +102,15 @@
             <input id="name" class="form-control" name="name" type="text" value="{{ @$edit ? $category->name : '' }}"
                 required placeholder="Nama kategori">
         </div>
-        <div class="form-group">
-            <label for="lainlain" class="form-control-label">Lain Lain</label>
-            <br>
-            <label class="switch">
-                <input @if(@$category->lainlain==0) @else checked=""
-                @endif type="checkbox" name="lainlain">
-                <span class="slider"></span>
-            </label>
-        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <label for="lainlain" class="form-control-label">Lain Lain</label>
+                <label class="switch">
+                    <input @if(@$isEdit && $category->lainlain==0) @else checked=""
+                    @endif type="checkbox" name="lainlain">
+                    <span class="slider"></span>
+                </label>
+            </div>
         <div class="form-group">
             <label for="notes" class="form-control-label">Catatan</label>
             <input required id="notes" class="form-control" name="notes" type="text"

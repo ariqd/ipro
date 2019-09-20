@@ -30,7 +30,6 @@ class BranchController extends Controller
     {
         $d['branch'] = Branch::find($id);
         $d['isEdit'] = TRUE;
-        
         return view('branch.form', $d);
     }
 

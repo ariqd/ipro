@@ -99,14 +99,15 @@ Purchase Order
         @endphp
         @foreach($line as $key)
         @php
-        $total += $key->qty_get*$key->item->weight;
+        $total += $key->qty*$key->item->weight;
         @endphp
+        {{dd($key)}}
         <tr>
             <td>{{ $loop->iteration }}</td>
-            <td>{{ $key->item->category->name }}</td>
-            <td>{{ $key->qty_get }}</td>
+            <td>{{ $key->item->name }}</td>
+            <td>{{ $key->qty }}</td>
             <td>{{ $key->item->weight }}</td>
-            <td>{{ $key->qty_get*$key->item->weight }}</td>
+            <td>{{ $key->qty*$key->item->weight }}</td>
             <td>{{ $key->purchase_details->sales->no_so ?? "-" }}</td>
         </tr>
         @endforeach
