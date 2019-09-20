@@ -80,6 +80,7 @@
     .slider.round:before {
         border-radius: 50%;
     }
+
 </style>
 @endpush
 
@@ -174,16 +175,16 @@
                     </div>
                 </div>
 
-                {{--                <div class="row mt-3">--}}
-                {{--                    <div class="col-4">--}}
-                {{--                        <b>--}}
-                {{--                            Email--}}
-                {{--                        </b>--}}
-                {{--                    </div>--}}
-                {{--                    <div class="col-8">--}}
-                {{--                        {{ $sale->customer->email }}--}}
-                {{--                    </div>--}}
-                {{--                </div>--}}
+                {{-- <div class="row mt-3">--}}
+                {{-- <div class="col-4">--}}
+                {{-- <b>--}}
+                {{-- Email--}}
+                {{-- </b>--}}
+                {{-- </div>--}}
+                {{-- <div class="col-8">--}}
+                {{-- {{ $sale->customer->email }}--}}
+                {{-- </div>--}}
+                {{-- </div>--}}
 
             </div>
         </div>
@@ -274,24 +275,28 @@
     </div>
 </div>
 <form method="post" action="{{ url("sales-orders/$sale->id/delivery-orders") }}">
-<div class="row">
+    <div class="row">
         <div class="col-md-6">
-            <label>
-                Dikirim dengan Mobil
-            </label>
-            <input class="form-control" name="mobil" required placeholder="Contoh: Tata">
+            <div class="form-group">
+                <label>
+                    Dikirim dengan Mobil
+                </label>
+                <input class="form-control" name="mobil" required placeholder="Contoh: Tata">
+            </div>
         </div>
         <div class="col-md-6">
-            <label>
-                Dikirim dengan Plat
-            </label>
-            <input class="form-control" name="plat" required placeholder="Contoh: D 8078 F">
+            <div class="form-group">
+                <label>
+                    Dikirim dengan Plat
+                </label>
+                <input class="form-control" name="plat" required placeholder="Contoh: D 8078 F">
+            </div>
         </div>
         <div class="col-12">
             <h4>Detail Barang</h4>
             <div class="card">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -314,13 +319,19 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td>
+                                    <p class="text-muted mb-0">
+                                        <small>
+                                            {{ $details->stock->item->category->brand->name }} -
+                                            {{ $details->stock->item->category->name }}
+                                        </small>
+                                    </p>
                                     {{ $details->stock->item->name }}
                                 </td>
                                 <td>
                                     {{ $details->qty }}
                                 </td>
                                 <td @if($details->qty_kirim != $details->qty) style="color: red" @endif>
-                                    {{  $details->qty_kirim }}
+                                    {{ $details->qty_kirim }}
                                 </td>
                                 <td>
                                     Rp{{number_format($details->price) }},00
@@ -334,18 +345,15 @@
                                 <td>
                                     @if($details->qty_kirim < $details->qty)
                                         <input autocomplete="off" type="number" min="0"
-                                            max="{{ $details->qty - $details->qty_kirim }}" name="qty_kirim[]"
-                                            value="0">
+                                            max="{{ $details->qty - $details->qty_kirim }}" name="qty_kirim[]" value="0"
+                                            class="form-control">
                                         <input type="hidden" name="do[]" value="{{$details->id}}">
                                         @elseif($details->qty_kirim == $details->qty)
                                         Pengiriman Selesai
                                         @else
                                         Pengiriman Berlebih
                                         @endif
-
-
                                 </td>
-
                             </tr>
                             @endforeach
                         </tbody>
@@ -353,20 +361,20 @@
                 </div>
             </div>
         </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-6">
-
     </div>
-    <div class="col-lg-6">
-        <input type="hidden" name="count" value="{{ count($sale->details) }}">
-        @if($flag != count($sale->details))
-        <input type="submit" class="form-control btn btn-success" value="Create Delivery Order">
-        @endif
-        @csrf
-        </form>
+
+    <div class="row">
+        <div class="col-lg-6">
+
+        </div>
+        <div class="col-lg-6">
+            <input type="hidden" name="count" value="{{ count($sale->details) }}">
+            @if($flag != count($sale->details))
+            <input type="submit" class="form-control btn btn-success" value="Create Delivery Order">
+            @endif
+            @csrf
+        </div>
     </div>
-</div>
+</form>
 
 @endsection

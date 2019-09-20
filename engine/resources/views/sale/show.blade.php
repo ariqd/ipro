@@ -245,7 +245,7 @@
                         </b>
                     </div>
                     <div class="col-8">
-                        {{ $sale->note }}
+                        {{ $sale->note ?? '-' }}
                     </div>
                 </div>
 
@@ -286,7 +286,7 @@
                             </div>
                         </td>
                         <td>
-                            {{ $details->qty }}
+                            {{ $details->qty }} pcs
                         </td>
                         <td>
                             <div class="float-right">
@@ -305,6 +305,18 @@
                     @endforeach
                 </tbody>
                 <tfoot>
+                    <tr>
+                        <th colspan="5">
+                            <div class="float-right">
+                                Jumlah Barang:
+                            </div>
+                        </th>
+                        <th>
+                            <div class="float-right">
+                                {{ $sale->details()->sum('qty') }} pcs
+                            </div>
+                        </th>
+                    </tr>
                     <tr>
                         <th colspan="5">
                             <div class="float-right">

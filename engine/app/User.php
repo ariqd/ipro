@@ -43,6 +43,11 @@ class User extends Authenticatable
         return $query->where('role', 'sales');
     }
 
+    // public function scopeExceptMe($query)
+    // {
+    //     return $query->except(auth()->id());
+    // }
+
     public function checkIfAdmin()
     {
         if ($this->role == 'admin')

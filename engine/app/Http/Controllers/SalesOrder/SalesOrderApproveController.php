@@ -134,9 +134,9 @@ class SalesOrderApproveController extends Controller
                 } else {
                     //Solo
                     if ($value->stock->item->category->lainlain == 1) {
-                        $value['komisi_achieve'] = $value->total *0.005;
+                        $value['komisi_achieve'] = $value->total * 0.005;
                     } else {
-                        $value['komisi_achieve'] = $value->total *0.02;
+                        $value['komisi_achieve'] = $value->total * 0.02;
                     }
                     $totalachieve += $value->total;
                 }
@@ -158,6 +158,9 @@ class SalesOrderApproveController extends Controller
 
         //save komisi untuk sales utama
         $commission = Commission::where('user_id', $sale->user->id)->first();
+        if (!$commission) {
+            return redirect()->back()->with('error', 'Komisi sales ' . $sale->user->name . ' belum disetting untuk periode ini!');
+        }
         $commission->total_commission += $totalkomisiachieve;
         $commission->total_commission_not_achieve += $totalkomisinotachieve;
         $commission->achieved += $totalachieve;

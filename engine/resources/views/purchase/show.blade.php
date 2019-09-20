@@ -79,6 +79,7 @@
     .slider.round:before {
         border-radius: 50%;
     }
+
 </style>
 @endpush
 
@@ -104,7 +105,8 @@
                     </h2>
                 </div>
                 <div>
-                    <a href="{{ url('purchase-orders') }}" class="btn btn-light"><i class="fa fa-arrow-left"></i> Purchase Orders</a>
+                    <a href="{{ url('purchase-orders') }}" class="btn btn-light"><i class="fa fa-arrow-left"></i>
+                        Purchase Orders</a>
                 </div>
             </div>
         </div>
@@ -160,13 +162,17 @@
                                 </td>
                                 <td>{{ $key->item->weight }} Kg</td>
                                 <td>{{ $key->qty }} pcs</td>
-                                @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
-                                @if($key->approval_finance > 1)
-                                <td><input type="number" min="1" max="{{ $key->qty }}" value="{{ $key->qty }}"
-                                        name="{{ "qty-".$key->id }}" class="form-control"></td>
-                                @else
-                                <td>{{ $key->qty_approval ?? 0 }} pcs</td>
-                                @endif
+                                <td>
+                                    <div class="input-group">
+                                        <input type="number" min="1" max="{{ $key->qty }}"
+                                            value="{{ $key->approval_finance >= 1 ? $key->qty_approval : $key->qty }}"
+                                            name="{{ "qty-".$key->id }}" class="form-control"
+                                            {{ Gate::allows('isFinance') || Gate::allows('isAdmin') ? '' : 'disabled' }}>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">pcs</span>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td class="text-right">Rp{{ number_format($key->total_price, 0, ',', '.') }}</td>
                                 @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                                 <td>
@@ -183,7 +189,11 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <td colspan="2"></td>
+                                <td colspan="2">
+                                    <div class="float-right">
+                                        <b>Total</b>
+                                    </div>
+                                </td>
                                 <td>
                                     {{ $total_weight }} Kg
                                 </td>
@@ -210,7 +220,10 @@
             <div class="col-lg-6">
                 @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
                 @if($header->approval_status == 0)
-                <input type="submit" class="form-control btn btn-success" value="Create Purchase Order">
+                <input type="submit" class="form-control btn btn-success" value="Approve & Create Purchase Order"
+                    name="button">
+                @else
+                <input type="submit" class="form-control btn btn-warning" value="Update Approve" name="button">
                 @endif
                 @endif
             </div>

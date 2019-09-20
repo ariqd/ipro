@@ -7,15 +7,18 @@
 <div class="modal-body">
     <div class="row">
         <div class="col-8">
-            <p class="text-muted mb-0">{{ $category->brand->name }}</p>
+            <p class="text-muted mb-0">{{ $category->brand->name }} {{ $category->lainlain ? '- Lain-lain' : '' }}</p>
             <h3>{{ $category->name }}</h3>
         </div>
     </div>
-    {{-- <div class="row">
+    <div class="row">
         <div class="col-12">
-            <hr>
+            <p class="text-muted mb-0">Catatan</p>
+            <p>
+                {{ $category->notes ?? '-' }}
+            </p>
         </div>
-    </div> --}}
+    </div>
     <div class="row">
         <div class="col-12">
             <table class="table table-bordered">
