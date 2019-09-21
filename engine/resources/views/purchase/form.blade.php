@@ -102,10 +102,10 @@
                     var cell3 = row.insertCell(3);
                     var cell4 = row.insertCell(4);
                     var cell5 = row.insertCell(5);
-                    // var cell6 = row.insertCell(6);
                     var cell6 = row.insertCell(6);
                     var cell7 = row.insertCell(7);
                     var cell8 = row.insertCell(8);
+                    var cell9 = row.insertCell(9);
                     cell0.setAttribute('class', "form_id");
                     cell6.setAttribute('class', "subtotal");
 
@@ -114,10 +114,11 @@
                     cell3.innerHTML = value.item.name;
                     cell4.innerHTML = value.item.weight + " Kg";
                     cell5.innerHTML = value.qty + ' pcs';
-                    // cell6.innerHTML = "Rp" + value.item.purchase_price;
                     cell6.innerHTML = "Rp" + number_format(value.total, 0, ',', '.');
                     cell7.innerHTML = response.header.no_so;
-                    cell8.innerHTML = '<a style="cursor:pointer" onclick=voidItem("item-' +
+                    cell8.innerHTML =
+                        '<input type="number" class="form-control" name="modal[]" required/>';
+                    cell9.innerHTML = '<a style="cursor:pointer" onclick=voidItem("item-' +
                         count + '") class=""> <i class="fa fa-trash"></i> </a>';
 
                     var container = document.getElementById("input-body");
@@ -182,6 +183,7 @@
                         var cell6 = row.insertCell(6);
                         var cell7 = row.insertCell(7);
                         var cell8 = row.insertCell(8);
+                        var cell9 = row.insertCell(9);
                         cell0.setAttribute('class', "form_id");
                         cell7.setAttribute('class', "subtotal");
 
@@ -194,7 +196,8 @@
                         cell6.innerHTML = "Rp " + number_format($("#qty").val() * $("#modal").val(),
                             0, ',', '.');
                         cell7.innerHTML = "";
-                        cell8.innerHTML = '<a style="cursor:pointer" onclick=voidItem("item-' +
+                        cell8.innerHTML = "";
+                        cell9.innerHTML = '<a style="cursor:pointer" onclick=voidItem("item-' +
                             count + '") class=""> <i class="fa fa-trash"></i> </a>';
 
                         var container = document.getElementById("input-body");
@@ -357,32 +360,39 @@
             </div>
         </div>
         <div class="col-lg-12">
-            <h4><b># Cart</b></h4>
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table table-hover table-light m-0">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Kategori</th>
-                                <th>Kode Barang</th>
-                                <th>Item</th>
-                                <th>Berat/pcs</th>
-                                <th>Order Qty/pcs</th>
-                                {{-- <th>Price/pcs</th> --}}
-                                <th>Total Amount (IDR)</th>
-                                <th>No. Sales</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="purchase-body">
-                            <tr>
+            <form action="{{url("/purchase-orders")}}" method="POST">
+                @csrf
+                <h4><b># Cart</b></h4>
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-light m-0">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Kategori</th>
+                                    <th>Kode Barang</th>
+                                    <th>Item</th>
+                                    <th>Berat/pcs</th>
+                                    <th>Order Qty/pcs</th>
+                                    {{-- <th>Price/pcs</th> --}}
+                                    <th>Total Amount (IDR)</th>
+                                    <th>No. Sales</th>
+                                    <th>Harga PO</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="purchase-body">
+                                <tr>
 
-                            </tr>
-                        </tbody>
-                    </table>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+                <div id="input-body">
+                </div>
+                <input type="submit" class="btn btn-success float-right" value="Buat Purchase Order">
+            </form>
         </div>
     </div>
     <div class="row">
@@ -390,12 +400,6 @@
 
         </div>
         <div class="col-lg-6">
-            <form action="{{url("/purchase-orders")}}" method="POST">
-                @csrf
-                <div id="input-body">
-                </div>
-                <input type="submit" class="form-control btn btn-success" value="Buat Purchase Order">
-            </form>
         </div>
     </div>
 </div>

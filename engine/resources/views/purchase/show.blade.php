@@ -165,7 +165,7 @@
                                 <td>
                                     <div class="input-group">
                                         <input type="number" min="1" max="{{ $key->qty }}"
-                                            value="{{ $key->approval_finance >= 1 ? $key->qty_approval : $key->qty }}"
+                                            value="{{ $key->approval_finance >= 1 ? $key->qty_approval : 1 }}"
                                             name="{{ "qty-".$key->id }}" class="form-control"
                                             {{ Gate::allows('isFinance') || Gate::allows('isAdmin') ? '' : 'disabled' }}>
                                         <div class="input-group-append">

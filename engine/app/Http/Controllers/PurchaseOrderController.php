@@ -60,7 +60,6 @@ class PurchaseOrderController extends Controller
     {
         $counter = Counter::where("name", "=", "PO")->first();
         $branch_id = Auth::user()->branch_id;
-        $branch = Branch::find($branch_id);
         $nopo = "PO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
         $item = "item-id";
         $count = count($request->$item);
@@ -69,7 +68,6 @@ class PurchaseOrderController extends Controller
         ];
         $purchase = Purchase::create($purchase);
         for ($i = 0; $i < $count; $i++) {
-            $itemdetail = Item::find($request->$item[$i]);
             if (!empty($request->sales[$i])) {
                 $purchase_detail = [
                     "item_id" => $request->$item[$i],
