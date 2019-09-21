@@ -18,7 +18,7 @@ class SalesOrderApproveController extends Controller
 {
     public function index()
     {
-        $d['sales'] = Sale::orderBy('created_at', 'desc')->get();
+        $d['sales'] = Sale::latest()->with(['customer', 'user.branch'])->get();
 
         return view('sale.index', $d);
     }
@@ -37,12 +37,13 @@ class SalesOrderApproveController extends Controller
 
         $counter = Counter::where("name", "=", "SO")->first();
         $branch_id = Auth::user()->branch_id;
-        $branch = Branch::find($branch_id);
-        $nopo = "SO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
+        $noso = "SO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
 
-        $sale->no_so = $nopo;
+        $sale->no_so = $noso;
         $sale->notes = $request->notes;
         $sale->tgl_pembayaran = $request->tgl_pembayaran;
+        $sale->atas_nama = $request->atas_nama;
+        $sale->perihal = $request->perihal;
         $sale->save();
 
         $counter->counter += 1;
@@ -154,9 +155,9 @@ class SalesOrderApproveController extends Controller
             $totalSO += $value->total;
         }
 
-        //endcalulatecommission
+        // end calulate commission
 
-        //save komisi untuk sales utama
+        // save komisi untuk sales utama
         $commission = Commission::where('user_id', $sale->user->id)->first();
         if (!$commission) {
             return redirect()->back()->with('error', 'Komisi sales ' . $sale->user->name . ' belum disetting untuk periode ini!');
@@ -174,7 +175,7 @@ class SalesOrderApproveController extends Controller
             "role" => $role,
         ]);
 
-        //save komisi jika bahu membahu
+        // save komisi jika bahu membahu
         if ($sale->sales_id != null) {
             $commission = Commission::where('user_id', $sale->sales_id)->first();
             $commission->total_commission += $totalkomisiachievesales;
@@ -191,7 +192,7 @@ class SalesOrderApproveController extends Controller
             ]);
         }
 
-        //save komisi jika ada admin
+        // save komisi jika ada admin
         if ($sale->admin_id != null) {
             $commission = Commission::where('user_id', $sale->admin_id)->first();
             $commission->total_commission += $totalkomisiachieveadmin;

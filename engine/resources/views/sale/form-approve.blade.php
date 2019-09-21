@@ -37,7 +37,16 @@
                     @csrf
                     <div class="form-group">
                         <label for="note">Tanggal Bayar</label>
-                        <input type="date" name="tgl_pembayaran" class="form-control" required>
+                        <input type="date" name="tgl_pembayaran" class="form-control" required
+                            value="{{ date('Y-m-d') }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="atas_nama">Pembayaran Atas Nama</label>
+                        <input type="text" name="atas_nama" id="atas_nama" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="perihal">Untuk Perihal</label>
+                        <input type="text" name="perihal" id="perihal" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="note">Notes Payment</label>

@@ -56,7 +56,7 @@
                         <p class="mb-0"><b>{{ $date }}</b></p>
                         <ul class="list-unstyled">
                             @forelse ($sales as $sale)
-                            <li><a href="{{ url('sales-orders/'.$sale->id) }}">{{ $sale->no_so }} ({{ $sale->delivery ? 'Terkirim' : 'Belum Dikirim' }})</a></li>
+                            <li><a href="{{ url('sales-orders/'.$sale->id) }}">{{ $sale->no_so ?? $sale->quotation_id }} ({{ $sale->delivery ? 'Terkirim' : 'Belum Dikirim' }})</a></li>
                             @empty
                             <li class="text-muted">Tidak ada pengiriman</li>
                             @endforelse
