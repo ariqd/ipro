@@ -108,10 +108,9 @@ class PurchaseOrderController extends Controller
 
     public function approve(Request $request, $id)
     {
-        $query = Purchase::find($id);
-        $detail = $query->details;
+        $purchase_order = Purchase::find($id);
 
-        foreach ($detail as $value) {
+        foreach ($purchase_order->details as $value) {
             $i = $value->id;
             $stringqty = "qty-$i";
             if ($request->has("approve-$i")) {
@@ -128,18 +127,11 @@ class PurchaseOrderController extends Controller
             $value->save();
         }
 
-        $allItems = $query->details()->count();
-        $approvedItems = $query->details()->approved()->count();
+        $approvedItems = $purchase_order->details()->approved()->count();
+        $purchase_order->approval_status = $approvedItems <= 0 ? false : true;
+        $purchase_order->save();
 
-        if (($approvedItems < $allItems) && $approvedItems == 0) {
-            $query->approval_status = 0;
-        } else {
-            $query->approval_status = 1;
-        }
-
-        $query->save();
-
-        return redirect("purchase-orders")->with("info", "PO dengan nomor $query->purchase_number disetujui");
+        return redirect("purchase-orders")->with("info", "PO dengan nomor $purchase_order->purchase_number disetujui");
     }
 
 

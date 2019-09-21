@@ -91,11 +91,11 @@
                                 Request
                             </a>
                             @else
-                            <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm" my-1>
+                            <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm my-1" my-1>
                                 Show </a>
                             @endif
                             @elseif(Gate::allows("isSales"))
-                            <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm" my-1>
+                            <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm my-1" my-1>
                                 Show </a>
                             @endif
                         </td>

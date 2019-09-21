@@ -34,10 +34,10 @@ class SalesOrderController extends Controller
         $counter = Counter::where("name", "=", "QO")->first();
         $branch_id = Auth::user()->branch_id;
         $d['no_qo'] = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
-        $d['customers'] = Customer::orderBy('created_at', 'desc')->get();
+        $d['customers'] = Customer::latest()->get();
         $d['brands'] = Brand::all();
         $d['branches'] = Branch::all();
-        $d['sales'] = User::sales()->get()->except(auth()->id());
+        $d['sales'] = User::sales()->with(['details'])->get()->except(auth()->id());
 
         return view('sale.form', $d);
     }
@@ -147,5 +147,13 @@ class SalesOrderController extends Controller
         }
 
         return redirect('sales-orders')->with('info', 'Sales Order Created');
+    }
+
+    public function deleteDetail($sales_id, $details_id)
+    {
+        $detail = Sale_Detail::find($details_id);
+        $detail->delete();
+
+        return redirect('sales-orders/' . $sales_id . '/edit')->with('info', "Produk #$detail->id berhasil dihapus dari Sales Order");
     }
 }

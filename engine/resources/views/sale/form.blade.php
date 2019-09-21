@@ -396,16 +396,17 @@
                         <div class="col-12">
                             <h5><b>Barang Saat Ini</b></h5>
                             <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Qty</th>
-                                            <th>Harga Beli</th>
+                                            <th>Harga Pricelist</th>
                                             <th>Harga Jual</th>
                                             <th>Diskon</th>
                                             <th>Total</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -415,10 +416,18 @@
                                                 {{ $details->id }}
                                             </td>
                                             <td>
+                                                <small class="text-muted">
+                                                    {{ $details->stock->item->category->brand->name }} -
+                                                    {{ $details->stock->item->category->name }}
+                                                </small><br>
+                                                {{ $details->stock->item->code }} -
                                                 {{ $details->stock->item->name }}
                                             </td>
                                             <td>
                                                 {{ $details->qty }}
+                                            </td>
+                                            <td>
+                                                Rp{{ number_format($details->stock->item->purchase_price) }}
                                             </td>
                                             <td>
                                                 Rp{{number_format($details->price) }}
@@ -428,6 +437,10 @@
                                             </td>
                                             <td>
                                                 Rp{{number_format($details->total)}}
+                                            </td>
+                                            <td>
+                                                <a href="{{ url('sales-orders/'.$sale->id.'/edit/'.$details->id.'/delete') }}"
+                                                    class="btn btn-link text-danger"><i class="fa fa-trash"></i></a>
                                             </td>
                                         </tr>
                                         @empty
