@@ -11,6 +11,6 @@ class Delivery_Order extends Model
 
     public function sales()
     {
-        return $this->belongsTo('App\Sale_Detail', 'sales_order_id', 'id');
+        return $this->belongsTo('App\Sale', 'sales_order_id', 'id');
     }
 }

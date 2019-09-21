@@ -49,4 +49,9 @@ class Sale extends Model
     {
         return $query->where('user_id', Auth::id());
     }
+
+    public function delivery() 
+    {
+        return $this->hasOne('App\Delivery_Order', 'sales_order_id');
+    }
 }

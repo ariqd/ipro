@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Sale;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -19,12 +20,11 @@ class DashboardController extends Controller
         $ton = 0;
         $salefinish = 0;
         $saleunfinish = 0;
-        $totalsale = 0;
         $sale = Sale::all();
-        $salebydayf = array();
-        $salebydayu = array();
-        $countday = array();
-        //init
+        $salebydayf = [];
+        $salebydayu = [];
+        $countday = [];
+
         for ($i = 1; $i <= date("t"); $i++) {
             $countday[$i] = $i;
             $salebydayf[$i] = 0;
@@ -52,20 +52,26 @@ class DashboardController extends Controller
                 if ($flag == 1) {
                     $ton += $value["stock"]["item"]->weight;
                 }
-
             }
         }
 
-        $totalsale = count($sale);
-        // dd($d);
         $graph["revenue"] = $revenue;
         $graph["ton"] = $ton / 1000;
         $graph["salefinish"] = $salefinish;
         $graph["saleunfinish"] = $saleunfinish;
-        $graph["totalsale"] = $totalsale;
+        $graph["totalsale"] = $sale->count();
         $graph["countday"] = $countday;
         $graph["salebydayf"] = $salebydayf;
         $graph["salebydayu"] = $salebydayu;
+
+        $graph['salesByDate'] = [];
+        $today = Carbon::today();
+
+        for ($i = 0; $i < 5; $i++) {
+            $graph['salesByDate'][$today->toDateString()] = Sale::whereDate('created_at', $today)->latest()->get();
+            $today->subDay();
+        }
+        
         return view('dashboard.index', $graph);
     }
 

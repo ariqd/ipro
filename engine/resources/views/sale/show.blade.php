@@ -1,4 +1,5 @@
 @extends('layouts.carbon')
+
 @if($sale->no_so == null || isset($sale->no_so))
 @section('title', 'Quotation Order #' . $sale->quotation_id .' - '. $sale->created_at)
 @else
@@ -67,12 +68,12 @@
         <div class="card">
             <div class="card-body pb-0">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12 col-lg-6">
                         <h4>
                             Nomor Sales Order:
                         </h4>
                     </div>
-                    <div class="col-6 ">
+                    <div class="col-12 col-lg-6">
                         <div class="float-right">
                             @if($sale->no_so != null)
                             <h4 class="font-weight-bold">
@@ -91,14 +92,52 @@
                         </div>
                     </div>
                 </div>
-                @if($sale->no_so != null)
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12 col-lg-6">
                         <h5>Nomor Quotation:</h5>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12 col-lg-6">
                         <div class="float-right">
                             <h5 class="font-weight-bold">#{{ $sale->quotation_id }}</h5>
+                        </div>
+                    </div>
+                </div>
+                @if($sale->no_so != null)
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <h5>Status Pengiriman:</h5>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="float-right">
+                            <div class="d-flex align-items-center">
+
+                                @if($sale->delivery)
+                                <h5 class="font-weight-bold text-success">Terkirim</h5>
+                                <a href="{{ url('sales-orders/'.$sale->id.'/delivery-orders') }}"
+                                    class="btn btn-success btn-sm mb-3 ml-3">Cek Detail Pengiriman</a>
+                                @else
+                                <h5 class="font-weight-bold text-danger">Belum Dikirim</h5>
+                                <a href="{{ url('sales-orders/'.$sale->id.'/delivery-orders') }}"
+                                    class="btn btn-dark btn-sm mb-3 ml-3">Buat Delivery Order</a>
+                                {{-- <form action="{{ url('sales-orders/'.$sale->id.'/delivery-status/change') }}"
+                                method="POST"
+                                class="mt-4">
+                                @csrf
+                                <div class="d-flex align-items-center pt-1">
+                                    <div class="custom-control custom-checkbox mb-3 float-right">
+                                        <input type="checkbox" name="delivery_status" class="custom-control-input"
+                                            id="deliveryCheck">
+                                        <label class="custom-control-label" for="deliveryCheck">
+                                            Terkirim
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-success btn-sm ml-3 mb-3" id="deliveryBtn"
+                                        disabled>Ubah Status
+                                        Pengiriman</button>
+                                </div>
+                                </form> --}}
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,6 @@
 @extends('layouts.carbon')
 
-@section('title', 'Surat Jalan' . $sale->quotation_id .' - '. $sale->created_at)
-
+@section('title', 'Surat Jalan' . $sale->no_so .' - '. $sale->created_at)
 
 @push("css")
 <style>
@@ -89,7 +88,7 @@
     <div class="col-lg-12">
         <div class="d-flex justify-content-between">
             <div>
-                <h2><b>Quotation Order #{{ $sale->quotation_id }}</b></h2>
+                <h2><b>Delivery Order untuk SO #{{ $sale->no_so }}</b></h2>
             </div>
             <div>
                 <a href="{{ url('sales-orders/'.$sale->id.'/edit') }}" class="btn btn-secondary mr-3">
@@ -281,7 +280,8 @@
                 <label>
                     Dikirim dengan Mobil
                 </label>
-                <input class="form-control" name="mobil" required placeholder="Contoh: Tata">
+                <input class="form-control" name="mobil" required placeholder="Contoh: Tata"
+                    {{ $sale->delivery ? 'disabled' : '' }} value="{{ $sale->delivery ? $sale->delivery->mobil : '' }}">
             </div>
         </div>
         <div class="col-md-6">
@@ -289,7 +289,8 @@
                 <label>
                     Dikirim dengan Plat
                 </label>
-                <input class="form-control" name="plat" required placeholder="Contoh: D 8078 F">
+                <input class="form-control" name="plat" required placeholder="Contoh: D 8078 F"
+                    {{ $sale->delivery ? 'disabled' : '' }} value="{{ $sale->delivery ? $sale->delivery->plat : '' }}">
             </div>
         </div>
         <div class="col-12">
@@ -362,7 +363,7 @@
             </div>
         </div>
     </div>
-
+    @if (!$sale->delivery)
     <div class="row">
         <div class="col-lg-6">
 
@@ -375,6 +376,8 @@
             @csrf
         </div>
     </div>
+    @endif
+
 </form>
 
 @endsection

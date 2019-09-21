@@ -13,7 +13,6 @@
                     <i class="fa fa-dashboard"></i> Dashboard
                 </a>
             </li>
-
             <li class="nav-item nav-dropdown">
                 <a href="#" class="nav-link nav-dropdown-toggle">
                     <i class="fa fa-asterisk"></i> Master Data <i class="fa fa-caret-left"></i>
@@ -60,9 +59,38 @@
                     </li>
                 </ul>
             </li>
+            <li class="nav-item">
+                <a href="{{ url('sales-orders') }}"
+                    class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
+                    <i class="fa fa-arrow-down"></i> Sales Order
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('nota-khusus') }}"
+                    class="nav-link {{ (request()->is('nota-khusus*')) && !request()->is('nota-khusus/check/approve') ? 'active' : '' }}">
+                    <i class="fa fa-exclamation-circle"></i> Nota Khusus
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('purchase-orders') }}"
+                    class="nav-link {{ (request()->is('purchase-orders*')) ? 'active' : '' }}">
+                    <i class="fa fa-arrow-up"></i> Purchase Order
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('goods-receive') }}"
+                    class="nav-link {{ (request()->is('goods-receive*')) ? 'active' : '' }}">
+                    <i class="fa fa-truck"></i> Goods Receive
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('finances') }}" class="nav-link {{ (request()->is('finances*')) ? 'active' : '' }}">
+                    <i class="fa fa-line-chart"></i> Finance
+                </a>
+            </li>
             @endif
 
-            @if (Gate::allows('isSales') || Gate::allows('isAdmin'))
+            @if (Gate::allows('isSales'))
             <li class="nav-item">
                 <a href="{{ url('sales-orders') }}"
                     class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
@@ -77,7 +105,13 @@
             </li>
             @endif
 
-            @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
+            @if(Gate::allows('isFinance'))
+            <li class="nav-item">
+                <a href="{{ url('sales-orders') }}"
+                    class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
+                    <i class="fa fa-arrow-down"></i> Sales Order
+                </a>
+            </li>
             <li class="nav-item">
                 <a href="{{ url('purchase-orders') }}"
                     class="nav-link {{ (request()->is('purchase-orders*')) ? 'active' : '' }}">
@@ -90,23 +124,9 @@
                     <i class="fa fa-truck"></i> Goods Receive
                 </a>
             </li>
-            @endif
-
-            @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
-            <li class="nav-item">
-                <a href="{{ url('sales-orders') }}"
-                    class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
-                    <i class="fa fa-arrow-down"></i> Sales Order
-                </a>
-            </li>
             <li class="nav-item">
                 <a href="{{ url('finances') }}" class="nav-link {{ (request()->is('finances*')) ? 'active' : '' }}">
                     <i class="fa fa-line-chart"></i> Finance
-                </a>
-            </li>
-            <li class="nav-item d-none">
-                <a href="{{ url('deposits') }}" class="nav-link {{ (request()->is('deposits*')) ? 'active' : '' }}">
-                    <i class="fa fa-credit-card"></i> Deposits
                 </a>
             </li>
             @endif

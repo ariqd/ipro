@@ -19,9 +19,9 @@ class SalesOrderController extends Controller
     public function index()
     {
         if (Auth::user()->role == 'admin' || Auth::user()->role == 'gudang')
-            $d['sales'] = Sale::orderBy('created_at', 'desc')->get();
+            $d['sales'] = Sale::with(['customer', 'user.branch'])->latest()->get();
         else
-            $d['sales'] = Sale::mySales()->orderBy('created_at', 'desc')->get();
+            $d['sales'] = Sale::mySales()->with(['customer', 'user.branch'])->latest()->get();
 
         if (Auth::user()->role == 'finance')
             return redirect('sales-orders/check/approve');
