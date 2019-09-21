@@ -410,7 +410,7 @@
                     <div class="row">
                         <div class="form-group col-10">
                             @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
-                            <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print Invoice">
+                            <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print SO">
                             <div class="custom-control custom-checkbox col-2 my-2">
                                 <input type="checkbox" name="markup" class="custom-control-input" id="defaultCheck1">
                                 <label class="custom-control-label" for="defaultCheck1">

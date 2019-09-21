@@ -16,6 +16,7 @@
         z-index: 2000;
         display: none;
     }
+
 </style>
 @endpush
 
@@ -190,7 +191,8 @@
                         cell4.innerHTML = response.item.weight + " Kg";
                         cell5.innerHTML = $("#qty").val() + ' pcs';
                         // cell6.innerHTML = "Rp " + number_format(response.item.purchase_price);
-                        cell6.innerHTML = "Rp " + number_format($("#qty").val() * $("#modal").val(), 0, ',', '.');
+                        cell6.innerHTML = "Rp " + number_format($("#qty").val() * $("#modal").val(),
+                            0, ',', '.');
                         cell7.innerHTML = "";
                         cell8.innerHTML = '<a style="cursor:pointer" onclick=voidItem("item-' +
                             count + '") class=""> <i class="fa fa-trash"></i> </a>';
@@ -313,9 +315,9 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row">
+                    <div class="form-row">
                         <div class="form-group col-lg-6">
-                            Brand
+                            <label for="brands">Brand</label>
                             <select autocomplete="off" name="brand" id="brands" class="form-control brands w-100">
                                 <option value="" selected disabled></option>
                                 @foreach($brands as $brand)
@@ -324,7 +326,7 @@
                             </select>
                         </div>
                         <div class="form-group col-lg-6">
-                            Category
+                            <label for="categories">Category</label>
                             <select autocomplete="off" name="category" id="categories" class="form-control categories">
                                 <option value="" selected disabled></option>
                                 @foreach($categories as $category)
@@ -333,7 +335,7 @@
                             </select>
                         </div>
                         <div class="form-group col-lg-12">
-                            Item
+                            <label for="items">Produk</label>
                             <select autocomplete="off" name="items" id="items" class="form-control items">
                                 <option value="" selected disabled></option>
                                 {{--@foreach($categories as $category)--}}
@@ -343,15 +345,14 @@
                         </div>
                         <br>
                         <div class="form-group col-lg-6">
-                            Modal satuan
+                            <label for="modal">Modal satuan</label>
                             <input type="number" class="form-control" step="1" id="modal">
                         </div>
                         <div class="form-group col-lg-6">
-                            Quantity
+                            <label for="qty">Quantity</label>
                             <input type="number" class="form-control" step="1" id="qty">
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

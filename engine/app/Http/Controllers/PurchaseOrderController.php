@@ -25,10 +25,10 @@ class PurchaseOrderController extends Controller
 
     public function create()
     {
-        $counter = Counter::where("name", "=", "PO")->first();
+        $counter = Counter::PO();
         $data['brands'] = Brand::all();
         $data['categories'] = Category::all();
-        $data['sales'] = Sale::all();
+        $data['sales'] = Sale::latest()->get();
         $data['no_po'] = "PO" . date("ymd") . str_pad(auth()->user()->branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
 
         return view('purchase.form', $data);
