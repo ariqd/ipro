@@ -221,6 +221,8 @@ class SalesOrderApproveController extends Controller
         $data["nominal"] = $sale->grand_total + $sale->ongkir;
         $data["QO"] = $sale->quotation_id;
         $data["SO"] = $sale->no_so;
+        $data["perihal"] = $sale->perihal;
+        $data["atas_nama"] = $sale->atas_nama;
         $pdf = PDF::loadView('print.kwitansi', $data);
         return $pdf->stream('invoice ' . date("Ymd") . '.pdf');
     }

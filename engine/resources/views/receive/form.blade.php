@@ -33,8 +33,7 @@
     $("#purchaseid").change(function () {
         $("#purchase-body").empty();
         $.ajax({
-            url: "{!! url("
-            purchase - orders / ") !!}/" + $("#purchaseid").val() + "/search",
+            url: "{!! url('purchase-orders') !!}" + $("#purchaseid").val() + "/search",
             method: "get",
             success: function (response) {
                 var table = document.getElementById("purchase-body");

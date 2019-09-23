@@ -83,8 +83,19 @@
                 cache: true
             }
         });
-
     });
+
+    $("#items").change(function(){
+        $.ajax({
+            url: "{!! url('items/search/detail') !!}/" + $("#items").val(),
+            method: "get",
+            success: function (response) {
+                $("#modal").val(response.item.purchase_price);
+            },
+            error: function (xhr, statusCode, error) {}
+        });
+    })
+
 
     $("#salesorderid").change(function () {
         $.ajax({
@@ -112,7 +123,7 @@
                     cell2.innerHTML = value.item.code;
                     cell3.innerHTML = value.item.name;
                     cell4.innerHTML = '<input type="hidden" id="berat-'+count+'" value="value.item.weight">'+value.item.weight + " Kg";
-                    cell5.innerHTML = '<input type="number" onchange="updateharga('+count+')" class="form-control" id="harga-'+count+'"  name="modal[]" required/>';
+                    cell5.innerHTML = '<input type="number" onchange="updateharga('+count+')" class="form-control" id="harga-'+count+'"  name="modal[]" value="'+value.item.purchase_price+'" required/>';
                     cell6.innerHTML = value.qty + ' pcs';
                     cell7.innerHTML = response.header.no_so;
                     cell8.innerHTML =
@@ -394,7 +405,7 @@
                         <br>
                         <div class="form-group col-lg-6">
                             <label for="modal">Modal satuan</label>
-                            <input type="number" class="form-control" step="1" id="modal">
+                            <input type="number" class="form-control" step="1" min="0" id="modal">
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="qty">Quantity</label>

@@ -75,7 +75,7 @@ Kwitansi
                                 :
                             </div>
                             <div class="col-xs-7">
-                                {{ $customer_name }}
+                                {{ $atas_nama ?? $customer_name }}
                             </div>
                         </div>
                         <div class="col-xs-12">
@@ -114,7 +114,7 @@ Kwitansi
                             </div>
                         </b>
                         <div class="col-xs-7">
-                            {{ $project_name }}
+                            {{ $perihal ?? $project_name }}
                         </div>
                     </div>
                     <div class="col-xs-12">
