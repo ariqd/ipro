@@ -128,8 +128,8 @@
                     cell7.innerHTML = response.header.no_so;
                     cell8.innerHTML =
                         '<input type="number" class="form-control" id="total-harga-'+count+'" required/>';
-                    cell9.innerHTML = '<a style="cursor:pointer" onclick=voidItem("item-' +
-                        count + '") class=""> <i class="fa fa-trash"></i> </a>';
+                    cell9.innerHTML = "";
+                    // '<a style="cursor:pointer" onclick=voidItem("item-' + count + '") class=""> <i class="fa fa-trash"></i> </a>';
 
                     var container = document.getElementById("input-body");
                     var input = document.createElement("input");
@@ -242,8 +242,8 @@
                         cell6.innerHTML = $("#qty").val() + ' pcs';
                         cell7.innerHTML = "";
                         cell8.innerHTML = "Rp " + number_format($("#qty").val() * $("#modal").val(), 0, ',', '.');
-                        cell9.innerHTML = '<a style="cursor:pointer" onclick=voidItem("item-' +
-                            count + '") class=""> <i class="fa fa-trash"></i> </a>';
+                        cell9.innerHTML = "";
+                        // '<a style="cursor:pointer" onclick=voidItem("item-' + count + '") class=""> <i class="fa fa-trash"></i> </a>';
 
                         var container = document.getElementById("input-body");
                         var input = document.createElement("input");
