@@ -25,6 +25,7 @@
                     Lihat Item</a>
             </div>
         </div>
+        @if(@$isEdit == false)
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="branch" class="form-control-label">Cabang</label>
@@ -41,6 +42,7 @@
                         class="fa fa-plus"></i> Lihat Cabang</a>
             </div>
         </div>
+        @endif
         <div class="form-group">
             <label for="quantity" class="form-control-label">Quantity (per batang)</label>
             <div class="input-group">

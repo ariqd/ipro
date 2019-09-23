@@ -399,16 +399,11 @@ Sales Order
         </div>
     </div>
     <div class="col-xs-4">
-        <div class="text-center">
-            <p>Mengetahui,</p>
-            <p style="margin-top: 120px">(RIA ADRIYATI)</p>
-            <P>HEAD SALES</P>
-        </div>
-    </div>
+    </div>  
     <div class="col-xs-4">
         <div class="text-center">
             <p>Yang Membuat,</p>
-            <p style="margin-top: 120px">Erlin</p>
+            <p style="margin-top: 120px">{{$sale->user->name}}</p>
             <P>SALES</P>
         </div>
     </div>

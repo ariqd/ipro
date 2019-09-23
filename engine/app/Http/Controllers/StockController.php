@@ -131,7 +131,7 @@ class StockController extends Controller
 
         $validate = Validator::make($input, [
             'item_id' => 'required|numeric',
-            'branch_id' => 'required|numeric',
+            // 'branch_id' => 'required|numeric',
             'quantity' => 'required|numeric',
             'price_branch' => 'required|numeric',
             //            'weight' => 'required|numeric',

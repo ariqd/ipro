@@ -363,7 +363,6 @@
             </div>
         </div>
     </div>
-    @if (!$sale->delivery)
     <div class="row">
         <div class="col-lg-6">
 
@@ -376,7 +375,6 @@
             @csrf
         </div>
     </div>
-    @endif
 
 </form>
 
