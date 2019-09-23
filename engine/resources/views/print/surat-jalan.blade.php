@@ -67,7 +67,7 @@ Surat Jalan
 <div class="col-xs-12">
     <div style="text-align:center">
         <h4>Surat Jalan</h4>
-        <h6>xxx/yyy/zz</h6>
+        <h6>{{$head->nomor_surat}}</h6>
     </div>
 </div>
 <div class="col-xs-12">
