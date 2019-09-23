@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('sales-orders/{id}/payment', 'SalesOrder\SalesOrderApproveController@postPaymentForm');
     Route::get('sales-orders/{id}/approve/print', 'SalesOrder\SalesOrderApproveController@makeKwitansi');
     Route::get('sales-orders/{id}/pdf/quotation', 'SalesOrder\SalesOrderPrintController@makeQuotation');
+    Route::post('sales-orders/{id}/pdf/SO', 'SalesOrder\SalesOrderPrintController@makeSO');
     Route::post('sales-orders/{id}/pdf/invoice', 'SalesOrder\SalesOrderPrintController@makeInvoice');
     Route::get('sales-orders/{id}/pdf/surat-jalan', 'SalesOrder\DeliveryOrderController@print');
     Route::get('sales-orders/{sales_id}/edit/{details_id}/delete', 'SalesOrder\SalesOrderController@deleteDetail');

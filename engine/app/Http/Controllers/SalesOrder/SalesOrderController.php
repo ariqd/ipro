@@ -37,7 +37,9 @@ class SalesOrderController extends Controller
         $d['customers'] = Customer::latest()->get();
         $d['brands'] = Brand::all();
         $d['branches'] = Branch::all();
-        $d['sales'] = User::sales()->with(['details'])->get()->except(auth()->id());
+        $d['sales'] = User::sales()
+        // ->with(['details'])
+        ->get()->except(auth()->id());
 
         return view('sale.form', $d);
     }

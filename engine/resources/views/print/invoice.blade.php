@@ -1,7 +1,7 @@
 @extends("layouts.print")
 
 @section("title")
-Kwitansi
+Invoice
 @endsection
 
 @push("css")
@@ -51,7 +51,6 @@ Kwitansi
         transform: rotate(270deg);
         min-height: 150px;
     }
-
 </style>
 @endpush
 
@@ -74,24 +73,24 @@ Kwitansi
                 <td width="40%">
                     <p class="text-right" style="margin:0 auto">Date :</p>
                 </td>
-                <td width="60%" colspan="3"><b class="text-danger">2</b></td>
+            <td width="60%" colspan="3"><b class="text-danger">{{date("d-m-Y")}}</b></td>
             </tr>
             <tr>
                 <td width="40%">
                     <p class="text-right" style="margin:0 auto">Customer Code :</p>
                 </td>
-                <td width="20%">3</td>
+                <td width="20%">SO</td>
                 <td width="20%">
                     <p class="text-right" style="margin:0 auto">SO</p>
                 </td>
-                <td width="20%">4</td>
+            <td width="20%">{{$sale->no_so}}</td>
             </tr>
         </table>
     </div>
 </div>
 <div class="col-xs-12" style="margin-top: 0%">
     <div class="col-xs-2" style="margin-top: 0%; margin-bottom: 0%">
-        <img src="logo.jpg" alt="logo" style="width: 100%;">
+        <img src="{!! asset('assets/img/logo.png') !!}" alt="" width="100%">
     </div>
     <div class="col-xs-5" style="font-size: 12px">
         <br><br>
@@ -107,32 +106,32 @@ Kwitansi
                     <p class="text-right" style="margin:0 auto">Customer :</p>
                 </td>
                 <td width="60%" colspan="3">
-                    <p class="text-center" style="margin:0 auto">1</p>
+                    <p class="text-center" style="margin:0 auto">{{$sale->customer->project_owner}}</p>
                 </td>
             </tr>
             <tr>
                 <td width="40%">
                     <p class="text-right" style="margin:0 auto">Address :</p>
                 </td>
-                <td width="60%" colspan="3">2</td>
+                <td width="60%" colspan="3">{{$sale->customer->address}}</td>
             </tr>
             <tr>
                 <td width="40%">
-                    <p class="text-right" style="margin:0 auto">City :</p>
+                    <p class="text-right" style="margin:0 auto">City</p>
                 </td>
-                <td width="60%">3</td>
+                <td width="60%">{{$sale->customer->city ?? "-" }}</td>
             </tr>
             <tr>
                 <td width="40%">
                     <p class="text-right" style="margin:0 auto">Contact :</p>
                 </td>
-                <td width="60%">4</td>
+                <td width="60%">{{$sale->customer->phone}}</td>
             </tr>
             <tr>
                 <td width="40%">
                     <p class="text-right" style="margin:0 auto">Sales :</p>
                 </td>
-                <td width="60%">5</td>
+                <td width="60%">{{$sale->user->name}}</td>
             </tr>
         </table>
     </div>
@@ -163,57 +162,64 @@ Kwitansi
                 </tr>
             </thead>
             <tbody>
-
+                @php
+                $totalweight = 0;
+                @endphp
+                @foreach($sale->detail as $detail)
                 <tr style="text-align: center;">
-                    <td width="5%" class="vertical-text">[kategori]</td>
-                    <td>1</td>
-                    <td>2</td>
+                    <td width="5%" class="vertical-text">{{$detail->stock->item->category->name}}</td>
+                    <td>{{$detail->stock->item->name}}</td>
+                    <td>{{$detail->qty}}</td>
                     <td style="">
-                        4
+                        {{$detail->stock->item->weight}}
+                        @php
+                            $totalweight += $detail->stock->item->weight * $detail->qty;
+                        @endphp
                     </td>
-                    <td class="">4</td>
+                    <td class="">{{$detail->qty}}</td>
                     <td class="printUang">
-                        <p class="text-right" style="margin:0 auto">&nbsp;&nbsp;&nbsp;5</p>
+                        <p class="text-right" style="margin:0 auto">&nbsp;&nbsp;&nbsp;{{$detail->price}}</p>
                     </td>
-                    <td class="printUang">&nbsp;&nbsp;&nbsp;6</td>
+                    <td class="printUang">&nbsp;&nbsp;&nbsp;{{$detail->discount}}</td>
                     <td class="printUang">
-                        <p class="text-right" style="margin:0 auto">&nbsp;&nbsp;&nbsp;7</p>
+                        <p class="text-right" style="margin:0 auto">&nbsp;&nbsp;&nbsp;{{$detail->price * $detail->qty}}
+                        </p>
                     </td>
                 </tr>
-
+                @endforeach
 
                 <tr style="text-align: center;">
                     <td class="text-right" colspan="4">TOTAL QTY (Pcs)</td>
                     <td class="text-right" colspan="1">
-                        <p class="text-right" style="margin:0 auto">1</p>
+                        <p class="text-right" style="margin:0 auto"></p>
                     </td>
                     <td class="text-right" colspan="2">Total Amount</td>
                     <td>
-                        <p class="text-right" style="margin:0 auto">9
+                        <p class="text-right" style="margin:0 auto">{{$sale->grand_total}}
                     </td>
                 </tr>
 
                 <tr style="text-align: center;">
                     <td class="text-right" colspan="4">TOTAL WEIGHT (Kg)</td>
                     <td class="text-right" colspan="1">
-                        <p class="text-right" style="margin:0 auto">1</p>
+                        <p class="text-right" style="margin:0 auto">{{$totalweight}}</p>
                     </td>
                     <td class="text-right" colspan="2">Transport Cost</td>
                     <td>
-                        <p class="text-right" style="margin:0 auto">9</p>
+                        <p class="text-right" style="margin:0 auto">{{$sale->ongkir}}</p>
                     </td>
                 </tr>
 
                 <tr style="text-align: center;">
                     <td class="text-right" colspan="7">Discount Transport Cost (%)</td>
                     <td class="printUang">
-                        <p class="text-right" style="margin:0 auto">&nbsp;&nbsp;&nbsp;11</p>
+                        <p class="text-right" style="margin:0 auto">&nbsp;&nbsp;&nbsp;0</p>
                     </td>
                 </tr>
                 <tr style="text-align: center;">
                     <td class="text-right" colspan="7">Total (Rp.)</td>
                     <td class="printUang">
-                        <p class="text-right" style="margin:0 auto">&nbsp;&nbsp;&nbsp;12</p>
+                        <p class="text-right" style="margin:0 auto">&nbsp;&nbsp;&nbsp;{{$sale->grand_total +$sale->ongkir}}</p>
                     </td>
                 </tr>
             </tbody>
@@ -240,7 +246,6 @@ Kwitansi
     <div class="col-xs-12" style="font-size: 11px">
         <b class="text-danger"><strong>Note :</strong></b>
         <ol>
-            <li class="text-danger">Harga Franco Bandung</li>
             <li class="text-danger">Barang yang telah dibeli, tidak dapat dikembalikan.</li>
         </ol>
     </div>
@@ -271,7 +276,7 @@ Kwitansi
                         <br>
                         <br>
                         <br>
-                        ( Nama )
+                        ( Irene )
                     </div>
                 </td>
             </tr>

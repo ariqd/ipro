@@ -405,12 +405,20 @@
                 <a href="{{ url('sales-orders/'.$sale->id.'/pdf/quotation') }}" class="btn btn-dark btn-block my-2"> Print Quotation</a>
             </div> -->
             <div class="col-lg-6">
+                @if(Gate::allows('isFinance'))
                 <form action="{{ url("sales-orders/$sale->id/pdf/invoice") }}" method="post">
+                @else
+                <form action="{{ url("sales-orders/$sale->id/pdf/SO") }}" method="post">
+                    @endif
                     @csrf
                     <div class="row">
                         <div class="form-group col-10">
                             @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
+                            @if(Gate::allows('isFinance'))
+                            <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print Invoice">
+                            @else
                             <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print SO">
+                            @endif
                             <div class="custom-control custom-checkbox col-2 my-2">
                                 <input type="checkbox" name="markup" class="custom-control-input" id="defaultCheck1">
                                 <label class="custom-control-label" for="defaultCheck1">

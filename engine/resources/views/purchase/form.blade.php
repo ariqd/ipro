@@ -16,7 +16,6 @@
         z-index: 2000;
         display: none;
     }
-
 </style>
 @endpush
 
@@ -112,12 +111,12 @@
                     cell1.innerHTML = value.category.name;
                     cell2.innerHTML = value.item.code;
                     cell3.innerHTML = value.item.name;
-                    cell4.innerHTML = value.item.weight + " Kg";
-                    cell5.innerHTML = value.qty + ' pcs';
-                    cell6.innerHTML = "Rp" + number_format(value.total, 0, ',', '.');
+                    cell4.innerHTML = '<input type="hidden" id="berat-'+count+'" value="value.item.weight">'+value.item.weight + " Kg";
+                    cell5.innerHTML = '<input type="number" onchange="updateharga('+count+')" class="form-control" id="harga-'+count+'"  name="modal[]" required/>';
+                    cell6.innerHTML = value.qty + ' pcs';
                     cell7.innerHTML = response.header.no_so;
                     cell8.innerHTML =
-                        '<input type="number" class="form-control" name="modal[]" required/>';
+                        '<input type="number" class="form-control" id="total-harga-'+count+'" required/>';
                     cell9.innerHTML = '<a style="cursor:pointer" onclick=voidItem("item-' +
                         count + '") class=""> <i class="fa fa-trash"></i> </a>';
 
@@ -133,17 +132,26 @@
                     input.type = "hidden";
                     input.name = "qty[]";
                     input.setAttribute('value', value.qty);
-                    input.setAttribute('class', "item-" + count);
+                    input.setAttribute('id', "qty-" + count);
                     container.appendChild(input);
 
                     var input = document.createElement("input");
                     input.type = "hidden";
                     input.name = "sales[]";
                     input.setAttribute('value', response.header.id);
-                    input.setAttribute('class', "item-" + count);
+                    input.setAttribute('class', "sales-" + count);
                     container.appendChild(input);
 
                     count++;
+
+                        jmlhitem++;
+                        jmlhberat += value.item.weight * value.qty;
+                        jmlhqty += parseInt(value.qty);
+
+                        //tambah footer
+                        $("#jmlh-item").text(jmlhitem);
+                        $("#jmlh-berat").text(jmlhberat);
+                        $("#jmlh-qty").text(jmlhqty);
                 });
                 updateRowOrder();
 
@@ -154,9 +162,36 @@
 
 
     function voidItem(id) {
+        //cek
+        console.log("Berat "+$("#berat-"+id).val());
+        console.log("Berat "+$("#berat-"+id).val());
+
         $("." + id).remove();
         updateRowOrder();
     }
+
+    function updateharga(count){
+        jmlhamount -= $('#total-harga-'+count).val() / $('#qty-'+count).val();
+
+        var hargalama = $('#total-harga-'+count).val();
+        jmlhharga -= hargalama
+
+        var harga = $('#harga-'+count).val() * $('#qty-'+count).val()
+        $('#total-harga-'+count).val(harga);
+
+        jmlhharga += harga;
+        jmlhamount += parseInt($('#harga-'+count).val());
+        $("#jmlh-harga").text(jmlhharga);
+        $("#jmlh-amount").text(jmlhamount);
+
+    }
+
+    //setvariableuntukfooter
+    var jmlhitem = 0;
+    var jmlhberat = 0;
+    var jmlhqty = 0;
+    var jmlhamount = 0;
+    var jmlhharga = 0;
 
     $(document).on('keypress', function (e) {
         if (e.which == 13) {
@@ -190,13 +225,12 @@
                         cell1.innerHTML = response.item.category.name;
                         cell2.innerHTML = response.item.code;
                         cell3.innerHTML = response.item.name;
-                        cell4.innerHTML = response.item.weight + " Kg";
-                        cell5.innerHTML = $("#qty").val() + ' pcs';
+                        cell4.innerHTML = '<input type="hidden" id="berat-'+count+'" value="response.item.weight">'+response.item.weight + " Kg";
                         // cell6.innerHTML = "Rp " + number_format(response.item.purchase_price);
-                        cell6.innerHTML = "Rp " + number_format($("#qty").val() * $("#modal").val(),
-                            0, ',', '.');
+                        cell5.innerHTML = "Rp "+ number_format($("#modal").val(), 0, ',', '.');
+                        cell6.innerHTML = $("#qty").val() + ' pcs';
                         cell7.innerHTML = "";
-                        cell8.innerHTML = "";
+                        cell8.innerHTML = "Rp " + number_format($("#qty").val() * $("#modal").val(), 0, ',', '.');
                         cell9.innerHTML = '<a style="cursor:pointer" onclick=voidItem("item-' +
                             count + '") class=""> <i class="fa fa-trash"></i> </a>';
 
@@ -213,18 +247,29 @@
                         input.type = "hidden";
                         input.name = "modal[]";
                         input.setAttribute('value', $("#modal").val());
-                        input.setAttribute('class', "modal-" + count);
+                        input.setAttribute('id', "harga-" + count);
                         container.appendChild(input);
 
                         var input = document.createElement("input");
                         input.type = "hidden";
                         input.name = "qty[]";
                         input.setAttribute('value', $("#qty").val());
-                        input.setAttribute('class', "item-" + count);
+                        input.setAttribute('id', "qty-" + count);
                         container.appendChild(input);
                         count++;
                         updateRowOrder();
 
+                        jmlhitem++;
+                        jmlhharga += $("#modal").val() * $("#qty").val();
+                        jmlhberat += response.item.weight * $("#qty").val();
+                        jmlhqty += parseInt($("#qty").val());
+                        jmlhamount += parseInt($("#modal").val());
+                        //tambah footer
+                        $("#jmlh-item").text(jmlhitem);
+                        $("#jmlh-berat").text(jmlhberat);
+                        $("#jmlh-qty").text(jmlhqty);
+                        $("#jmlh-harga").text(jmlhharga);
+                        $("#jmlh-amount").text(jmlhamount);
                     },
                     error: function (xhr, statusCode, error) {}
                 });
@@ -353,7 +398,7 @@
                         </div>
                         <div class="form-group col-lg-6">
                             <label for="qty">Quantity</label>
-                            <input type="number" class="form-control" step="1" id="qty">
+                            <input type="number" class="form-control" step="1" min="0" id="qty">
                         </div>
                     </div>
                 </div>
@@ -373,11 +418,11 @@
                                     <th>Kode Barang</th>
                                     <th>Item</th>
                                     <th>Berat/pcs</th>
+                                    <th>Harga/pcs</th>
                                     <th>Order Qty/pcs</th>
                                     {{-- <th>Price/pcs</th> --}}
-                                    <th>Total Amount (IDR)</th>
                                     <th>No. Sales</th>
-                                    <th>Harga PO</th>
+                                    <th>Harga Total</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -386,6 +431,18 @@
 
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th id="jmlh-item">Item</th>
+                                <th id="jmlh-berat">Berat/pcs</th>
+                                <th id="jmlh-amount">Total Amount (IDR)</th>
+                                <th id="jmlh-qty">Order Qty/pcs</th>
+                                <th></th>
+                                <th id="jmlh-harga">Harga PO</th>
+                                <th></th>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
