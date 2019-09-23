@@ -34,7 +34,6 @@
         $("#customer_select").change(function () {
             var id = $(this).val();
             $.ajax({
-                // url: '/info/' + $(this).val(),
                 url: "{{ url('sales-orders/create/customer/') }}/" + id,
                 type: 'get',
                 data: {},
@@ -126,7 +125,6 @@
                 },
                 success: function (response) {
                     $('.loading').hide();
-                    // console.dir(response);
                     if (response.length > 0) {
                         $.each(response, function (index, value) {
                             var btn;
@@ -161,10 +159,11 @@
                                 '<h5>' + value.item.name + ' (' + value.branch.name +
                                 ') ' + '</h5>' +
                                 '<p>Quantity: ' + value.quantity + '</p>' +
-                                '<p class="m-0">Harga Pricelist: Rp' + value.item
-                                .purchase_price + '</p>' +
-                                '<p class="m-0">Harga Cabang: Rp' + value
-                                .price_branch + '</p>' +
+                                '<p class="m-0">Harga Pricelist: Rp' + number_format(
+                                    value.item
+                                    .purchase_price, 0, ',', '.') + '</p>' +
+                                '<p class="m-0">Harga Cabang: Rp' + number_format(value
+                                    .price_branch, 0, ',', '.') + '</p>' +
                                 '</div>' +
                                 '<div>' +
                                 btn +
@@ -176,12 +175,12 @@
                             items_count++;
                         });
                     } else {
-                        $("#items").append(
+                        $("#items").html(
                             '<div class="card mb-0">' +
                             '<div class="card-body item">' +
                             '<div class="d-flex justify-content-between align-items-center">' +
                             '<div>' +
-                            '<h5>No item found</h5>' +
+                            '<h5>Tidak ada produk</h5>' +
                             '</div>' +
                             '</div>' +
                             '</div>' +
@@ -215,6 +214,7 @@
             }
         });
     });
+
     $("#case_1").change(function () {
         if ($("#case_1").val() == 2) {
             $('#sales').val('5').trigger('change');
@@ -233,19 +233,16 @@
         if (case2 == 3) {
             $(".case3").show();
             $(".case3").prop("disabled", false);
-
             $(".case4").hide();
             $(".case4").prop("disabled", true);
         } else if (case2 == 4) {
             $(".case4").show();
             $(".case4").prop("disabled", false);
-
             $(".case3").hide();
             $(".case3").prop("disabled", true);
         } else {
             $(".case3").hide();
             $(".case3").prop("disabled", true);
-
             $(".case4").hide();
             $(".case4").prop("disabled", true);
         }
@@ -253,10 +250,11 @@
 
     $('#collapse-example').on('shown.bs.collapse', function () {
         document.getElementById('detail-text').innerHTML = 'Sembunyikan';
-    })
+    });
+
     $('#collapse-example').on('hidden.bs.collapse', function () {
         document.getElementById('detail-text').innerHTML = 'Tampilkan';
-    })
+    });
 
 </script>
 @endpush

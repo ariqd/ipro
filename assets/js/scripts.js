@@ -75,8 +75,8 @@ function addProduct(id) {
             '       <div class="row">' +
             '           <div class="col-lg-6">' +
             '               <h5><b>' + name + ' (' + branch + ')</b></h5>' +
-            '               <p id="price-pusat-' + code + '" class="mb-0">Harga Pricelist: Rp ' + price + '</p>' +
-            '               <p id="price-' + code + '" class="mb-0">Harga Jual: Rp ' + price_branch + '</p>' +
+            '               <p id="price-pusat-' + code + '" class="mb-0">Harga Pricelist: Rp ' + number_format(price, 0, ',', '.') + '</p>' +
+            '               <p id="price-' + code + '" class="mb-0">Harga Jual: Rp ' + number_format(price_branch, 0, ',', '.') + '</p>' +
             '               <p id="quantity-' + code + '">Stok Tersedia: ' + quantity + '</p>' +
             '               <input type="hidden" value="' + code + '" name="item[' + items_count + '][stock_id]">' +
             '               <span class="btn btn-outline-danger" onclick="return removeProduct(' + "'" + code + "'" + ');"><i class="fa fa-trash"></i>' +
@@ -108,10 +108,11 @@ function addProduct(id) {
             '                   <label for="item-price-branch-' + code + '"' +
             '                       class="col-sm-4 col-form-label text-right">Harga Jual</label>' +
             '                   <div class="col-sm-8">' +
-            '                   <span class="select">' +
+            // '                   <span class="select">' +
             '                       <input type="text" class="form-control item-price-branch' + code + '" id="item-price-branch-' + code + '"' +
             '                              value="' + price_branch + '" name="item[' + items_count + '][price]" onchange="countSubtotal(' + "'" + code + "'" + ')">' +
-            '                   </span>' +
+            // '                   </span>' +
+            '                   <small class="text-danger d-none" id="item-price-help-' + code + '">Lebih kecil dari harga pricelist!</small>' +
             '                   </div>' +
             '               </div>' +
             '               <div class="pb-2 form-row">' +
@@ -185,9 +186,17 @@ function removeProduct(product_code) {
  * @param product_code Product Code Part
  */
 function countSubtotal(product_code) {
-    var actual_price = $('#item-price-branch-' + product_code).val();
+    var priceHelp = $('#item-price-help-' + product_code);
+    var pricelist_price = parseFloat($('#item-price-' + product_code).val()) || 0;
+    var actual_price = parseFloat($('#item-price-branch-' + product_code).val()) || 0;
     var qty = parseFloat($("#item-qty-" + product_code).val()) || 0;
     var discount = parseFloat($("#item-disc-" + product_code).val() || 0);
+
+    if (pricelist_price > actual_price) {
+        priceHelp.removeClass('d-none');
+    } else {
+        priceHelp.addClass('d-none');
+    }
 
     if ($("#item-qty-" + product_code).val() === "") {
         swal({
@@ -254,14 +263,11 @@ function countTotal() {
     }
 }
 
-
-// $("#ongkir").change(function(){
-//     alert(parseInt(varGrand));
-//     alert( parseInt($("#ongkir").val()));
-//     $("#grand-total-ongkir").val(parseInt(varGrand) + parseInt($("#ongkir").val()));
-// })
-
 function print(name) {
     printJS(name);
+}
+
+function showHelp(code) {
+
 }
 
