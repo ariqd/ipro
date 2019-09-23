@@ -101,7 +101,6 @@ Purchase Order
         @php
         $total += $key->qty*$key->item->weight;
         @endphp
-        {{dd($key)}}
         <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $key->item->name }}</td>
@@ -159,13 +158,13 @@ Purchase Order
         </div>
     </div>
     <div class="col-xs-3 nopadding">
-        No Dok: 
+        No Dok:
     </div>
     <div class="col-xs-3 nopadding">
-        No. Rev: 
+        No. Rev:
     </div>
     <div class="col-xs-3 nopadding">
-        Tgl Efektif: 
+        Tgl Efektif:
     </div>
     <div class="col-xs-3 nopadding">
         Hal : 1 Dari 1
