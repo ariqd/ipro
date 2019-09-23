@@ -91,7 +91,6 @@ Sales Order
         border: 1px solid #000000;
         padding: 10px;
     }
-
 </style>
 @endpush
 
@@ -227,92 +226,66 @@ Sales Order
                     @endphp
                 </tr>
                 @endforeach
-            </tbody>
-            <tfoot>
                 <tr>
                     <td colspan="3">
-                        <div class="text-right"><b>JUMLAH</b></div>
+
                     </td>
                     <td></td>
-                    <td></td>
+                    <td>
+                        <div class="text-right"><b>Subtotal</b></div>
+                    </td>
                     <td>Rp. {{ number_format($total) }}</td>
                 </tr>
-            </tfoot>
+
+                <tr class="border-none">
+                    <td colspan="4">
+                        <div class="text-left"><b>CATATAN</b>
+                            <p> {{ $sale->note }}</p>
+                    </td>
+                    <td>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr class="border-none">
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>DISC %</b></div>
+                    </td>
+                    <td>{{$diskon/100 ?? 0}} %</td>
+                </tr>
+                <tr class="border-none">
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>DISC</b></div>
+                    </td>
+                    <td>Rp. {{ number_format($diskon) }}</td>
+                </tr>
+                <tr class="border-none">
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>JUMLAH</b></div>
+                    </td>
+                    <td>Rp. {{ number_format($total) }}</td>
+                </tr>
+                <tr class="border-none">
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>ONGKOS KIRIM</b></div>
+                    </td>
+                    <td>Rp. {{ number_format($sale->ongkir) }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>GRAND TOTAL</b></div>
+                    </td>
+                    <td>Rp. {{ number_format($total + $sale->ongkir) }}</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xs-6">
-        <div class="notes">
-            <p><b>Catatan:</b></p>
-            <p> {{ $sale->note }}</p>
-        </div>
-    </div>
-    <div class="col-xs-6">
-        <table class="table table-borderless">
-            <tr>
-                <td colspan="2"><b>JUMLAH</b></td>
-                <td>: Rp. {{ number_format($total) }}</td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>ONGKOS KIRIM</b></td>
-                <td style="border-bottom: 1px solid #000000">: Rp. {{ number_format($sale->ongkir) }}</td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>GRAND TOTAL</b></td>
-                <td>: Rp. {{ number_format($total + $sale->ongkir) }}</td>
-            </tr>
-        </table>
-    </div>
-</div>
-{{--    @else--}}
-{{--        <div class="row">--}}
-{{--            <div class="col-xs-12">--}}
-{{--                <table class="table table-bordered">--}}
-{{--                    <thead>--}}
-{{--                    <tr class="warning">--}}
-{{--                        <th>BANYAK</th>--}}
-{{--                        <th>NAMA BARANG</th>--}}
-{{--                        <th>BERAT/PCS</th>--}}
-{{--                        <th>BERAT (KG)</th>--}}
-{{--                        <th>HARGA/UNIT</th>--}}
-{{--                        <th>JUMLAH</th>--}}
-{{--                    </tr>--}}
-{{--                    </thead>--}}
-{{--                    <tbody>--}}
-{{--                    @php--}}
-{{--                        $total =0;--}}
-{{--                        $diskon =0;--}}
-{{--                    @endphp--}}
-{{--                    @foreach($sale->detail as $key)--}}
-{{--                        <tr>--}}
-{{--                            <td>{{ $key->qty }}</td>--}}
-{{--                            <td>{{ $key->stock->item->name }}</td>--}}
-{{--                            <td>{{ $key->stock->item->weight }}</td>--}}
-{{--                            <td>{{ $key->qty*$key->stock->item->weight  }}</td>--}}
-{{--                            <td>{{ $key->stock->item->purchase_price }}</td>--}}
-{{--                            <td>{{ $key->stock->item->purchase_price*$key->qty }}</td>--}}
-{{--                            @php--}}
-{{--                                $total += $key->stock->item->purchase_price*$key->qty;--}}
-{{--                                $diskon += $key->discount/100 * ($key->stock->item->purchase_price*$key->qty);--}}
-{{--                            @endphp--}}
-{{--                        </tr>--}}
-{{--                    @endforeach--}}
-{{--                    </tbody>--}}
-{{--                    <tfoot>--}}
-{{--                    <tr>--}}
-{{--                        <td colspan="3">--}}
-{{--                            <div class="text-right"><b>JUMLAH</b></div>--}}
-{{--                        </td>--}}
-{{--                        <td></td>--}}
-{{--                        <td></td>--}}
-{{--                        <td></td>--}}
-{{--                    </tr>--}}
-{{--                    </tfoot>--}}
-{{--                </table>--}}
-{{--            </div>--}}
-{{--        </div>--}}
 @else
 <div class="row">
     <div class="col-xs-12">
@@ -324,7 +297,7 @@ Sales Order
                     <th>BERAT/PCS</th>
                     <th>BERAT (KG)</th>
                     <th>HARGA/UNIT</th>
-                    <th>JUMLAH</th>
+                    <th style="width:250px">JUMLAH</th>
                 </tr>
             </thead>
             <tbody>
@@ -346,51 +319,71 @@ Sales Order
                     @endphp
                 </tr>
                 @endforeach
-            </tbody>
-            <tfoot>
                 <tr>
                     <td colspan="3">
-                        <div class="text-right"><b>JUMLAH</b></div>
+
                     </td>
                     <td></td>
-                    <td></td>
-                    <td> Rp. {{ number_format($total) }}</td>
+                    <td>
+                        <div class="text-right"><b>Subtotal</b></div>
+                    </td>
+                    <td> Rp. {{ number_format($total -$diskon) }}</td>
                 </tr>
-            </tfoot>
-        </table>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-xs-6">
-        <div class="notes">
-            <p><b>Catatan:</b></p>
-            <p> {{ $sale->note }}</p>
-        </div>
-    </div>
-    <div class="col-xs-6">
-        <table class="table table-borderless">
-            <tr>
-                <td colspan="2"><b>DISC</b></td>
-                <td style="border-bottom: 1px solid #000000">: Rp. {{ number_format($diskon) }}</td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>JUMLAH</b></td>
-                <td>: Rp. {{ number_format($total -$diskon) }}</td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>PPN 10%</b></td>
-                <td>: Rp. {{ number_format(($total -$diskon)*0.1) }}</td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>ONGKOS KIRIM</b></td>
-                <td style="border-bottom: 1px solid #000000">: Rp. {{ number_format($sale->ongkir) }}</td>
-            </tr>
-            <tr>
-                <td colspan="2"><b>GRAND TOTAL</b></td>
-                <td>:
-                    Rp. {{ number_format(($total + $sale->ongkir - $diskon) + (($total -$diskon)*0.1)) }}</td>
-            </tr>
+                <tr class="border-none">
+                    <td colspan="4">
+                        <div class="text-left"><b>CATATAN</b>
+                            <p> {{ $sale->note }}</p>
+                    </td>
+                    <td>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <tr class="border-none">
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>DISC %</b></div>
+                    </td>
+                    <td>{{$diskon/100 ?? 0}} %</td>
+                </tr>
+                <tr class="border-none">
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>DISC</b></div>
+                    </td>
+                    <td>Rp. {{ number_format($diskon) }}</td>
+                </tr>
+                <tr class="border-none">
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>JUMLAH</b></div>
+                    </td>
+                    <td>Rp. {{ number_format($total-$diskon) }}</td>
+                </tr>
+
+                <tr class="border-none">
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>PPN 10%</b></div>
+                    </td>
+                    <td>Rp. {{ number_format(($total -$diskon)*0.1) }}</td>
+                </tr>
+                <tr class="border-none">
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>ONGKOS KIRIM</b></div>
+                    </td>
+                    <td>Rp. {{ number_format($sale->ongkir) }}</td>
+                </tr>
+                <tr class="border-none">
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>GRAND TOTAL</b></div>
+                    </td>
+                    <td>Rp. {{ number_format(($total + $sale->ongkir - $diskon) + (($total -$diskon)*0.1)) }}</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </div>
@@ -400,20 +393,25 @@ Sales Order
 <div class="row">
     <div class="col-xs-4">
         <div class="text-center">
-            
+            <p>Mengetahui,</p>
+            <p style="margin-top: 120px">(IRENE)</p>
+            <P>KEUANGAN</P>
         </div>
     </div>
     <div class="col-xs-4">
         <div class="text-center">
-            
+            <p>Mengetahui,</p>
+            <p style="margin-top: 120px">(RIA ADRIYATI)</p>
+            <P>HEAD SALES</P>
         </div>
     </div>
     <div class="col-xs-4">
         <div class="text-center">
             <p>Yang Membuat,</p>
-            <p style="margin-top: 120px">{{Auth::User()->name}}</p>
+            <p style="margin-top: 120px">Erlin</p>
             <P>SALES</P>
         </div>
     </div>
 </div>
+
 @endsection

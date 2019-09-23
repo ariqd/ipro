@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SalesOrder;
 
+use App\Counter;
 use Illuminate\Support\Facades\App;
 use PDF;
 use App\Sale;
@@ -62,9 +63,14 @@ class SalesOrderPrintController extends Controller
     public function makeInvoice($id, Request $request)
     {
         $data = Sale::find($id);
+        $counter = Counter::where("name","=","INV")->find();
+        $roman = $this->romanNumber(date("m"));
+        $inv = $counter->counter."/".$counter->name."/".$roman;
+        $data["nomor"] = $data->user;
         $data["user"] = $data->user;
         $data["detail"] = $data->details;
         $data["customer"] = $data->customer;
+        $data["inv"] = $inv;
         // $this->angkaTerbilang();
         if ($request->has("markup")) {
             $data["markup"] = 0;

@@ -65,7 +65,7 @@ Invoice
         <table width="80%" style="float: right">
             <tr>
                 <td width="40%">
-                    <p class="text-right" style="margin:0 auto">No. Order :</p>
+                <p class="text-right" style="margin:0 auto">No. Order : {{$inv}}</p>
                 </td>
                 <td width="60%" colspan="3">1</td>
             </tr>
