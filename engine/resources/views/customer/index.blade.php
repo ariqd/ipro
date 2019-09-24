@@ -71,10 +71,11 @@
                         <th>Project Owner</th>
                         <th>KTP</th>
                         <th>NPWP</th>
-                        <th>Phone</th>
+                        <th>Telp</th>
                         <th>Email</th>
                         <th>Fax</th>
-                        <th>Address</th>
+                        <th>Alamat</th>
+                        <th>Kota</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -89,6 +90,7 @@
                             <td>{{ $customer->email }}</td>
                             <td>{{ $customer->fax }}</td>
                             <td>{{ $customer->address }}</td>
+                            <td>{{ $customer->city }}</td>
                             <td>
                                 <div class="d-flex">
                                     <a href="#modalForm" data-toggle="modal"

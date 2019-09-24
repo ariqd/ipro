@@ -92,7 +92,6 @@
                         <tr>
                             <th>No</th>
                             <th>Kode - Nama Produk</th>
-                            {{-- <th>Merek - Kategori</th> --}}
                             <th>Tanggal Dibuat</th>
                             <th></th>
                         </tr>
@@ -108,7 +107,6 @@
                                 </small> <br>
                                 {{ $item->code }} - {{ $item->name }}
                             </td>
-                            {{-- <td></td> --}}
                             <td>{{ $item->created_at->toDayDateTimeString() }}</td>
                             <td>
                                 <a href="#modalForm" data-toggle="modal" data-href="{{ url('items/' . $item->id) }}"

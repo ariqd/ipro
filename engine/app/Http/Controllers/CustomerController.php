@@ -48,6 +48,7 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        // dd($input);
         unset($input['_token']);
 
         $validate = Validator::make($input, [

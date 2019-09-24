@@ -95,12 +95,16 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="pcs_per_pack" class="form-control-label">Pcs / Pack</label>
+            <input id="pcs_per_pack" class="form-control" name="pcs_per_pack" type="number"
+                value="{{ @$isEdit ? $item->pcs_per_pack : 1 }}" placeholder="Jumlah barang per pack" min="1">
+        </div>
+        <div class="form-group">
             <label for="notes" class="form-control-label">Catatan</label>
-            <input id="notes" class="form-control" name="notes" type="text"
-                value="{{ @$isEdit ? $item->notes : '' }}" placeholder="Catatan">
+            <input id="notes" class="form-control" name="notes" type="text" value="{{ @$isEdit ? $item->notes : '' }}"
+                placeholder="Catatan">
             <small class="text-muted">Boleh dikosongkan</small>
         </div>
-
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-muted" data-dismiss="modal"> Batal</button>

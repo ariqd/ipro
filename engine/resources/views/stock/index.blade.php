@@ -298,7 +298,6 @@
                         <td class="hold">
                             {{ $stock->hold }}
                         </td>
-
                         <td class="broken">
                             {{ $stock->broken }}
                         </td>

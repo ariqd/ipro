@@ -41,16 +41,22 @@
         </div>
     </div>
     <div class="row mt-3">
-        <div class="col-6">
+        <div class="col-4">
             <div class="text-center">
                 <p class="text-muted mb-0">Kebutuhan per meter persegi</p>
                 <h3>{{ $item->area }} <small>m2</small></h3>
             </div>
         </div>
-        <div class="col-6">
+        <div class="col-4">
             <div class="text-center">
-                <p class="text-muted mb-0">Tebal</p>
-                <h3>{{ $item->length }} <small>mm</small></h3>
+                <h3 class="mb-0">{{ $item->pcs_per_pack }}</h3>
+                <p class="text-muted mb-0">Pcs / Pack</p>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="text-center">
+                <p class="text-muted mb-0">Kebutuhan per meter persegi</p>
+                <h3>{{ $item->area }} <small>m2</small></h3>
             </div>
         </div>
     </div>
@@ -59,7 +65,7 @@
             <hr>
             <p class="text-muted mb-0">Catatan</p>
             <p>
-                {{ $item->notes }}
+                {{ $item->notes ?? '-' }}
             </p>
         </div>
     </div>

@@ -47,6 +47,13 @@
         </div>
         <div class="form-group row">
             <div class="col-lg-12">
+                <label for="city" class="form-control-label">Kota</label>
+                <input id="city" type="text" class="form-control" name="city"
+                    value="{{ @$customer->city ?? old('city') }}" placeholder="Ketikkan kota customer">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
                 <label for="fax" class="form-control-label">Fax Customer</label>
                 <input id="fax" class="form-control" name="fax" value="{{ @$customer ? $customer->fax : old('fax') }}">
                 <small class="text-secondary">Boleh dikosongkan</small>
@@ -69,7 +76,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal"> Cancel</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"> Cancel</button>
         <button type="submit" class="btn btn-success"><i class="fa fa-check"></i>
             Simpan
         </button>
