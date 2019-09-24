@@ -23,7 +23,7 @@ class StockController extends Controller
         $d['brands'] = Brand::all();
         $d['branches'] = Branch::all();
 
-        $d['stocks'] = Stock::with(['item.category.brand'])->get();
+        $d['stocks'] = Stock::with(['item.category.brand'])->latest()->get();
 
         $d['filtered'] = FALSE;
         if (!empty($request->all())) {
@@ -44,9 +44,7 @@ class StockController extends Controller
             }
 
             $d['stocks'] = $query->get();
-
             $d['filtered'] = TRUE;
-            //            dd($d['stocks']);
         }
 
         return view('stock.index', $d);
@@ -77,7 +75,6 @@ class StockController extends Controller
 
         $validate = Validator::make($input, [
             'item_id' => 'required|numeric',
-            'branch_id' => 'required|numeric',
             'quantity' => 'required|numeric',
             'price_branch' => 'required|numeric'
         ]);
@@ -85,8 +82,24 @@ class StockController extends Controller
         if ($validate->fails()) {
             return redirect('stocks')->withErrors($validate)->withInput($input);
         } else {
-            $stock = Stock::create($input);
-            return redirect('stocks')->with('info', $stock->name . ' berhasil ditambahkan!');
+            if ($input['massCheckBox'] == 'on') {
+                $branches = Branch::all();
+
+                foreach ($branches as $branch) {
+                    $stock = new Stock();
+                    $stock->item_id = $input['item_id'];
+                    $stock->branch_id = $branch->id;
+                    $stock->quantity = $input['quantity'];
+                    $stock->price_branch = $input['price_branch'];
+                    $stock->notes = $input['notes'];
+                    $stock->save();
+                }
+
+                return redirect('stocks')->with('info', 'Stok berhasil ditambahkan ke semua cabang!');
+            } else {
+                $stock = Stock::create($input);
+                return redirect('stocks')->with('info', 'Stok berhasil ditambahkan!');
+            }
         }
     }
 

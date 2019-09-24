@@ -15,6 +15,8 @@ class AccountController extends Controller
         'sales' => 'Sales Cabang',
         'finance' => 'Finance',
         'gudang' => 'Gudang',
+        'koordinator_wilayah' => 'Koordinator Wilayah',
+        'sales_ho' => 'Sales HO',
     ];
 
     /**

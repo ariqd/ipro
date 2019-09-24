@@ -37,9 +37,8 @@ class SalesOrderController extends Controller
         $d['customers'] = Customer::latest()->get();
         $d['brands'] = Brand::all();
         $d['branches'] = Branch::all();
-        $d['sales'] = User::sales()
-        // ->with(['details'])
-        ->get()->except(auth()->id());
+        $d['sales'] = User::sales()->get()->except(auth()->id());
+
 
         return view('sale.form', $d);
     }
@@ -49,31 +48,66 @@ class SalesOrderController extends Controller
         $input = $request->all();
         unset($input['_token']);
         $input['user_id'] = Auth::id();
-        if (Auth::user()->role == "admin") {
-            $input['user_id'] = Auth::id();
-        }
+        // if (Auth::user()->role == "admin") {
+        //     $input['user_id'] = Auth::id();
+        // }
         $sales_order_details = $input['item'];
         unset($input['item']);
 
         $counter = Counter::where("name", "=", "QO")->first();
         $branch_id = Auth::user()->branch_id;
-        $no_po = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
-        $input["quotation_id"] = $no_po;
+        $no_qo = "QO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
+        $input["quotation_id"] = $no_qo;
+
+        $d['max_discount'] = 14.5;
+        if (Auth::user()->role == 'koordinator_wilayah') {
+            $d['max_discount'] = 18.8;
+        } else if (Auth::user()->role == 'sales_ho') {
+            $d['max_discount'] = 22.85;
+        }
 
         $sales_order = Sale::create($input);
         $counter->counter += 1;
         $counter->save();
 
+        $discountCounter = 0; // Counter untuk barang yang diskonnya di atas 18.8%
         foreach ($sales_order_details as $sales_order_detail) {
+            // Jika diskon barang di atas 18.8% counter naik
+            if ($sales_order_detail['discount'] > 18.8) {
+                $discountCounter++;
+            }
+
+            // Jika diskon di atas 22.85% & role Korwil maka cancel pembuatan SO
+            if ($sales_order_detail['discount'] > 22.85 && Auth::user()->role == 'koordinator_wilayah') {
+                $sales_order->delete();
+                return redirect()->back()->withError('Koordinator Wilayah tidak bisa memberi diskon di atas 22.85%')->withInput($input);
+            }
+
             $stock = Stock::find($sales_order_detail['stock_id']);
             if ($sales_order_detail['qty'] > $stock->quantity) {
                 $sales_order->delete();
                 return redirect()->back()->withError('Jumlah pesanan ' . $stock->item->name . ' melebihi jumlah yang tersedia!')->withInput($input);
             }
+
             $sales_order_detail['sales_order_id'] = $sales_order->id;
             Sale_Detail::create($sales_order_detail);
             $stock->hold += $sales_order_detail['qty'];
             $stock->save();
+        }
+
+        if ($input['payment_method'] == 'CBD') { // Jika metode pembayarannya CBD
+            // START Approve SO
+            $no_so = "SO" . date("ymd") . str_pad($branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
+            $sales_order->no_so = $no_so;
+            // END Approve SO
+
+            // TAPI jika salesnya korwil & ada barang yang diskonnya di atas 18.8
+            if (Auth::user()->role == 'koordinator_wilayah' && $discountCounter > 0) {
+                $sales_order->no_so = null;  // Batal approve
+            }
+            // END
+
+            $sales_order->save();
         }
 
         return redirect('sales-orders')->with('info', 'Sales Order Created');

@@ -122,7 +122,7 @@ function addProduct(id) {
             '                       <div class="input-group">' +
             '                           <input type="number" class="form-control item-disc" onchange="countSubtotal(' + "'" + code + "'" + ')"' +
             '                                  id="item-disc-' + code + '"' +
-            '                                  min="0" max="15" value="0" step="any" name="item[' + items_count + '][discount]">' +
+            '                                  min="0" value="0" step="any" name="item[' + items_count + '][discount]">' +
             '                            <div class="input-group-append">' +
             '                               <span class="input-group-text bg-dark text-light"' +
             '                                   id="customer-name">%</span>' +

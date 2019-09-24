@@ -110,7 +110,7 @@
                             <td>{{ $item->created_at->toDayDateTimeString() }}</td>
                             <td>
                                 <a href="#modalForm" data-toggle="modal" data-href="{{ url('items/' . $item->id) }}"
-                                    class="btn btn-light btn-sm m-1">Detail</a>
+                                    class="btn btn-outline-dark btn-sm m-1">Detail</a>
                                 <a href="#modalForm" data-toggle="modal"
                                     data-href="{{ url('items/' . $item->id . '/edit') }}"
                                     class="btn btn-secondary btn-sm m-1">Edit</a>

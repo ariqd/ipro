@@ -10,7 +10,7 @@
     <div class="modal-body">
         <div class="form-group row">
             <div class="col-lg-12">
-                <label for="item" class="form-control-label">Pilih Item</label>
+                <label for="item" class="form-control-label">Pilih Produk</label>
                 <br>
                 <select class="item form-control" name="item_id" id="item" style="width: 100%">
                     <option></option>
@@ -22,7 +22,7 @@
                     @endforeach
                 </select>
                 <a href="{{ url('items') }}" class="btn btn-secondary btn-block btn-sm my-3"><i class="fa fa-plus"></i>
-                    Lihat Item</a>
+                    Lihat Daftar Seluruh Produk</a>
             </div>
         </div>
         @if(@$isEdit == false)
@@ -38,9 +38,15 @@
                     </option>
                     @endforeach
                 </select>
-                <a href="{{ url('branches') }}" class="btn btn-secondary btn-block btn-sm my-3"><i
-                        class="fa fa-plus"></i> Lihat Cabang</a>
+                <a href="{{ url('branches') }}" class="btn btn-secondary btn-block btn-sm mt-3"><i
+                        class="fa fa-plus"></i> Lihat Daftar Seluruh Cabang</a>
             </div>
+        </div>
+        <div class="custom-control custom-checkbox col-12 mb-3">
+            <input type="checkbox" name="massCheckBox" class="custom-control-input" id="massCheckBox">
+            <label class="custom-control-label" for="massCheckBox">
+                Buat untuk semua cabang
+            </label>
         </div>
         @else
         <div class="form-group">
@@ -58,7 +64,7 @@
             <label for="quantity" class="form-control-label">Quantity (per batang)</label>
             <div class="input-group">
                 <input type="number" id="quantity" class="form-control" name="quantity"
-                    value="{{ @$isEdit ? $stock->quantity : '' }}">
+                    value="{{ @$isEdit ? $stock->quantity : 1 }}" min="1">
                 <div class="input-group-append">
                     <span class="input-group-text">pcs</span>
                 </div>
@@ -115,6 +121,14 @@
             $('#price_branchDangerBlock').removeClass('d-none');
         } else {
             $('#price_branchDangerBlock').addClass('d-none');
+        }
+    });
+
+    $('#massCheckBox').on('click', function () {
+        if (this.checked) {
+            $('#branch').attr('disabled', true);
+        } else {
+            $('#branch').removeAttr('disabled');
         }
     });
 
