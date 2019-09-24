@@ -160,9 +160,9 @@
                         jmlhqty += parseInt(value.qty);
 
                         //tambah footer
-                        $("#jmlh-item").text(jmlhitem);
-                        $("#jmlh-berat").text(jmlhberat);
-                        $("#jmlh-qty").text(jmlhqty);
+                        $("#jmlh-item").text(number_format(jmlhitem, 0, ',', '.'));
+                        $("#jmlh-berat").text(number_format(jmlhberat, 0, ',', '.'));
+                        $("#jmlh-qty").text(number_format(jmlhqty, 0, ',', '.'));
                 });
                 updateRowOrder();
 
@@ -192,8 +192,8 @@
 
         jmlhharga += harga;
         jmlhamount += parseInt($('#harga-'+count).val());
-        $("#jmlh-harga").text(jmlhharga);
-        $("#jmlh-amount").text(jmlhamount);
+        $("#jmlh-harga").text("Rp. "+number_format(jmlhharga, 0, ',', '.'));
+        $("#jmlh-amount").text("Rp. "+number_format(jmlhamount, 0, ',', '.'));
 
     }
 
@@ -276,11 +276,11 @@
                         jmlhqty += parseInt($("#qty").val());
                         jmlhamount += parseInt($("#modal").val());
                         //tambah footer
-                        $("#jmlh-item").text(jmlhitem);
-                        $("#jmlh-berat").text(jmlhberat);
-                        $("#jmlh-qty").text(jmlhqty);
-                        $("#jmlh-harga").text(jmlhharga);
-                        $("#jmlh-amount").text(jmlhamount);
+                        $("#jmlh-item").text(number_format(jmlhitem, 0, ',', '.'));
+                        $("#jmlh-berat").text(number_format(jmlhberat, 0, ',', '.'));
+                        $("#jmlh-qty").text(number_format(jmlhqty, 0, ',', '.'));
+                        $("#jmlh-harga").text("Rp. "+number_format(jmlhharga, 0, ',', '.'));
+                        $("#jmlh-amount").text("Rp. "+number_format(jmlhamount, 0, ',', '.'));
                     },
                     error: function (xhr, statusCode, error) {}
                 });

@@ -50,6 +50,7 @@
                 </div>
             </div>
         </div>
+        @if (Auth::user()->role == "admin") {
         <div class="form-group row">
             <div class="col-lg-12">
                 <label for="role" class="form-control-label">Jabatan</label>
@@ -77,6 +78,7 @@
                 </select>
             </div>
         </div>
+        @endif
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal"> Batal</button>

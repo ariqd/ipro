@@ -6,8 +6,8 @@
                     <i class="fa fa-home"></i> Home
                 </a>
             </li>
-
             @if(Gate::allows('isAdmin'))
+
             <li class="nav-item">
                 <a href="{{ url('dashboard') }}" class="nav-link {{ (request()->is('dashboard*')) ? 'active' : '' }}">
                     <i class="fa fa-dashboard"></i> Dashboard
@@ -91,6 +91,12 @@
             @endif
 
             @if (Gate::allows('isSales'))
+
+            <li class="nav-item">
+                <a href="{{ url('dashboard') }}" class="nav-link {{ (request()->is('dashboard*')) ? 'active' : '' }}">
+                    <i class="fa fa-dashboard"></i> Dashboard
+                </a>
+            </li>
             <li class="nav-item">
                 <a href="{{ url('sales-orders') }}"
                     class="nav-link {{ (request()->is('sales-orders*')) && !request()->is('sales-orders/check/approve') ? 'active' : '' }}">
@@ -129,6 +135,11 @@
                     <i class="fa fa-line-chart"></i> Finance
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ url('stocks') }}" class="nav-link {{ (request()->is('stocks*')) ? 'active' : '' }}">
+                    <i class="fa fa-list"></i> Stok
+                </a>
+            </li>   
             @endif
 
             @if(Gate::allows('isGudang'))

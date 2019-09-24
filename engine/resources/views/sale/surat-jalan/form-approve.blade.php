@@ -281,7 +281,7 @@
                     Dikirim dengan Mobil
                 </label>
                 <input class="form-control" name="mobil" required placeholder="Contoh: Tata"
-                    {{ $sale->delivery ? 'disabled' : '' }} value="{{ $sale->delivery ? $sale->delivery->mobil : '' }}">
+                     value="">
             </div>
         </div>
         <div class="col-md-6">
@@ -290,7 +290,7 @@
                     Dikirim dengan Plat
                 </label>
                 <input class="form-control" name="plat" required placeholder="Contoh: D 8078 F"
-                    {{ $sale->delivery ? 'disabled' : '' }} value="{{ $sale->delivery ? $sale->delivery->plat : '' }}">
+                    value="">
             </div>
         </div>
         <div class="col-12">

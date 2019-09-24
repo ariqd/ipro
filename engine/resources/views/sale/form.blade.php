@@ -225,6 +225,8 @@
     });
 
     $("#case_2").change(function () {
+        $("#sales_id").val("null").trigger("change");
+        $("#admin_id").val("null").trigger("change");
         $(".case4").hide();
         $(".case4").prop("disabled", true);
         $(".case3").hide();
@@ -290,6 +292,7 @@
             <div class="case3 pt-3" style="display: none;">
                 <label for="sales_id">Referral</label>
                 <select name="sales_id" class="form-control sales case3" style="display: none;" id="sales_id">
+                    <option selected></option>
                     @foreach ($sales as $item)
                     <option value="{{$item->id}}"> {{$item->name}}</option>
                     @endforeach
@@ -298,6 +301,7 @@
             <div class="case4 pt-3" style="display: none;">
                 <label for="admin_id">Admin</label>
                 <select name="admin_id" class="form-control sales case4" style="display: none;" id="admin_id">
+                    <option selected></option>
                     @foreach ($sales as $item)
                     <option value="{{$item->id}}"> {{$item->name}}</option>
                     @endforeach

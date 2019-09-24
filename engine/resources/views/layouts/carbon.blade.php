@@ -41,6 +41,9 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right">
+                            <a href="{{ url('accounts') }}" class="dropdown-item">
+                                    <i class="fa fa-user"></i> Profile
+                                </a>
                         <a href="#" class="dropdown-item btnLogout">
                             <i class="fa fa-lock"></i> Logout
                         </a>

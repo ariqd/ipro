@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Branch;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
@@ -23,8 +24,13 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $d['users'] = User::all();
-        return view('account.index', $d);
+        if (Auth::user()->role == "admin") {
+            $d['users'] = User::all();
+            return view('account.index', $d);
+        } else {
+            $d['users'] = User::where("id","=",Auth::user()->id)->get();
+            return view('account.index', $d);
+        }
     }
 
     /**

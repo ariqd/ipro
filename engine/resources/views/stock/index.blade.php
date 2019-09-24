@@ -30,7 +30,6 @@
     .dataTables_wrapper .mylength .dataTables_length {
         float: right
     }
-
 </style>
 @endpush
 
@@ -170,8 +169,8 @@
                 </a>
                 @endif
                 @if(Gate::allows('isAdmin'))
-                <a href="#modalForm" data-toggle="modal" data-href="{{ url('stocks/create') }}" class="btn btn-success"><i
-                        class="fa fa-plus"></i> Tambah Stok</a>
+                <a href="#modalForm" data-toggle="modal" data-href="{{ url('stocks/create') }}"
+                    class="btn btn-success"><i class="fa fa-plus"></i> Tambah Stok</a>
                 @endif
             </div>
         </div>
@@ -265,9 +264,11 @@
                 <thead>
                     <tr>
                         <th>No.</th>
+                        <th>Item Code</th>
                         <th>Item</th>
                         <th class="stock">Stok (per Batang)</th>
                         <th class="holds">Stok (Hold per Batang)</th>
+                        <th class="holds">Rusak (per Batang)</th>
                         <th class="berat">Berat (kg)</th>
                         <th class="harga">Harga Pricelist</th>
                         <th>Cabang</th>
@@ -282,18 +283,24 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>
+                            {{ $stock->item->code }} </td>
+                        <td>
                             <small class="text-secondary">
                                 {{ $stock->item->category->brand->name }}
                                 -
                                 {{ $stock->item->category->name }}
                             </small> <br>
-                            {{ $stock->item->code }} - {{ $stock->item->name }}
+                            {{ $stock->item->name }}
                         </td>
                         <td class="stok">
                             {{ $stock->quantity - $stock->hold }}
                         </td>
                         <td class="hold">
                             {{ $stock->hold }}
+                        </td>
+
+                        <td class="broken">
+                            {{ $stock->broken }}
                         </td>
                         <td class="weight berat">
                             {{ $stock->item->weight }}

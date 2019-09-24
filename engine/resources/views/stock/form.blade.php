@@ -42,6 +42,17 @@
                         class="fa fa-plus"></i> Lihat Cabang</a>
             </div>
         </div>
+        @else
+        <div class="form-group">
+            <label for="broken" class="form-control-label">Jumlah Rusak</label>
+            <div class="input-group">
+                <input type="number" id="broken" class="form-control" name="broken"
+                    value="{{ @$isEdit ? $stock->broken : '' }}">
+                <div class="input-group-append">
+                    <span class="input-group-text">pcs</span>
+                </div>
+            </div>
+        </div>
         @endif
         <div class="form-group">
             <label for="quantity" class="form-control-label">Quantity (per batang)</label>
