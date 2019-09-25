@@ -6,8 +6,8 @@
                     <i class="fa fa-home"></i> Home
                 </a>
             </li>
-            @if(Gate::allows('isAdmin'))
 
+            @if(Gate::allows('isAdmin'))
             <li class="nav-item">
                 <a href="{{ url('dashboard') }}" class="nav-link {{ (request()->is('dashboard*')) ? 'active' : '' }}">
                     <i class="fa fa-dashboard"></i> Dashboard
@@ -90,8 +90,7 @@
             </li>
             @endif
 
-            @if (Gate::allows('isSales'))
-
+            @if (Gate::allows('isSales') || Gate::allows('isKorwil') || Gate::allows('isSalesHo'))
             <li class="nav-item">
                 <a href="{{ url('dashboard') }}" class="nav-link {{ (request()->is('dashboard*')) ? 'active' : '' }}">
                     <i class="fa fa-dashboard"></i> Dashboard

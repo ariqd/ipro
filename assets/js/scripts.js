@@ -127,6 +127,7 @@ function addProduct(id) {
             '                               <span class="input-group-text bg-dark text-light"' +
             '                                   id="customer-name">%</span>' +
             '                            </div>' +
+            '                   <small class="text-muted" id="item-disc-help-' + code + '">Pecahan desimal menggunakan titik (.)</small>' +
             '                        </div>' +
             '                    </div>' +
             '                </div>' +

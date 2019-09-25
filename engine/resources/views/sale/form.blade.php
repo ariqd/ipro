@@ -605,7 +605,6 @@
                                 <label class="custom-control-label" for="payment_method_cbd">Cash Before Delivery
                                     (CBD)</label>
                             </div>
-                            @if(Gate::allows("isAdmin")||Gate::allows("isFinance"))
                             <div class="custom-control custom-radio mt-2">
                                 <input type="radio" id="payment_method_cod" name="payment_method"
                                     class="custom-control-input" value="COD">
@@ -618,7 +617,6 @@
                                 <label class="custom-control-label" for="payment_method_credit">Down Payment /
                                     Credit</label>
                             </div>
-                            @endif
                         </div>
                     </div>
                 </div>

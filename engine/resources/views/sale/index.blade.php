@@ -48,7 +48,7 @@
                         <th>No. Quotation</th>
                         <th>No. SO</th>
                         <th>Customer</th>
-                        @if (auth()->user()->role == 'admin' || auth()->user()->role == 'finance')
+                        @if (auth()->user()->role != 'sales')
                         <th>Sales</th>
                         @endif
                         <th></th>
@@ -68,11 +68,16 @@
                             {{ $sale->no_so}}
                         </td>
                         <td>{{ $sale->customer->project_owner }}</td>
-                        @if (auth()->user()->role == 'admin' || auth()->user()->role == 'finance')
-                        <td>{{ $sale->user->name }} ({{ $sale->user->branch->name }})</td>
+                        @if (auth()->user()->role != 'sales')
+                        <td>
+                            {{ $sale->user->name }}
+                            <p class="mb-0">
+                                <small class="text-muted">{{ $sale->user->branch->name }}</small>
+                            </p>
+                        </td>
                         @endif
                         <td>
-                            @if(Gate::allows("isAdmin")||Gate::allows("isGudang"))
+                            @if(Gate::allows("isAdmin") || Gate::allows("isGudang") || Gate::allows('isSalesHo'))
                             @if($sale->no_so == null)
                             <a href="{{ url('sales-orders/'.$sale->id.'/payment') }}"
                                 class="btn btn-warning btn-sm my-1 text-dark">
@@ -94,7 +99,7 @@
                             <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm my-1" my-1>
                                 Show </a>
                             @endif
-                            @elseif(Gate::allows("isSales"))
+                            @elseif(Gate::allows("isSales") || Gate::allows('isKorwil'))
                             <a href="{{ url('sales-orders/'.$sale->id) }}" class="btn btn-dark btn-sm my-1" my-1>
                                 Show </a>
                             @endif

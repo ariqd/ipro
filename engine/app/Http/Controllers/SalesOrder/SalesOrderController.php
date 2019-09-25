@@ -18,13 +18,16 @@ class SalesOrderController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->role == 'admin' || Auth::user()->role == 'gudang')
-            $d['sales'] = Sale::with(['customer', 'user.branch'])->latest()->get();
-        else
+        if (Auth::user()->role == 'sales') {
             $d['sales'] = Sale::mySales()->with(['customer', 'user.branch'])->latest()->get();
+        } else if (Auth::user()->role == 'koordinator_wilayah') {
+            $d['sales'] = Sale::myArea()->with(['customer', 'user.branch'])->latest()->get();
+        } else {
+            $d['sales'] = Sale::with(['customer', 'user.branch'])->latest()->get();
+        }
 
-        if (Auth::user()->role == 'finance')
-            return redirect('sales-orders/check/approve');
+        // if (Auth::user()->role == 'finance' || Auth::user()->role == 'sales_ho')
+        //     return redirect('sales-orders/check/approve');
 
         return view('sale.index', $d);
     }
@@ -77,10 +80,18 @@ class SalesOrderController extends Controller
                 $discountCounter++;
             }
 
-            // Jika diskon di atas 22.85% & role Korwil maka cancel pembuatan SO
-            if ($sales_order_detail['discount'] > 22.85 && Auth::user()->role == 'koordinator_wilayah') {
+            // Jika diskon di atas 22.85% & role Korwil atau Sales HO maka cancel pembuatan SO
+            if ($sales_order_detail['discount'] > 22.85) {
+                if (Auth::user()->role == 'koordinator_wilayah' || Auth::user() - role == 'Sales HO') {
+                    $sales_order->delete();
+                    return redirect()->back()->withError('Koordinator Wilayah & Sales HO tidak bisa memberi diskon di atas 22.85%')->withInput($input);
+                }
+            }
+
+            // Jika diskon di atas 14.5% & role Korwil maka cancel pembuatan SO
+            if ($sales_order_detail['discount'] > 14.5 && Auth::user()->role == 'sales') {
                 $sales_order->delete();
-                return redirect()->back()->withError('Koordinator Wilayah tidak bisa memberi diskon di atas 22.85%')->withInput($input);
+                return redirect()->back()->withError('Sales tidak bisa memberi diskon di atas 14.5%')->withInput($input);
             }
 
             $stock = Stock::find($sales_order_detail['stock_id']);
@@ -92,6 +103,7 @@ class SalesOrderController extends Controller
             $sales_order_detail['sales_order_id'] = $sales_order->id;
             Sale_Detail::create($sales_order_detail);
             $stock->hold += $sales_order_detail['qty'];
+
             $stock->save();
         }
 

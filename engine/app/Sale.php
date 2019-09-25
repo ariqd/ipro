@@ -50,7 +50,14 @@ class Sale extends Model
         return $query->where('user_id', Auth::id());
     }
 
-    public function delivery() 
+    public function scopeMyArea($query)
+    {
+        return $query->whereHas('user', function ($q) {
+            $q->where('branch_id', '=', Auth::user()->branch_id);
+        });
+    }
+
+    public function delivery()
     {
         return $this->hasOne('App\Delivery_Order', 'sales_order_id');
     }
