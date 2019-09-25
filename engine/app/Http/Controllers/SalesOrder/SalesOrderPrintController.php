@@ -47,14 +47,15 @@ class SalesOrderPrintController extends Controller
         $data["detail"] = $data->details;
         // $this->angkaTerbilang();
         if ($request->has("markup")) {
-            $data["markup"] = 0;
-        } else {
             $data["markup"] = 1;
+        } else {
+            $data["markup"] = 0;
         }
         foreach ($data["detail"] as $key) {
             $key["stock"] = $key->stock;
             $key["stock"]["item"] = $key["stock"]->item;
         }
+
         $pdf = PDF::loadView('print.sales-order', ['sale' => $data]);
         return $pdf->download('invoice.pdf');
     }

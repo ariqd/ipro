@@ -180,13 +180,13 @@ class SalesOrderController extends Controller
         // $counter->save();
 
         foreach ($sales_order_details as $sales_order_detail) {
-            $stock = Stock::find($sales_order_detail['stock_id']);
+            // $stock = Stock::find($sales_order_detail['stock_id']);
             // if ($sales_order_detail['qty'] > $stock->quantity) {
             //     $sales_order->delete();
             //     return redirect()->back()->withError('Jumlah pesanan ' . $stock->item->name . ' melebihi jumlah yang tersedia!')->withInput($input);
             // }
             $sales_order_detail['sales_order_id'] = $sales_order->id;
-            // Sale_Detail::create($sales_order_detail);
+            Sale_Detail::create($sales_order_detail);
             // $stock->hold += $sales_order_detail['qty'];
             // $stock->save();
         }
