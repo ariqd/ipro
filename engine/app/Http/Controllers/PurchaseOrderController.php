@@ -86,7 +86,11 @@ class PurchaseOrderController extends Controller
                     "purchase_id" => $purchase->id
                 ];
             }
-            Purchase_Detail::create($purchase_detail);
+            
+            $purchase_item = Purchase_Detail::create($purchase_detail);
+            $item = $purchase_item->item;
+            $item->po_price = $purchase_item->purchase_price;
+            $item->save();
         }
         $counter->counter += 1;
         $counter->save();

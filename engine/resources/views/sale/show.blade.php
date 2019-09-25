@@ -414,7 +414,7 @@
                     <div class="row">
                         <div class="form-group col-10">
                             @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
-                            @if(Gate::allows('isFinance'))
+                            @if(Gate::allows('isFinance') || (Gate::allows('isSales')) && )
                             <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print Invoice">
                             @else
                             <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print SO">

@@ -26,9 +26,6 @@ class SalesOrderController extends Controller
             $d['sales'] = Sale::with(['customer', 'user.branch'])->latest()->get();
         }
 
-        // if (Auth::user()->role == 'finance' || Auth::user()->role == 'sales_ho')
-        //     return redirect('sales-orders/check/approve');
-
         return view('sale.index', $d);
     }
 

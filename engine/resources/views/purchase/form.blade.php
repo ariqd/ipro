@@ -16,6 +16,7 @@
         z-index: 2000;
         display: none;
     }
+
 </style>
 @endpush
 
@@ -85,7 +86,7 @@
         });
     });
 
-    $("#items").change(function(){
+    $("#items").change(function () {
         $.ajax({
             url: "{!! url('items/search/detail') !!}/" + $("#items").val(),
             method: "get",
@@ -122,12 +123,17 @@
                     cell1.innerHTML = value.category.name;
                     cell2.innerHTML = value.item.code;
                     cell3.innerHTML = value.item.name;
-                    cell4.innerHTML = '<input type="hidden" id="berat-'+count+'" value="value.item.weight">'+value.item.weight + " Kg";
-                    cell5.innerHTML = '<input type="number" onchange="updateharga('+count+')" class="form-control" id="harga-'+count+'"  name="modal[]" value="'+value.item.purchase_price+'" required/>';
+                    cell4.innerHTML = '<input type="hidden" id="berat-' + count +
+                        '" value="value.item.weight">' + value.item.weight + " Kg";
+                    cell5.innerHTML = '<input type="number" onchange="updateharga(' +
+                        count + ')" class="form-control" id="harga-' + count +
+                        '"  name="modal[]" value="' + value.item.po_price +
+                        '" required/>';
                     cell6.innerHTML = value.qty + ' pcs';
                     cell7.innerHTML = response.header.no_so;
                     cell8.innerHTML =
-                        '<input type="number" class="form-control" id="total-harga-'+count+'" required/>';
+                        '<input type="number" class="form-control" id="total-harga-' +
+                        count + '" required/>';
                     cell9.innerHTML = "";
                     // '<a style="cursor:pointer" onclick=voidItem("item-' + count + '") class=""> <i class="fa fa-trash"></i> </a>';
 
@@ -155,14 +161,14 @@
 
                     count++;
 
-                        jmlhitem++;
-                        jmlhberat += value.item.weight * value.qty;
-                        jmlhqty += parseInt(value.qty);
+                    jmlhitem++;
+                    jmlhberat += value.item.weight * value.qty;
+                    jmlhqty += parseInt(value.qty);
 
-                        //tambah footer
-                        $("#jmlh-item").text(number_format(jmlhitem, 0, ',', '.'));
-                        $("#jmlh-berat").text(number_format(jmlhberat, 0, ',', '.'));
-                        $("#jmlh-qty").text(number_format(jmlhqty, 0, ',', '.'));
+                    //tambah footer
+                    $("#jmlh-item").text(number_format(jmlhitem, 0, ',', '.'));
+                    $("#jmlh-berat").text(number_format(jmlhberat, 0, ',', '.'));
+                    $("#jmlh-qty").text(number_format(jmlhqty, 0, ',', '.'));
                 });
                 updateRowOrder();
 
@@ -174,26 +180,26 @@
 
     function voidItem(id) {
         //cek
-        console.log("Berat "+$("#berat-"+id).val());
-        console.log("Berat "+$("#berat-"+id).val());
+        console.log("Berat " + $("#berat-" + id).val());
+        console.log("Berat " + $("#berat-" + id).val());
 
         $("." + id).remove();
         updateRowOrder();
     }
 
-    function updateharga(count){
-        jmlhamount -= $('#total-harga-'+count).val() / $('#qty-'+count).val();
+    function updateharga(count) {
+        jmlhamount -= $('#total-harga-' + count).val() / $('#qty-' + count).val();
 
-        var hargalama = $('#total-harga-'+count).val();
+        var hargalama = $('#total-harga-' + count).val();
         jmlhharga -= hargalama
 
-        var harga = $('#harga-'+count).val() * $('#qty-'+count).val()
-        $('#total-harga-'+count).val(harga);
+        var harga = $('#harga-' + count).val() * $('#qty-' + count).val()
+        $('#total-harga-' + count).val(harga);
 
         jmlhharga += harga;
-        jmlhamount += parseInt($('#harga-'+count).val());
-        $("#jmlh-harga").text("Rp. "+number_format(jmlhharga, 0, ',', '.'));
-        $("#jmlh-amount").text("Rp. "+number_format(jmlhamount, 0, ',', '.'));
+        jmlhamount += parseInt($('#harga-' + count).val());
+        $("#jmlh-harga").text("Rp. " + number_format(jmlhharga, 0, ',', '.'));
+        $("#jmlh-amount").text("Rp. " + number_format(jmlhamount, 0, ',', '.'));
 
     }
 
@@ -236,12 +242,14 @@
                         cell1.innerHTML = response.item.category.name;
                         cell2.innerHTML = response.item.code;
                         cell3.innerHTML = response.item.name;
-                        cell4.innerHTML = '<input type="hidden" id="berat-'+count+'" value="response.item.weight">'+response.item.weight + " Kg";
+                        cell4.innerHTML = '<input type="hidden" id="berat-' + count +
+                            '" value="response.item.weight">' + response.item.weight + " Kg";
                         // cell6.innerHTML = "Rp " + number_format(response.item.purchase_price);
-                        cell5.innerHTML = "Rp "+ number_format($("#modal").val(), 0, ',', '.');
+                        cell5.innerHTML = "Rp " + number_format($("#modal").val(), 0, ',', '.');
                         cell6.innerHTML = $("#qty").val() + ' pcs';
                         cell7.innerHTML = "";
-                        cell8.innerHTML = "Rp " + number_format($("#qty").val() * $("#modal").val(), 0, ',', '.');
+                        cell8.innerHTML = "Rp " + number_format($("#qty").val() * $("#modal").val(),
+                            0, ',', '.');
                         cell9.innerHTML = "";
                         // '<a style="cursor:pointer" onclick=voidItem("item-' + count + '") class=""> <i class="fa fa-trash"></i> </a>';
 
@@ -279,8 +287,8 @@
                         $("#jmlh-item").text(number_format(jmlhitem, 0, ',', '.'));
                         $("#jmlh-berat").text(number_format(jmlhberat, 0, ',', '.'));
                         $("#jmlh-qty").text(number_format(jmlhqty, 0, ',', '.'));
-                        $("#jmlh-harga").text("Rp. "+number_format(jmlhharga, 0, ',', '.'));
-                        $("#jmlh-amount").text("Rp. "+number_format(jmlhamount, 0, ',', '.'));
+                        $("#jmlh-harga").text("Rp. " + number_format(jmlhharga, 0, ',', '.'));
+                        $("#jmlh-amount").text("Rp. " + number_format(jmlhamount, 0, ',', '.'));
                     },
                     error: function (xhr, statusCode, error) {}
                 });
