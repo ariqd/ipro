@@ -64,7 +64,7 @@
             <label for="quantity" class="form-control-label">Quantity (per batang)</label>
             <div class="input-group">
                 <input type="number" id="quantity" class="form-control" name="quantity"
-                    value="{{ @$isEdit ? $stock->quantity : 1 }}" min="1">
+                    value="{{ @$isEdit ? $stock->quantity : 1 }}">
                 <div class="input-group-append">
                     <span class="input-group-text">pcs</span>
                 </div>

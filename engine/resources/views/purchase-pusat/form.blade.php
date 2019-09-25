@@ -91,7 +91,7 @@
             url: "{!! url('items/search/detail') !!}/" + $("#items").val(),
             method: "get",
             success: function (response) {
-                $("#modal").val(response.item.po_price);
+                $("#modal").val(response.item.purchase_price);
             },
             error: function (xhr, statusCode, error) {}
         });
@@ -114,28 +114,14 @@
                     var cell4 = row.insertCell(4);
                     var cell5 = row.insertCell(5);
                     var cell6 = row.insertCell(6);
-                    var cell7 = row.insertCell(7);
-                    var cell8 = row.insertCell(8);
-                    var cell9 = row.insertCell(9);
-                    cell0.setAttribute('class', "form_id");
-                    cell6.setAttribute('class', "subtotal");
 
                     cell1.innerHTML = value.category.name;
                     cell2.innerHTML = value.item.code;
                     cell3.innerHTML = value.item.name;
                     cell4.innerHTML = '<input type="hidden" id="berat-' + count +
                         '" value="value.item.weight">' + value.item.weight + " Kg";
-                    cell5.innerHTML = '<input type="number" onchange="updateharga(' +
-                        count + ')" class="form-control" id="harga-' + count +
-                        '"  name="modal[]" value="' + value.item.po_price +
-                        '" required/>';
-                    cell6.innerHTML = value.qty + ' pcs';
-                    cell7.innerHTML = response.header.no_so;
-                    cell8.innerHTML =
-                        '<input type="number" class="form-control" id="total-harga-' +
-                        count + '" required/>';
-                    cell9.innerHTML = "";
-                    // '<a style="cursor:pointer" onclick=voidItem("item-' + count + '") class=""> <i class="fa fa-trash"></i> </a>';
+                    cell5.innerHTML = value.qty + ' pcs';
+                    cell6.innerHTML = response.header.no_so;
 
                     var container = document.getElementById("input-body");
                     var input = document.createElement("input");
@@ -167,7 +153,7 @@
 
                     //tambah footer
                     $("#jmlh-item").text(number_format(jmlhitem, 0, ',', '.'));
-                    $("#jmlh-berat").text(number_format(jmlhberat, 0, ',', '.'));
+                    $("#jmlh-berat").text(jmlhberat);
                     $("#jmlh-qty").text(number_format(jmlhqty, 0, ',', '.'));
                 });
                 updateRowOrder();
@@ -231,27 +217,15 @@
                         var cell3 = row.insertCell(3);
                         var cell4 = row.insertCell(4);
                         var cell5 = row.insertCell(5);
-                        // var cell6 = row.insertCell(6);
                         var cell6 = row.insertCell(6);
-                        var cell7 = row.insertCell(7);
-                        var cell8 = row.insertCell(8);
-                        var cell9 = row.insertCell(9);
-                        cell0.setAttribute('class', "form_id");
-                        cell7.setAttribute('class', "subtotal");
 
                         cell1.innerHTML = response.item.category.name;
                         cell2.innerHTML = response.item.code;
                         cell3.innerHTML = response.item.name;
                         cell4.innerHTML = '<input type="hidden" id="berat-' + count +
                             '" value="response.item.weight">' + response.item.weight + " Kg";
-                        // cell6.innerHTML = "Rp " + number_format(response.item.purchase_price);
-                        cell5.innerHTML = "Rp " + number_format($("#modal").val(), 0, ',', '.');
-                        cell6.innerHTML = $("#qty").val() + ' pcs';
-                        cell7.innerHTML = "";
-                        cell8.innerHTML = "Rp " + number_format($("#qty").val() * $("#modal").val(),
-                            0, ',', '.');
-                        cell9.innerHTML = "";
-                        // '<a style="cursor:pointer" onclick=voidItem("item-' + count + '") class=""> <i class="fa fa-trash"></i> </a>';
+                        cell5.innerHTML = $("#qty").val() + ' pcs';
+                        cell6.innerHTML = "";
 
                         var container = document.getElementById("input-body");
                         var input = document.createElement("input");
@@ -259,14 +233,6 @@
                         input.name = "item-id[]";
                         input.setAttribute('value', response.item.id);
                         input.setAttribute('class', "item-" + count);
-                        container.appendChild(input);
-
-                        var container = document.getElementById("input-body");
-                        var input = document.createElement("input");
-                        input.type = "hidden";
-                        input.name = "modal[]";
-                        input.setAttribute('value', $("#modal").val());
-                        input.setAttribute('id', "harga-" + count);
                         container.appendChild(input);
 
                         var input = document.createElement("input");
@@ -285,7 +251,7 @@
                         jmlhamount += parseInt($("#modal").val());
                         //tambah footer
                         $("#jmlh-item").text(number_format(jmlhitem, 0, ',', '.'));
-                        $("#jmlh-berat").text(number_format(jmlhberat, 0, ',', '.'));
+                        $("#jmlh-berat").text(jmlhberat);
                         $("#jmlh-qty").text(number_format(jmlhqty, 0, ',', '.'));
                         $("#jmlh-harga").text("Rp. " + number_format(jmlhharga, 0, ',', '.'));
                         $("#jmlh-amount").text("Rp. " + number_format(jmlhamount, 0, ',', '.'));
@@ -410,11 +376,10 @@
                                 {{--@endforeach--}}
                             </select>
                         </div>
-                        <br>
-                        <div class="form-group col-lg-6">
+                        {{-- <div class="form-group col-lg-6">
                             <label for="modal">Modal satuan</label>
                             <input type="number" class="form-control" step="1" min="0" id="modal">
-                        </div>
+                        </div> --}}
                         <div class="form-group col-lg-6">
                             <label for="qty">Quantity</label>
                             <input type="number" class="form-control" step="1" min="0" id="qty">
@@ -437,12 +402,8 @@
                                     <th>Kode Barang</th>
                                     <th>Item</th>
                                     <th>Berat/pcs</th>
-                                    <th>Harga/pcs</th>
                                     <th>Order Qty/pcs</th>
-                                    {{-- <th>Price/pcs</th> --}}
                                     <th>No. Sales</th>
-                                    <th>Harga Total</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody id="purchase-body">
@@ -451,16 +412,24 @@
                                 </tr>
                             </tbody>
                             <tfoot>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th id="jmlh-item">Item</th>
-                                <th id="jmlh-berat">Berat/pcs</th>
-                                <th id="jmlh-amount">Total Amount (IDR)</th>
-                                <th id="jmlh-qty">Order Qty/pcs</th>
-                                <th></th>
-                                <th id="jmlh-harga">Harga PO</th>
-                                <th></th>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th id="jmlh-item">-</th>
+                                    <th id="jmlh-berat">-</th>
+                                    <th id="jmlh-qty">-</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>Jumlah Produk</th>
+                                    <th>Total Berat/pcs (Kg)</th>
+                                    <th>Total Order Qty/pcs</th>
+                                    <th></th>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>

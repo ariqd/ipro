@@ -17,22 +17,19 @@ class FinanceController extends Controller
     public function index()
     {
         $setting = 1;
-        $month =date("n")-1;
+        $month = date("n") - 1;
         $day = 15;
-        if($day < 15){
+        if ($day < 15) {
             $month--;
         }
         $monthmoduloberjalan = $month - ($month % $setting);
         $monthmodulosisa = $monthmoduloberjalan + $setting;
 
-
-        $d['sales'] = User::sales()->get();
+        $d['sales'] = User::sales()->orWhere('role', '=', 'koordinator_wilayah')->get();
         $settings = Setting::where(['name' => 'finance-period-start'])
             ->orWhere(['name' => 'finance-period-end'])->get()->keyBy('name');
-        $d['from'] = date("d F",mktime(0, 0, 0, $monthmoduloberjalan+1  , 15, date("Y")));
-        $d['to'] = date("d F",mktime(0, 0, 0, $monthmodulosisa+1, 14, date("Y")));
-
-        // dd($d);
+        $d['from'] = date("d F", mktime(0, 0, 0, $monthmoduloberjalan + 1, 15, date("Y")));
+        $d['to'] = date("d F", mktime(0, 0, 0, $monthmodulosisa + 1, 14, date("Y")));
 
         return view('finance.index', $d);
     }

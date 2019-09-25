@@ -20,6 +20,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('purchase-orders/{id}/pdf/po', 'PurchaseOrderController@printPO');
     Route::get('purchase-orders/{id}/pdf/memo', 'PurchaseOrderController@printMemoPengambilanProduk');
 
+    // Route::resource('purchase-orders-pusat', 'PurchaseOrderPusatController');
+    // Route::get('purchase-orders-pusat/create/add-items', 'PurchaseOrderPusatController@addItems');
+    // Route::post('purchase-orders-pusat/{id}/approve', "PurchaseOrderPusatController@approve");
+    // Route::get('purchase-orders-pusat/{id}/search', "PurchaseOrderPusatController@search");
+    // Route::get('purchase-orders-pusat/{id}/pdf/po', 'PurchaseOrderPusatController@printPO');
+    // Route::get('purchase-orders-pusat/{id}/pdf/memo', 'PurchaseOrderPusatController@printMemoPengambilanProduk');
+
     Route::get('nota-khusus', 'SalesOrder\SalesOrderController@notaKhusus');
     Route::post('nota-khusus-create', 'SalesOrder\SalesOrderController@notaKhususCreate');
     Route::resource('sales-orders', 'SalesOrder\SalesOrderController');

@@ -280,8 +280,7 @@
                 <label>
                     Dikirim dengan Mobil
                 </label>
-                <input class="form-control" name="mobil" required placeholder="Contoh: Tata"
-                     value="">
+                <input class="form-control" name="mobil" required placeholder="Contoh: Tata" value="">
             </div>
         </div>
         <div class="col-md-6">
@@ -289,8 +288,7 @@
                 <label>
                     Dikirim dengan Plat
                 </label>
-                <input class="form-control" name="plat" required placeholder="Contoh: D 8078 F"
-                    value="">
+                <input class="form-control" name="plat" required placeholder="Contoh: D 8078 F" value="">
             </div>
         </div>
         <div class="col-12">
@@ -365,7 +363,8 @@
     </div>
     <div class="row">
         <div class="col-lg-6">
-
+            <a target='_BLANK' class="btn btn-dark btn-block"
+                href="{{ url('sales-orders/'.$sale->id.'/pdf/surat-jalan') }}">Download Delivery Order</a>
         </div>
         <div class="col-lg-6">
             <input type="hidden" name="count" value="{{ count($sale->details) }}">

@@ -110,6 +110,20 @@
             </li>
             @endif
 
+            @if(Gate::allows('isKorwil'))
+            <li class="nav-item">
+                <a href="{{ url('stocks') }}" class="nav-link {{ (request()->is('stocks*')) ? 'active' : '' }}">
+                    <i class="fa fa-list"></i> Stok
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ url('purchase-orders') }}"
+                    class="nav-link {{ (request()->is('purchase-orders*')) ? 'active' : '' }}">
+                    <i class="fa fa-arrow-up"></i> PO Untuk Pusat
+                </a>
+            </li>
+            @endif
+
             @if(Gate::allows('isFinance'))
             <li class="nav-item">
                 <a href="{{ url('sales-orders') }}"
@@ -138,7 +152,7 @@
                 <a href="{{ url('stocks') }}" class="nav-link {{ (request()->is('stocks*')) ? 'active' : '' }}">
                     <i class="fa fa-list"></i> Stok
                 </a>
-            </li>   
+            </li>
             @endif
 
             @if(Gate::allows('isGudang'))

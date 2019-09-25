@@ -18,8 +18,11 @@ class PurchaseOrderController extends Controller
 {
     public function index()
     {
-        $d["data"] = Purchase::latest()->with('details')->get();
-
+        if (Auth::user()->role == 'koordinator_wilayah') {
+            $d["data"] = Purchase::latest()->with('details')->get();
+        } else {
+            $d["data"] = Purchase::latest()->with('details')->get();
+        }
         return view('purchase.index', $d);
     }
 
@@ -31,7 +34,10 @@ class PurchaseOrderController extends Controller
         $data['sales'] = Sale::latest()->get();
         $data['no_po'] = "PO" . date("ymd") . str_pad(auth()->user()->branch_id, 2, 0, STR_PAD_LEFT) . str_pad($counter->counter, 5, 0, STR_PAD_LEFT);
 
-        return view('purchase.form', $data);
+        if (Auth::user()->role == 'koordinator_wilayah')
+            return view('purchase-pusat.form', $data);
+        else
+            return view('purchase.form', $data);
     }
 
     public function show($id)
@@ -53,7 +59,11 @@ class PurchaseOrderController extends Controller
             $d['total_amount'] += $value->total_price;
         }
 
-        return view("purchase.show", $d);
+
+        if (Auth::user()->role == 'koordinator_wilayah')
+            return view('purchase-pusat.show', $d);
+        else
+            return view("purchase.show", $d);
     }
 
     public function store(Request $request)
@@ -66,31 +76,25 @@ class PurchaseOrderController extends Controller
         $purchase = [
             "purchase_number" => $nopo
         ];
+        // dd($request->$item[1]);
         $purchase = Purchase::create($purchase);
         for ($i = 0; $i < $count; $i++) {
-            if (!empty($request->sales[$i])) {
-                $purchase_detail = [
-                    "item_id" => $request->$item[$i],
-                    "qty" => $request->qty[$i],
-                    "purchase_price" => $request->modal[$i],
-                    "total_price" => $request->qty[$i] * $request->modal[$i],
-                    "purchase_id" => $purchase->id,
-                    "sales_id" => $request->sales[$i]
-                ];
-            } else {
-                $purchase_detail = [
-                    "item_id" => $request->$item[$i],
-                    "qty" => $request->qty[$i],
-                    "purchase_price" => $request->modal[$i],
-                    "total_price" => $request->qty[$i] * $request->modal[$i],
-                    "purchase_id" => $purchase->id
-                ];
-            }
-            
+            $purchase_price = isset($request->modal) ? $request->modal[$i] : 0;
+            $total_price = isset($request->modal) ? ($request->qty[$i] * $request->modal[$i]) : 0;
+
+            $purchase_detail = [
+                "item_id" => $request->$item[$i],
+                "qty" => $request->qty[$i],
+                "purchase_price" => $purchase_price,
+                "total_price" => $total_price,
+                "purchase_id" => $purchase->id,
+                "sales_id" => !empty($request->sales[$i]) ? $request->sales[$i] : null
+            ];
+
             $purchase_item = Purchase_Detail::create($purchase_detail);
-            $item = $purchase_item->item;
-            $item->po_price = $purchase_item->purchase_price;
-            $item->save();
+            $this_item = $purchase_item->item;
+            $this_item->po_price = $purchase_item->purchase_price;
+            $this_item->save();
         }
         $counter->counter += 1;
         $counter->save();
