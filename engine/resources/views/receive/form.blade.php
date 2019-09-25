@@ -33,7 +33,7 @@
     $("#purchaseid").change(function () {
         $("#purchase-body").empty();
         $.ajax({
-            url: "{!! url('purchase-orders') !!}" + $("#purchaseid").val() + "/search",
+            url: "{!! url('purchase-orders') !!}" + '/' + $("#purchaseid").val() + "/search",
             method: "get",
             success: function (response) {
                 var table = document.getElementById("purchase-body");
@@ -67,7 +67,7 @@
                         cell7.innerHTML =
                             '<input class="form-control totalammount" id="purchase-' +
                             count + '" disabled value="' + value.total_price + '"></input>';
-                        console.dir(value);
+                        // console.dir(value);
                         if (value.sales_id != null) {
                             cell8.innerHTML = value.sales.no_so;
                         } else {
