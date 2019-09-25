@@ -82,7 +82,7 @@ class StockController extends Controller
         if ($validate->fails()) {
             return redirect('stocks')->withErrors($validate)->withInput($input);
         } else {
-            if ($input['massCheckBox'] == 'on') {
+            if ($request->has('massCheckBox')) {
                 $branches = Branch::all();
 
                 foreach ($branches as $branch) {
