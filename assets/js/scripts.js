@@ -90,7 +90,7 @@ function addProduct(id) {
             '                   <div class="col-sm-8">' +
             '                   <span class="select">' +
             '                       <input type="number" class="form-control item-qty-' + code + '" id="item-qty-' + code + '"' +
-            '                              min="1" max="' + quantity + '" value="1" name="item[' + items_count + '][qty]" onchange="countSubtotal(' + "'" + code + "'" + ')">' +
+            '                              min="1" value="1" name="item[' + items_count + '][qty]" onchange="countSubtotal(' + "'" + code + "'" + ')">' +
             '                   </span>' +
             '                   </div>' +
             '               </div>' +

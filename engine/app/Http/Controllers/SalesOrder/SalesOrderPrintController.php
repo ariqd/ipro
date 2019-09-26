@@ -60,6 +60,26 @@ class SalesOrderPrintController extends Controller
         return $pdf->download('invoice.pdf');
     }
 
+    public function makeQO($id, Request $request)
+    {
+        $data = Sale::find($id);
+        $data["user"] = $data->user;
+        $data["detail"] = $data->details;
+        // $this->angkaTerbilang();
+        if ($request->has("markup")) {
+            $data["markup"] = 1;
+        } else {
+            $data["markup"] = 0;
+        }
+        foreach ($data["detail"] as $key) {
+            $key["stock"] = $key->stock;
+            $key["stock"]["item"] = $key["stock"]->item;
+        }
+
+        $pdf = PDF::loadView('print.QO-order', ['sale' => $data]);
+        return $pdf->download('invoice.pdf');
+    }
+
 
     public function makeInvoice($id, Request $request)
     {
