@@ -412,11 +412,12 @@
                     @endif
                     @csrf
                     <div class="row">
-                        <div class="form-group col-10">
-                            @if(Gate::allows('isFinance') || Gate::allows('isAdmin'))
-                            @if(Gate::allows('isFinance') || (Gate::allows('isSales') && $sale->no_so != null))
+                        <div class="form-group col-12">
+                            {{-- @if(Gate::allows('isFinance') || Gate::allows('isAdmin')) --}}
+                            {{-- @if(Gate::allows('isFinance')) --}}
                             <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print Invoice">
-                            @else
+                            {{-- @else --}}
+                            <br>
                             <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print SO">
                             <div class="custom-control custom-checkbox col-2 my-2">
                                 <input type="checkbox" name="markup" class="custom-control-input" id="defaultCheck1">
@@ -424,16 +425,16 @@
                                     PPN
                                 </label>
                             </div>
-                            @endif
-                            @elseif(Gate::allows('isSales'))
-                            <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print SO">
+                            {{-- @endif
+                            @elseif(Gate::allows('isSales')) --}}
+                            {{-- <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print SO">
                             <div class="custom-control custom-checkbox col-2 my-2">
                                 <input type="checkbox" name="markup" class="custom-control-input" id="defaultCheck1">
                                 <label class="custom-control-label" for="defaultCheck1">
                                     PPN
                                 </label>
-                            </div>
-                            @endif
+                            </div> --}}
+                            {{-- @endif --}}
                         </div>
 
                     </div>
