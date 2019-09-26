@@ -6,9 +6,10 @@
 <link href="{{ asset('assets/plugins/DataTables/datatables.min.css') }}" rel="stylesheet" />
 <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet" />
 <style>
-tr.align-middle td {
-    vertical-align: middle;
-}
+    tr.align-middle td {
+        vertical-align: middle;
+    }
+
 </style>
 @endpush
 
@@ -17,7 +18,7 @@ tr.align-middle td {
 <script src="https://cdn.datatables.net/plug-ins/1.10.19/features/scrollResize/dataTables.scrollResize.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#datatable').DataTable();
+        $('#datatable').ataTable();
 
         $('.btnDelete').on('click', function (e) {
             e.preventDefault();
