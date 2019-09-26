@@ -187,7 +187,6 @@ Sales Order
         </table>
     </div>
 </div>
-
 @if($sale->markup == 1)
 <div class="row">
     <div class="col-xs-12">
@@ -206,12 +205,14 @@ Sales Order
                 @php
                 $total =0;
                 $diskon =0;
+                $totaltanpappn =0;
                 @endphp
                 @foreach($sale->detail as $key)
+
                 <tr>
                     @php
-                    $price = $key->stock->item->purchase_price;
-                    $pricediskon = $key->stock->item->purchase_price - ($key->stock->item->purchase_price *
+                    $price = $key->price;
+                    $pricediskon = $key->price - ($key->price *
                     $key->discount/100);
                     $priceppn = $pricediskon + $pricediskon*0.1;
                     @endphp
@@ -219,10 +220,12 @@ Sales Order
                     <td>{{ $key->stock->item->name }}</td>
                     <td>{{ $key->stock->item->weight }}</td>
                     <td>{{ $key->qty*$key->stock->item->weight  }}</td>
-                    <td>Rp. {{ number_format($priceppn) }}</td>
-                    <td>Rp. {{ number_format($priceppn*$key->qty) }}</td>
+                    <td>Rp. {{ number_format($pricediskon) }}</td>
+                    <td>Rp. {{ number_format($pricediskon*$key->qty) }}</td>
                     @php
                     $total += $priceppn*$key->qty;
+                    $totaltanpappn += ($key->price - ($key->price *
+                    $key->discount/100)) * $key->qty
                     @endphp
                 </tr>
                 @endforeach
@@ -234,7 +237,7 @@ Sales Order
                     <td>
                         <div class="text-right"><b>Subtotal</b></div>
                     </td>
-                    <td>Rp. {{ number_format($total) }}</td>
+                    <td>Rp. {{ number_format($totaltanpappn ) }}</td>
                 </tr>
 
                 <tr class="border-none">
@@ -265,7 +268,14 @@ Sales Order
                     <td>
                         <div class="text-right"><b>JUMLAH</b></div>
                     </td>
-                    <td>Rp. {{ number_format($total) }}</td>
+                    <td>Rp. {{ number_format($totaltanpappn) }}</td>
+                </tr>
+                <tr class="border-none">
+                    <td colspan="4"></td>
+                    <td>
+                        <div class="text-right"><b>PPN 10%</b></div>
+                    </td>
+                    <td>Rp. {{ number_format(($totaltanpappn)*0.1) }}</td>
                 </tr>
                 <tr class="border-none">
                     <td colspan="4"></td>
@@ -287,6 +297,7 @@ Sales Order
 </div>
 
 @else
+
 <div class="row">
     <div class="col-xs-12">
         <table class="table table-bordered">
@@ -306,16 +317,18 @@ Sales Order
                 $diskon =0;
                 @endphp
                 @foreach($sale->detail as $key)
+
+
                 <tr>
                     <td>{{ $key->qty }}</td>
                     <td>{{ $key->stock->item->name }}</td>
                     <td>{{ $key->stock->item->weight }}</td>
                     <td>{{ $key->qty*$key->stock->item->weight  }}</td>
-                    <td>Rp. {{ number_format($key->stock->item->purchase_price) }}</td>
-                    <td>Rp. {{ number_format($key->stock->item->purchase_price*$key->qty) }}</td>
+                    <td>Rp. {{ number_format($key->price) }}</td>
+                    <td>Rp. {{ number_format($key->price*$key->qty) }}</td>
                     @php
-                    $total += $key->stock->item->purchase_price*$key->qty;
-                    $diskon += $key->discount/100 * ($key->stock->item->purchase_price*$key->qty);
+                    $total += $key->price*$key->qty;
+                    $diskon += $key->discount/100 * ($key->price*$key->qty);
                     @endphp
                 </tr>
                 @endforeach
@@ -362,13 +375,13 @@ Sales Order
                     <td>Rp. {{ number_format($total-$diskon) }}</td>
                 </tr>
 
-                <tr class="border-none">
+                {{-- <tr class="border-none">
                     <td colspan="4"></td>
                     <td>
                         <div class="text-right"><b>PPN 10%</b></div>
                     </td>
                     <td>Rp. {{ number_format(($total -$diskon)*0.1) }}</td>
-                </tr>
+                </tr> --}}
                 <tr class="border-none">
                     <td colspan="4"></td>
                     <td>
@@ -381,7 +394,9 @@ Sales Order
                     <td>
                         <div class="text-right"><b>GRAND TOTAL</b></div>
                     </td>
-                    <td>Rp. {{ number_format(($total + $sale->ongkir - $diskon) + (($total -$diskon)*0.1)) }}</td>
+                    {{-- <td>Rp. {{ number_format(($total + $sale->ongkir - $diskon) + (($total -$diskon)*0.1)) }}</td>
+                    --}}
+                    <td>Rp. {{ number_format(($total + $sale->ongkir - $diskon))}}</td>
                 </tr>
             </tbody>
         </table>
@@ -399,7 +414,7 @@ Sales Order
         </div>
     </div>
     <div class="col-xs-4">
-    </div>  
+    </div>
     <div class="col-xs-4">
         <div class="text-center">
             <p>Yang Membuat,</p>
@@ -408,5 +423,4 @@ Sales Order
         </div>
     </div>
 </div>
-
 @endsection
