@@ -168,7 +168,7 @@
                     Filter <i class="fa fa-chevron-down"></i>
                 </a>
                 @endif
-                @if(Gate::allows('isAdmin'))
+                @if(Gate::allows('isAdmin') || Gate::allows('isKorwil'))
                 <a href="#modalForm" data-toggle="modal" data-href="{{ url('stocks/create') }}"
                     class="btn btn-success"><i class="fa fa-plus"></i> Tambah Stok</a>
                 @endif
@@ -323,7 +323,7 @@
                                         <i class="fa fa-plus text-success"></i>
                                         Restock
                                     </a>
-                                    @if(Gate::allows('isAdmin'))
+                                    @if(Gate::allows('isAdmin') || Gate::allwos('isKorwil'))
                                     <a href="#modalForm" data-toggle="modal" data-href="{{ url('stocks/'.$stock->id) }}"
                                         class="dropdown-item">
                                         <i class="fa fa-eye"></i> Detail</a>
