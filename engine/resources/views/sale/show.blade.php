@@ -401,11 +401,12 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="row">
-            <!-- <div class="col-lg-6">
-                <a href="{{ url('sales-orders/'.$sale->id.'/pdf/quotation') }}" class="btn btn-dark btn-block my-2"> Print Quotation</a>
-            </div> -->
             <div class="col-lg-6">
-                @if(Gate::allows('isFinance'))
+                <a href="{{ url('sales-orders/'.$sale->id.'/pdf/quotation') }}" class="btn btn-dark btn-block my-2"> Print Quotation</a>
+                {{-- <a href="{{ url('sales-orders/'.$sale->id.'/approve/print') }}" class="btn btn-dark btn-block my-2"> Print Kwitansi</a> --}}
+            </div>
+            <div class="col-lg-6">
+                @if(Gate::allows('isFinance') || Gate::allows('isSales') ||Gate::allows('isKorwil') || Gate::allows('isSalesHo'))
                 <form action="{{ url("sales-orders/$sale->id/pdf/invoice") }}" method="post">
                 @else
                 <form action="{{ url("sales-orders/$sale->id/pdf/SO") }}" method="post">
@@ -413,10 +414,7 @@
                     @csrf
                     <div class="row">
                         <div class="form-group col-12">
-                            {{-- @if(Gate::allows('isFinance') || Gate::allows('isAdmin')) --}}
-                            {{-- @if(Gate::allows('isFinance')) --}}
                             <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print Invoice">
-                            {{-- @else --}}
                             <br>
                             <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print SO">
                             <div class="custom-control custom-checkbox col-2 my-2">
@@ -425,31 +423,17 @@
                                     PPN
                                 </label>
                             </div>
-                            {{-- @endif
-                            @elseif(Gate::allows('isSales')) --}}
-                            {{-- <input type="submit" name="" class="btn btn-success btn-block my-2" value="Print SO">
-                            <div class="custom-control custom-checkbox col-2 my-2">
-                                <input type="checkbox" name="markup" class="custom-control-input" id="defaultCheck1">
-                                <label class="custom-control-label" for="defaultCheck1">
-                                    PPN
-                                </label>
-                            </div> --}}
-                            {{-- @endif --}}
                         </div>
-
                     </div>
                 </form>
             </div>
-            {{-- @if($flag != count($sale->details)) --}}
             @if(Gate::allows('isGudang') || Gate::allows('isAdmin'))
-
             <div class="col-lg-12">
                 <a href="{{ url("sales-orders/$sale->id/delivery-orders") }}" class="btn btn-secondary btn-block">
                     Buat Surat Jalan
                 </a>
             </div>
             @endif
-            {{-- @endif --}}
         </div>
     </div>
 </div>
